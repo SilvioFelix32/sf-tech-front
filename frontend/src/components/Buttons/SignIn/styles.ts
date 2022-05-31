@@ -4,8 +4,8 @@ export const Wrapper = styled.button`
   display: flex;
   height: 50px;
   padding: 10px;
-  background: ${({ theme }) => theme.colors.tertiary};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.primary};
   border: none;
 
   svg {
@@ -13,7 +13,7 @@ export const Wrapper = styled.button`
     width: 100%;
 
     &:hover {
-      color: red;
+      color: ${({ theme }) => theme.colors.tertiary};
     }
   }
 `;

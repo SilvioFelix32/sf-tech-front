@@ -9,7 +9,7 @@ export const GlobalStyles = createGlobalStyle`
 
     html {
         background-color: ${({ theme }) => theme.colors.primary};
-        
+     
         @media (max-width: 1000px) {
             font-size: 93.75%;  
         }
