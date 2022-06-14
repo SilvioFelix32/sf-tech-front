@@ -1,21 +1,17 @@
 export type CartItemType = {
-    id: number;
-    sku: string,
-    titulo: string,
-    subtitulo: string,
-    descricao: string,
-    tipo_produto: string,
-    ordem_menu: number,
-    promocao: boolean,
-    combo: boolean,
-    faixa_etaria: string,
-    qtde_max_total_diario: number,
-    url_capa: string,
-    valor: number,
-    valor_promocao: number,
-    valor_venda: number,
-    qtde_venda_diaria: number,
-    qtde_acessos: number,
-    amount?: number;
-}
-
+  id: number;
+  sku: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  product_type: string;
+  order_menu: number;
+  promotion: boolean;
+  combo: boolean;
+  age_group: string;
+  url_banner: string;
+  value: number;
+  value_promotion: number;
+  value_sale: number;
+  amount?: number;
+};

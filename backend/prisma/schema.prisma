@@ -3,15 +3,16 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Company {
-  id            String  @id @default(uuid())
+  id            String  @id @default(uuid()) @map("_id")
   name          String  @unique
   fantasy_name  String?
   celphone1     String
@@ -26,13 +27,14 @@ model Company {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  company_params   CompanyParams[]
   product_category ProductCategory[]
   sales            Sale[]
   price_tables     PriceTable[]
   products         Product[]
   users            User[]
 
-  @@map("companie")
+  @@map("company")
 }
 
 enum Environment {
@@ -40,6 +42,21 @@ enum Environment {
   HOMOLOGATION
 
   @@map("environment")
+}
+
+model CompanyParams {
+  id             String       @id @default(uuid()) @map("_id")
+  company        Company      @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company_id     String       @unique
+  environment    Environment? @default(value: HOMOLOGATION)
+  obs_email      String?
+  obs_voucher    String?
+  privacy_policy String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("company_params")
 }
 
 enum ProductType {
@@ -59,11 +76,11 @@ enum ProductType {
 }
 
 model ProductCategory {
-  id             String      @id @default(uuid())
+  id             String      @id @default(uuid()) @map("_id")
   company        Company     @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   company_id     String
   product_type   ProductType
-  config_tipo_id String?
+  config_type_id String?
   title          String
   description    String
   url_banner     String?
@@ -77,7 +94,7 @@ model ProductCategory {
 }
 
 model Product {
-  id                     String          @id @default(uuid())
+  id                     String          @id @default(uuid()) @map("_id")
   product_category       ProductCategory @relation(fields: [product_category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   product_category_id    String
   company                Company         @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -99,12 +116,12 @@ model Product {
   age_group              String?
   promotion              Boolean?        @default(false)
 
-  items                  ProductCombo[]           @relation("Combo")
-  availability_exception ConfigProductException[]
-  total_sale             ProductTotalSales[]
-  product_item           ProductCombo[]           @relation("Item")
-  sales_item             ItemSales[]
-  price_table            ProductPricesTable[]
+  items                   ProductCombo[]           @relation("Combo")
+  config_product_exeption ConfigProductException[]
+  total_sale              ProductTotalSales[]
+  product_item            ProductCombo[]           @relation("Item")
+  sales_item              ItemSales[]
+  price_table             ProductPricesTable[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -113,7 +130,7 @@ model Product {
 }
 
 model ItemSales {
-  id               String   @id @default(uuid())
+  id               String   @id @default(uuid()) @map("_id")
   sales            Sale     @relation(fields: [sale_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   sale_id          String
   product          Product  @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
@@ -129,6 +146,86 @@ model ItemSales {
   @@map("item_sales")
 }
 
+model ProductCombo {
+  id         String  @id @default(uuid()) @map("_id")
+  product    Product @relation(name: "Combo", fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product_id String
+  item       Product @relation(name: "Item", fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  item_id    String
+  amount     Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([product_id, item_id])
+  @@map("product_combo")
+}
+
+enum TypeActionExceptionProduct {
+  BLOCK
+  RELEASE
+
+  @@map("type_action_exception_product")
+}
+
+model ConfigProductException {
+  id         String                     @id @default(uuid()) @map("_id")
+  product    Product                    @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product_id String
+  date       DateTime
+  action     TypeActionExceptionProduct @default(BLOCK)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([product_id, date])
+  @@map("config_product_exception")
+}
+
+model ProductTotalSales {
+  id         String   @id @default(uuid()) @map("_id")
+  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product_id String
+  date       DateTime
+  amount     Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([product_id, date])
+  @@map("product_total_sales")
+}
+
+model PriceTable {
+  id           String    @id @default(uuid()) @map("_id")
+  company      Company?  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company_id   String
+  description  String
+  initial_date DateTime? @default(now())
+  final_date   DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+
+  products ProductPricesTable[]
+
+  @@map("price_table")
+}
+
+model ProductPricesTable {
+  id              String      @id @default(uuid()) @map("_id")
+  price_table     PriceTable? @relation(fields: [price_table_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  price_table_id  String
+  product         Product?    @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product_id      String
+  value           Float
+  value_promotion Float
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("product_price_table")
+}
+
 enum SaleStatus {
   NEW
   ABANDONED
@@ -141,7 +238,7 @@ enum SaleStatus {
 }
 
 model Sale {
-  id                  String         @id @default(uuid())
+  id                  String         @id @default(uuid()) @map("_id")
   company             Company?       @relation(fields: [company_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
   company_id          String
   user                User?          @relation(fields: [user_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -173,7 +270,7 @@ model Sale {
 }
 
 model SalesHistory {
-  id       String @id @default(uuid())
+  id       String @id @default(uuid()) @map("_id")
   sale     Sale   @relation(fields: [sale_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   sale_id  String
   historic String
@@ -182,56 +279,6 @@ model SalesHistory {
   updated_at DateTime @updatedAt
 
   @@map("sales_history")
-}
-
-model ProductCombo {
-  id         String  @id @default(uuid())
-  product    Product @relation(name: "Combo", fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product_id String
-  item       Product @relation(name: "Item", fields: [item_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  item_id    String
-  amount     Int
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@unique([product_id, item_id])
-  @@map("product_combo")
-}
-
-enum TypeActionExceptionProduct {
-  BLOCK
-  RELEASE
-
-  @@map("type_action_exception_product")
-}
-
-model ConfigProductException {
-  id         String                     @id @default(uuid())
-  product    Product                    @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product_id String
-  date       DateTime
-  action     TypeActionExceptionProduct @default(BLOCK)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@unique([product_id, date])
-  @@map("config_product_exception")
-}
-
-model ProductTotalSales {
-  id         String   @id @default(uuid())
-  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product_id String
-  date       DateTime
-  amount     Int
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@unique([product_id, date])
-  @@map("product_total_sales")
 }
 
 enum Sex {
@@ -243,14 +290,14 @@ enum Sex {
 }
 
 model User {
-  id                 String    @id @default(uuid())
+  id                 String    @id @default(uuid()) @map("_id")
   company            Company?  @relation(fields: [company_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
   company_id         String
   document           String?
   name               String
   last_name          String
   sex_type           Sex?      @default(OTHERS)
-  data_nascimento    DateTime?
+  birth_date         DateTime?
   celphone           String?
   email              String
   cep                String?
@@ -268,34 +315,4 @@ model User {
 
   Sale Sale[]
   @@map("users")
-}
-
-model PriceTable {
-  id           String    @id @default(uuid())
-  company      Company?  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  company_id   String
-  description  String
-  data_inicial DateTime? @default(now())
-  data_final   DateTime?
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-
-  products ProductPricesTable[]
-
-  @@map("price_table")
-}
-
-model ProductPricesTable {
-  id              String      @id @default(uuid())
-  price_table     PriceTable? @relation(fields: [price_table_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  price_table_id  String
-  product         Product?    @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product_id      String
-  value           Float
-  value_promotion Float
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@map("product_price_table")
 }

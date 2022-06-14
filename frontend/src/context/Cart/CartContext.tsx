@@ -15,7 +15,7 @@ export default function CartProvider(props) {
 
     const cartTotalPrice = useMemo(() => {
         return cartItems.reduce((acumulator, item) => {
-            const totalPrice = item.amount * item.valor_venda
+            const totalPrice = item.amount * item.value_sale
             return acumulator + totalPrice
         }, 0).toFixed(2)
     }, [cartItems])
