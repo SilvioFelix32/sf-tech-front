@@ -1,35 +1,31 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-
 import { AppService } from './app.service';
-import { CompaniesModule } from './modules/companies/companies.module';
-import { ProductsCategoriesModule } from './modules/products-categories/products-categories.module';
-import { ProductsPricesModule } from './modules/products-prices/products-prices.module';
-import { ProductsModule } from './modules/products/products.module';
-import { TenantsModule } from './modules/tenants/tenants.module';
-import { UsersModule } from './modules/users/users.module';
+import { PrismaService } from './shared/prisma/prisma.service';
+import { AppController } from './app.controller';
+import { UsersModule } from './users/users.module';
+import { CompaniesModule } from './companies/companies.module';
+import { ProductModule } from './product/modules/product.module';
+import { ProductCategoriesModule } from './product-categories/modules/product-categories.module';
+import { ProductPricesModule } from './product-table/modules/product-prices.module';
+import { ProductTablePricesModule } from './product-table-prices/modules/product-table-prices.module';
+import { SalesModule } from './sales/modules/sales.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }),
-    TenantsModule,
+
     CompaniesModule,
-    ProductsCategoriesModule,
-    ProductsPricesModule,
-    ProductsModule,
     UsersModule,
+    ProductModule,
+    ProductCategoriesModule,
+    ProductPricesModule,
+    ProductTablePricesModule,
+    SalesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
