@@ -1,38 +1,21 @@
-import React from "react";
-import {
-  FaTimes,
-  FaHome,
-  FaEnvelope,
-  FaRegSun,
-  FaUserAlt,
-  FaIdCardAlt,
-  FaRegFileAlt,
-  FaRegCalendarAlt,
-  FaChartBar,
-} from "react-icons/fa";
-import { SidebarItem } from "../SidebarItem";
-
+import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { FaGem } from "react-icons/fa";
 //styles
-import { Container, Content } from "./styles";
+import "react-pro-sidebar/dist/css/styles.css";
+interface SideBarProps {
+  isToggled?: boolean;
+  setIsToggled: () => void;
+}
 
-export function Sidebar({ active }) {
-  const closeSidebar = () => {
-    active(false);
-  };
-
+export function Sidebar({ isToggled }: SideBarProps) {
   return (
-    <Container sidebar={active}>
-      <FaTimes onClick={closeSidebar} />
-      <Content>
-        <SidebarItem Icon={FaHome} Text="Home" />
-        <SidebarItem Icon={FaChartBar} Text="Statistics" />
-        <SidebarItem Icon={FaUserAlt} Text="Users" />
-        <SidebarItem Icon={FaEnvelope} Text="Mail" />
-        <SidebarItem Icon={FaRegCalendarAlt} Text="Calendar" />
-        <SidebarItem Icon={FaIdCardAlt} Text="Employees" />
-        <SidebarItem Icon={FaRegFileAlt} Text="Reports" />
-        <SidebarItem Icon={FaRegSun} Text="Settings" />
-      </Content>
-    </Container>
+    <ProSidebar collapsed={false} toggled={isToggled}>
+      <Menu iconShape="square">
+        <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
+        <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
+        <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
+        <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
+      </Menu>
+    </ProSidebar>
   );
 }

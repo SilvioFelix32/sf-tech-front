@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
+import "i18next";
 //components
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -11,7 +12,6 @@ import light from "../styles/themes/light";
 
 const Home: NextPage = () => {
   const [theme, setTheme] = useState(light);
-
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
   }
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
       <Wrapper>
         <Header toggleTheme={toggleTheme} />
         <Content>
-          <h1>CONTEUDO</h1>
+          <h1>SFTech</h1>
         </Content>
         <Footer />
       </Wrapper>

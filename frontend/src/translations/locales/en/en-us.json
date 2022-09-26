@@ -1,0 +1,14 @@
+{
+  "main": {
+    "sidebar": {
+      "project": "Project",
+      "title": "Name of the project."
+    },
+    "searchbar": {
+      "serchfield": "Search for a product or category..."
+    },
+    "footer": {
+      "title": "SFTech Eletronics"
+    }
+  }
+}

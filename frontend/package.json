@@ -10,12 +10,18 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "bootstrap": "5.1.0",
+    "i18next": "^21.9.2",
+    "i18next-browser-languagedetector": "^6.1.5",
     "next": "12.1.5",
     "nookies": "^2.5.2",
     "polished": "^4.2.2",
     "react": "18.0.0",
+    "react-bootstrap": "^2.5.0-beta.1",
     "react-dom": "18.0.0",
+    "react-i18next": "^11.18.6",
     "react-icons": "^4.3.1",
+    "react-pro-sidebar": "^0.7.1",
     "react-switch": "^6.0.0",
     "styled-components": "^5.3.5"
   },
