@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { PrismaService } from './shared/prisma/prisma.service';
@@ -16,7 +17,7 @@ import { SalesModule } from './sales/modules/sales.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
+    HttpModule,
     CompaniesModule,
     UsersModule,
     ProductModule,
