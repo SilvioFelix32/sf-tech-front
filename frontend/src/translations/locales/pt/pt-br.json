@@ -4,8 +4,22 @@
       "project": "Project",
       "title": "Name of the project."
     },
+    "header": {
+      "dropdown": {
+        "ptBR": "Português",
+        "enUS": "Inglês"
+      }
+    },
     "searchbar": {
       "serchfield": "Procure um produto ou categoria..."
+    },
+    "companyTable": {
+      "id": "Id",
+      "name": "Nome",
+      "fantasyName": "Nome fantasia",
+      "document": "CNPJ",
+      "cellphone": "Celular",
+      "email": "Email"
     },
     "footer": {
       "title": "SFTech Computadores"

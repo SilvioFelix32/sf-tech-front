@@ -4,8 +4,22 @@
       "project": "Project",
       "title": "Name of the project."
     },
+    "header": {
+      "dropdown": {
+        "ptBR": "Portuguese",
+        "enUS": "English"
+      }
+    },
     "searchbar": {
       "serchfield": "Search for a product or category..."
+    },
+    "companyTable": {
+      "id": "Id",
+      "name": "Name",
+      "fantasyName": "Fantasy name",
+      "document": "Document",
+      "cellphone": "Cellphone",
+      "email": "Email"
     },
     "footer": {
       "title": "SFTech Eletronics"

@@ -1,19 +1,38 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.button`
-  display: flex;
-  height: 50px;
-  padding: 10px;
-  color: ${({ theme }) => theme.colors.secondary};
-  background-color: ${({ theme }) => theme.colors.primary};
-  border: none;
+export const Wrapper = styled.div`
+  .Wrapper {
+    margin: 0;
+    padding: 0;
+  }
 
-  svg {
-    height: 100%;
-    width: 100%;
+  .GlobeBtn {
+    margin: 0 5px;
+    color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.primary};
+    border: none;
+    outline: none;
+
+    > svg {
+      height: 28px;
+      width: 28px;
+    }
 
     &:hover {
       color: ${({ theme }) => theme.colors.tertiary};
+    }
+  }
+
+  .OptionBtn {
+    cursor: pointer;
+    color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.primary};
+    border: none;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.9);
     }
   }
 `;
