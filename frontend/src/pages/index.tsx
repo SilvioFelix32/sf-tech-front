@@ -1,18 +1,20 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { companiesService } from "../services/companies-service";
-import DataTable from "react-data-table-component";
+import { useTranslation } from "react-i18next";
 import "i18next";
 //components
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { NavHeader } from "../components/NavHeader";
+import { ProductCard } from "../components/ProductCard";
+import DataTable from "react-data-table-component";
 //styles
 import { ThemeProvider } from "styled-components";
 import { Wrapper, Content } from "../styles";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 import customStyles from "../styles/customStyles";
-import { useTranslation } from "react-i18next";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
@@ -100,7 +102,9 @@ const Home: NextPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <Wrapper>
+        <NavHeader />
         <Header toggleTheme={toggleTheme} />
+        <ProductCard />
         <Content>
           <DataTable
             columns={columns}

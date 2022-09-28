@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100px;
+  height: 80px;
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.tertiary};
 
   > svg {
     color: ${({ theme }) => theme.colors.secondary};
@@ -18,6 +18,22 @@ export const Wrapper = styled.div`
     &:hover {
       color: ${({ theme }) => theme.colors.tertiary};
     }
+  }
+`;
+
+export const Logo = styled.button`
+  display: flex;
+  border: none;
+  outline: none;
+  transition: filter 0.2s;
+
+  > image {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
   }
 `;
 

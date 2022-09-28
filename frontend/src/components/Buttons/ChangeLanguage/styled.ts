@@ -5,24 +5,25 @@ export const Wrapper = styled.div`
     margin: 0;
     padding: 0;
   }
-
+  
   .GlobeBtn {
     margin: 0 5px;
     color: ${({ theme }) => theme.colors.secondary};
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.tertiary};
     border: none;
     outline: none;
-
-    > svg {
+    
+    svg {
       height: 28px;
       width: 28px;
-    }
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.tertiary};
+      transition: filter 0.2s;
+      
+      &:hover {
+        filter: brightness(0.9);
+      }
     }
   }
-
+  
   .OptionBtn {
     cursor: pointer;
     color: ${({ theme }) => theme.colors.secondary};
