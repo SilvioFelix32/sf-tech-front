@@ -11,7 +11,29 @@
       }
     },
     "searchbar": {
+      "selectField": {
+        "option": "Categorias",
+        "computer": "Computador",
+        "cellphone": "Celular",
+        "printer": "Impressora",
+        "monitor": "Monitor",
+        "notebook": "Notebook"
+      },
       "serchfield": "Procure um produto ou categoria..."
+    },
+    "mainSection": {
+      "categoriesFilterCard": {
+        "title": "Categorias",
+        "body": "Nome da categoria"
+      },
+      "brandsFilterCard": {
+        "title": "Marcas",
+        "body": "Filtrar por essa marca"
+      },
+      "priceFilterCard": {
+        "title": "Filtrar por preço",
+        "priceType": "R$"
+      }
     },
     "companyTable": {
       "id": "Id",

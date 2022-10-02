@@ -7,11 +7,24 @@ export function SearchBar() {
   return (
     <Search>
       <SearchSelect>
-        <option value="computador">computador</option>
-        <option value="celular">celular</option>
-        <option value="impressora">impressora</option>
-        <option value="monitor">monitor</option>
-        <option value="notebook">notebook</option>
+        <option value="">
+          {t("main.searchbar.selectField.option")}
+        </option>
+        <option value="computador">
+          {t("main.searchbar.selectField.computer")}
+        </option>
+        <option value="celular">
+          {t("main.searchbar.selectField.cellphone")}
+        </option>
+        <option value="impressora">
+          {t("main.searchbar.selectField.printer")}
+        </option>
+        <option value="monitor">
+          {t("main.searchbar.selectField.monitor")}
+        </option>
+        <option value="notebook">
+          {t("main.searchbar.selectField.notebook")}
+        </option>
       </SearchSelect>
       <InputContainer>
         <SearchInput placeholder={t("main.searchbar.serchfield")} />

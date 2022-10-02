@@ -11,6 +11,9 @@
   "dependencies": {
     "@coreui/coreui": "^4.2.2",
     "@coreui/react": "^4.4.0",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.7",
     "add": "^2.0.6",
     "axios": "^0.27.2",
     "bootstrap": "5.1.0",

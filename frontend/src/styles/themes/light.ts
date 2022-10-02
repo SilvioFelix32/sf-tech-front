@@ -10,6 +10,6 @@ export default {
     quinary: "#FFFFFF",
 
     text: "#2D3748",
-    title: "#FFFFFF",
+    title: "#002",
   },
 };

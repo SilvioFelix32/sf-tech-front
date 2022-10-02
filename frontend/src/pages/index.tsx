@@ -15,9 +15,11 @@ import { Wrapper, Content } from "../styles";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 import customStyles from "../styles/customStyles";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const [theme, setTheme] = useState(light);
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -104,7 +106,7 @@ const Home: NextPage = () => {
       <Wrapper>
         <NavHeader />
         <Header toggleTheme={toggleTheme} />
-        <ProductCard />
+        <button onClick={() => router.push("filters")}> pagina filters</button>
         <Content>
           <DataTable
             columns={columns}
