@@ -20,6 +20,7 @@
     "i18next": "^21.9.2",
     "i18next-browser-languagedetector": "^6.1.5",
     "next": "12.1.5",
+    "next-images": "^1.8.4",
     "nookies": "^2.5.2",
     "polished": "^4.2.2",
     "react": "18.0.0",
@@ -30,6 +31,8 @@
     "react-pro-sidebar": "^0.7.1",
     "react-switch": "^6.0.0",
     "styled-components": "^5.3.5",
+    "sweetalert2": "^11.4.37",
+    "sweetalert2-react-content": "^5.0.3",
     "yarn": "^1.22.19"
   },
   "devDependencies": {

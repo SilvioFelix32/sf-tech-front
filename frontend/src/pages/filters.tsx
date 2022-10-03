@@ -37,8 +37,6 @@ const Filtes: NextPage = () => {
           </LeftContent>
           <MainSection>
             <ProductCard />
-            <ProductCard />
-            <ProductCard />
           </MainSection>
         </Content>
         <Footer />

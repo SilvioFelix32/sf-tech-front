@@ -12,9 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<DefaultTheme>(light);
 
   return (
-    <AuthProvider>
-      <CartProvider>
-        <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <CartProvider>
           <Head>
             <title>Sf-tech</title>
             <link rel="shortcut icon" href="/favicon.jpg" />
@@ -25,9 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           </Head>
           <Component {...pageProps} />
           <GlobalStyles />
-        </ThemeProvider>
-      </CartProvider>
-    </AuthProvider>
+        </CartProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

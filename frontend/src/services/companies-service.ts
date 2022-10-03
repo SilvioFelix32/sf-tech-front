@@ -2,7 +2,7 @@ import api from "./api";
 
 export const companiesService = {
   getAll,
-  getByRealm,
+  getById,
   create,
   update,
   delete: _delete,
@@ -15,8 +15,8 @@ async function getAll() {
   return response.data;
 }
 
-async function getByRealm(realm: string) {
-  const response = await api.get(`${baseUrl}/${realm}`);
+async function getById(company_id: string) {
+  const response = await api.get(`${baseUrl}/${company_id}`);
   return response.data;
 }
 

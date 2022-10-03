@@ -11,5 +11,6 @@ export default {
 
     text: "#2D3748",
     title: "#FFFFFF",
+    background: "#1A202C",
   },
 };

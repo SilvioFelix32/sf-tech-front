@@ -26,7 +26,7 @@ export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
 `;
@@ -35,21 +35,15 @@ export const ProductPrices = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
 `;
 
 export const Text = styled.p`
-  cursor: pointer;
   color: ${({ theme }) => theme.colors.text};
-  font-weight: 300;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 16px;
   margin: 0;
   padding: 0 5px;
-  transition: filter(0.2s);
-
-  &:hover {
-    filter: brightness(0.9);
-  }
 `;
