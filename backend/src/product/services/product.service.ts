@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
 import { CreateProductDto } from '../dto/create-product.dto';
@@ -61,10 +65,15 @@ export class ProductService {
     });
   }
 
-  update(
+  async update(
     product_id: string,
     dto: UpdateProductDto,
   ): Promise<Product | unknown> {
+    const updateProduct = await this.findOne(product_id);
+    if (!updateProduct) {
+      throw new NotFoundException('Product not found');
+    }
+
     return this.prisma.product.update({
       where: {
         product_id,
@@ -75,7 +84,12 @@ export class ProductService {
     });
   }
 
-  remove(product_id: string): Promise<Product | unknown> {
+  async remove(product_id: string): Promise<Product | unknown> {
+    const deleteProduct = await this.findOne(product_id);
+    if (!deleteProduct) {
+      throw new NotFoundException('Product not found');
+    }
+
     return this.prisma.product.delete({
       where: {
         product_id,

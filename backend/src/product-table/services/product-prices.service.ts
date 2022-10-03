@@ -22,9 +22,10 @@ export class ProductPricesService {
     return this.prisma.priceTable.create({ data });
   }
 
-  findAll() {
+  findAll(company_id: string) {
     return this.prisma.priceTable.findMany({
       select: {
+        company_id,
         ...tableResponse,
       },
     });

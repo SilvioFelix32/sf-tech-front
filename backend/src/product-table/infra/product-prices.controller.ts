@@ -33,8 +33,13 @@ export class ProductPricesController {
   }
 
   @Get()
-  findAll() {
-    return this.productPricesService.findAll();
+  findAll(@RequestHeaders() header: IHeaders) {
+    const { company_id } = header;
+
+    if (!company_id) {
+      throw new BadRequestException('No Company informed');
+    }
+    return this.productPricesService.findAll(company_id);
   }
 
   @Get(':price_table_id')

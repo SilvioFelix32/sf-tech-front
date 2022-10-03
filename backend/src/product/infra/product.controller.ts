@@ -15,7 +15,7 @@ import { FindProductDto } from '../dto/find-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { ProductService } from '../services/product.service';
 
-@Controller('product')
+@Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
