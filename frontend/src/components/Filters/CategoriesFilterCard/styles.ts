@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const ProductInfo = styled.div`
@@ -33,7 +32,7 @@ export const Text = styled.p`
 
 export const Button = styled.button`
   color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.background};
   border: none;
   outline: none;
 

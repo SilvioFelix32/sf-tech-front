@@ -5,7 +5,7 @@ export const Wrapper = styled.button`
   border: none;
   height: 50px;
   padding: 10px;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.primary};
   background-color: ${({ theme }) => theme.colors.tertiary};
 
   svg {
@@ -38,7 +38,7 @@ export const CartValue = styled.div`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.text};
   transform: translate(19px, -11px);
-  background-color: ${({ theme }) => theme.colors.quaternary};
+  background-color: ${({ theme }) => theme.colors.primary};
   width: 20px;
   height: 20px;
   margin: 3px;

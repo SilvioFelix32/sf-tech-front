@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   height: 100%;
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Content = styled.div`
@@ -25,7 +25,6 @@ export const LeftContent = styled.div`
 `;
 
 export const MainSection = styled.div`
-  outline: solid 2px black;
   width: 100%;
   height: 100%;
   display: flex;

@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
@@ -24,7 +23,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        background-color: ${({ theme }) => theme.colors.primary};
+        background-color: ${({ theme }) => theme.colors.background_dark};
         -webkit-font-smoothing: antialiased;
     }
 

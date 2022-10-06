@@ -4,7 +4,15 @@ import { useTranslation } from "react-i18next";
 import { productsService, productsPricesService } from "../../services";
 import { IProduct, IProductPrices } from "../../services/types";
 //styles
-import { Wrapper, Text, Picture, ProductInfo, ProductPrices } from "./styles";
+import {
+  Wrapper,
+  Text,
+  BuyButton,
+  FavoriteButton,
+  Picture,
+  ProductInfo,
+  ProductPrices,
+} from "./styles";
 
 export function ProductCard() {
   const { t } = useTranslation();
@@ -29,7 +37,7 @@ export function ProductCard() {
           <Wrapper key={product.product_id}>
             <Picture>
               <Image
-                src={product?.url_banner || "/images/logo_sftech.jpg"}
+                src={product?.url_banner}
                 alt={product?.title}
                 width="300"
                 height="300"
@@ -61,10 +69,8 @@ export function ProductCard() {
                       {t("main.mainSection.priceFilterCard.priceType")}{" "}
                       {product?.value.toFixed(2).replace(".", ",")}
                     </Text>
-                    <Text>
-                      {t("main.mainSection.priceFilterCard.priceType")}{" "}
-                      {product?.descount_value.toFixed(2).replace(".", ",")}
-                    </Text>
+                    <BuyButton>Comprar</BuyButton>
+                    <FavoriteButton>Favoritar</FavoriteButton>
                   </ProductPrices>
                 ))
               )}

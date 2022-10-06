@@ -4,7 +4,7 @@ export const Wrapper = styled.button`
   display: flex;
   height: 50px;
   padding: 10px;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.primary};
   background-color: ${({ theme }) => theme.colors.tertiary};
   border: none;
 

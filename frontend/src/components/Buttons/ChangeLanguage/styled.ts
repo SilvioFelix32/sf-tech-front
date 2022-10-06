@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   
   .GlobeBtn {
     margin: 0 5px;
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.tertiary};
     border: none;
     outline: none;
@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
   
   .OptionBtn {
     cursor: pointer;
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.text};
     background-color: ${({ theme }) => theme.colors.primary};
     border: none;
 

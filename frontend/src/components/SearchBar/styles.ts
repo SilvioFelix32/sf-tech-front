@@ -54,7 +54,6 @@ export const SearchInput = styled.input`
   text-align: center;
   height: 100%;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.quaternary};
 
   color: ${({ theme }) => theme.colors.secondary};
 `;

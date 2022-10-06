@@ -3,14 +3,15 @@ export default {
   title: "light",
 
   colors: {
-    primary: "#FFFFFF",
-    secondary: "#2D3748",
-    tertiary: "#52D1C5",
-    quaternary: "#EDEEEE",
-    quinary: "#FFFFFF",
+    primary: "#8EE1D9",
+    secondary: "#52D1C5",
+    tertiary: "#33C1B3",
+    quaternary: "#1A615A",
+    quinary: "#11403C",
 
     text: "#2D3748",
     title: "#002",
     background: "#FFFFFF",
+    background_dark: "#2D3748",
   },
 };
