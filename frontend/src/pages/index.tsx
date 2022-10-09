@@ -15,6 +15,8 @@ import { Wrapper, Content } from "../styles";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 import customStyles from "../styles/customStyles";
+import Link from "next/link";
+import { ICompany } from "../types/ICompany";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
@@ -34,14 +36,23 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const data = companies.map((company) => {
+  const data = companies.map((company: ICompany) => {
     return {
       id: company.id,
-      cnpj: company.cnpj,
       name: company.name,
       fantasy_name: company.fantasy_name,
       celphone1: company.celphone1,
       email: company.email,
+      select_id: (
+        <Link
+          href={{
+            pathname: "admin-products",
+            query: { company_id: company.id },
+          }}
+        >
+          {company.name}
+        </Link>
+      ),
     };
   });
 
@@ -50,17 +61,6 @@ const Home: NextPage = () => {
       name: t("main.companyTable.id"),
       selector: (row) => row.id,
       sortable: true,
-    },
-    {
-      name: t("main.companyTable.document"),
-      selector: (row) => row.cnpj,
-      sortable: true,
-      grow: 2,
-      style: {
-        color: "#202124",
-        fontSize: "14px",
-        fontWeight: 500,
-      },
     },
     {
       name: t("main.companyTable.name"),
@@ -92,6 +92,10 @@ const Home: NextPage = () => {
       name: t("main.companyTable.email"),
       selector: (row) => row.email,
     },
+    {
+      name: t("Select ID"),
+      selector: (row) => row.select_id,
+    },
   ];
 
   const paginationComponentOptions = {
@@ -106,6 +110,9 @@ const Home: NextPage = () => {
         <NavHeader />
         <Header toggleTheme={toggleTheme} />
         <button onClick={() => router.push("filters")}> pagina filters</button>
+        <button onClick={() => router.push("admin-products")}>
+          admin products
+        </button>
         <Content>
           <DataTable
             columns={columns}

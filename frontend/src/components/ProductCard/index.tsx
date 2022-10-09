@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { productsService, productsPricesService } from "../../services";
-import { IProduct, IProductPrices } from "../../services/types";
+import { IProduct, IProductPrices } from "../../types";
 //styles
 import {
   Wrapper,

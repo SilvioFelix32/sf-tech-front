@@ -1,5 +1,5 @@
 import api from "./api";
-import { IProduct } from "./types";
+import { IProduct } from "../types";
 
 export const productsService = {
   getAll,
