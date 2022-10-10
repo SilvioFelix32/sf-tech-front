@@ -23,9 +23,14 @@ async function getById(product_id: string) {
   return response.data;
 }
 
-async function create(company_id: string, params: any) {
-  //https://i.imgur.com/2HFGvvT.png
-  const response = await api.post(`${company_id}/${baseUrl}`, params);
+async function create(
+  category_id: string,
+  params: IProduct,
+  company_id: string
+) {
+  const response = await api.post(`${baseUrl}/${category_id}`, params, {
+    headers: { company_id },
+  });
   return response.data;
 }
 
@@ -38,6 +43,6 @@ async function update(company_id: string, product_id: string, params: any) {
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-async function _delete(company_id: string, product_id: string) {
-  await api.delete(`${company_id}/${baseUrl}/${product_id}`);
+async function _delete(product_id: string) {
+  await api.delete(`${baseUrl}/${product_id}`);
 }

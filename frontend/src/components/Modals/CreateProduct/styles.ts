@@ -3,33 +3,41 @@ import styled from "styled-components";
 export const Wrapper = styled.form`
   display: flex;
   justify-content: center;
-  align-items: center;
-  
+  align-items: flex-start;
+  flex-direction: column;
+
+  max-height: 600px;
+  max-width: 800px;
+  width: 100%;
+  height: 100%;
   padding: 10px;
+`;
+
+export const Context = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-
+  margin: 0 10px;
   height: 100%;
   width: 100%;
 `;
 
 export const Text = styled.p`
   width: 90%;
-  margin-left: 10px;
+  margin: 10px;
   font-weight: 500;
 `;
 
 export const Input = styled.input`
   height: 36px;
   width: 95%;
-  margin: 8px auto;
   outline: solid 0.1px ${({ theme }) => theme.colors.quaternary};
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-weight: 400;
   padding-left: 10px;
   color: ${({ theme }) => theme.colors.secondary};
@@ -42,9 +50,8 @@ export const Input = styled.input`
 export const Select = styled.select`
   height: 36px;
   width: 95%;
-  margin: 8px auto;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   outline: solid 1px ${({ theme }) => theme.colors.quaternary};
   font-weight: 400;
   color: ${({ theme }) => theme.colors.secondary};

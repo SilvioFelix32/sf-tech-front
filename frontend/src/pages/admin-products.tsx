@@ -16,6 +16,7 @@ import { ThemeProvider } from "styled-components";
 import { Wrapper, Button } from "../styles/admin-products";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
+import { ModalDeleteProduct } from "../components/Modals";
 
 export default function Administration() {
   const [theme, setTheme] = useState(light);
@@ -25,6 +26,7 @@ export default function Administration() {
   const router = useRouter();
   //Data table states and paginator
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [product_id, setProduct_id] = useState("");
   //Modals
   const [reloadData, setReloadData] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,26 +46,7 @@ export default function Administration() {
       alert("No company informed!");
       router.push("/");
     }
-  }, []);
-
-  /*   async function fetchOneProduct(product_id: string) {
-    if (company_id) {
-      await productsService
-        .getById(company_id)
-        .then((data) => setProductSelectedById(data))
-        .catch((err) => alert(err));
-    } else {
-      alert("Something went wrong!");
-      router.push("/");
-    }
-  }
-
-  async function handleDeleteProduct(product_id: string) {
-    productsService.delete(company_id, product_id).then(() => {
-      setReloadData(Math.random());
-      setOpen(false);
-    });
-  } */
+  }, [reloadData]);
 
   //Dados da tabela
   const columns = [
@@ -88,7 +71,7 @@ export default function Administration() {
     },
     {
       name: "outros",
-      selector: (row) => row.excluir_alterar,
+      selector: (row) => row.exclude_alter,
     },
   ];
 
@@ -120,6 +103,7 @@ export default function Administration() {
           <button
             type="button"
             onClick={() => {
+              setProduct_id(product?.product_id);
               setOpen(true);
             }}
           >
@@ -150,11 +134,6 @@ export default function Administration() {
               <Button onClick={() => setIsOpen(true)}>
                 Cadastrar novo Produto
               </Button>
-              <ModalCreateProduct
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                setReloadData={setReloadData}
-              />
             </div>
             <DataTable
               columns={columns}
@@ -167,26 +146,17 @@ export default function Administration() {
           </div>
         </div>
         <Footer />
-        {/*      <ModalRegistration
+        <ModalCreateProduct
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setReloadData={setReloadData}
-        /> */}
-        {/*         <ModalDelete open={open} onClose={() => setIsOpen(false)} center>
-          <div>
-            <p>Excluir Produto?:</p>
-            <div>
-              <button
-                onClick={() => {
-                  handleDeleteProduct(selectedProduct);
-                }}
-              >
-                Confirmar
-              </button>
-              <button onClick={() => setIsOpen(false)}>Cancelar</button>
-            </div>
-          </div>
-        </ModalDelete> */}
+        />
+        <ModalDeleteProduct
+          product_id={product_id}
+          open={open}
+          setOpen={setOpen}
+          setReloadData={setReloadData}
+        />
       </Wrapper>
     </ThemeProvider>
   );
