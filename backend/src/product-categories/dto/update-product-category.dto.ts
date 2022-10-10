@@ -4,14 +4,8 @@ import { ProductType } from 'src/product/entities/product-type.entity';
 export class UpdateProductCategoryDto {
   company?: any;
 
-/*   @IsString()
-  company_id?: string; */
 
   product_type?: ProductType;
-
-  @IsString()
-  @IsOptional()
-  config_type_id?: string | null;
 
   @IsString()
   @IsOptional()
@@ -20,10 +14,6 @@ export class UpdateProductCategoryDto {
   @IsString()
   @IsOptional()
   description?: string | null;
-
-  @IsString()
-  @IsOptional()
-  url_banner?: string | null;
 
   @IsBoolean()
   @IsOptional()

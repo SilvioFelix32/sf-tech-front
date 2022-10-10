@@ -25,21 +25,13 @@ export class CreateProductCategoryDto {
   product_type: ProductType;
 
   @IsString()
-  @IsOptional()
-  config_type_id?: string | null;
-
-  @IsString()
   @IsNotEmpty()
   title: string;
 
   @IsString()
   @IsOptional()
   description?: string | null;
-
-  @IsString()
-  @IsOptional()
-  url_banner?: string | null;
-
+  
   @IsBoolean()
   @IsOptional()
   active?: boolean;
