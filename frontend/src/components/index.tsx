@@ -3,4 +3,4 @@ export * from "./Header";
 export * from "./Footer";
 
 //subcomponents
-export * from "./Modals/CreateProduct";
+export * from "./Modals";

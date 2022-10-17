@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-//services
+//services an types
 import { productsService } from "../services";
 import { IProduct } from "../types";
 //components
-import { NavHeader, Header, Footer, ModalCreateProduct } from "../components";
-//import { Modal as ModalDelete } from "react-responsive-modal";
-//import { Modal as ModalOptions } from "react-responsive-modal";
+import {
+  NavHeader,
+  Header,
+  Footer,
+  ModalCreateProduct,
+  ModalEditProduct,
+  ModalDeleteProduct,
+} from "../components";
+import { EditButton, ExcludeButton } from "../components/Buttons";
 //imported libs
-import { MdDeleteOutline, MdOutlineModeEditOutline } from "react-icons/md";
 import DataTable from "react-data-table-component";
-//styles
+//styles and theme
 import { ThemeProvider } from "styled-components";
 import { Wrapper, Button } from "../styles/admin-products";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
-import { ModalDeleteProduct } from "../components/Modals";
 
 export default function Administration() {
   const [theme, setTheme] = useState(light);
@@ -29,8 +33,9 @@ export default function Administration() {
   const [product_id, setProduct_id] = useState("");
   //Modals
   const [reloadData, setReloadData] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [onOpen, setOnOpen] = useState(false);
 
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
@@ -91,24 +96,25 @@ export default function Administration() {
       ),
       combo: product.combo ? "Sim" : "Não",
       exclude_alter: (
-        <div>
-          <button
-            type="button"
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <EditButton
             onClick={() => {
-              setIsOpen(true);
+              setOnOpen(true);
+              setProduct_id(product?.product_id);
             }}
-          >
-            <MdOutlineModeEditOutline />
-          </button>
-          <button
-            type="button"
+          ></EditButton>
+          <ExcludeButton
             onClick={() => {
               setProduct_id(product?.product_id);
               setOpen(true);
             }}
-          >
-            <MdDeleteOutline />
-          </button>
+          ></ExcludeButton>
         </div>
       ),
     };
@@ -149,6 +155,12 @@ export default function Administration() {
         <ModalCreateProduct
           isOpen={isOpen}
           setIsOpen={setIsOpen}
+          setReloadData={setReloadData}
+        />
+        <ModalEditProduct
+          product_id={product_id}
+          onOpen={onOpen}
+          setOnOpen={setOnOpen}
           setReloadData={setReloadData}
         />
         <ModalDeleteProduct

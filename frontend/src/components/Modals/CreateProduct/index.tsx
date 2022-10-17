@@ -63,9 +63,6 @@ export function ModalCreateProduct({
         .getAll(company_id as string)
         .then((data) => setProductCategory(data))
         .catch((err) => alert(err));
-    } else {
-      alert("No company informed!");
-      router.push("/");
     }
   }, [company_id]);
 

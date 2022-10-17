@@ -64,7 +64,7 @@ export function ProductCard() {
               )
               .map((itemPrice) =>
                 itemPrice?.products.map((product) => (
-                  <ProductPrices key={product.product_id}>
+                  <ProductPrices key={product.item_price_id}>
                     <Text>
                       {t("main.mainSection.priceFilterCard.priceType")}{" "}
                       {product?.value.toFixed(2).replace(".", ",")}

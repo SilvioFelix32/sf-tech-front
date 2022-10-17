@@ -34,11 +34,14 @@ async function create(
   return response.data;
 }
 
-async function update(company_id: string, product_id: string, params: any) {
-  const response = await api.patch(
-    `${company_id}/${baseUrl}/${product_id}`,
-    params
-  );
+async function update(
+  company_id: string,
+  product_id: string,
+  params: IProduct
+) {
+  const response = await api.patch(`${baseUrl}/${product_id}`, params, {
+    headers: { company_id },
+  });
   return response.data;
 }
 
