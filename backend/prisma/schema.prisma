@@ -8,24 +8,18 @@ datasource db {
 }
 
 model Company {
-  id            String  @id @default(uuid()) @map("_id")
-  name          String  @unique
-  fantasy_name  String?
-  cnpj          String? @unique
-  celphone1     String
-  celphone2     String?
-  email         String  @unique
-  url_banner    String?
-  url_site      String?
-  url_facebook  String?
-  url_instagram String?
-  url_linkedin  String?
+  id           String  @id @default(uuid()) @map("_id")
+  name         String  @unique
+  fantasy_name String?
+  document     String  @unique
+  phone        String?
+  cellphone    String
+  email        String  @unique
 
   company_params     CompanyParams[]
-  users              User[]
   products           Product[]
   product_categories ProductCategory[]
-  price_tables       PriceTable[]
+  users              User[]
   sale               Sale[]
 
   created_at DateTime @default(now())
@@ -46,6 +40,11 @@ model CompanyParams {
   company        Company      @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   company_id     String       @unique
   environment    Environment? @default(value: HOMOLOGATION)
+  url_banner     String?
+  url_site       String?
+  url_facebook   String?
+  url_instagram  String?
+  url_linkedin   String?
   obs_email      String?
   obs_voucher    String?
   privacy_policy String?
@@ -143,20 +142,17 @@ model Product {
   subtitle         String?
   description      String?
   url_banner       String?
+  value            Int
+  discount         Int
   active           Boolean          @default(true)
   combo            Boolean?         @default(false)
-  amount_min_sale  Int?             @default(1)
-  amount_max_sale  Int?             @default(5)
   highlighted      Boolean?         @default(false)
-  order_on_menu    Int?             @default(0)
   for_sale         Boolean?         @default(true)
-  discount         Boolean?         @default(false)
 
-  items                ProductCombo[]       @relation("Combo")
-  product_item         ProductCombo[]       @relation("Item")
-  total_sales          ProductTotalSales[]
-  products_price_table ProductPricesTable[]
-  ItemSales            ItemSales[]
+  items         ProductCombo[]      @relation("Combo")
+  product_combo ProductCombo[]      @relation("Item")
+  item_sales    ItemSales[]
+  total_sales   ProductTotalSales[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -191,36 +187,6 @@ model ProductTotalSales {
 
   @@unique([product_id, date])
   @@map("product_total_sales")
-}
-
-model PriceTable {
-  price_table_id String               @id @default(uuid()) @map("_id")
-  company        Company?             @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  company_id     String
-  description    String
-  initial_date   DateTime?            @default(now())
-  final_date     DateTime?
-  products       ProductPricesTable[]
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@map("price_table")
-}
-
-model ProductPricesTable {
-  item_price_id  String      @id @default(uuid()) @map("_id")
-  price_table    PriceTable? @relation(fields: [price_table_id], references: [price_table_id], onDelete: Cascade, onUpdate: Cascade)
-  price_table_id String
-  product        Product?    @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: Cascade)
-  product_id     String
-  value          Float
-  descount_value Float
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@map("product_price_table")
 }
 
 model ItemSales {

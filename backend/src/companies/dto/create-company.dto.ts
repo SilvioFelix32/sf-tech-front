@@ -23,41 +23,21 @@ export class CreateCompanyDto extends Company {
 
   @IsString()
   @IsNotEmpty()
-  cnpj: string;
+  document: string;
 
   @IsOptional()
   @IsString()
   fantasy_name?: string;
 
-  @IsString()
-  celphone1: string;
-
   @IsOptional()
   @IsString()
-  celphone2?: string;
+  phone?: string;
+
+  @IsString()
+  cellphone: string;
 
   @IsEmail()
   email: string;
-
-  @IsOptional()
-  @IsString()
-  url_banner?: string;
-
-  @IsOptional()
-  @IsString()
-  url_site?: string;
-
-  @IsOptional()
-  @IsString()
-  url_facebook?: string;
-
-  @IsOptional()
-  @IsString()
-  url_instagram?: string;
-
-  @IsOptional()
-  @IsString()
-  url_linkedin?: string;
 
   @IsOptional()
   @ValidateNested({ each: true })

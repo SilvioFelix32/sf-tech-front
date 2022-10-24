@@ -8,8 +8,6 @@ import { UsersModule } from './users/users.module';
 import { CompaniesModule } from './companies/companies.module';
 import { ProductModule } from './product/modules/product.module';
 import { ProductCategoriesModule } from './product-categories/modules/product-categories.module';
-import { ProductPricesModule } from './product-table/modules/product-prices.module';
-import { ProductTablePricesModule } from './product-table-prices/modules/product-table-prices.module';
 import { SalesModule } from './sales/modules/sales.module';
 
 @Module({
@@ -22,8 +20,6 @@ import { SalesModule } from './sales/modules/sales.module';
     UsersModule,
     ProductModule,
     ProductCategoriesModule,
-    ProductPricesModule,
-    ProductTablePricesModule,
     SalesModule,
   ],
   controllers: [AppController],

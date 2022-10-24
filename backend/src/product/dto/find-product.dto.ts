@@ -53,6 +53,14 @@ export class FindProductDto {
   @IsOptional()
   url_banner?: string | null;
 
+  @IsNumber()
+  @IsOptional()
+  value?: number;
+
+  @IsNumber()
+  @IsOptional()
+  discount?: number;
+
   @IsBoolean()
   @IsOptional()
   active?: boolean | null;
@@ -61,29 +69,13 @@ export class FindProductDto {
   @IsOptional()
   combo?: boolean | null;
 
-  @IsNumber()
-  @IsOptional()
-  amount_min_sale?: number | null;
-
-  @IsNumber()
-  @IsOptional()
-  amount_max_sale?: number | null;
-
   @IsBoolean()
   @IsOptional()
   highlighted?: boolean | null;
 
-  @IsNumber()
-  @IsOptional()
-  order_on_menu?: number | null;
-
   @IsBoolean()
   @IsOptional()
   for_sale?: boolean | null;
-
-  @IsBoolean()
-  @IsOptional()
-  discount?: boolean | null;
 
   @IsDate()
   @IsOptional()

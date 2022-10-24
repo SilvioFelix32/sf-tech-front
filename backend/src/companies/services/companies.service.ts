@@ -15,7 +15,7 @@ export class CompaniesService {
   constructor(private readonly prisma: PrismaService) {}
 
   private async validateCreation(data: CreateCompanyDto) {
-    const { name, cnpj, email } = data;
+    const { name, document, email } = data;
 
     const comanyEmail = await this.prisma.company.findUnique({
       where: { email },
@@ -25,12 +25,12 @@ export class CompaniesService {
       throw new BadRequestException('Company with email already informed');
     }
 
-    const companyCnpj = await this.prisma.company.findUnique({
-      where: { cnpj },
+    const companyDocument = await this.prisma.company.findUnique({
+      where: { document },
     });
 
-    if (companyCnpj) {
-      throw new BadRequestException('Company with CNPJ already informed');
+    if (companyDocument) {
+      throw new BadRequestException('Company with document already informed');
     }
 
     const companyName = await this.prisma.company.findUnique({
@@ -65,16 +65,16 @@ export class CompaniesService {
   }
 
   async update(company_id: string, data: UpdateCompanyDto) {
-    const { cnpj } = data;
+    const { document } = data;
 
-    if (cnpj) {
-      const findCompanyCnpj = await this.prisma.company.findUnique({
-        where: { cnpj },
+    if (document) {
+      const findCompanyDocument = await this.prisma.company.findUnique({
+        where: { document },
       });
 
-      if (findCompanyCnpj && findCompanyCnpj.id !== company_id) {
+      if (findCompanyDocument && findCompanyDocument.id !== company_id) {
         throw new HttpException(
-          'CNPJ already exists in the database',
+          'document already exists in the database',
           HttpStatus.BAD_REQUEST,
         );
       }

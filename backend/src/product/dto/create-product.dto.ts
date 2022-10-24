@@ -9,7 +9,6 @@ import {
   IsUUID,
   ValidateNested,
 } from 'class-validator';
-import { ProductPriceTable } from 'src/product-table/entities/product-price.entity';
 import { ProductTotalSales } from '../entities/product-total-sales.entity';
 import { ProductType } from '../entities/product-type.entity';
 import { CreateProductItemDto } from './create-product-item.dto';
@@ -53,6 +52,14 @@ export class CreateProductDto {
   @IsOptional()
   url_banner?: string;
 
+  @IsNumber()
+  @IsNotEmpty()
+  value: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  discount: number;
+
   @IsBoolean()
   @IsOptional()
   active: boolean;
@@ -61,29 +68,13 @@ export class CreateProductDto {
   @IsOptional()
   combo?: boolean;
 
-  @IsNumber()
-  @IsOptional()
-  amount_min_sale?: number;
-
-  @IsNumber()
-  @IsOptional()
-  amount_max_sale?: number;
-
   @IsBoolean()
   @IsOptional()
   highlighted: boolean;
 
-  @IsNumber()
-  @IsOptional()
-  order_on_menu?: number;
-
   @IsBoolean()
   @IsOptional()
   for_sale?: boolean;
-
-  @IsBoolean()
-  @IsOptional()
-  discount?: boolean | null;
 
   @IsOptional()
   @ValidateNested({ each: true })
@@ -91,14 +82,12 @@ export class CreateProductDto {
   items?: any | CreateProductItemDto[];
 
   @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() => CreateProductItemDto)
-  total_sales?: any | ProductTotalSales[];
+  product_combo: any;
 
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => CreateProductItemDto)
-  price_table?: any | ProductPriceTable[];
+  total_sales?: any | ProductTotalSales[];
 
   @IsString()
   @IsDate()

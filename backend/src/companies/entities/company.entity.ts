@@ -1,16 +1,15 @@
+import { ProductCategory } from 'src/product-categories/entities/product-category.entity';
+import { Product } from 'src/product/entities/product.entity';
+import { User } from 'src/users/entities/user.entity';
 import { CompanyParams } from './company-params.entity';
 export class Company {
   id?: string;
   name: string;
   fantasy_name?: string;
-  celphone1: string;
-  celphone2?: string;
+  document: string;
+  phone?: string;
+  cellphone: string;
   email: string;
-  url_banner?: string;
-  url_site?: string;
-  url_facebook?: string;
-  url_instagram?: string;
-  url_linkedin?: string;
 
   company_params?: CompanyParams;
 

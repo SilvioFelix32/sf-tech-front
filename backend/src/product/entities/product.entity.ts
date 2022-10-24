@@ -10,14 +10,17 @@ export class Product {
   subtitle: string;
   description: string;
   url_banner?: string;
+  value: number;
+  discount: number;
   active: boolean;
   combo?: boolean;
-  amount_min_sale?: number;
-  amount_max_sale?: number;
   highlighted: boolean;
-  order_on_menu?: number;
   for_sale: boolean;
-  discount: boolean;
+
+  items: any;
+  product_combo: any;
+  item_sales: any;
+  total_sales: any;
 
   created_at: Date | string;
   updated_at: Date | string;
