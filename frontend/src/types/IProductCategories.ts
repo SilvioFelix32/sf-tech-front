@@ -19,6 +19,5 @@ export interface IProductCategories {
   config_type_id: string;
   title: string;
   description: string;
-  url_banner: string;
   active: boolean;
 }

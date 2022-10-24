@@ -40,8 +40,9 @@ const Home: NextPage = () => {
     return {
       id: company.id,
       name: company.name,
+      document: company.document,
       fantasy_name: company.fantasy_name,
-      celphone1: company.celphone1,
+      cellphone: company.cellphone,
       email: company.email,
       select_id: (
         <Link
@@ -74,6 +75,12 @@ const Home: NextPage = () => {
       },
     },
     {
+      name: 'document',
+      selector: (row) => row.document,
+      sortable: true,
+      grow: 1,
+    },
+    {
       name: t("main.companyTable.fantasyName"),
       selector: (row) => row.fantasy_name,
       sortable: true,
@@ -86,7 +93,7 @@ const Home: NextPage = () => {
     },
     {
       name: t("main.companyTable.cellphone"),
-      selector: (row) => row.celphone1,
+      selector: (row) => row.cellphone,
     },
     {
       name: t("main.companyTable.email"),
@@ -110,9 +117,6 @@ const Home: NextPage = () => {
         <NavHeader />
         <Header toggleTheme={toggleTheme} />
         <button onClick={() => router.push("filters")}> pagina filters</button>
-        <button onClick={() => router.push("admin-products")}>
-          admin products
-        </button>
         <Content>
           <DataTable
             columns={columns}

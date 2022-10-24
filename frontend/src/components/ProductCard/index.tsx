@@ -17,15 +17,11 @@ import {
 export function ProductCard() {
   const { t } = useTranslation();
   const [products, setProducts] = useState<IProduct[]>([]);
-  const [productPrice, setProductPrice] = useState<IProductPrices[]>([]);
-  const company_id = "f1a87c2b-f81a-4d28-a24d-15bb3d0aac7b";
+  const company_id = "a38bb1f1-c73f-44b0-9cdc-b4af0e5f1b9e";
 
   useEffect(() => {
     productsService.getAll(company_id).then((data) => {
       setProducts(data);
-    });
-    productsPricesService.getAll(company_id).then((data) => {
-      setProductPrice(data);
     });
   }, [company_id]);
 
@@ -58,22 +54,20 @@ export function ProductCard() {
               <Text>{product.description}</Text>
             </ProductInfo>
 
-            {productPrice
-              .filter((productitem) =>
-                productitem.products.map((product) => product.product_id)
-              )
-              .map((itemPrice) =>
-                itemPrice?.products.map((product) => (
-                  <ProductPrices key={product.item_price_id}>
-                    <Text>
-                      {t("main.mainSection.priceFilterCard.priceType")}{" "}
-                      {product?.value.toFixed(2).replace(".", ",")}
-                    </Text>
-                    <BuyButton>Comprar</BuyButton>
-                    <FavoriteButton>Favoritar</FavoriteButton>
-                  </ProductPrices>
-                ))
-              )}
+            <ProductPrices>
+              <Text>
+                Valor {" "}
+                {t("main.mainSection.priceFilterCard.priceType")}{" "}
+                {product?.value.toFixed(2).replace(".", ",")}
+              </Text>
+              <Text>
+                Desconto{" "}
+                {t("main.mainSection.priceFilterCard.priceType")}{" "}
+                {product?.discount.toFixed(2).replace(".", ",")}
+              </Text>
+              <BuyButton>Comprar</BuyButton>
+              <FavoriteButton>Favoritar</FavoriteButton>
+            </ProductPrices>
           </Wrapper>
         ))}
     </>

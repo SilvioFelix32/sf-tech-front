@@ -48,10 +48,8 @@ export function ModalCreateProduct({
   const [subtitle, setSubtitle] = useState<string>();
   const [description, setDescription] = useState<string>();
   const [url_banner, setUrl] = useState<string>();
-  const [discount, setDiscount] = useState(false);
-  const [amount_min_sale, setAmount_min_sale] = useState(1);
-  const [amount_max_sale, setAmount_max_sale] = useState(5);
-  const [order_on_menu, setOrder_on_menu] = useState(1);
+  const [value, setValue] = useState<number>();
+  const [discount, setDiscount] = useState<number>();
   const [active, setActive] = useState(true);
   const [combo, setCombo] = useState(true);
   const [for_sale, setFor_sale] = useState(true);
@@ -75,14 +73,12 @@ export function ModalCreateProduct({
       subtitle,
       description,
       url_banner: url_banner || "https://i.imgur.com/2HFGvvT.png",
-      amount_min_sale,
-      amount_max_sale,
-      order_on_menu,
+      value,
+      discount,
       active,
       combo,
       for_sale,
       highlighted,
-      discount,
       product_type,
     };
 
@@ -133,25 +129,15 @@ export function ModalCreateProduct({
               placeholder="(Optional)"
               onChange={(e) => setUrl(e.target.value)}
             />
-            <Text>Discount %:</Text>
-            <Select
-              onChange={(e) =>
-                setDiscount(e.target.value === "true" ? true : false)
-              }
-              defaultValue="true"
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
-            <Text>Quantidade min de Venda:</Text>
+            <Text>Valor:</Text>
             <Input
               type="number"
-              onChange={(e) => setAmount_min_sale(Number(e.target.value))}
+              onChange={(e) => setValue(Number(e.target.value))}
             />
-            <Text>Quantidade máx de Venda:</Text>
+            <Text>Valor Desconto:</Text>
             <Input
               type="number"
-              onChange={(e) => setAmount_max_sale(Number(e.target.value))}
+              onChange={(e) => setDiscount(Number(e.target.value))}
             />
           </Content>
           <Content>

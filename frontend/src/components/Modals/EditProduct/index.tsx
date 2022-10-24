@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { productCategoryService, productsService } from "../../../services";
 import { IProduct } from "../../../types";
@@ -24,7 +24,7 @@ import {
 interface modalProps {
   onOpen: boolean;
   setOnOpen: (value: boolean) => void;
-  setReloadData(value: number);
+  setReloadData: (value: number) => void;
   product_id: string;
 }
 
@@ -37,11 +37,13 @@ export function ModalEditProduct({
   const {
     query: { company_id },
   } = useRouter();
-  const { register, handleSubmit } = useForm();
   const [selectedProduct, setSelectedProduct] = useState<IProduct>();
   const [productCategory, setproductCategory] = useState<IProductCategories[]>(
     []
   );
+  const { register, handleSubmit } = useForm({
+    defaultValues: { ...selectedProduct },
+  });
 
   useEffect(() => {
     if (product_id) {
@@ -54,11 +56,14 @@ export function ModalEditProduct({
         .then((data) => setproductCategory(data))
         .catch((err) => alert(err));
     }
-  }, [product_id]);
+  }, [product_id, selectedProduct]);
 
-  async function handleUpdate(data: IProduct) {
+  const onSubmit = (data: IProduct) => console.log("====>", data);
+
+  /*   async function handleUpdate(data: IProduct) {
+    console.log("logDEDATA===>", data);
     if ((data.title = "")) {
-      console.log("data =====>", data);
+      console.log("dataSUCESSO =====>", data);
       await productsService
         .update(company_id as string, product_id as string, data)
         .then(() => setReloadData(Math.random()))
@@ -67,7 +72,7 @@ export function ModalEditProduct({
       alert("ERRO");
       console.log("dataERRO =====>", data);
     }
-  }
+  } */
 
   return (
     <ModalEdit
@@ -81,7 +86,7 @@ export function ModalEditProduct({
       }}
       center
     >
-      <Wrapper onSubmit={handleSubmit(handleUpdate)}>
+      <Wrapper onSubmit={handleSubmit(onSubmit)}>
         <Context>
           <Content>
             <Text>Sku:</Text>
@@ -94,7 +99,7 @@ export function ModalEditProduct({
             <Input
               type="string"
               defaultValue={selectedProduct?.title}
-              {...register("title")}
+              {...(register("title"), { required: true })}
             />
             <Text>Subtitle:</Text>
             <Input
@@ -116,28 +121,20 @@ export function ModalEditProduct({
               defaultValue={selectedProduct?.url_banner}
               {...register("url_banner")}
             />
-            <Text>Discount %:</Text>
-            <Select
-              defaultValue={selectedProduct?.discount.toString()}
-              {...register("discount")}
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
-            <Text>Quantidade min de Venda:</Text>
+            <Text>Valor:</Text>
             <Input
               type="number"
-              defaultValue={selectedProduct?.amount_min_sale}
-              {...(register("amount_min_sale"),
+              defaultValue={selectedProduct?.value.toFixed(2)}
+              {...(register("value"),
               {
                 valueAsNumber: true,
               })}
             />
-            <Text>Quantidade máx de Venda:</Text>
+            <Text>Valor Desconto:</Text>
             <Input
-              type="string"
-              defaultValue={selectedProduct?.amount_max_sale}
-              {...(register("amount_min_sale"),
+              type="number"
+              defaultValue={selectedProduct?.discount.toFixed(2)}
+              {...(register("discount"),
               {
                 valueAsNumber: true,
               })}
