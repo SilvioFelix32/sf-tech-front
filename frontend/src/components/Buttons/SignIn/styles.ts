@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.button`
+export const Button = styled.button`
   display: flex;
   height: 50px;
   padding: 10px;

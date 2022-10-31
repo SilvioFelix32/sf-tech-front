@@ -27,6 +27,7 @@ export const Text = styled.p`
   margin-left: 12px;
   font-size: 16px;
 `;
+
 export const CartValue = styled.div`
   display: flex;
   align-items: center;
@@ -43,4 +44,5 @@ export const CartValue = styled.div`
   height: 20px;
   margin: 3px;
 `;
+
 export const Icon = styled.div``;

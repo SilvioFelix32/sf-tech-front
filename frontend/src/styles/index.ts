@@ -1,3 +1,9 @@
+export * from "./pages/home";
+export * from "./pages/filters";
+export * from "./pages/admin-company";
+export * from "./pages/admin-products";
+export * from "./pages/admin-product-category";
+
 import styled from "styled-components";
 
 export const Wrapper = styled.div`

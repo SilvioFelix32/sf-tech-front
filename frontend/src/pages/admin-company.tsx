@@ -7,7 +7,6 @@ import { FiArrowLeft } from "react-icons/fi";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-import styles from "../components/UpdateCompany/styles.module.scss";
 import "react-responsive-modal/styles.css";
 import { companiesService } from "../services";
 import dark from "../styles/themes/dark";
@@ -60,18 +59,13 @@ export default function ManageCompany() {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <div className={styles.section}>
-          <button
-            className={styles.btnDashboard}
-            onClick={() => router.push("dashboard")}
-          >
+        <Header toggleTheme={toggleTheme} />
+        <div>
+          <button onClick={() => router.push("dashboard")}>
             <FiArrowLeft />
           </button>
-          <h1 className={styles.head}>Editar dados da Empresa </h1>
-          <button
-            className={styles.btnDashboard}
-            onClick={() => setIsToggled((oldValue) => !oldValue)}
-          >
+          <h1>Editar dados da Empresa </h1>
+          <button onClick={() => setIsToggled((oldValue) => !oldValue)}>
             <FaBars />
           </button>
         </div>
@@ -81,7 +75,6 @@ export default function ManageCompany() {
           }}
         <Footer />
       </>
-      <Header toggleTheme={toggleTheme} />
     </ThemeProvider>
   );
 }

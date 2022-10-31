@@ -18,7 +18,7 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 import DataTable from "react-data-table-component";
 //styles and theme
 import { ThemeProvider } from "styled-components";
-import { Wrapper, Button } from "../styles/admin-products";
+import { Wrapper, Button } from "../styles";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 
