@@ -2,21 +2,22 @@
 
 import { TableStyles } from "react-data-table-component";
 
-const customStyles: TableStyles = {
+export const customStyles: TableStyles = {
+  table: {
+    style: {
+      overflowX: "auto",
+      color: `${({ theme }) => theme.colors.primary}`,
+      backgroundColor: "#a22",
+    },
+  },
   tableWrapper: {
     style: {
       display: "table",
-      width: "95vw",
-      margin: "0 auto 0 auto",
+      minHeight: "400px",
+      width: "70%",
+      margin: "0 auto",
       overflowX: "auto",
-    },
-  },
-  table: {
-    style: {
-      display: "block",
-      alignItems: "center",
-      justifyContent: "center",
-      overflowX: "auto",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   rows: {
@@ -29,7 +30,7 @@ const customStyles: TableStyles = {
   headCells: {
     style: {
       textTransform: "uppercase",
-      color: "var(--gray-500)",
+      color: `${({ theme }) => theme.colors.text}`,
       letterSpacing: "1px",
       fontWeight: "400",
       tableLayout: "fixed",
@@ -45,7 +46,7 @@ const customStyles: TableStyles = {
       alignItems: "center",
       justifyContent: "center",
       textAlign: "center",
-      color: "var(--gray-300)",
+      color: `${({ theme }) => theme.colors.text}`,
       fontWeight: "400",
       whiteSpace: "nowrap",
       textOverflow: "ellipsis",
@@ -63,11 +64,11 @@ const customStyles: TableStyles = {
       display: "flex",
       justifyContent: "flex-end",
       alignItems: "center",
-      width: "90vw",
-      color: "var(--gray-300)",
+      width: "70%",
+      color: `${({ theme }) => theme.colors.primary}`,
       fontSize: "13px",
       minHeight: "56px",
-      backgroundColor: "var(--white)",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
     pageButtonsStyle: {
       borderRadius: "50%",
@@ -77,20 +78,20 @@ const customStyles: TableStyles = {
       margin: "px",
       cursor: "pointer",
       transition: "0.4s",
-      color: "var(--gray-300)",
-      fill: "var(--gray-300)",
+      color: `${({ theme }) => theme.colors.primary}`,
+      fill: `${({ theme }) => theme.colors.text}`,
       backgroundColor: "transparent",
       "&:disabled": {
         cursor: "unset",
-        color: "var(--gray-100)",
-        fill: "var(--gray-100)",
+        color: `${({ theme }) => theme.colors.primary}`,
+        fill: `${({ theme }) => theme.colors.primary}`,
       },
       "&:hover:not(:disabled)": {
-        backgroundColor: "var(--gray-100)",
+        backgroundColor: `${({ theme }) => theme.colors.background}`,
       },
       "&:focus": {
         outline: "none",
-        backgroundColor: "var(--white)",
+        backgroundColor: `${({ theme }) => theme.color.background}`,
       },
     },
   },
@@ -99,8 +100,8 @@ const customStyles: TableStyles = {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "var(--gray-300)",
-      backgroundColor: "var(--white)",
+      color: `${({ theme }) => theme.colors.primary}`,
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   progress: {
@@ -108,10 +109,8 @@ const customStyles: TableStyles = {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "var(--gray-300)",
-      backgroundColor: "var(--gray-100)",
+      color: `${({ theme }) => theme.colors.primary}`,
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
 };
-
-export default customStyles;

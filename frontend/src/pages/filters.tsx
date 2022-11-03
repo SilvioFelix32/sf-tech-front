@@ -12,7 +12,7 @@ import { CategoriesFilterCard } from "../components/Filters/CategoriesFilterCard
 import { PriceFilterCard } from "../components/Filters/PriceFilterCard";
 //styles
 import { ThemeProvider } from "styled-components";
-import { Wrapper, Content, MainSection, LeftContent } from "../styles";
+import { Wrapper, Content, MainSection, LeftContent, Theme } from "../styles";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 
@@ -26,21 +26,23 @@ const Filtes: NextPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Wrapper>
-        <NavHeader />
-        <Header toggleTheme={toggleTheme} />
-        <Content>
-          <LeftContent>
-            <CategoriesFilterCard />
-            <BrandsFilterCard />
-            <PriceFilterCard />
-          </LeftContent>
-          <MainSection>
-            <ProductCard />
-          </MainSection>
-        </Content>
-        <Footer />
-      </Wrapper>
+      <Theme>
+        <Wrapper>
+          <NavHeader />
+          <Header toggleTheme={toggleTheme} />
+          <Content>
+            <LeftContent>
+              <CategoriesFilterCard />
+              <BrandsFilterCard />
+              <PriceFilterCard />
+            </LeftContent>
+            <MainSection>
+              <ProductCard />
+            </MainSection>
+          </Content>
+          <Footer />
+        </Wrapper>
+      </Theme>
     </ThemeProvider>
   );
 };

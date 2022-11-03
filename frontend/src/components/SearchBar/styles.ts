@@ -9,6 +9,10 @@ export const Search = styled.div`
   align-items: center;
   justify-content: space-around;
   background-color: ${({ theme }) => theme.colors.quaternary};
+
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 export const SearchSelect = styled.select`

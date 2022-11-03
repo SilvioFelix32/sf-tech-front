@@ -1,8 +1,10 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { companiesService } from "../services/companies-service";
 import { useTranslation } from "react-i18next";
+import { ICompany } from "../types/ICompany";
 import "i18next";
 //components
 import { Footer } from "../components/Footer";
@@ -11,12 +13,10 @@ import { NavHeader } from "../components/NavHeader";
 import DataTable from "react-data-table-component";
 //styles
 import { ThemeProvider } from "styled-components";
-import { Wrapper, Content } from "../styles";
+import { Wrapper, Theme, Content } from "../styles";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
-import customStyles from "../styles/customStyles";
-import Link from "next/link";
-import { ICompany } from "../types/ICompany";
+import { customStyles } from "../styles/dataTable/customStyles";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
       },
     },
     {
-      name: 'document',
+      name: "document",
       selector: (row) => row.document,
       sortable: true,
       grow: 1,
@@ -113,25 +113,28 @@ const Home: NextPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Wrapper>
-        <NavHeader />
-        <Header toggleTheme={toggleTheme} />
-        <button onClick={() => router.push("filters")}> pagina filters</button>
-        <Content>
-          <DataTable
-            columns={columns}
-            data={data}
-            progressPending={loading}
-            pagination
-            paginationServer
-            paginationComponentOptions={paginationComponentOptions}
-            paginationRowsPerPageOptions={[10, 15, 20]}
-            paginationTotalRows={totalRows}
-            //customStyles={customStyles}
-          />
-        </Content>
-        <Footer />
-      </Wrapper>
+      <Theme>
+        <Wrapper>
+          <NavHeader />
+          <Header toggleTheme={toggleTheme} />
+          <button onClick={() => router.push("filters")}>
+            {" "}
+            pagina filters
+          </button>
+          <Content>
+            <DataTable
+              columns={columns}
+              data={data}
+              pagination
+              paginationServer
+              paginationComponentOptions={paginationComponentOptions}
+              paginationRowsPerPageOptions={[5, 10, 20]}
+              customStyles={customStyles}
+            />
+          </Content>
+          <Footer />
+        </Wrapper>
+      </Theme>
     </ThemeProvider>
   );
 };

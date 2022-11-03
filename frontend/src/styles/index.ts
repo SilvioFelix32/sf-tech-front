@@ -3,8 +3,15 @@ export * from "./pages/filters";
 export * from "./pages/admin-company";
 export * from "./pages/admin-products";
 export * from "./pages/admin-product-category";
+export * from "./dataTable/customStyles";
 
 import styled from "styled-components";
+
+export const Theme = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background: ${({ theme }) => theme.colors.background};
+`;
 
 export const Wrapper = styled.div`
   height: 100%;
@@ -12,11 +19,12 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 export const Content = styled.div`
   width: 100%;
+  min-height: 70vh;
   padding: 20px;
   display: flex;
   align-items: flex-start;

@@ -18,9 +18,10 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 import DataTable from "react-data-table-component";
 //styles and theme
 import { ThemeProvider } from "styled-components";
-import { Wrapper, Button } from "../styles";
+import { Wrapper, Button, Theme } from "../styles";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
+import { customStyles } from "../styles/index";
 
 export default function Administration() {
   const [theme, setTheme] = useState(light);
@@ -128,48 +129,52 @@ export default function Administration() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Wrapper>
-        <NavHeader />
-        <Header toggleTheme={toggleTheme} />
-        <div>
+      <Theme>
+        <Wrapper>
+          <NavHeader />
+          <Header toggleTheme={toggleTheme} />
           <div>
             <div>
-              <h1>Administração</h1>
+              <div>
+                <h1>Administração</h1>
+              </div>
+              <div>
+                <Button onClick={() => setIsOpen(true)}>
+                  Cadastrar novo Produto
+                </Button>
+              </div>
+              <DataTable
+                columns={columns}
+                data={data}
+                pagination
+                paginationServer
+                paginationComponentOptions={paginationComponentOptions}
+                paginationRowsPerPageOptions={[5, 10, 20]}
+                customStyles={customStyles}
+                theme={theme as any}
+              />
             </div>
-            <div>
-              <Button onClick={() => setIsOpen(true)}>
-                Cadastrar novo Produto
-              </Button>
-            </div>
-            <DataTable
-              columns={columns}
-              data={data}
-              pagination
-              paginationServer
-              paginationComponentOptions={paginationComponentOptions}
-              paginationRowsPerPageOptions={[5, 10, 20]}
-            />
           </div>
-        </div>
-        <Footer />
-        <ModalCreateProduct
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          setReloadData={setReloadData}
-        />
-        <ModalEditProduct
-          product_id={product_id}
-          onOpen={onOpen}
-          setOnOpen={setOnOpen}
-          setReloadData={setReloadData}
-        />
-        <ModalDeleteProduct
-          product_id={product_id}
-          open={open}
-          setOpen={setOpen}
-          setReloadData={setReloadData}
-        />
-      </Wrapper>
+          <Footer />
+          <ModalCreateProduct
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            setReloadData={setReloadData}
+          />
+          <ModalEditProduct
+            product_id={product_id}
+            onOpen={onOpen}
+            setOnOpen={setOnOpen}
+            setReloadData={setReloadData}
+          />
+          <ModalDeleteProduct
+            product_id={product_id}
+            open={open}
+            setOpen={setOpen}
+            setReloadData={setReloadData}
+          />
+        </Wrapper>
+      </Theme>
     </ThemeProvider>
   );
 }

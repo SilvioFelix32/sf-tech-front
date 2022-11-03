@@ -16,15 +16,16 @@ export const GlobalStyles = createGlobalStyle`
             font-size: 87.5%;  
         }
     }
+
+    
+    body {
+        background: ${({ theme }) => theme.colors.background};
+        -webkit-font-smoothing: antialiased;
+    }
     
     body, input, textarea, button {
         font-family: 'Inter', sans-serif;
         font-weight: 400;
-    }
-
-    body {
-        background-color: ${({ theme }) => theme.colors.background_dark};
-        -webkit-font-smoothing: antialiased;
     }
 
     h1, h2, h3, h4, h5, h6, strong {

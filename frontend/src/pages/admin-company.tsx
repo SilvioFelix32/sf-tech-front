@@ -12,6 +12,7 @@ import { companiesService } from "../services";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 import { ThemeProvider } from "styled-components";
+import { Theme, Wrapper } from "../styles";
 
 export default function ManageCompany() {
   const {
@@ -58,23 +59,27 @@ export default function ManageCompany() {
 
   return (
     <ThemeProvider theme={theme}>
-      <>
-        <Header toggleTheme={toggleTheme} />
-        <div>
-          <button onClick={() => router.push("dashboard")}>
-            <FiArrowLeft />
-          </button>
-          <h1>Editar dados da Empresa </h1>
-          <button onClick={() => setIsToggled((oldValue) => !oldValue)}>
-            <FaBars />
-          </button>
-        </div>
-        {company &&
-          {
-            /* <AdminCompany company={company} /> */
-          }}
-        <Footer />
-      </>
+      <Theme>
+        <Wrapper>
+          <>
+            <Header toggleTheme={toggleTheme} />
+            <div>
+              <button onClick={() => router.push("dashboard")}>
+                <FiArrowLeft />
+              </button>
+              <h1>Editar dados da Empresa </h1>
+              <button onClick={() => setIsToggled((oldValue) => !oldValue)}>
+                <FaBars />
+              </button>
+            </div>
+            {company &&
+              {
+                /* <AdminCompany company={company} /> */
+              }}
+            <Footer />
+          </>
+        </Wrapper>
+      </Theme>
     </ThemeProvider>
   );
 }

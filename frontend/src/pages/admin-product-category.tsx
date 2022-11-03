@@ -8,7 +8,7 @@ import { FaBars } from "react-icons/fa";
 import { FiArrowLeft } from "react-icons/fi";
 //styles
 import { ThemeProvider } from "styled-components";
-import { Wrapper, Content } from "../styles";
+import { Wrapper, Content, Theme } from "../styles";
 import light from "../styles/themes/light";
 import dark from "../styles/themes/dark";
 
@@ -42,35 +42,37 @@ export default function ProductCategoryAdmin() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <Header toggleTheme={toggleTheme} />
+      <Theme>
         <div>
+          <Header toggleTheme={toggleTheme} />
           <div>
             <div>
-              <button
-                onClick={() =>
-                  router.push({
-                    pathname: "admin-products",
-                    query: { company_id },
-                  })
-                }
-              >
-                <FiArrowLeft />
-              </button>
-              <h1>Administrar Categoria Produtos </h1>
-              <button onClick={() => setOpen((oldValue) => !oldValue)}>
-                <FaBars />
-              </button>
-            </div>
-            <div>
-              <button onClick={() => setIsOpen(true)}>
-                Cadastrar nova Categoria
-              </button>
+              <div>
+                <button
+                  onClick={() =>
+                    router.push({
+                      pathname: "admin-products",
+                      query: { company_id },
+                    })
+                  }
+                >
+                  <FiArrowLeft />
+                </button>
+                <h1>Administrar Categoria Produtos </h1>
+                <button onClick={() => setOpen((oldValue) => !oldValue)}>
+                  <FaBars />
+                </button>
+              </div>
+              <div>
+                <button onClick={() => setIsOpen(true)}>
+                  Cadastrar nova Categoria
+                </button>
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </Theme>
     </ThemeProvider>
   );
 }

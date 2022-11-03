@@ -7,9 +7,7 @@ export function SearchBar() {
   return (
     <Search>
       <SearchSelect>
-        <option value="">
-          {t("main.searchbar.selectField.option")}
-        </option>
+        <option value="">{t("main.searchbar.selectField.option")}</option>
         <option value="computador">
           {t("main.searchbar.selectField.computer")}
         </option>

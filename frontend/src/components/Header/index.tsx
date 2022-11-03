@@ -13,7 +13,7 @@ export function Header({ toggleTheme }) {
 
   return (
     <Wrapper>
-      <Logo onClick={() => router.push("/#")}>
+      <Logo onClick={() => router.push("/")}>
         <Image
           src="/images/logo_sftech.jpg"
           alt="sftech"
