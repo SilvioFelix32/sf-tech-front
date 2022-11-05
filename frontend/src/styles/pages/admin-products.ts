@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Theme = styled.div`
   height: 100vh;
-  width: 100vw;
   background: ${({ theme }) => theme.colors.background};
 `;
 
@@ -17,10 +16,15 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  padding: 20px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  padding: 10px;
+`;
+
+export const Text = styled.p`
+  margin: 10px auto;
+  font-size: 32px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.title};
+  text-align: center;
 `;
 
 export const Button = styled.button`

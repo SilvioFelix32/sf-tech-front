@@ -5,12 +5,12 @@ export const Wrapper = styled.form`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-
   max-height: 600px;
   max-width: 800px;
   width: 100%;
   height: 100%;
   padding: 10px;
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Context = styled.div`
@@ -30,6 +30,7 @@ export const Text = styled.p`
   width: 90%;
   margin: 10px;
   font-weight: 500;
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const Input = styled.input`

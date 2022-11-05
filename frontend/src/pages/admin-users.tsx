@@ -1,11 +1,9 @@
-import type { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { companiesService } from "../services/companies-service";
 import { useTranslation } from "react-i18next";
-import { ICompany } from "../types/ICompany";
 import "i18next";
+import { IUser } from "../types/IUser";
+import { userService } from "../services";
 //components
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -13,54 +11,46 @@ import { NavHeader } from "../components/NavHeader";
 import DataTable from "react-data-table-component";
 //styles
 import { ThemeProvider } from "styled-components";
-import { Wrapper, Theme, Content } from "../styles";
+import { Wrapper, Theme, Content, Text } from "../styles/pages/admin-company";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 import { customStyles } from "../styles/dataTable/customStyles";
 
-const Home: NextPage = () => {
+export default function ManageUsers() {
   const { t } = useTranslation();
-  const router = useRouter();
+  const {
+    query: { company_id },
+  } = useRouter();
   const [theme, setTheme] = useState(light);
-  const [companies, setCompanies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
+  const [users, setUsers] = useState<IUser[]>([]);
 
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
   }
 
   useEffect(() => {
-    companiesService.getAll().then((data) => {
-      setCompanies(data);
+    userService.getAll(company_id as string).then((data) => {
+      setUsers(data);
     });
-  }, []);
+  }, [company_id]);
 
-  const data = companies.map((company: ICompany) => {
+  const data = users.map((user) => {
     return {
-      id: company.id,
-      name: company.name,
-      document: company.document,
-      fantasy_name: company.fantasy_name,
-      cellphone: company.cellphone,
-      email: company.email,
-      select_id: (
-        <Link
-          href={{
-            pathname: "filters",
-            query: { company_id: company.id },
-          }}
-        >
-          {company.name}
-        </Link>
-      ),
+      user_id: user.user_id,
+      name: user.name,
+      last_name: user.last_name,
+      document: user.document,
+      email: user.email,
+      celphone: user.celphone,
+      birth_date: user.birth_date,
+      active: user.active ? "Sim" : "Não",
     };
   });
 
   const columns = [
     {
-      name: t("main.companyTable.id"),
-      selector: (row) => row.id,
+      name: t("user_id"),
+      selector: (row) => row.user_id,
       sortable: true,
     },
     {
@@ -70,28 +60,34 @@ const Home: NextPage = () => {
       grow: 2,
     },
     {
+      name: "last_name",
+      selector: (row) => row.last_name,
+      sortable: true,
+      grow: 1,
+    },
+    {
       name: "document",
       selector: (row) => row.document,
       sortable: true,
       grow: 1,
     },
     {
-      name: t("main.companyTable.fantasyName"),
-      selector: (row) => row.fantasy_name,
+      name: t("email"),
+      selector: (row) => row.email,
       sortable: true,
       grow: 2,
     },
     {
-      name: t("main.companyTable.cellphone"),
-      selector: (row) => row.cellphone,
+      name: t("celphone"),
+      selector: (row) => row.celphone,
     },
     {
-      name: t("main.companyTable.email"),
-      selector: (row) => row.email,
+      name: t("birth_date"),
+      selector: (row) => row.birth_date,
     },
     {
-      name: t("Select ID"),
-      selector: (row) => row.select_id,
+      name: t("active"),
+      selector: (row) => row.active,
     },
   ];
 
@@ -107,6 +103,7 @@ const Home: NextPage = () => {
         <Wrapper>
           <NavHeader />
           <Header toggleTheme={toggleTheme} />
+          <Text>Administrar Usuários</Text>
           <Content>
             <DataTable
               columns={columns}
@@ -124,6 +121,4 @@ const Home: NextPage = () => {
       </Theme>
     </ThemeProvider>
   );
-};
-
-export default Home;
+}

@@ -8,7 +8,7 @@ export const Search = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: ${({ theme }) => theme.colors.quaternary};
+  background-color: ${({ theme }) => theme.colors.background};
 
   @media screen and (max-width: 1200px) {
     display: none;
@@ -26,10 +26,11 @@ export const SearchSelect = styled.select`
   padding: 5px 10px;
   height: 100%;
   width: 30%;
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.background};
 
   option {
-    margin: 5px 0;
-    padding: 5px 0;
+    padding: 8px;
   }
 `;
 
@@ -41,7 +42,7 @@ export const InputContainer = styled.div`
   height: 100%;
 
   > svg {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.text};
     width: 60px;
     height: 30px;
     cursor: pointer;
@@ -59,5 +60,6 @@ export const SearchInput = styled.input`
   height: 100%;
   width: 100%;
 
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.background};
 `;

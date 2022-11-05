@@ -93,9 +93,7 @@ export const GlobalStyles = createGlobalStyle`
 }
 
 .customModal {
-    background: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.primary};
-
+    padding: 0;
     border-radius: 8px;
 }
     

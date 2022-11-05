@@ -5,29 +5,33 @@ export const Wrapper = styled.div`
     margin: 0;
     padding: 0;
   }
-  
+
   .GlobeBtn {
     margin: 0 5px;
     color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.tertiary};
     border: none;
     outline: none;
-    
+
     svg {
       height: 28px;
       width: 28px;
       transition: filter 0.2s;
-      
+
       &:hover {
         filter: brightness(0.9);
       }
     }
   }
-  
+
+  .DropMenu {
+    background-color: ${({ theme }) => theme.colors.tertiary};
+  }
+
   .OptionBtn {
     cursor: pointer;
-    color: ${({ theme }) => theme.colors.text};
-    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.title};
+    background-color: ${({ theme }) => theme.colors.tertiary};
     border: none;
 
     transition: filter 0.2s;

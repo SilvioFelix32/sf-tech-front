@@ -18,7 +18,13 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 import DataTable from "react-data-table-component";
 //styles and theme
 import { ThemeProvider } from "styled-components";
-import { Wrapper, Button, Theme } from "../styles";
+import {
+  Wrapper,
+  Button,
+  Theme,
+  Text,
+  Content,
+} from "../styles/pages/admin-products";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 import { customStyles } from "../styles/index";
@@ -133,28 +139,22 @@ export default function Administration() {
         <Wrapper>
           <NavHeader />
           <Header toggleTheme={toggleTheme} />
-          <div>
-            <div>
-              <div>
-                <h1>Administração</h1>
-              </div>
-              <div>
-                <Button onClick={() => setIsOpen(true)}>
-                  Cadastrar novo Produto
-                </Button>
-              </div>
-              <DataTable
-                columns={columns}
-                data={data}
-                pagination
-                paginationServer
-                paginationComponentOptions={paginationComponentOptions}
-                paginationRowsPerPageOptions={[5, 10, 20]}
-                customStyles={customStyles}
-                theme={theme as any}
-              />
-            </div>
-          </div>
+          <Content>
+            <Text>Administração de Produtos</Text>
+            <Button onClick={() => setIsOpen(true)}>
+              Cadastrar novo Produto
+            </Button>
+            <DataTable
+              columns={columns}
+              data={data}
+              pagination
+              paginationServer
+              paginationComponentOptions={paginationComponentOptions}
+              paginationRowsPerPageOptions={[5, 10, 20]}
+              customStyles={customStyles}
+              theme={theme.title}
+            />
+          </Content>
           <Footer />
           <ModalCreateProduct
             isOpen={isOpen}

@@ -4,14 +4,14 @@ import {
   CDropdownMenu,
   CDropdownItem,
 } from "@coreui/react";
-import { BsGlobe } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 import i18next from "../../../translations/ii18n";
+import { BsGlobe } from "react-icons/bs";
 
 //styles
 import { Wrapper } from "./styled";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import "../../../styles/global";
-import { useTranslation } from "react-i18next";
 
 export function LanguageSelector() {
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ export function LanguageSelector() {
         <CDropdownToggle className="GlobeBtn">
           <BsGlobe />
         </CDropdownToggle>
-        <CDropdownMenu>
+        <CDropdownMenu className="DropMenu">
           {languages.map(({ code, name, country_code }) => (
             <CDropdownItem
               key={country_code}

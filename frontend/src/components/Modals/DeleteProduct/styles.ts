@@ -5,10 +5,10 @@ export const Wrapper = styled.form`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-
   height: 120px;
   width: 350px;
   padding: 10px;
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Content = styled.div`
@@ -22,6 +22,7 @@ export const Text = styled.p`
   margin: 10px;
   font-weight: 600;
   text-align: center;
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const Button = styled.button`

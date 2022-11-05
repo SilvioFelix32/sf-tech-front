@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { productsService, productsPricesService } from "../../services";
-import { IProduct, IProductPrices } from "../../types";
+import { productsService } from "../../services";
+import { IProduct } from "../../types";
 //styles
 import {
   Wrapper,
@@ -16,11 +17,13 @@ import {
 
 export function ProductCard() {
   const { t } = useTranslation();
+  const {
+    query: { company_id },
+  } = useRouter();
   const [products, setProducts] = useState<IProduct[]>([]);
-  const company_id = "a38bb1f1-c73f-44b0-9cdc-b4af0e5f1b9e";
 
   useEffect(() => {
-    productsService.getAll(company_id).then((data) => {
+    productsService.getAll(company_id as string).then((data) => {
       setProducts(data);
     });
   }, [company_id]);
@@ -56,13 +59,11 @@ export function ProductCard() {
 
             <ProductPrices>
               <Text>
-                Valor {" "}
-                {t("main.mainSection.priceFilterCard.priceType")}{" "}
+                Valor {t("main.mainSection.priceFilterCard.priceType")}{" "}
                 {product?.value.toFixed(2).replace(".", ",")}
               </Text>
               <Text>
-                Desconto{" "}
-                {t("main.mainSection.priceFilterCard.priceType")}{" "}
+                Desconto {t("main.mainSection.priceFilterCard.priceType")}{" "}
                 {product?.discount.toFixed(2).replace(".", ",")}
               </Text>
               <BuyButton>Comprar</BuyButton>

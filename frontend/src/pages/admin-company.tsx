@@ -1,83 +1,118 @@
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { Header } from "../components/Header";
+import { useEffect, useState } from "react";
+import { companiesService } from "../services/companies-service";
+import { useTranslation } from "react-i18next";
+import { ICompany } from "../types/ICompany";
+import "i18next";
+//components
 import { Footer } from "../components/Footer";
-import { FaBars } from "react-icons/fa";
-import { FiArrowLeft } from "react-icons/fi";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-import "react-responsive-modal/styles.css";
-import { companiesService } from "../services";
+import { Header } from "../components/Header";
+import { NavHeader } from "../components/NavHeader";
+import DataTable from "react-data-table-component";
+//styles
+import { ThemeProvider } from "styled-components";
+import {
+  Wrapper,
+  Theme,
+  Content,
+  Text,
+  Button,
+} from "../styles/pages/admin-company";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
-import { ThemeProvider } from "styled-components";
-import { Theme, Wrapper } from "../styles";
+import { customStyles } from "../styles/dataTable/customStyles";
 
 export default function ManageCompany() {
-  const {
-    query: { companyQuery },
-  } = useRouter();
+  const { t } = useTranslation();
   const router = useRouter();
-  const MySwal = withReactContent(Swal);
-  const [isToggled, setIsToggled] = useState(false);
-  const [company, setCompany] = useState(null);
-  const company_id = "f1a87c2b-f81a-4d28-a24d-15bb3d0aac7b";
-
-  useEffect(() => {
-    if (company_id) {
-      companiesService
-        .getById(company_id)
-        .then((data) => {
-          setCompany(data);
-        })
-        .catch(() => {
-          MySwal.fire({
-            position: "center",
-            icon: "info",
-            title: "Empresa não encontrada, você será redirecionado em 3s",
-            showConfirmButton: false,
-            timer: 3000,
-          }).then(() => router.push("/"));
-        });
-    } else {
-      MySwal.fire({
-        position: "center",
-        icon: "info",
-        title: "Empresa não encontrada, você será redirecionado em 3s",
-        showConfirmButton: false,
-        timer: 3000,
-      }).then(() => router.push("dashboard"));
-    }
-  }, [company_id]);
-
   const [theme, setTheme] = useState(light);
+  const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [totalRows, setTotalRows] = useState(0);
 
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
   }
 
+  useEffect(() => {
+    companiesService.getAll().then((data) => {
+      setCompanies(data);
+    });
+  }, []);
+
+  const data = companies.map((company: ICompany) => {
+    return {
+      id: company.id,
+      name: company.name,
+      document: company.document,
+      fantasy_name: company.fantasy_name,
+      cellphone: company.cellphone,
+      email: company.email,
+    };
+  });
+
+  const columns = [
+    {
+      name: t("main.companyTable.id"),
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: t("main.companyTable.name"),
+      selector: (row) => row.name,
+      sortable: true,
+      grow: 2,
+    },
+    {
+      name: "document",
+      selector: (row) => row.document,
+      sortable: true,
+      grow: 1,
+    },
+    {
+      name: t("main.companyTable.fantasyName"),
+      selector: (row) => row.fantasy_name,
+      sortable: true,
+      grow: 2,
+    },
+    {
+      name: t("main.companyTable.cellphone"),
+      selector: (row) => row.cellphone,
+    },
+    {
+      name: t("main.companyTable.email"),
+      selector: (row) => row.email,
+    },
+  ];
+
+  const paginationComponentOptions = {
+    rowsPerPageText: "Linhas por página",
+    rangeSeparatorText: "de",
+    selectAllRowsItem: false,
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Theme>
         <Wrapper>
-          <>
-            <Header toggleTheme={toggleTheme} />
-            <div>
-              <button onClick={() => router.push("dashboard")}>
-                <FiArrowLeft />
-              </button>
-              <h1>Editar dados da Empresa </h1>
-              <button onClick={() => setIsToggled((oldValue) => !oldValue)}>
-                <FaBars />
-              </button>
-            </div>
-            {company &&
-              {
-                /* <AdminCompany company={company} /> */
-              }}
-            <Footer />
-          </>
+          <NavHeader />
+          <Header toggleTheme={toggleTheme} />
+          <Text>Administrar Empresas</Text>
+          <Button>Cadastrar Empresa</Button>
+          <Content>
+            <DataTable
+              columns={columns}
+              data={data}
+              pagination
+              paginationServer
+              paginationComponentOptions={paginationComponentOptions}
+              paginationRowsPerPageOptions={[5, 10, 20]}
+              customStyles={customStyles}
+              theme={theme.title}
+            />
+          </Content>
+          <Footer />
         </Wrapper>
       </Theme>
     </ThemeProvider>

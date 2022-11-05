@@ -22,3 +22,19 @@ export const Content = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
 `;
+
+export const LeftContent = styled.div`
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const MainSection = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
