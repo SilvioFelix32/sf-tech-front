@@ -1,3 +1,5 @@
+import { IProduct } from "./IProducts";
+
 export enum ProductType {
   COMPUTER = "COMPUTER",
   NOTEBOOK = "NOTEBOOK",
@@ -20,4 +22,6 @@ export interface IProductCategories {
   title: string;
   description: string;
   active: boolean;
+
+  products: IProduct[];
 }
