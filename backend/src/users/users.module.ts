@@ -5,6 +5,7 @@ import { UsersService } from './services/users.service';
 import { CompaniesService } from 'src/companies/services/companies.service';
 
 @Module({
+  imports: [CompaniesService, PrismaService],
   controllers: [UsersController],
   providers: [UsersService, CompaniesService, PrismaService],
   exports: [UsersService],

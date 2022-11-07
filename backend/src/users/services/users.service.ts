@@ -10,11 +10,14 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { FindUserDto } from '../dto/query-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { userResponse } from '../dto/user-response.dto';
-
+export interface IUser {
+  findOneByUserName(user_name: string): Promise<User | undefined>;
+}
 @Injectable()
 export class UsersService {
   constructor(
     private readonly prisma: PrismaService,
+    private readonly user: IUser,
     private readonly companiesService: CompaniesService,
   ) {}
 
@@ -132,6 +135,16 @@ export class UsersService {
     return this.prisma.user.create({
       data,
     });
+  }
+
+  async findByUserName(user_name: string) {
+    const user = this.user.findOneByUserName(user_name);
+
+    if (!user) {
+      throw new BadRequestException('User not Found');
+    }
+
+    return user;
   }
 
   async findOne(user_id: string): Promise<User | unknown> {

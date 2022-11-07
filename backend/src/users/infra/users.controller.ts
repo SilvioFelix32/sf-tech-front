@@ -54,6 +54,12 @@ export class UsersController {
     return this.usersService.findAll(company_id, param);
   }
 
+  @Get('/login')
+  @ApiResponse({ status: 200, type: User })
+  findByUserName(@Body('user_name') user_name: string) {
+    return this.usersService.findByUserName(user_name);
+  }
+
   @Get(':id')
   @ApiResponse({ status: 200, type: User })
   findOne(@Param('id') user_id: string) {

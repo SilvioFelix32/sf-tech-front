@@ -4,6 +4,7 @@ import { CompaniesController } from './infra/companies.controller';
 import { CompaniesService } from './services/companies.service';
 
 @Module({
+  imports: [PrismaService],
   controllers: [CompaniesController],
   providers: [PrismaService, CompaniesService],
   exports: [CompaniesService],
