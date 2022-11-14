@@ -31,14 +31,14 @@ export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
     query: { company_id },
   } = useRouter();
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [user_name, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     const data = {
-      email,
+      user_name,
       password,
     };
 
@@ -57,8 +57,9 @@ export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
     >
       <Wrapper onSubmit={handleSubmit}>
         <h2>Entre com sua conta</h2> <br />
-        <p>Email:</p>
-        <Input type="text" onChange={(e) => setEmail(e.target.value)} /> <br />
+        <p>Nome de Usuário:</p>
+        <Input type="text" onChange={(e) => setUserName(e.target.value)} />{" "}
+        <br />
         <Password>
           <p>Senha:</p>
           <Link

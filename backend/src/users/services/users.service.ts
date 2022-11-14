@@ -137,8 +137,13 @@ export class UsersService {
     });
   }
 
-  async findByUserName(user_name: string) {
-    const user = this.user.findOneByUserName(user_name);
+  async findByEmail(email: string): Promise<User | unknown> {
+    const user = this.prisma.user.findUnique({
+      where: { email },
+      select: {
+        ...userResponse,
+      },
+    });
 
     if (!user) {
       throw new BadRequestException('User not Found');

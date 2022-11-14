@@ -5,13 +5,13 @@ import { userService } from "../../services";
 
 type User = {
   name: string;
-  email: string;
+  user_name: string;
   password: string;
   roles: string[];
 };
 
 type signInCredentials = {
-  email: string;
+  user_name: string;
   password: string;
 };
 
@@ -37,15 +37,15 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const {
-    query: { companyQuery },
+    query: { company_id },
   } = useRouter();
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
 
-  async function signIn({ email, password }: signInCredentials) {
+  async function signIn({ user_name, password }: signInCredentials) {
     try {
-      const response = await userService.login(companyQuery as string, {
-        email,
+      const response = await userService.login(company_id as string, {
+        user_name,
         password,
       });
 
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({
         name: user.name as string,
-        email: user.email as string,
+        user_name: user.user_name as string,
         password: user.password as string,
         roles: user.role,
       });

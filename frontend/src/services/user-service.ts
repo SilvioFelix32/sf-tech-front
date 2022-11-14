@@ -13,7 +13,8 @@ export const userService = {
 const baseUrl = "/users";
 
 async function login(company_id: string, params: any) {
-  const response = await api.post(`login`, params);
+  const response = await api.post(`auth/login`, params);
+  console.log("response", response.data);
   return response.data;
 }
 async function getAll(company_id: string) {
