@@ -17,7 +17,6 @@ export interface IUser {
 export class UsersService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly user: IUser,
     private readonly companiesService: CompaniesService,
   ) {}
 
