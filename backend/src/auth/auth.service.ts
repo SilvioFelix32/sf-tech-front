@@ -15,10 +15,13 @@ export class AuthService {
   ) {}
 
   async login(user: User): Promise<UserToken> {
+    const { user_id, email, name }: Partial<User> =
+      await this.userService.findByEmail(user.email);
+
     const payload: UserPayload = {
-      sub: user.user_id,
-      email: user.email,
-      name: user.name,
+      sub: user_id,
+      email: email,
+      name: name,
     };
 
     return {
@@ -27,10 +30,12 @@ export class AuthService {
   }
 
   async validateUser(email: string, password: string): Promise<User> {
+    console.log('senha', password);
     const user: any = await this.userService.findByEmail(email);
-
+    console.log('senha-usuário', user.password);
     if (user) {
-      const isPasswordValid = await bcrypt.compare(password, user.password);
+      const isPasswordValid = await bcrypt.compare(user.password, password);
+      console.log(isPasswordValid);
 
       if (isPasswordValid) {
         return {

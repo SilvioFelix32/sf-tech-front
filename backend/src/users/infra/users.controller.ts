@@ -11,6 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { RequestHeaders } from 'src/shared/app.headers.dto';
 import { IHeaders } from 'src/shared/IHeaders';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -43,6 +44,7 @@ export class UsersController {
   }
 
   @Get()
+  @IsPublic()
   @ApiResponse({ status: 200, type: [User] })
   findAll(@RequestHeaders() header: IHeaders, @Param() param: FindUserDto) {
     const { company_id } = header;
@@ -54,7 +56,8 @@ export class UsersController {
     return this.usersService.findAll(company_id, param);
   }
 
-  @Get(':email')
+  @Get('email')
+  @IsPublic()
   @ApiResponse({ status: 200, type: User })
   findByUserEmail(@Body('email') email: string) {
     return this.usersService.findByEmail(email);
