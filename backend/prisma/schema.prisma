@@ -70,8 +70,8 @@ enum Sex {
 
 model User {
   user_id            String    @id @default(uuid()) @map("_id")
-  company            Company?  @relation(fields: [company_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  company_id         String
+  company            Company?  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company_id         String?
   document           String
   name               String
   last_name          String
@@ -117,7 +117,7 @@ enum ProductType {
 model ProductCategory {
   category_id  String      @id @default(uuid()) @map("_id")
   company      Company?    @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  company_id   String
+  company_id   String?
   product_type ProductType
   title        String
   description  String?
@@ -133,9 +133,9 @@ model ProductCategory {
 model Product {
   product_id       String           @id @default(uuid()) @map("_id")
   product_category ProductCategory? @relation(fields: [category_id], references: [category_id], onDelete: Cascade, onUpdate: Cascade)
-  category_id      String
+  category_id      String?
   company          Company?         @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  company_id       String
+  company_id       String?
   product_type     ProductType      @default(OTHERS)
   sku              String
   title            String
@@ -219,9 +219,9 @@ enum SaleStatus {
 
 model Sale {
   sale_id             String         @id @default(uuid()) @map("_id")
-  company             Company?       @relation(fields: [company_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  company_id          String
-  user                User?          @relation(fields: [user_id], references: [user_id], onDelete: SetNull, onUpdate: Cascade)
+  company             Company?       @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company_id          String?
+  user                User?          @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
   user_id             String
   session             String?
   status              SaleStatus     @default(NEW)

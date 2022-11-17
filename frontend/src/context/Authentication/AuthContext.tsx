@@ -5,13 +5,13 @@ import { userService } from "../../services";
 
 type User = {
   name: string;
-  user_name: string;
+  email: string;
   password: string;
   roles: string[];
 };
 
 type signInCredentials = {
-  user_name: string;
+  email: string;
   password: string;
 };
 
@@ -42,10 +42,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
 
-  async function signIn({ user_name, password }: signInCredentials) {
+  async function signIn({ email, password }: signInCredentials) {
     try {
       const response = await userService.login(company_id as string, {
-        user_name,
+        email,
         password,
       });
 
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({
         name: user.name as string,
-        user_name: user.user_name as string,
+        email: user.email as string,
         password: user.password as string,
         roles: user.role,
       });

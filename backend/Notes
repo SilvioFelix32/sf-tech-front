@@ -22,6 +22,9 @@ nest g s prisma
 /# START INDEX.TS IN PORT 3003
 yarn dev
 
+# GENERATE SEED ON DB
+npx prisma db seed --preview-feature
+
 //Authentication
 https://fabricadesinapse.gitbook.io/sinapse-book/nestjs/autenticacao-sistema-de-login-com-token-jwt
 https://www.youtube.com/watch?v=3z6Cs_PtYc0

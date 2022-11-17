@@ -1,4 +1,21 @@
-Libs para usar.
+backend/src/auth/auth.service.ts 
 
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+
+    console.log('senha', password);
+    const user: any = await this.userService.findByEmail(email);
+    console.log('senha-usuário', user.password);
+    if (user) {
+      const isPasswordValid = await bcrypt.compare(user.password, password);
+      console.log(isPasswordValid);
+
+      if (isPasswordValid) {
+        return {
+          ...user,
+          password: undefined,
+        };
+      }
+    }
+
+    Conferir porque - o usuário, mesmo estando com a senha certa, o bcrypt.compare retorna sempre false
+
+    Aprimorar os SEEDS. Como fazer uma referencia entre eles.
