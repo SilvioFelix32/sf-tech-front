@@ -75,12 +75,12 @@ model User {
   document           String
   name               String
   last_name          String
-  user_name          String
+  user_name          String    @unique
   password           String
   sex_type           Sex?      @default(OTHERS)
   birth_date         DateTime?
   celphone           String?
-  email              String
+  email              String    @unique
   cep                String?
   state              String?
   city               String?
