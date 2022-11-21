@@ -115,13 +115,13 @@ enum ProductType {
 }
 
 model ProductCategory {
-  category_id  String      @id @default(uuid()) @map("_id")
-  company      Company?    @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  category_id  String       @id @default(uuid()) @map("_id")
+  company      Company?     @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   company_id   String?
-  product_type ProductType
+  product_type ProductType? @default(OTHERS)
   title        String
   description  String?
-  active       Boolean     @default(true)
+  active       Boolean?     @default(true)
   products     Product[]
 
   created_at DateTime @default(now())
@@ -136,7 +136,6 @@ model Product {
   category_id      String?
   company          Company?         @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   company_id       String?
-  product_type     ProductType      @default(OTHERS)
   sku              String
   title            String
   subtitle         String?
@@ -144,7 +143,7 @@ model Product {
   url_banner       String?
   value            Int
   discount         Int
-  active           Boolean          @default(true)
+  active           Boolean?         @default(true)
   combo            Boolean?         @default(false)
   highlighted      Boolean?         @default(false)
   for_sale         Boolean?         @default(true)

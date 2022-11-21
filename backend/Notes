@@ -23,6 +23,7 @@ nest g s prisma
 yarn dev
 
 # GENERATE SEED ON DB
+npx prisma db push 
 npx prisma db seed --preview-feature
 
 //Authentication
