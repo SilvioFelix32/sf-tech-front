@@ -30,6 +30,7 @@ export class UsersController {
     description: 'User successfully created.',
     type: User,
   })
+  @IsPublic()
   create(
     @RequestHeaders() header: IHeaders,
     @Body() createUserDto: CreateUserDto,

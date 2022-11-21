@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { Prisma, User } from '@prisma/client';
 import { CompaniesService } from 'src/companies/services/companies.service';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
@@ -126,8 +127,12 @@ export class UsersService {
   ): Promise<User | unknown> {
     await this.validateCreateLocalUser(company_id, dto);
 
+    const encriptedPassword = bcrypt.hash(dto.password, 10);
+    delete dto.password;
+
     const data: Prisma.UserCreateInput = {
       company_id,
+      password: encriptedPassword,
       ...dto,
     };
 
@@ -138,7 +143,7 @@ export class UsersService {
 
   async findByEmail(email: string): Promise<User | unknown> {
     const user = this.prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (!user) {

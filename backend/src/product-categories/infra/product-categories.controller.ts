@@ -8,6 +8,7 @@ import {
   Delete,
   BadRequestException,
 } from '@nestjs/common';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { RequestHeaders } from 'src/shared/app.headers.dto';
 import { IHeaders } from 'src/shared/IHeaders';
 import { CreateProductCategoryDto } from '../dto/create-product-category.dto';
@@ -35,6 +36,7 @@ export class ProductCategoriesController {
   }
 
   @Get()
+  @IsPublic()
   findAll(@RequestHeaders() header: IHeaders, @Param() dto: any) {
     const { company_id } = header;
 

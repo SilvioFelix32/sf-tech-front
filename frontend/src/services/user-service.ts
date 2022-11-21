@@ -12,11 +12,11 @@ export const userService = {
 
 const baseUrl = "/users";
 
-async function login(company_id: string, params: any) {
-  const response = await api.post(`auth/login`, params);
-  console.log("response", response.data);
+async function login(params: any) {
+  const response = await api.post("login", params);
   return response.data;
 }
+
 async function getAll(company_id: string) {
   const response = await api.get<IUser[]>(`${baseUrl}`, {
     headers: { company_id },

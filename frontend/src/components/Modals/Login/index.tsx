@@ -57,7 +57,7 @@ export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
     >
       <Wrapper onSubmit={handleSubmit}>
         <h2>Entre com sua conta</h2> <br />
-        <p>Nome de Usuário:</p>
+        <p>Email:</p>
         <Input type="text" onChange={(e) => setEmail(e.target.value)} /> <br />
         <Password>
           <p>Senha:</p>

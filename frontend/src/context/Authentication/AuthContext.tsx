@@ -36,15 +36,12 @@ export function signOut() {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
 
   async function signIn({ email, password }: signInCredentials) {
     try {
-      const response = await userService.login(company_id as string, {
+      const response = await userService.login({
         email,
         password,
       });
