@@ -5,6 +5,7 @@ export const productSeed = {
   title: 'computer',
   subtitle: 'computer',
   description: 'computer',
+  url_banner: 'https://i.imgur.com/2HFGvvT.png',
   value: 1000,
   discount: 100,
 };

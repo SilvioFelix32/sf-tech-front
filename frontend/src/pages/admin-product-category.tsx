@@ -27,8 +27,9 @@ import {
 } from "../styles/pages/admin-products";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
-import { customStyles } from "../styles/index";
 import { IProductCategories } from "../types/IProductCategories";
+import { customStyles } from "../styles/dataTable/customStyles";
+import { ModalCreateCategory } from "../components/Modals/CreateCategory";
 
 export default function Administration() {
   const [theme, setTheme] = useState(light);
@@ -63,7 +64,6 @@ export default function Administration() {
     }
   }, [reloadData]);
 
-  console.log(productCategories);
   //Dados da tabela
   const columns = [
     {
@@ -126,7 +126,7 @@ export default function Administration() {
           <Content>
             <Text>Administração de Categorias de Produtos</Text>
             <Button onClick={() => setIsOpen(true)}>
-              Cadastrar novo Produto
+              Cadastrar nova Categoria
             </Button>
             <DataTable
               columns={columns}
@@ -140,7 +140,7 @@ export default function Administration() {
             />
           </Content>
           <Footer />
-          <ModalCreateProduct
+          <ModalCreateCategory
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             setReloadData={setReloadData}

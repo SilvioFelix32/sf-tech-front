@@ -1,4 +1,4 @@
-import { ProductType } from "./IProductCategories";
+import { ProductType } from "./IProductType";
 
 export interface IProduct {
   company_id: string;

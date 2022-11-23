@@ -21,6 +21,7 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post(':category_id')
+  @IsPublic()
   create(
     @RequestHeaders() header: IHeaders,
     @Param('category_id') category_id: string,
@@ -35,6 +36,13 @@ export class ProductController {
     if (!category_id) {
       throw new BadRequestException('Product needs a Category');
     }
+
+    const { url_banner } = dto;
+    if (url_banner === null) {
+      url_banner.replace(url_banner, 'https://i.imgur.com/2HFGvvT.png');
+      return url_banner;
+    }
+    console.log(url_banner);
 
     return this.productService.create(company_id, category_id, dto);
   }

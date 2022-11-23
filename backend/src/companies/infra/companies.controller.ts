@@ -17,6 +17,7 @@ export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
   @Post()
+  @IsPublic()
   async create(@Body() data: CreateCompanyDto) {
     return await this.companiesService.create(data);
   }

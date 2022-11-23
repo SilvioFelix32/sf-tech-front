@@ -30,10 +30,6 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
-  product_type: ProductType;
-
-  @IsString()
-  @IsNotEmpty()
   sku: string;
 
   @IsString()

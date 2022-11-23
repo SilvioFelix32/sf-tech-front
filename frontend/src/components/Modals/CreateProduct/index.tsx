@@ -42,7 +42,6 @@ export function ModalCreateProduct({
   );
   //product data
   const [category_id, setCategory_id] = useState<string>();
-  const [product_type, setProduct_type] = useState<ProductType>();
   const [sku, setSku] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [subtitle, setSubtitle] = useState<string>();
@@ -79,7 +78,6 @@ export function ModalCreateProduct({
       combo,
       for_sale,
       highlighted,
-      product_type,
     };
 
     await productsService
@@ -154,17 +152,6 @@ export function ModalCreateProduct({
                   </option>
                 );
               })}
-            </Select>
-
-            <Text>Product Type:</Text>
-            <Select
-              onChange={(e) => setProduct_type(e.target.value as ProductType)}
-            >
-              <option></option>
-              <option value={"COMPUTER"}>COMPUTER</option>
-              <option value={"NOTEBOOK"}>NOTEBOOK</option>
-              <option value={"CELL"}>CELLPHONE</option>
-              <option value={"OTHERS"}>OTHERS</option>
             </Select>
 
             <Text>A venda:</Text>

@@ -22,6 +22,7 @@ export class ProductCategoriesController {
   ) {}
 
   @Post()
+  @IsPublic()
   create(
     @RequestHeaders() header: IHeaders,
     @Body() dto: CreateProductCategoryDto,
