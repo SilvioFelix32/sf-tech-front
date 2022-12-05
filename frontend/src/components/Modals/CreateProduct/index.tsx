@@ -17,10 +17,7 @@ import {
 } from "./styles";
 import "react-responsive-modal/styles.css";
 import { productCategoryService } from "../../../services/products-category-service";
-import {
-  IProductCategories,
-  ProductType,
-} from "../../../types/IProductCategories";
+import { IProductCategories } from "../../../types/IProductCategories";
 
 interface modalProps {
   isOpen: boolean;

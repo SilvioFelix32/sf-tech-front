@@ -1,5 +1,5 @@
+import { User } from 'src/users/entities/user.entity';
 export interface UserToken {
   access_token: string;
-  name: string;
-  email: string;
+  user: User;
 }

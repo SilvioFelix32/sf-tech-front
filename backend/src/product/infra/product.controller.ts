@@ -34,15 +34,13 @@ export class ProductController {
     }
 
     if (!category_id) {
-      throw new BadRequestException('Product needs a Category');
+      throw new BadRequestException('Product needs a category_id');
     }
 
-    const { url_banner } = dto;
-    if (url_banner === null) {
-      url_banner.replace(url_banner, 'https://i.imgur.com/2HFGvvT.png');
-      return url_banner;
+    let { url_banner } = dto;
+    if (url_banner === null || undefined) {
+      dto.url_banner = 'https://i.imgur.com/2HFGvvT.png';
     }
-    console.log(url_banner);
 
     return this.productService.create(company_id, category_id, dto);
   }

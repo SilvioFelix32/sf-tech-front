@@ -1,3 +1,8 @@
 backend/src/auth/auth.service.ts 
 
-Aprimorar rota de login, css de login, context de login
+Aprimorar rota de login, css de login, context de login (front)
+
+concluir pagina categoria de product
+
+concluir modal de edição de usuario
+concluir modal de categorias e empresas

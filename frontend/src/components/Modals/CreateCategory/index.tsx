@@ -6,15 +6,7 @@ import { IProduct } from "../../../types";
 //components
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
-import {
-  Button,
-  Text,
-  Content,
-  Wrapper,
-  Input,
-  Select,
-  Context,
-} from "./styles";
+import { Button, Text, Content, Wrapper, Input, Select } from "./styles";
 import "react-responsive-modal/styles.css";
 import { productCategoryService } from "../../../services/products-category-service";
 import { IProductCategories } from "../../../types/IProductCategories";
@@ -71,41 +63,31 @@ export function ModalCreateCategory({
       center
     >
       <Wrapper onSubmit={handleSubmit}>
-        <Context>
-          <Content>
-            <Text>Title:</Text>
-            <Input type="string" onChange={(e) => setTitle(e.target.value)} />
-            <Text>Description:</Text>
-            <Input
-              type="string"
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Content>
-          <Content>
-            <Text>Product Category:</Text>
-            {/* <Select onChange={(e) => setProduct_type(e.target.value)}>
-              <option></option>
-              {ProductTypes.map((productType) => {
-                return (
-                  <option key={productType} value={productType}>
-                    {productType}
-                  </option>
-                );
-              })}
-            </Select> */}
+        <Content>
+          <Text>Title:</Text>
+          <Input type="string" onChange={(e) => setTitle(e.target.value)} />
+          <Text>Description:</Text>
+          <Input
+            type="string"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Text>Product Category:</Text>
+          <Select>
+            <option value="">categoria</option>
+            <option value="">categoria2</option>
+          </Select>
 
-            <Text>Ativo:</Text>
-            <Select
-              onChange={(e) =>
-                setActive(e.target.value === "true" ? true : false)
-              }
-              defaultValue="true"
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
-          </Content>
-        </Context>
+          <Text>Ativo:</Text>
+          <Select
+            onChange={(e) =>
+              setActive(e.target.value === "true" ? true : false)
+            }
+            defaultValue="true"
+          >
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+          </Select>
+        </Content>
         <Button type="submit" onClick={() => setIsOpen(false)}>
           Cadastrar
         </Button>

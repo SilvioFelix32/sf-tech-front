@@ -19,7 +19,7 @@ export const ProductInfo = styled.div`
 export const ProductFilter = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
 `;
 

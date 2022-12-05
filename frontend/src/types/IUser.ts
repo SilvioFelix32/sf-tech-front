@@ -15,7 +15,7 @@ export interface IUser {
   name: string;
   last_name: string;
   sex_type?: Sex;
-  birth_date?: Date;
+  birth_date?: string;
   celphone?: string | null;
   email: string;
   cep?: string | null;

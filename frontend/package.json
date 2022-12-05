@@ -20,6 +20,7 @@
     "i18next": "^21.9.2",
     "i18next-browser-languagedetector": "^6.1.5",
     "next": "12.1.5",
+    "next-auth": "^4.17.0",
     "next-images": "^1.8.4",
     "nookies": "^2.5.2",
     "polished": "^4.2.2",

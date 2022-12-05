@@ -27,9 +27,9 @@ import {
 } from "../styles/pages/admin-products";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
-import { customStyles } from "../styles/index";
+import { customStyles } from "../styles/dataTable/customStyles";
 
-export default function Administration() {
+export default function AdminProducts() {
   const [theme, setTheme] = useState(light);
   const {
     query: { company_id },

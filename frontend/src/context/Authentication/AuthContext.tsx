@@ -1,13 +1,20 @@
 import { createContext, ReactNode, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 import { userService } from "../../services";
+import api from "../../services/api";
+import { IUser, Role } from "../../types/IUser";
 
 type User = {
   name: string;
   email: string;
   password: string;
-  roles: string[];
+  role: Role;
+};
+
+type IResponse = {
+  access_token: string;
+  user: IUser;
 };
 
 type signInCredentials = {
@@ -41,33 +48,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ email, password }: signInCredentials) {
     try {
-      const response = await userService.login({
+      const response: IResponse = await userService.login({
         email,
         password,
       });
 
-      const { token, refreshToken, user } = response.data;
+      const { access_token, user } = response;
 
       //using nookies to create the nextJS cookies
-      setCookie(undefined, "nextauth.token", token, {
-        maxAge: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
-        path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
-      });
-      setCookie(undefined, "nextauth.refreshToken", refreshToken, {
+      setCookie(undefined, "nextauth.token", access_token, {
         maxAge: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
         path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
       });
 
       setUser({
-        name: user.name as string,
-        email: user.email as string,
-        password: user.password as string,
-        roles: user.role,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        role: user.role,
       });
 
-      /*  api.defaults.headers['Authorization'] = `Bearer ${token}` */
+      api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
 
-      Router.push("/payment"); //SELECT THE PAGE YOU WANT TO OPEN NEXT
+      Router.push("/"); //SELECT THE PAGE YOU WANT TO OPEN NEXT
     } catch (err) {
       console.log(err);
     }

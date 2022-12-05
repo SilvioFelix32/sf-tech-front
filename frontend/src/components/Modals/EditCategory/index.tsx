@@ -25,7 +25,7 @@ interface modalProps {
   product_id: string;
 }
 
-export function ModalEditProduct({
+export function ModalEditCategory({
   onOpen,
   setOnOpen,
   product_id,

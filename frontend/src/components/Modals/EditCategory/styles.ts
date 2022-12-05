@@ -5,6 +5,7 @@ export const Wrapper = styled.form`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+
   max-height: 600px;
   max-width: 800px;
   width: 100%;
@@ -13,7 +14,14 @@ export const Wrapper = styled.form`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
+export const Context = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 0 10px;
   height: 100%;
   width: 100%;

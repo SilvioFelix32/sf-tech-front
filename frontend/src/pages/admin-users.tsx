@@ -9,6 +9,9 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NavHeader } from "../components/NavHeader";
 import DataTable from "react-data-table-component";
+import { ModalEditUser } from "../components/Modals/EditUser";
+import { ModalDeleteUser } from "../components/Modals/DeleteUser";
+import { EditButton, ExcludeButton } from "../components/Buttons";
 //styles
 import { ThemeProvider } from "styled-components";
 import { Wrapper, Theme, Content, Text } from "../styles/pages/admin-company";
@@ -23,6 +26,11 @@ export default function ManageUsers() {
   } = useRouter();
   const [theme, setTheme] = useState(light);
   const [users, setUsers] = useState<IUser[]>([]);
+  //Modals
+  const [reloadData, setReloadData] = useState(0);
+  const [user_id, setUser_id] = useState("");
+  const [open, setOpen] = useState(false);
+  const [onOpen, setOnOpen] = useState(false);
 
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
@@ -36,7 +44,6 @@ export default function ManageUsers() {
 
   const data = users.map((user) => {
     return {
-      user_id: user.user_id,
       name: user.name,
       last_name: user.last_name,
       document: user.document,
@@ -44,15 +51,32 @@ export default function ManageUsers() {
       celphone: user.celphone,
       birth_date: user.birth_date,
       active: user.active ? "Sim" : "Não",
+      exclude_alter: (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <EditButton
+            onClick={() => {
+              setOnOpen(true);
+              setUser_id(user?.user_id);
+            }}
+          ></EditButton>
+          <ExcludeButton
+            onClick={() => {
+              setUser_id(user?.user_id);
+              setOpen(true);
+            }}
+          ></ExcludeButton>
+        </div>
+      ),
     };
   });
 
   const columns = [
-    {
-      name: t("user_id"),
-      selector: (row) => row.user_id,
-      sortable: true,
-    },
     {
       name: t("main.companyTable.name"),
       selector: (row) => row.name,
@@ -89,6 +113,11 @@ export default function ManageUsers() {
       name: t("active"),
       selector: (row) => row.active,
     },
+    {
+      name: t("outros"),
+      selector: (row) => row.exclude_alter,
+      sortable: true,
+    },
   ];
 
   const paginationComponentOptions = {
@@ -117,6 +146,18 @@ export default function ManageUsers() {
             />
           </Content>
           <Footer />
+          <ModalEditUser
+            user_id={user_id}
+            onOpen={onOpen}
+            setOnOpen={setOnOpen}
+            setReloadData={setReloadData}
+          />
+          <ModalDeleteUser
+            user_id={user_id}
+            open={open}
+            setOpen={setOpen}
+            setReloadData={setReloadData}
+          />
         </Wrapper>
       </Theme>
     </ThemeProvider>

@@ -33,7 +33,6 @@ export class ProductService {
       category_id,
       ...dto,
     };
-    console.log('DATA', data);
 
     return this.prisma.product.create({
       data,
