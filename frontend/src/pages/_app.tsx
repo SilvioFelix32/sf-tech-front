@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import { AuthProvider, CartProvider } from "../context";
+import { ProSidebarProvider } from "react-pro-sidebar";
 //styles
 import { ThemeProvider, DefaultTheme } from "styled-components";
 import { GlobalStyles } from "../styles/global";
@@ -15,16 +16,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={theme}>
       <AuthProvider>
         <CartProvider>
-          <Head>
-            <title>Sf-tech</title>
-            <link rel="shortcut icon" href="/favicon.jpg" />
-            <meta
-              name="viewport"
-              content="initial-scale=1.0, width=device-width"
-            />
-          </Head>
-          <Component {...pageProps} />
-          <GlobalStyles />
+          <ProSidebarProvider>
+            <Head>
+              <title>Sf-tech</title>
+              <link rel="shortcut icon" href="/favicon.jpg" />
+              <meta
+                name="viewport"
+                content="initial-scale=1.0, width=device-width"
+              />
+            </Head>
+            <Component {...pageProps} />
+            <GlobalStyles />
+          </ProSidebarProvider>
         </CartProvider>
       </AuthProvider>
     </ThemeProvider>

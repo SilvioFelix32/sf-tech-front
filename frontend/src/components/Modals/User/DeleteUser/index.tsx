@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { productsService, userService } from "../../../services";
+import { userService } from "../../../../services";
+
 import { Button, Content, Text, Wrapper } from "./styles";
 //styles
 

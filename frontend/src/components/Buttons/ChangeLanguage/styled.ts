@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  .Wrapper {
-    margin: 0;
-    padding: 0;
-  }
+  display: flex;
+  margin: 0;
+  padding: 0;
 
   .GlobeBtn {
-    margin: 0 5px;
+    margin: 0;
     color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.tertiary};
     border: none;

@@ -7,6 +7,7 @@ export const Wrapper = styled.form`
   align-items: flex-start;
   width: 100%;
   height: 100%;
+  padding: 20px;
 
   h2 {
     font-size: 26px;

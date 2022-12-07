@@ -5,21 +5,16 @@ import "i18next";
 import { IUser } from "../types/IUser";
 import { userService } from "../services";
 //components
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { NavHeader } from "../components/NavHeader";
 import DataTable from "react-data-table-component";
-import { ModalEditUser } from "../components/Modals/EditUser";
-import { ModalDeleteUser } from "../components/Modals/DeleteUser";
+import { ModalEditUser, ModalDeleteUser } from "../components";
 import { EditButton, ExcludeButton } from "../components/Buttons";
 //styles
-import { ThemeProvider } from "styled-components";
-import { Wrapper, Theme, Content, Text } from "../styles/pages/admin-company";
+import { Wrapper, Content, Text } from "../styles/pages/admin";
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 import { customStyles } from "../styles/dataTable/customStyles";
 
-export default function ManageUsers() {
+export default function AdminUsers() {
   const { t } = useTranslation();
   const {
     query: { company_id },
@@ -127,39 +122,32 @@ export default function ManageUsers() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Theme>
-        <Wrapper>
-          <NavHeader />
-          <Header toggleTheme={toggleTheme} />
-          <Text>Administrar Usuários</Text>
-          <Content>
-            <DataTable
-              columns={columns}
-              data={data}
-              pagination
-              paginationServer
-              paginationComponentOptions={paginationComponentOptions}
-              paginationRowsPerPageOptions={[5, 10, 20]}
-              customStyles={customStyles}
-              theme={theme.title}
-            />
-          </Content>
-          <Footer />
-          <ModalEditUser
-            user_id={user_id}
-            onOpen={onOpen}
-            setOnOpen={setOnOpen}
-            setReloadData={setReloadData}
-          />
-          <ModalDeleteUser
-            user_id={user_id}
-            open={open}
-            setOpen={setOpen}
-            setReloadData={setReloadData}
-          />
-        </Wrapper>
-      </Theme>
-    </ThemeProvider>
+    <Wrapper>
+      <Text>Administrar Usuários</Text>
+      <Content>
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          paginationServer
+          paginationComponentOptions={paginationComponentOptions}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          customStyles={customStyles}
+          theme={theme.title}
+        />
+      </Content>
+      <ModalEditUser
+        user_id={user_id}
+        onOpen={onOpen}
+        setOnOpen={setOnOpen}
+        setReloadData={setReloadData}
+      />
+      <ModalDeleteUser
+        user_id={user_id}
+        open={open}
+        setOpen={setOpen}
+        setReloadData={setReloadData}
+      />
+    </Wrapper>
   );
 }

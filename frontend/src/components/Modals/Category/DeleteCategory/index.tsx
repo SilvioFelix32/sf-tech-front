@@ -1,28 +1,32 @@
+import { useRouter } from "next/router";
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { productsService } from "../../../services";
+import { productCategoryService } from "../../../../services";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
 
 interface modalProps {
-  product_id: string;
+  category_id: string;
   open: boolean;
   setOpen: (value: boolean) => void;
   setReloadData(value: number);
 }
 
-export function ModalDeleteProduct({
-  product_id,
+export function ModalDeleteCategory({
+  category_id,
   open,
   setOpen,
   setReloadData,
 }: modalProps) {
+  const {
+    query: { company_id },
+  } = useRouter();
 
   async function handleDelete(event: FormEvent) {
     event.preventDefault();
 
-    await productsService
-      .delete(product_id as string)
+    await productCategoryService
+      .delete(company_id as string, category_id as string)
       .then(() => setReloadData(Math.random()))
       .catch((err) => alert(err));
   }
@@ -40,7 +44,7 @@ export function ModalDeleteProduct({
       center
     >
       <Wrapper onSubmit={handleDelete}>
-        <Text>Delete Product?</Text>
+        <Text>Delete Category?</Text>
         <Content>
           <Button type="submit" onClick={() => setOpen(false)}>
             Confirm

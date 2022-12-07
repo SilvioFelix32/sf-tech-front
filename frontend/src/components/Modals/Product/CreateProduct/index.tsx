@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { productsService } from "../../../services";
-import { IProduct } from "../../../types";
 //components
+import { IProductCategories } from "../../../../types/IProductCategories";
+import { productCategoryService, productsService } from "../../../../services";
+import { IProduct } from "../../../../types";
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
 import {
@@ -16,8 +17,6 @@ import {
   Context,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { productCategoryService } from "../../../services/products-category-service";
-import { IProductCategories } from "../../../types/IProductCategories";
 
 interface modalProps {
   isOpen: boolean;

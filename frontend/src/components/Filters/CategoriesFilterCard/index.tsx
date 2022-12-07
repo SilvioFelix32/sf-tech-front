@@ -23,7 +23,6 @@ export function CategoriesFilterCard() {
         .then((data) => setProductCategories(data))
         .catch((err) => alert(err));
     } else {
-      console.log();
       router.push("/");
     }
   }, [company_id, router]);

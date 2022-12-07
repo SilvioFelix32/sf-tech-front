@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { productsService } from "../../../services";
+import { productsService } from "../../../../services";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
 
@@ -11,7 +11,7 @@ interface modalProps {
   setReloadData(value: number);
 }
 
-export function ModalDeleteCategory({
+export function ModalDeleteProduct({
   product_id,
   open,
   setOpen,

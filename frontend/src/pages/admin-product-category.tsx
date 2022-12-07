@@ -1,56 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 //services an types
 import { productCategoryService } from "../services";
-import { IProduct } from "../types";
+import { IProductCategories } from "../types/IProductCategories";
 //components
 import {
-  NavHeader,
-  Header,
-  Footer,
-  ModalCreateProduct,
-  ModalEditProduct,
-  ModalDeleteProduct,
+  ModalCreateCategory,
+  ModalEditCategory,
+  ModalDeleteCategory,
 } from "../components";
 import { EditButton, ExcludeButton } from "../components/Buttons";
 //imported libs
 import DataTable from "react-data-table-component";
 //styles and theme
-import { ThemeProvider } from "styled-components";
-import {
-  Wrapper,
-  Button,
-  Theme,
-  Text,
-  Content,
-} from "../styles/pages/admin-products";
-import dark from "../styles/themes/dark";
+import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import light from "../styles/themes/light";
-import { IProductCategories } from "../types/IProductCategories";
 import { customStyles } from "../styles/dataTable/customStyles";
-import { ModalCreateCategory } from "../components/Modals/CreateCategory";
 
-export default function Administration() {
+export default function AdminCategories() {
   const [theme, setTheme] = useState(light);
   const {
     query: { company_id },
   } = useRouter();
-  const router = useRouter();
   //Data table states and paginator
   const [productCategories, setProductCategories] = useState<
     IProductCategories[]
   >([]);
-  const [product_id, setProduct_id] = useState("");
+  const [category_id, setCategory_id] = useState("");
   //Modals
   const [reloadData, setReloadData] = useState(0);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
-
-  function toggleTheme() {
-    setTheme(theme.title === "light" ? dark : light);
-  }
 
   useEffect(() => {
     if (company_id) {
@@ -60,9 +41,8 @@ export default function Administration() {
         .catch((err) => alert(err));
     } else {
       alert("No company informed!");
-      router.push("/");
     }
-  }, [reloadData]);
+  }, [company_id, reloadData]);
 
   //Dados da tabela
   const columns = [
@@ -92,8 +72,8 @@ export default function Administration() {
       sortable: true,
     },
     {
-      name: "products",
-      selector: (row) => row.products,
+      name: "outros",
+      selector: (row) => row.exclude_alter,
       sortable: true,
     },
   ];
@@ -105,9 +85,28 @@ export default function Administration() {
       title: product.title,
       description: product.description,
       product_type: product.product_type,
-      products: product.products.map((prod: IProduct) => {
-        prod.title;
-      }),
+      exclude_alter: (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <EditButton
+            onClick={() => {
+              setOnOpen(true);
+              setCategory_id(product?.category_id);
+            }}
+          ></EditButton>
+          <ExcludeButton
+            onClick={() => {
+              setCategory_id(product?.category_id);
+              setOpen(true);
+            }}
+          ></ExcludeButton>
+        </div>
+      ),
     };
   });
 
@@ -118,47 +117,40 @@ export default function Administration() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Theme>
-        <Wrapper>
-          <NavHeader />
-          <Header toggleTheme={toggleTheme} />
-          <Content>
-            <Text>Administração de Categorias de Produtos</Text>
-            <Button onClick={() => setIsOpen(true)}>
-              Cadastrar nova Categoria
-            </Button>
-            <DataTable
-              columns={columns}
-              data={data}
-              pagination
-              paginationServer
-              paginationComponentOptions={paginationComponentOptions}
-              paginationRowsPerPageOptions={[5, 10, 20]}
-              customStyles={customStyles}
-              theme={theme.title}
-            />
-          </Content>
-          <Footer />
-          <ModalCreateCategory
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            setReloadData={setReloadData}
-          />
-          <ModalEditProduct
-            product_id={product_id}
-            onOpen={onOpen}
-            setOnOpen={setOnOpen}
-            setReloadData={setReloadData}
-          />
-          <ModalDeleteProduct
-            product_id={product_id}
-            open={open}
-            setOpen={setOpen}
-            setReloadData={setReloadData}
-          />
-        </Wrapper>
-      </Theme>
-    </ThemeProvider>
+    <Wrapper>
+      <Content>
+        <Text>Administração de Categorias de Produtos</Text>
+        <Button onClick={() => setIsOpen(true)}>
+          Cadastrar nova Categoria
+        </Button>
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          paginationServer
+          paginationComponentOptions={paginationComponentOptions}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          customStyles={customStyles}
+          theme={theme.title}
+        />
+      </Content>
+      <ModalCreateCategory
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setReloadData={setReloadData}
+      />
+      <ModalEditCategory
+        category_id={category_id}
+        onOpen={onOpen}
+        setOnOpen={setOnOpen}
+        setReloadData={setReloadData}
+      />
+      <ModalDeleteCategory
+        category_id={category_id}
+        open={open}
+        setOpen={setOpen}
+        setReloadData={setReloadData}
+      />
+    </Wrapper>
   );
 }

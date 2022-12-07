@@ -15,18 +15,24 @@ export class AuthService {
   ) {}
 
   async login(user: User): Promise<UserToken> {
-    const { user_id, email, name }: Partial<User> =
-      await this.userService.findByEmail(user.email);
+    const dbUser: Partial<User> = await this.userService.findByEmail(
+      user.email,
+    );
 
     const payload: UserPayload = {
-      sub: user_id,
-      email: email,
-      name: name,
+      sub: dbUser.user_id,
+      email: dbUser.email,
+      name: dbUser.name,
     };
 
     return {
       access_token: this.jwtService.sign(payload),
-      user,
+      user: {
+        name: dbUser.name,
+        role: dbUser.role,
+        email: dbUser.email,
+        password: dbUser.password,
+      },
     };
   }
 

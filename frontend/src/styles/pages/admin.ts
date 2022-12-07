@@ -6,17 +6,14 @@ export const Theme = styled.div`
 `;
 
 export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   height: 100%;
-  width: 70%;
-  margin: 0 auto;
-  position: relative;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Content = styled.div`
   width: 100%;
-  padding: 10px;
 `;
 
 export const Text = styled.p`

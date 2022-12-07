@@ -18,9 +18,9 @@ async function getAll(company_id: string) {
   return response.data;
 }
 
-async function getById(product_id: string) {
+async function getById(category_id: string) {
   const response = await api.get<IProductCategories>(
-    `${baseUrl}/${product_id}`
+    `${baseUrl}/${category_id}`
   );
   return response.data;
 }
@@ -34,18 +34,18 @@ async function create(company_id: string, params: IProductCategories) {
 
 async function update(
   company_id: string,
-  product_id: string,
+  category_id: string,
   params: IProductCategories
 ) {
-  const response = await api.patch(`${baseUrl}/${product_id}`, params, {
+  const response = await api.patch(`${baseUrl}/${category_id}`, params, {
     headers: { company_id },
   });
   return response.data;
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-async function _delete(company_id: string, product_id: string) {
-  await api.delete(`${baseUrl}/${product_id}`),
+async function _delete(company_id: string, category_id: string) {
+  await api.delete(`${baseUrl}/${category_id}`),
     {
       headers: { company_id },
     };

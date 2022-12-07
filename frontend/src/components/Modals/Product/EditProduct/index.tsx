@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { productCategoryService, productsService } from "../../../services";
-import { IProduct } from "../../../types";
+import { productsService, productCategoryService } from "../../../../services";
+import { IProduct } from "../../../../types";
+import { IProductCategories } from "../../../../types/IProductCategories";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
@@ -16,7 +17,6 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { IProductCategories } from "../../../types/IProductCategories";
 
 interface modalProps {
   onOpen: boolean;
@@ -25,7 +25,7 @@ interface modalProps {
   product_id: string;
 }
 
-export function ModalEditCategory({
+export function ModalEditProduct({
   onOpen,
   setOnOpen,
   product_id,

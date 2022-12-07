@@ -16,3 +16,13 @@ export const userResponse = {
   address_number: true,
   address_complement: true,
 };
+
+export const userAuthResponse = {
+  company_id: true,
+  user_id: true,
+  name: true,
+  last_name: true,
+  email: true,
+  password: true,
+  role: true,
+};

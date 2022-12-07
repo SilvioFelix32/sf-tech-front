@@ -1,16 +1,13 @@
 import { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { productsService } from "../../../services";
-import { IProduct } from "../../../types";
+import { FormEvent, useState } from "react";
 //components
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
 import { Button, Text, Content, Wrapper, Input, Select } from "./styles";
 import "react-responsive-modal/styles.css";
-import { productCategoryService } from "../../../services/products-category-service";
-import { IProductCategories } from "../../../types/IProductCategories";
-import { ProductType, ProductTypes } from "../../../types/IProductType";
+import { productCategoryService } from "../../../../services/products-category-service";
+import { IProductCategories } from "../../../../types/IProductCategories";
+import { ProductType } from "../../../../types/IProductType";
 
 interface modalProps {
   isOpen: boolean;

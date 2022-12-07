@@ -29,10 +29,9 @@ export class User {
   address?: string | null;
   address_number?: string | null;
   address_complement?: string | null;
+  role: Role;
   @ApiHideProperty()
   active?: boolean | null;
-  @ApiHideProperty()
-  role: Role;
   @ApiHideProperty()
   user_name?: string | null;
   @ApiHideProperty()

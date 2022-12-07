@@ -40,7 +40,7 @@ export class CreateUserDto extends User {
 
   @IsOptional()
   @IsString()
-  sex?: Sex;
+  sex_type?: Sex;
 
   @IsEmail()
   @IsNotEmpty()

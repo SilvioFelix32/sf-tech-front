@@ -10,7 +10,7 @@ import { PrismaService } from 'src/shared/prisma/prisma.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { FindUserDto } from '../dto/query-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { userResponse } from '../dto/user-response.dto';
+import { userAuthResponse, userResponse } from '../dto/user-response.dto';
 export interface IUser {
   findOneByUserName(user_name: string): Promise<User | undefined>;
 }
@@ -144,6 +144,9 @@ export class UsersService {
   async findByEmail(email: string): Promise<User | unknown> {
     const user = this.prisma.user.findUnique({
       where: { email },
+      select: {
+        ...userAuthResponse,
+      },
     });
 
     if (!user) {

@@ -6,26 +6,15 @@ import { productsService } from "../services";
 import { IProduct } from "../types";
 //components
 import {
-  NavHeader,
-  Header,
-  Footer,
   ModalCreateProduct,
-  ModalEditProduct,
   ModalDeleteProduct,
+  ModalEditProduct,
 } from "../components";
 import { EditButton, ExcludeButton } from "../components/Buttons";
 //imported libs
 import DataTable from "react-data-table-component";
 //styles and theme
-import { ThemeProvider } from "styled-components";
-import {
-  Wrapper,
-  Button,
-  Theme,
-  Text,
-  Content,
-} from "../styles/pages/admin-products";
-import dark from "../styles/themes/dark";
+import { Button, Text, Content } from "../styles/pages/admin";
 import light from "../styles/themes/light";
 import { customStyles } from "../styles/dataTable/customStyles";
 
@@ -34,7 +23,6 @@ export default function AdminProducts() {
   const {
     query: { company_id },
   } = useRouter();
-  const router = useRouter();
   //Data table states and paginator
   const [products, setProducts] = useState<IProduct[]>([]);
   const [product_id, setProduct_id] = useState("");
@@ -44,10 +32,6 @@ export default function AdminProducts() {
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
 
-  function toggleTheme() {
-    setTheme(theme.title === "light" ? dark : light);
-  }
-
   useEffect(() => {
     if (company_id) {
       productsService
@@ -56,9 +40,8 @@ export default function AdminProducts() {
         .catch((err) => alert(err));
     } else {
       alert("No company informed!");
-      router.push("/");
     }
-  }, [reloadData]);
+  }, [company_id, reloadData]);
 
   //Dados da tabela
   const columns = [
@@ -134,47 +117,38 @@ export default function AdminProducts() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Theme>
-        <Wrapper>
-          <NavHeader />
-          <Header toggleTheme={toggleTheme} />
-          <Content>
-            <Text>Administração de Produtos</Text>
-            <Button onClick={() => setIsOpen(true)}>
-              Cadastrar novo Produto
-            </Button>
-            <DataTable
-              columns={columns}
-              data={data}
-              pagination
-              paginationServer
-              paginationComponentOptions={paginationComponentOptions}
-              paginationRowsPerPageOptions={[5, 10, 20]}
-              customStyles={customStyles}
-              theme={theme.title}
-            />
-          </Content>
-          <Footer />
-          <ModalCreateProduct
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            setReloadData={setReloadData}
-          />
-          <ModalEditProduct
-            product_id={product_id}
-            onOpen={onOpen}
-            setOnOpen={setOnOpen}
-            setReloadData={setReloadData}
-          />
-          <ModalDeleteProduct
-            product_id={product_id}
-            open={open}
-            setOpen={setOpen}
-            setReloadData={setReloadData}
-          />
-        </Wrapper>
-      </Theme>
-    </ThemeProvider>
+    <>
+      <Content>
+        <Text>Administração de Produtos</Text>
+        <Button onClick={() => setIsOpen(true)}>Cadastrar novo Produto</Button>
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          paginationServer
+          paginationComponentOptions={paginationComponentOptions}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          customStyles={customStyles}
+          theme={theme.title}
+        />
+      </Content>
+      <ModalCreateProduct
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setReloadData={setReloadData}
+      />
+      <ModalEditProduct
+        product_id={product_id}
+        onOpen={onOpen}
+        setOnOpen={setOnOpen}
+        setReloadData={setReloadData}
+      />
+      <ModalDeleteProduct
+        product_id={product_id}
+        open={open}
+        setOpen={setOpen}
+        setReloadData={setReloadData}
+      />
+    </>
   );
 }

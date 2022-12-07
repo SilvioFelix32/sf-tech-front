@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
-import { setCookie, parseCookies, destroyCookie } from "nookies";
-import Router from "next/router";
+import { setCookie, destroyCookie } from "nookies";
+import Router, { useRouter } from "next/router";
 import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
@@ -43,6 +43,9 @@ export function signOut() {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const {
+    query: { company_id },
+  } = useRouter();
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
 
@@ -70,7 +73,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
 
-      Router.push("/"); //SELECT THE PAGE YOU WANT TO OPEN NEXT
+      const userHasAdminPermissions = user.role === "ADMIN";
+
+      if (userHasAdminPermissions) {
+        Router.push({
+          pathname: "administration",
+          query: { company_id },
+        }); //THIS PAGE WIL OPEN IF USER IS ADMIN
+      } else {
+        Router.push("/"); //SELECT THE PAGE YOU WANT TO OPEN NEXT
+      }
     } catch (err) {
       console.log(err);
     }
