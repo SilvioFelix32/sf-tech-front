@@ -15,7 +15,7 @@ export function CartProvider(props) {
   const cartTotalPrice = useMemo(() => {
     return cartItems
       .reduce((acumulator, item) => {
-        const totalPrice = item.amount * item.value_sale;
+        const totalPrice = item.amount * item.value;
         return acumulator + totalPrice;
       }, 0)
       .toFixed(2);
@@ -38,13 +38,13 @@ export function CartProvider(props) {
     return setCartItems((previousState) => {
       //1. Is the item already added in the cart? // se já tiver um, vai adicionar mais um item
       const isItemInCart = previousState.find(
-        (item) => item.id === clickedItem.id
+        (item) => item.product_id === clickedItem.product_id
       );
 
       if (isItemInCart) {
         //se ja houver retorna esse função
         return previousState.map((item) =>
-          item.id === clickedItem.id
+          item.product_id === clickedItem.product_id
             ? { ...item, amount: item.amount + 1 } //fiz um spread(...) do item, pego o valor, e adiciono +1 ao clique
             : item
         );
@@ -52,14 +52,14 @@ export function CartProvider(props) {
     });
   }
 
-  function handleRemoveFromCart(id: number) {
+  function handleRemoveFromCart(product_id: string) {
     return setCartItems(
       (
         previousState //valor antigo
       ) =>
         previousState.reduce((acumulator, item) => {
           //damos um reduce no valor antigo
-          if (item.id === id) {
+          if (item.product_id === product_id) {
             //se o id do item for igual ao (id:number) da função handleRemoveFromCart então retorna
             if (item.amount === 1) return acumulator; //se o valor for 1, retorna o acumulador e para aqui, deletando o item do array
             return [...acumulator, { ...item, amount: item.amount - 1 }]; // do contrario dou um spread(...) no item e tiro um -1 do valor total
@@ -70,9 +70,9 @@ export function CartProvider(props) {
     );
   }
 
-  function deleteItemFromCart(id: number) {
+  function deleteItemFromCart(product_id: string) {
     return setCartItems((previousState) =>
-      previousState.filter((item) => item.id !== id)
+      previousState.filter((item) => item.product_id !== product_id)
     );
   }
 

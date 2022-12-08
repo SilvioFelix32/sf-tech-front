@@ -2,6 +2,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { MdFavoriteBorder } from "react-icons/md";
+import { useCart } from "../../context";
 import { productsService } from "../../services";
 import { IProduct } from "../../types";
 //styles
@@ -13,10 +15,12 @@ import {
   Picture,
   ProductInfo,
   ProductPrices,
+  Title,
 } from "./styles";
 
 export function ProductCard() {
   const { t } = useTranslation();
+  const { handleAddToCart, deleteItemFromCart, handleRemoveFromCart } = useCart();
   const {
     query: { company_id },
   } = useRouter();
@@ -44,7 +48,7 @@ export function ProductCard() {
               ></Image>
             </Picture>
             <ProductInfo>
-              <Text
+              <Title
                 style={{
                   fontWeight: 600,
                   fontSize: "20px",
@@ -52,12 +56,10 @@ export function ProductCard() {
                 }}
               >
                 {product.title}
-              </Text>
+              </Title>
               <Text>{product.subtitle}</Text>
               <Text>{product.description}</Text>
-            </ProductInfo>
 
-            <ProductPrices>
               <Text>
                 Valor {t("main.mainSection.priceFilterCard.priceType")}{" "}
                 {product?.value.toFixed(2).replace(".", ",")}
@@ -66,9 +68,16 @@ export function ProductCard() {
                 Desconto {t("main.mainSection.priceFilterCard.priceType")}{" "}
                 {product?.discount.toFixed(2).replace(".", ",")}
               </Text>
-              <BuyButton>Comprar</BuyButton>
-              <FavoriteButton>Favoritar</FavoriteButton>
-            </ProductPrices>
+              <BuyButton onClick={() => handleAddToCart(product)}>
+                Comprar
+              </BuyButton>
+              <BuyButton onClick={() => handleRemoveFromCart(product.product_id)}>
+                Remover
+              </BuyButton>
+            </ProductInfo>
+            <FavoriteButton>
+              <MdFavoriteBorder />
+            </FavoriteButton>
           </Wrapper>
         ))}
     </>

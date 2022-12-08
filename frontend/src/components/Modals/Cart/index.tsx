@@ -6,6 +6,7 @@ import { BiTrash } from "react-icons/bi";
 //styles
 import "react-responsive-modal/styles.css";
 import { Button, BtnGroup, Wrapper, Totals, CartItems } from "./styles";
+import { CartItemType } from "../../../context/Cart/types";
 
 interface ModalProps {
   openModal: boolean;
@@ -18,6 +19,8 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
   const {
     query: { company_id },
   } = useRouter();
+
+  console.log(cartItems);
 
   return (
     <ModalComponent
@@ -34,15 +37,15 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
       <Wrapper>
         <CartItems>
           <p>Detalhes da Compra</p>
-          {cartItems.map((item) => (
-            <div key={item.id}>
-              <div>
+          {cartItems.map((item: CartItemType) => (
+            <div key={item.product_id}>
+              <div className="itemTitle">
                 <p>{item.title}:</p>
               </div>
-              <div>
+              <div className="itemValue">
                 <p> {item.amount}x</p>
-                <p>R$ {(item.amount * item.sale_value).toFixed(2)}</p>
-                <button onClick={() => deleteItemFromCart(item.id)}>
+                <p>R$ {(item.amount * item.value).toFixed(2)}</p>
+                <button onClick={() => deleteItemFromCart(item.product_id)}>
                   <BiTrash />
                 </button>
               </div>

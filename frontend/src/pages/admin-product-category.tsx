@@ -42,7 +42,7 @@ export default function AdminCategories() {
     } else {
       alert("No company informed!");
     }
-  }, [company_id, reloadData]);
+  }, [company_id]);
 
   //Dados da tabela
   const columns = [

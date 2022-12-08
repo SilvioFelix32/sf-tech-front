@@ -41,7 +41,7 @@ export default function AdminProducts() {
     } else {
       alert("No company informed!");
     }
-  }, [company_id, reloadData]);
+  }, [company_id]);
 
   //Dados da tabela
   const columns = [

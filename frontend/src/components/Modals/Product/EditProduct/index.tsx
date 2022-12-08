@@ -53,22 +53,15 @@ export function ModalEditProduct({
         .then((data) => setproductCategory(data))
         .catch((err) => alert(err));
     }
-  }, [product_id, selectedProduct]);
+  }, [product_id]);
 
   const onSubmit = (data: IProduct) => console.log("====>", data);
 
   /*   async function handleUpdate(data: IProduct) {
-    console.log("logDEDATA===>", data);
-    if ((data.title = "")) {
-      console.log("dataSUCESSO =====>", data);
       await productsService
         .update(company_id as string, product_id as string, data)
         .then(() => setReloadData(Math.random()))
         .catch((err) => alert(err));
-    } else {
-      alert("ERRO");
-      console.log("dataERRO =====>", data);
-    }
   } */
 
   return (
