@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -38,9 +39,11 @@ export function ModalEditProduct({
   const [productCategory, setproductCategory] = useState<IProductCategories[]>(
     []
   );
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: { ...selectedProduct },
   });
+
+  console.log("selected", selectedProduct);
 
   useEffect(() => {
     if (product_id) {
@@ -48,21 +51,29 @@ export function ModalEditProduct({
         .getById(product_id as string)
         .then((data) => setSelectedProduct(data))
         .catch((err) => alert(err));
-      productCategoryService
-        .getAll(product_id as string)
-        .then((data) => setproductCategory(data))
-        .catch((err) => alert(err));
     }
   }, [product_id]);
 
-  const onSubmit = (data: IProduct) => console.log("====>", data);
+  // async function fetchCategories() {
+  //   if (selectedProduct) {
+  //     await productCategoryService
+  //       .getAll(selectedProduct.category_id as string)
+  //       .then((data) => setproductCategory(data))
+  //       .catch((err) => alert(err));
+  //   }
+  // }
 
-  /*   async function handleUpdate(data: IProduct) {
-      await productsService
-        .update(company_id as string, product_id as string, data)
-        .then(() => setReloadData(Math.random()))
-        .catch((err) => alert(err));
-  } */
+  useEffect(() => {
+    reset({ ...selectedProduct });
+  }, [selectedProduct]);
+
+  async function handleUpdate(data: IProduct) {
+    delete data.product_id;
+    await productsService
+      .update(company_id as string, product_id as string, data)
+      .then(() => setReloadData(Math.random()))
+      .catch((err) => alert(err));
+  }
 
   return (
     <ModalEdit
@@ -76,7 +87,7 @@ export function ModalEditProduct({
       }}
       center
     >
-      <Wrapper onSubmit={handleSubmit(onSubmit)}>
+      <Wrapper onSubmit={handleSubmit(handleUpdate)}>
         <Context>
           <Content>
             <Text>Sku:</Text>
@@ -131,39 +142,19 @@ export function ModalEditProduct({
             />
           </Content>
           <Content>
-            <Text>Product Category:</Text>
-            <Select
-              defaultValue={selectedProduct?.category_id}
-              {...register("category_id")}
-            >
-              <option value={selectedProduct?.category_id}>
-                {selectedProduct?.product_type}
-              </option>
+            {/* <Text>Product Category:</Text>
+            <Select {...register("category_id")}>
               {productCategory.map((category) => {
                 return (
                   <option
                     key={category?.category_id}
                     value={category?.category_id}
                   >
-                    {category?.product_type}
+                    {category?.title}
                   </option>
                 );
               })}
-            </Select>
-
-            <Text>Product Type:</Text>
-            <Select
-              defaultValue={selectedProduct?.product_type as any}
-              {...register("product_type")}
-            >
-              <option value={selectedProduct?.product_type}>
-                {selectedProduct?.product_type}
-              </option>
-              <option value={"COMPUTER"}>COMPUTER</option>
-              <option value={"NOTEBOOK"}>NOTEBOOK</option>
-              <option value={"CELL"}>CELLPHONE</option>
-              <option value={"OTHERS"}>OTHERS</option>
-            </Select>
+            </Select> */}
 
             <Text>A venda:</Text>
             <Select

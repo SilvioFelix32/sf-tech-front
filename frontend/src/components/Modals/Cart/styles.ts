@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   height: 100%;
   min-height: 400px;
-  width: 500px;
+  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,19 +20,18 @@ export const CartItems = styled.div`
 
   p {
     font-size: 22px;
-    margin: 2px;
+    margin: 3px;
   }
 
   div {
     display: flex;
     width: 100%;
-    padding: 5px;
 
     .itemTitle {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      width: 50%;
+      width: 30%;
       text-transform: capitalize;
     }
 
@@ -40,7 +39,7 @@ export const CartItems = styled.div`
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      width: 50%;
+      width: 70%;
     }
   }
 

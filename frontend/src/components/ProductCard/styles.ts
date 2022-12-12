@@ -10,11 +10,15 @@ export const Wrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   outline: solid 1px ${({ theme }) => theme.colors.tertiary};
+  transition: all 0.3s ease;
 
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    transform: scaleY(1.05);
     cursor: pointer;
+
+    .favorite {
+      display: block;
+    }
   }
 `;
 
@@ -32,9 +36,9 @@ export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   margin: 5px 15px;
-  width: 100%;
+  padding: 10px;
+  width: 80%;
   height: 100%;
 `;
 
@@ -68,6 +72,7 @@ export const BuyButton = styled.button`
 `;
 
 export const FavoriteButton = styled.button`
+  display: none;
   position: absolute;
   right: 8px;
   top: 8px;
@@ -75,9 +80,9 @@ export const FavoriteButton = styled.button`
   border-radius: 50%;
   z-index: 2;
   outline: none;
-  color: ${({ theme }) => theme.colors.text};
-  border: solid 1px ${({ theme }) => theme.colors.quinary};
-  background-color: ${({ theme }) => theme.colors.tertiary};
+  color: ${({ theme }) => theme.colors.tertiary};
+  border: solid 1px ${({ theme }) => theme.colors.tertiary};
+  background-color: ${({ theme }) => theme.colors.background};
   transition: filter 0.2s;
 
   &:hover {
@@ -85,16 +90,27 @@ export const FavoriteButton = styled.button`
   }
 
   svg {
-    margin: 5px;
-    height: 32px;
-    width: 32px;
+    margin: 8px;
+    height: 26px;
+    width: 26px;
   }
 `;
 
+export const ProductValue = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: auto 0 0;
+  text-align: center;
+`;
+
+export const ProductDescription = styled.div``;
+
 export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
-  font-weight: 400;
-  font-size: 16px;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 22px;
   margin: 0;
   padding: 0 5px;
 `;
@@ -103,6 +119,7 @@ export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 400;
   font-size: 16px;
-  margin: 0;
+  margin: 2px;
   padding: 0 5px;
+  text-transform: capitalize;
 `;

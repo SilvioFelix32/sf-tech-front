@@ -81,7 +81,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           query: { company_id },
         }); //THIS PAGE WIL OPEN IF USER IS ADMIN
       } else {
-        Router.push("/"); //SELECT THE PAGE YOU WANT TO OPEN NEXT
+        Router.push({
+          pathname: "filters",
+          query: { company_id },
+        }); //SELECT THE PAGE YOU WANT TO OPEN NEXT
       }
     } catch (err) {
       console.log(err);

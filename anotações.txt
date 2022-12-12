@@ -1,8 +1,5 @@
-backend/src/auth/auth.service.ts 
+Aprimorar rota de login, context de login (front) - mostrar nome do usuário e redirecionamento
 
-Aprimorar rota de login, css de login, context de login (front)
+Verificar porque o register não retorna o valor que vem do GET no PATCH
 
-concluir pagina categoria de product
-
-concluir modal de edição de usuario
-concluir modal de categorias e empresas
+salvas no cookie as opções de tema
