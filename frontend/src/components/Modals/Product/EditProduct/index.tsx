@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { productsService, productCategoryService } from "../../../../services";
 import { IProduct } from "../../../../types";
@@ -43,25 +43,18 @@ export function ModalEditProduct({
     defaultValues: { ...selectedProduct },
   });
 
-  console.log("selected", selectedProduct);
-
   useEffect(() => {
     if (product_id) {
       productsService
         .getById(product_id as string)
         .then((data) => setSelectedProduct(data))
         .catch((err) => alert(err));
+      productCategoryService
+        .getAll(company_id as string)
+        .then((data) => setproductCategory(data))
+        .catch((err) => alert(err));
     }
   }, [product_id]);
-
-  // async function fetchCategories() {
-  //   if (selectedProduct) {
-  //     await productCategoryService
-  //       .getAll(selectedProduct.category_id as string)
-  //       .then((data) => setproductCategory(data))
-  //       .catch((err) => alert(err));
-  //   }
-  // }
 
   useEffect(() => {
     reset({ ...selectedProduct });
@@ -142,7 +135,7 @@ export function ModalEditProduct({
             />
           </Content>
           <Content>
-            {/* <Text>Product Category:</Text>
+            <Text>Product Category:</Text>
             <Select {...register("category_id")}>
               {productCategory.map((category) => {
                 return (
@@ -154,7 +147,7 @@ export function ModalEditProduct({
                   </option>
                 );
               })}
-            </Select> */}
+            </Select>
 
             <Text>A venda:</Text>
             <Select
@@ -175,7 +168,7 @@ export function ModalEditProduct({
             <Text>Ativo:</Text>
             <Select
               defaultValue={selectedProduct?.active.toString()}
-              {...register("highlighted")}
+              {...register("active")}
             >
               <option value="true">Sim</option>
               <option value="false">Não</option>

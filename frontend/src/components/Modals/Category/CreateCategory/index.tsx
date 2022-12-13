@@ -7,7 +7,7 @@ import { Button, Text, Content, Wrapper, Input, Select } from "./styles";
 import "react-responsive-modal/styles.css";
 import { productCategoryService } from "../../../../services/products-category-service";
 import { IProductCategories } from "../../../../types/IProductCategories";
-import { ProductType } from "../../../../types/IProductType";
+import { ProductType, ProductTypes } from "../../../../types/IProductType";
 
 interface modalProps {
   isOpen: boolean;
@@ -68,10 +68,16 @@ export function ModalCreateCategory({
             type="string"
             onChange={(e) => setDescription(e.target.value)}
           />
-          <Text>Product Category:</Text>
-          <Select>
-            <option value="">categoria</option>
-            <option value="">categoria2</option>
+          <Text>Product type:</Text>
+          <Select
+            onChange={(e) => setProduct_type(e.target.value as ProductType)}
+          >
+            <option value=""></option>
+            {ProductTypes.map((productType) => (
+              <option key={productType.title} value={productType.value}>
+                {productType.title}
+              </option>
+            ))}
           </Select>
 
           <Text>Ativo:</Text>

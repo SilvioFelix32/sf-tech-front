@@ -25,8 +25,8 @@ async function getById(product_id: string) {
 
 async function create(
   category_id: string,
-  params: IProduct,
-  company_id: string
+  company_id: string,
+  params: IProduct
 ) {
   const response = await api.post(`${baseUrl}/${category_id}`, params, {
     headers: { company_id },

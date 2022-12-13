@@ -11,35 +11,48 @@ export enum ProductType {
   USB = "USB",
   OTHERS = "OTHERS",
 }
+interface IProdutcType {
+  title: string;
+  value: string;
+}
 
-export const ProductTypes = [
+export const ProductTypes: IProdutcType[] = [
   {
-    COMPUTER: "COMPUTER",
+    title: "COMPUTER",
+    value: "COMPUTER",
   },
   {
-    NOTEBOOK: "NOTEBOOK",
+    title: "NOTEBOOK",
+    value: "NOTEBOOK",
   },
   {
-    CELL: "CELL",
+    title: "CELL",
+    value: "CELL",
   },
   {
-    MOUSE: "MOUSE",
+    title: "MOUSE",
+    value: "MOUSE",
   },
   {
-    KEYBOARD: "KEYBOARD",
+    title: "KEYBOARD",
+    value: "KEYBOARD",
   },
   {
-    SOUND_PHONE: "SOUND_PHONE",
+    title: "SOUND_PHONE",
+    value: "SOUND_PHONE",
   },
   {
-    PRINTER: "PRINTER",
+    title: "PRINTER",
+    value: "PRINTER",
   },
   {
-    MONITOR: "MONITOR",
+    title: "MONITOR",
+    value: "MONITOR",
   },
   {
-    PERIPHERAL: "PERIPHERAL",
+    title: "PERIPHERAL",
+    value: "PERIPHERAL",
   },
-  { USB: "USB" },
-  { OTHERS: "OTHERS" },
+  { title: "USB", value: "USB" },
+  { title: "OTHERS", value: "OTHERS" },
 ];

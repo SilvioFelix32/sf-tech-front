@@ -6,7 +6,6 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { ProductCategory } from 'src/product-categories/entities/product-category.entity';
 import { ProductType } from '../entities/product-type.entity';
 
 export class FindProductDto {
@@ -14,10 +13,6 @@ export class FindProductDto {
   @IsUUID()
   @IsOptional()
   product_id?: string;
-
-  @IsString()
-  @IsOptional()
-  product_category?: ProductCategory;
 
   @IsString()
   @IsUUID()

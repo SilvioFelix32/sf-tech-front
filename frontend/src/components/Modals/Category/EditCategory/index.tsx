@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -6,8 +7,17 @@ import { productCategoryService } from "../../../../services";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
-import { Button, Content, Context, Text, Input, Wrapper } from "./styles";
+import {
+  Button,
+  Content,
+  Context,
+  Text,
+  Input,
+  Select,
+  Wrapper,
+} from "./styles";
 import "react-responsive-modal/styles.css";
+import { ProductTypes } from "../../../../types/IProductType";
 
 interface modalProps {
   onOpen: boolean;
@@ -26,18 +36,24 @@ export function ModalEditCategory({
     query: { company_id },
   } = useRouter();
   const [productCategory, setproductCategory] = useState<IProductCategories>();
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: { ...productCategory },
   });
+
+  console.log(productCategory);
 
   useEffect(() => {
     if (category_id) {
       productCategoryService
-        .getAll(category_id as string)
+        .getById(category_id as string)
         .then((data) => setproductCategory(data as any))
         .catch((err) => alert(err));
     }
   }, [category_id]);
+
+  useEffect(() => {
+    reset({ ...productCategory });
+  }, [productCategory]);
 
   async function handleUpdate(data: IProductCategories) {
     await productCategoryService
@@ -75,12 +91,25 @@ export function ModalEditCategory({
             />
           </Content>
           <Content>
-            <Text>Product_type:</Text>
-            <Input
-              type="string"
+            <Text>Product type:</Text>
+            <Select
               defaultValue={productCategory?.product_type}
               {...register("product_type")}
-            />
+            >
+              {ProductTypes.map((productType) => (
+                <option key={productType.title} value={productType.value}>
+                  {productType.title}
+                </option>
+              ))}
+            </Select>
+            <Text>Active:</Text>
+            <Select
+              defaultValue={productCategory?.active === true ? "true" : "false"}
+              {...(register("active"), { valueAsBoolean: true })}
+            >
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </Select>
           </Content>
         </Context>
         <Button type="submit" onClick={() => setOnOpen(false)}>

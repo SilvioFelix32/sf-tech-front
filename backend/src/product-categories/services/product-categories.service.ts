@@ -76,6 +76,9 @@ export class ProductCategoriesService {
     category_id: string,
     dto: UpdateProductCategoryDto,
   ): Promise<ProductCategory | unknown> {
+    delete dto.category_id;
+    delete dto.products;
+    
     return this.prisma.productCategory.update({
       where: {
         category_id,

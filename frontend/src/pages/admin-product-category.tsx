@@ -42,15 +42,10 @@ export default function AdminCategories() {
     } else {
       alert("No company informed!");
     }
-  }, [company_id]);
+  }, [company_id, reloadData]);
 
   //Dados da tabela
   const columns = [
-    {
-      name: "category_id",
-      selector: (row) => row.category_id,
-      sortable: true,
-    },
     {
       name: "active",
       selector: (row) => row.active,
@@ -80,7 +75,6 @@ export default function AdminCategories() {
 
   const data = productCategories.map((product) => {
     return {
-      category_id: product.category_id,
       active: product.active ? "Sim" : "Não",
       title: product.title,
       description: product.description,

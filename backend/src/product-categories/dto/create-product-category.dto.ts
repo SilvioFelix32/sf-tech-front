@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsBoolean,
   IsDate,
   IsEnum,
@@ -31,7 +32,11 @@ export class CreateProductCategoryDto {
   @IsString()
   @IsOptional()
   description?: string | null;
-  
+
+  @IsOptional()
+  @IsArray()
+  products?: any;
+
   @IsBoolean()
   @IsOptional()
   active?: boolean;

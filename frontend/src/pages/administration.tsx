@@ -56,23 +56,19 @@ export default function Administration() {
                       <BiMenu />
                     </MenuItem>
                     <MenuItem onClick={() => setActualPage("AdminCompany")}>
-                      <BiStore />
-                      Company
+                      <BiStore /> Company
                     </MenuItem>
                     <MenuItem onClick={() => setActualPage("AdminUsers")}>
                       <BiUser /> Users
                     </MenuItem>
                     <MenuItem onClick={() => setActualPage("AdminCategories")}>
-                      <BiNews />
-                      Categories
+                      <BiNews /> Categories
                     </MenuItem>
                     <MenuItem onClick={() => setActualPage("AdminProducts")}>
-                      <BiPackage />
-                      Products
+                      <BiPackage /> Products
                     </MenuItem>
                     <MenuItem>
-                      <BiWallet />
-                      Sales
+                      <BiWallet /> Sales
                     </MenuItem>
                   </Menu>
                 </Sidebar>

@@ -10,8 +10,6 @@ import { ModalEditUser, ModalDeleteUser } from "../components";
 import { EditButton, ExcludeButton } from "../components/Buttons";
 //styles
 import { Wrapper, Content, Text } from "../styles/pages/admin";
-import dark from "../styles/themes/dark";
-import light from "../styles/themes/light";
 import { customStyles } from "../styles/dataTable/customStyles";
 
 export default function AdminUsers() {
@@ -19,7 +17,6 @@ export default function AdminUsers() {
   const {
     query: { company_id },
   } = useRouter();
-  const [theme, setTheme] = useState(light);
   const [users, setUsers] = useState<IUser[]>([]);
   //Modals
   const [reloadData, setReloadData] = useState(0);
@@ -27,15 +24,11 @@ export default function AdminUsers() {
   const [open, setOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
 
-  function toggleTheme() {
-    setTheme(theme.title === "light" ? dark : light);
-  }
-
   useEffect(() => {
     userService.getAll(company_id as string).then((data) => {
       setUsers(data);
     });
-  }, [company_id]);
+  }, [company_id, reloadData]);
 
   const data = users.map((user) => {
     return {
@@ -133,7 +126,6 @@ export default function AdminUsers() {
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
           customStyles={customStyles}
-          theme={theme.title}
         />
       </Content>
       <ModalEditUser
