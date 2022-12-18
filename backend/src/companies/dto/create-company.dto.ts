@@ -42,7 +42,7 @@ export class CreateCompanyDto extends Company {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => CreateCompanyParamsDto)
-  company_params?: CreateCompanyParamsDto;
+  company_params?: any;
 
   @IsOptional()
   @IsString()

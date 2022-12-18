@@ -11,7 +11,6 @@ import {
 } from 'class-validator';
 import { ProductTotalSales } from '../entities/product-total-sales.entity';
 import { ProductType } from '../entities/product-type.entity';
-import { CreateProductItemDto } from './create-product-item.dto';
 
 export class CreateProductDto {
   @IsUUID()
@@ -73,16 +72,10 @@ export class CreateProductDto {
   for_sale?: boolean;
 
   @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() => CreateProductItemDto)
-  items?: any | CreateProductItemDto[];
-
-  @IsOptional()
   product_combo: any;
 
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => CreateProductItemDto)
   total_sales?: any | ProductTotalSales[];
 
   @IsString()

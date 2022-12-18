@@ -1,5 +1,4 @@
 Aprimorar rota de login, context de login (front) - mostrar nome do usuário e redirecionamento
 
-Verificar porque o register não retorna o valor que vem do GET no PATCH
-
-salvas no cookie as opções de tema
+conferir porque está inverso o valor do theme.title do cookie em relação ao botão
+certificar de como setar o valor do theme no _app.tsx

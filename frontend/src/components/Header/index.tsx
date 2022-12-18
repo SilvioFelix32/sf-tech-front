@@ -2,7 +2,7 @@
 import { SearchBar } from "../SearchBar";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { CartButton, SignInButton, SwitchToggle } from "../Buttons";
+import { CartButton, SignInButton, ThemeToogle } from "../Buttons";
 import { LanguageSelector } from "../Buttons/ChangeLanguage";
 import "i18next";
 //styles
@@ -29,7 +29,7 @@ export function Header({ toggleTheme }) {
       </Logo>
       <SearchBar />
       <Select>
-        <SwitchToggle toggleTheme={toggleTheme} />
+        <ThemeToogle toggleTheme={toggleTheme} />
         <SignInButton />
         <CartButton />
         <LanguageSelector />

@@ -1,5 +1,5 @@
-import type { NextPage } from "next";
 import { useState } from "react";
+import { setCookie } from "nookies";
 import "i18next";
 //components
 import { Footer } from "../components/Footer";
@@ -21,10 +21,16 @@ import {
 import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 
-const Filtes: NextPage = () => {
-  const [theme, setTheme] = useState(light);
+export default function Filters() {
+  const themes = light || dark;
+  const [theme, setTheme] = useState(themes);
+
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
+    setCookie(undefined, "color-theme", theme.title, {
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    });
   }
 
   return (
@@ -48,6 +54,4 @@ const Filtes: NextPage = () => {
       </Theme>
     </ThemeProvider>
   );
-};
-
-export default Filtes;
+}

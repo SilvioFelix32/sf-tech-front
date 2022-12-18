@@ -16,7 +16,7 @@ export const Button = styled.button`
   border: none;
 `;
 
-export const ShopButton = styled.button`
+export const ShopButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

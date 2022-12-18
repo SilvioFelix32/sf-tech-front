@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { setCookie } from "nookies";
 import { useEffect, useState } from "react";
 import { companiesService } from "../services/companies-service";
 import { useTranslation } from "react-i18next";
@@ -20,14 +20,16 @@ import { customStyles } from "../styles/dataTable/customStyles";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const [theme, setTheme] = useState(light);
+  const themes = light || dark;
+  const [theme, setTheme] = useState(themes);
   const [companies, setCompanies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
 
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
+    setCookie(undefined, "color-theme", theme.title, {
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    });
   }
 
   useEffect(() => {

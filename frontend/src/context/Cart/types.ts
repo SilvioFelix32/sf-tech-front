@@ -15,6 +15,5 @@ export type CartItemType = {
   combo: boolean;
   for_sale: boolean;
   highlighted: boolean;
-  product_type: ProductType;
   amount?: number;
 };

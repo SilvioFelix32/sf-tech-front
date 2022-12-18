@@ -52,25 +52,6 @@ export const ProductPrices = styled.div`
   height: 100%;
 `;
 
-export const BuyButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-  height: 45px;
-  width: 150px;
-  margin: 12px;
-  border-radius: 12px;
-  color: ${({ theme }) => theme.colors.text};
-  border: solid 1px ${({ theme }) => theme.colors.quinary};
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  transition: filter 0.2s;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
-`;
-
 export const FavoriteButton = styled.button`
   display: none;
   position: absolute;

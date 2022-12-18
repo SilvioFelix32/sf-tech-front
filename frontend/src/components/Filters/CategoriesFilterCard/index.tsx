@@ -22,9 +22,7 @@ export function CategoriesFilterCard() {
         .getAll(company_id as string)
         .then((data) => setProductCategories(data))
         .catch((err) => alert(err));
-    } else {
-      router.push("/");
-    }
+    } else {}
   }, [company_id, router]);
 
   return (

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { MdFavoriteBorder } from "react-icons/md";
 import { productsService } from "../../services";
 import { IProduct } from "../../types";
-import { BtnAddOrRemove, BuyButton } from "../Buttons";
+import { BuyButton } from "../Buttons";
 //styles
 import {
   Wrapper,

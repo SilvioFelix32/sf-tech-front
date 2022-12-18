@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import "i18next";
 import { ThemeProvider } from "styled-components";
+import { setCookie } from "nookies";
 //components
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -31,14 +31,19 @@ import dark from "../styles/themes/dark";
 import light from "../styles/themes/light";
 
 export default function Administration() {
-  const [theme, setTheme] = useState(light);
-  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
-    useProSidebar();
+  const themes = light || dark;
+  const [theme, setTheme] = useState(themes);
+  const { collapseSidebar } = useProSidebar();
   const [actualPage, setActualPage] = useState("AdminCompany");
 
   const userHasAdminPermissions = useCan({ role: ["ADMIN"] });
+
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);
+    setCookie(undefined, "color-theme", theme.title, {
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    });
   }
 
   return (

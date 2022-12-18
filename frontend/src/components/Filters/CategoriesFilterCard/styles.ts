@@ -33,6 +33,7 @@ export const Text = styled.p`
 export const Button = styled.button`
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.background};
+  text-transform: uppercase;
   border: none;
   outline: none;
 
