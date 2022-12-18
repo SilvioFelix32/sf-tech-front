@@ -22,6 +22,11 @@ export const ProductInfo = styled.div`
     font-weight: bold;
     font-size: 18px;
     padding: 0 5px;
+
+    @media screen and (max-width: 1200px) {
+    font-size: 12px;
+    padding: 0 2px;
+  }
   }
 `;
 
@@ -38,4 +43,10 @@ export const Text = styled.p`
   font-size: 16px;
   margin: 5px 0;
   padding: 0 5px;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 12px;
+    margin: 2px 0;
+    padding: 0 2px;
+  }
 `;

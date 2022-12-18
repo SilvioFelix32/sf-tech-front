@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MdFavoriteBorder } from "react-icons/md";
-import { productsService } from "../../services";
+import { productCategoryService, productsService } from "../../services";
 import { IProduct } from "../../types";
+import { IProductCategories } from "../../types/IProductCategories";
 import { BuyButton } from "../Buttons";
 //styles
 import {
@@ -23,13 +24,24 @@ export function ProductCard() {
   const {
     query: { company_id },
   } = useRouter();
+  const [categories, setCategories] = useState<IProductCategories[]>([]);
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    productsService.getAll(company_id as string).then((data) => {
-      setProducts(data);
-    });
+    productsService
+      .getAll(company_id as string)
+      .then((data) => setProducts(data));
   }, [company_id]);
+
+  // useEffect(() => {
+  //   productCategoryService
+  //     .getAll(company_id as string)
+  //     .then((data) => setCategories(data));
+  // }, [company_id]);
+
+  // const products = categories.map((category) => {
+  //   return category.products.filter((product) => product.category_id);
+  // });
 
   return (
     <>

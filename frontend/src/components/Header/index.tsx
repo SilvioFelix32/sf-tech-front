@@ -10,7 +10,7 @@ import { Select, Wrapper, Logo, Button } from "./styles";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { BiStore } from "react-icons/bi";
 
-export function Header({ toggleTheme }) {
+export function Header() {
   const router = useRouter();
   const {
     query: { company_id },
@@ -29,8 +29,8 @@ export function Header({ toggleTheme }) {
       </Logo>
       <SearchBar />
       <Select>
-        <ThemeToogle toggleTheme={toggleTheme} />
         <SignInButton />
+        <ThemeToogle />
         <CartButton />
         <LanguageSelector />
         {userHasAdminPermissions && (

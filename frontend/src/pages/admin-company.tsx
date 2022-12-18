@@ -7,12 +7,10 @@ import "i18next";
 import DataTable from "react-data-table-component";
 //styles
 import { Wrapper, Content, Text } from "../styles/pages/admin";
-import light from "../styles/themes/light";
 import { customStyles } from "../styles/dataTable/customStyles";
 
 export default function AdminCompany() {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState(light);
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -78,7 +76,6 @@ export default function AdminCompany() {
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
           customStyles={customStyles}
-          theme={theme.title}
         />
       </Content>
     </Wrapper>

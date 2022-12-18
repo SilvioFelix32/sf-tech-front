@@ -1,28 +1,40 @@
-import { Search, SearchInput, SearchSelect, InputContainer } from "./styles";
 import { BiSearch } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { productCategoryService } from "../../services";
+import { IProductCategories } from "../../types/IProductCategories";
+//styles
+import { Search, SearchInput, SearchSelect, InputContainer } from "./styles";
 
 export function SearchBar() {
   const { t } = useTranslation();
+  const {
+    query: { company_id },
+  } = useRouter();
+  const router = useRouter();
+  const [productCategories, setProductCategories] = useState<
+    IProductCategories[]
+  >([]);
+
+  useEffect(() => {
+    if (company_id) {
+      productCategoryService
+        .getAll(company_id as string)
+        .then((data) => setProductCategories(data))
+        .catch((err) => alert(err));
+    } else {
+    }
+  }, [company_id, router]);
+
   return (
     <Search>
       <SearchSelect>
-        <option value="">{t("main.searchbar.selectField.option")}</option>
-        <option value="computador">
-          {t("main.searchbar.selectField.computer")}
-        </option>
-        <option value="celular">
-          {t("main.searchbar.selectField.cellphone")}
-        </option>
-        <option value="impressora">
-          {t("main.searchbar.selectField.printer")}
-        </option>
-        <option value="monitor">
-          {t("main.searchbar.selectField.monitor")}
-        </option>
-        <option value="notebook">
-          {t("main.searchbar.selectField.notebook")}
-        </option>
+        {productCategories
+          .filter((category) => category.active)
+          .map((category) => (
+            <option key={category.category_id}>{category.title.toLocaleLowerCase()}</option>
+          ))}
       </SearchSelect>
       <InputContainer>
         <SearchInput placeholder={t("main.searchbar.serchfield")} />

@@ -31,6 +31,10 @@ export const LeftContent = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 1200px) {
+   
+  }
 `;
 
 export const MainSection = styled.div`
@@ -43,6 +47,8 @@ export const MainSection = styled.div`
   align-items: flex-start;
 
   @media screen and (max-width: 1200px) {
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
   }
 `;

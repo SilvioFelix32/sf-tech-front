@@ -1,4 +1,4 @@
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { FaGem } from "react-icons/fa";
 //styles
 import "react-pro-sidebar/dist/css/styles.css";
@@ -7,15 +7,16 @@ interface SideBarProps {
   setIsToggled: () => void;
 }
 
-export function Sidebar({ isToggled }: SideBarProps) {
+export function ProSidebar({ isToggled }: SideBarProps) {
+  
   return (
-    <ProSidebar collapsed={false} toggled={isToggled}>
-      <Menu iconShape="square">
+    <Sidebar>
+      <Menu>
         <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
         <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
         <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
         <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
       </Menu>
-    </ProSidebar>
+    </Sidebar>
   );
 }

@@ -1,3 +1,3 @@
-export function ShopCart() {
+export default function ShopCart() {
   return <div>Carrinho</div>;
 }

@@ -28,7 +28,7 @@ export const SearchSelect = styled.select`
   width: 30%;
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.background};
-
+  
   option {
     padding: 8px;
   }

@@ -1,22 +1,20 @@
 import React, { useContext, useState } from "react";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
-import { ThemeContext } from "styled-components";
+import { ThemeContext } from "../../../context";
 //styles
 import { Button, Wrapper } from "./styled";
 
-export function ThemeToogle({ toggleTheme }) {
-  const { title } = useContext(ThemeContext);
+export function ThemeToogle() {
   const [themeMode, setThemeMode] = useState("light");
-
-  console.log("title", title);
+  const { setTheme } = useContext(ThemeContext);
 
   return (
     <Wrapper>
       {themeMode === "light" && (
         <Button
           onClick={() => {
-            setThemeMode("dark"), title === "dark";
-            toggleTheme();
+            setThemeMode("dark");
+            setTheme("dark");
           }}
         >
           <MdOutlineLightMode />
@@ -25,8 +23,8 @@ export function ThemeToogle({ toggleTheme }) {
       {themeMode === "dark" && (
         <Button
           onClick={() => {
-            setThemeMode("light"), title === "light";
-            toggleTheme();
+            setThemeMode("light");
+            setTheme("light");
           }}
         >
           <MdDarkMode />

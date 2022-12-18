@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { setCookie } from "nookies";
 import { useEffect, useState } from "react";
 import { companiesService } from "../services/companies-service";
 import { useTranslation } from "react-i18next";
@@ -12,25 +11,12 @@ import { Header } from "../components/Header";
 import { NavHeader } from "../components/NavHeader";
 import DataTable from "react-data-table-component";
 //styles
-import { ThemeProvider } from "styled-components";
 import { Wrapper, Theme, Content } from "../styles";
-import dark from "../styles/themes/dark";
-import light from "../styles/themes/light";
 import { customStyles } from "../styles/dataTable/customStyles";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
-  const themes = light || dark;
-  const [theme, setTheme] = useState(themes);
   const [companies, setCompanies] = useState([]);
-
-  function toggleTheme() {
-    setTheme(theme.title === "light" ? dark : light);
-    setCookie(undefined, "color-theme", theme.title, {
-      maxAge: 60 * 60 * 24,
-      path: "/",
-    });
-  }
 
   useEffect(() => {
     companiesService.getAll().then((data) => {
@@ -104,27 +90,24 @@ const Home: NextPage = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Theme>
-        <Wrapper>
-          <NavHeader />
-          <Header toggleTheme={toggleTheme} />
-          <Content>
-            <DataTable
-              columns={columns}
-              data={data}
-              pagination
-              paginationServer
-              paginationComponentOptions={paginationComponentOptions}
-              paginationRowsPerPageOptions={[5, 10, 20]}
-              customStyles={customStyles}
-              theme={theme.title}
-            />
-          </Content>
-          <Footer />
-        </Wrapper>
-      </Theme>
-    </ThemeProvider>
+    <Theme>
+      <Wrapper>
+        <NavHeader />
+        <Header />
+        <Content>
+          <DataTable
+            columns={columns}
+            data={data}
+            pagination
+            paginationServer
+            paginationComponentOptions={paginationComponentOptions}
+            paginationRowsPerPageOptions={[5, 10, 20]}
+            customStyles={customStyles}
+          />
+        </Content>
+        <Footer />
+      </Wrapper>
+    </Theme>
   );
 };
 

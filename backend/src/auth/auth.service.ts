@@ -29,6 +29,7 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
       user: {
         name: dbUser.name,
+        last_name: dbUser.last_name,
         role: dbUser.role,
         email: dbUser.email,
         password: undefined,

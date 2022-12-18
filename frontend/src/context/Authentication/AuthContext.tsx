@@ -7,6 +7,7 @@ import { IUser, Role } from "../../types/IUser";
 
 type User = {
   name: string;
+  last_name: string;
   email: string;
   password: string;
   role: Role;
@@ -57,7 +58,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       const { access_token, user } = response;
-
+      console.log(response);
       //using nookies to create the nextJS cookies
       setCookie(undefined, "nextauth.token", access_token, {
         maxAge: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
@@ -66,6 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({
         name: user.name,
+        last_name: user.last_name,
         email: user.email,
         password: user.password,
         role: user.role,

@@ -28,6 +28,10 @@ export const Text = styled.p`
   font-weight: 600;
   font-size: 18px;
   margin: 5px 0;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 12px;
+  }
 `;
 
 export const Button = styled.button`
@@ -44,5 +48,10 @@ export const Button = styled.button`
 
   &:hover {
     color: ${({ theme }) => theme.colors.tertiary};
+  }
+
+
+  @media screen and (max-width: 1200px) {
+    font-size: 12px;
   }
 `;

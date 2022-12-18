@@ -13,12 +13,19 @@ export const Wrapper = styled.div`
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: 0px 0px 30px 0px rgba(0, 1, 1, 0.3);
     cursor: pointer;
 
     .favorite {
       display: block;
     }
+  }
+
+  @media screen and (max-width: 1200px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 720px) {
+    width: 100%;
   }
 `;
 

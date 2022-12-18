@@ -2,3 +2,7 @@ Aprimorar rota de login, context de login (front) - mostrar nome do usuário e r
 
 conferir porque está inverso o valor do theme.title do cookie em relação ao botão
 certificar de como setar o valor do theme no _app.tsx
+box shadow do card de produtos
+
+
+responsidade dos componentes
