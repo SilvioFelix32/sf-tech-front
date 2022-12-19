@@ -40,8 +40,6 @@ export function ModalEditCategory({
     defaultValues: { ...productCategory },
   });
 
-  console.log(productCategory);
-
   useEffect(() => {
     if (category_id) {
       productCategoryService

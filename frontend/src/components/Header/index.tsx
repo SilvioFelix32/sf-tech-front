@@ -31,8 +31,8 @@ export function Header() {
       <Select>
         <SignInButton />
         <ThemeToogle />
-        <CartButton />
         <LanguageSelector />
+        <CartButton />
         {userHasAdminPermissions && (
           <Button
             onClick={() =>

@@ -1,9 +1,10 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { setCookie, destroyCookie } from "nookies";
 import Router, { useRouter } from "next/router";
 import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
+import { ThemeContext } from "../Theme/ThemeContext";
 
 type User = {
   name: string;
@@ -58,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       const { access_token, user } = response;
-      console.log(response);
+
       //using nookies to create the nextJS cookies
       setCookie(undefined, "nextauth.token", access_token, {
         maxAge: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
@@ -79,7 +80,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       if (userHasAdminPermissions) {
         Router.push({
-          pathname: "administration",
+          pathname: "filters",
           query: { company_id },
         }); //THIS PAGE WIL OPEN IF USER IS ADMIN
       } else {

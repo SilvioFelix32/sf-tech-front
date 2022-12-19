@@ -17,7 +17,7 @@ export function ThemeToogle() {
             setTheme("dark");
           }}
         >
-          <MdOutlineLightMode />
+          <MdDarkMode />
         </Button>
       )}
       {themeMode === "dark" && (
@@ -27,7 +27,7 @@ export function ThemeToogle() {
             setTheme("light");
           }}
         >
-          <MdDarkMode />
+          <MdOutlineLightMode />
         </Button>
       )}
     </Wrapper>
