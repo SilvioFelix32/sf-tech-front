@@ -80,7 +80,7 @@ export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
           Não tem uma conta?
           <Link
             href={{
-              pathname: "registration",
+              pathname: "create-acount",
               query: { company_id },
             }}
           >

@@ -128,7 +128,6 @@ export class UsersService {
     await this.validateCreateLocalUser(company_id, dto);
 
     const encriptedPassword = bcrypt.hash(dto.password, 10);
-    delete dto.password;
 
     const data: Prisma.UserCreateInput = {
       company_id,

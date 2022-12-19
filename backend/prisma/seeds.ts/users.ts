@@ -1,11 +1,10 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from '@prisma/client';
 
 export const userSeed: Prisma.UserCreateInput[] = [
   {
     document: '00000000000',
     name: 'admin',
     last_name: 'last_name',
-    user_name: 'admin',
     password: 'admin',
     email: 'admin@hotmail.com',
   },
@@ -13,7 +12,6 @@ export const userSeed: Prisma.UserCreateInput[] = [
     document: '00000000001',
     name: 'user',
     last_name: 'last_name',
-    user_name: 'user',
     password: 'user',
     email: 'user@hotmail.com',
   },

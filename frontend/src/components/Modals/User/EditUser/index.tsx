@@ -16,6 +16,7 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
+import { SweetAlert } from "../../../../shared/sweet-alert";
 
 interface modalProps {
   onOpen: boolean;
@@ -34,8 +35,9 @@ export function ModalEditUser({
     query: { company_id },
   } = useRouter();
   const [selectedUser, setSelectedUSer] = useState<IUser>();
+  const { SwallSuccess } = SweetAlert;
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: { ...selectedUser },
   });
 
@@ -49,6 +51,10 @@ export function ModalEditUser({
         .catch((err) => alert(err));
     }
   }, [user_id, company_id]);
+
+  useEffect(() => {
+    reset({ ...selectedUser });
+  }, [selectedUser]);
 
   async function handleUpdate(data: IUser) {
     await userService
@@ -99,6 +105,15 @@ export function ModalEditUser({
               <option value="MALE">MALE</option>
               <option value="FEMALE">FEMALE</option>
               <option value="OTHERS">OTHERS</option>
+            </Select>
+            <Text>Role:</Text>
+            <Select
+              defaultValue={selectedUser?.role}
+              {...register("role")}
+            >
+              <option value=""></option>
+              <option value="USER">USER</option>
+              <option value="ADMIN">ADMIN</option>
             </Select>
           </Content>
           <Content>
@@ -160,7 +175,13 @@ export function ModalEditUser({
             />
           </Content>
         </Context>
-        <Button type="submit" onClick={() => setOnOpen(false)}>
+        <Button
+          type="submit"
+          onClick={() => {
+            setOnOpen(false);
+            SwallSuccess();
+          }}
+        >
           Confirmar
         </Button>
       </Wrapper>

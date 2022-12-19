@@ -26,7 +26,6 @@ export interface IUser {
   address_number?: string | null;
   address_complement?: string | null;
   active?: boolean | null;
-  role: Role;
-  user_name?: string | null;
+  role?: Role;
   password: string;
 }

@@ -36,11 +36,11 @@ export class CreateUserDto extends User {
   @Type(() => Date)
   @IsDate()
   @IsOptional()
-  birth_date?: Date;
+  birth_date?: Date | null;
 
   @IsOptional()
   @IsString()
-  sex_type?: Sex;
+  sex_type?: Sex | null;
 
   @IsEmail()
   @IsNotEmpty()
@@ -85,17 +85,12 @@ export class CreateUserDto extends User {
   @IsString()
   @ApiProperty()
   @ApiHideProperty()
-  role: Role;
+  role?: Role;
 
   @IsString()
   @ApiProperty()
   @ApiHideProperty()
   password: string;
-
-  @IsString()
-  @ApiProperty()
-  @ApiHideProperty()
-  user_name: string;
 
   @ApiProperty()
   @ApiHideProperty()
