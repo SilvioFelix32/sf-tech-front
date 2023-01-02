@@ -29,7 +29,6 @@ export function ModalDeleteUser({
     await userService
       .delete(user_id as string, company_id as string)
       .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
   }
 
   return (

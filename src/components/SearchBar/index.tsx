@@ -19,8 +19,7 @@ export function SearchBar() {
     if (company_id) {
       productCategoryService
         .getAll(company_id as string)
-        .then((data) => setProductCategories(data))
-        .catch((err) => alert(err));
+        .then((data) => setProductCategories(data));
     } else {
     }
   }, [company_id, router]);

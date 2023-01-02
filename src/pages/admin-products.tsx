@@ -36,8 +36,7 @@ export default function AdminProducts() {
     if (company_id) {
       productsService
         .getAll(company_id as string)
-        .then((data) => setProducts(data))
-        .catch((err) => alert(err));
+        .then((data) => setProducts(data));
     } else {
       alert("No company informed!");
     }

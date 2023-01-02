@@ -55,7 +55,6 @@ export function ModalCreateProduct({
       productCategoryService
         .getAll(company_id as string)
         .then((data) => setProductCategory(data))
-        .catch((err) => alert(err));
     }
   }, [company_id]);
 
@@ -79,7 +78,6 @@ export function ModalCreateProduct({
     await productsService
       .create(category_id as string, company_id as string, data as IProduct)
       .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
   }
 
   return (

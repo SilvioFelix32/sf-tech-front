@@ -48,11 +48,9 @@ export function ModalEditProduct({
       productsService
         .getById(product_id as string)
         .then((data) => setSelectedProduct(data))
-        .catch((err) => alert(err));
       productCategoryService
         .getAll(company_id as string)
         .then((data) => setproductCategory(data))
-        .catch((err) => alert(err));
     }
   }, [product_id]);
 
@@ -65,7 +63,6 @@ export function ModalEditProduct({
     await productsService
       .update(company_id as string, product_id as string, data)
       .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
   }
 
   return (

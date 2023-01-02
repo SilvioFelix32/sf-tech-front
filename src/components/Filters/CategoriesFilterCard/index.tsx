@@ -24,9 +24,7 @@ export function CategoriesFilterCard({ filter, setFilter }: CategorySelector) {
     if (company_id) {
       productCategoryService
         .getAll(company_id as string)
-        .then((data) => setProductCategories(data))
-        .catch((err) => alert(err));
-    } else {
+        .then((data) => setProductCategories(data));
     }
   }, [company_id, router]);
 

@@ -37,8 +37,7 @@ export default function AdminCategories() {
     if (company_id) {
       productCategoryService
         .getAll(company_id as string)
-        .then((data) => setProductCategories(data))
-        .catch((err) => alert(err));
+        .then((data) => setProductCategories(data));
     } else {
       alert("No company informed!");
     }

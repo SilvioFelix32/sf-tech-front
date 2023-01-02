@@ -28,7 +28,6 @@ export function ModalDeleteCategory({
     await productCategoryService
       .delete(company_id as string, category_id as string)
       .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
   }
 
   return (

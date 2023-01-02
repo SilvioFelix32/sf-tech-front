@@ -16,8 +16,6 @@ function checkCEP(e: any) {
         setValue("estado", data.uf);
         setValue("endereco_complemento", data.complemento);
         setFocus("endereco_numero");
-      })
-      .catch(() => "");
-  } else {
+      });
   }
 }

@@ -44,8 +44,7 @@ export function ModalEditCategory({
     if (category_id) {
       productCategoryService
         .getById(category_id as string)
-        .then((data) => setproductCategory(data as any))
-        .catch((err) => alert(err));
+        .then((data) => setproductCategory(data as any));
     }
   }, [category_id]);
 
@@ -57,7 +56,6 @@ export function ModalEditCategory({
     await productCategoryService
       .update(company_id as string, category_id as string, data)
       .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
   }
 
   return (

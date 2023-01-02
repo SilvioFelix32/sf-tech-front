@@ -23,7 +23,6 @@ export function ModalDeleteProduct({
     await productsService
       .delete(product_id as string)
       .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
   }
 
   return (

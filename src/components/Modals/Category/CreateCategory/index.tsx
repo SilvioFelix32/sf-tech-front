@@ -44,7 +44,6 @@ export function ModalCreateCategory({
     await productCategoryService
       .create(company_id as string, data as IProductCategories)
       .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
   }
 
   return (

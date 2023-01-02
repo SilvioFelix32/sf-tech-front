@@ -47,8 +47,7 @@ export function ModalEditUser({
         .getById(company_id as string, user_id as string)
         .then((data) => {
           setSelectedUSer(data);
-        })
-        .catch((err) => alert(err));
+        });
     }
   }, [user_id, company_id]);
 
@@ -59,8 +58,7 @@ export function ModalEditUser({
   async function handleUpdate(data: IUser) {
     await userService
       .update(company_id as string, user_id as string, data)
-      .then(() => setReloadData(Math.random()))
-      .catch((err) => alert(err));
+      .then(() => setReloadData(Math.random()));
   }
 
   return (
@@ -107,10 +105,7 @@ export function ModalEditUser({
               <option value="OTHERS">OTHERS</option>
             </Select>
             <Text>Role:</Text>
-            <Select
-              defaultValue={selectedUser?.role}
-              {...register("role")}
-            >
+            <Select defaultValue={selectedUser?.role} {...register("role")}>
               <option value=""></option>
               <option value="USER">USER</option>
               <option value="ADMIN">ADMIN</option>
