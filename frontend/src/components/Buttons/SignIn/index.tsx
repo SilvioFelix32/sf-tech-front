@@ -11,6 +11,7 @@ import {
   CDropdownItem,
 } from "@coreui/react";
 //styles
+import "@coreui/coreui/dist/css/coreui.min.css";
 import { Button, Svg, Text, Wrapper } from "./styles";
 
 export const SignInButton = () => {
@@ -32,8 +33,10 @@ export const SignInButton = () => {
           </Button>
         </CDropdownToggle>
         <CDropdownMenu className="DropMenu">
+          <CDropdownItem className="OptionBtn">Minha conta</CDropdownItem>
+          <CDropdownItem className="OptionBtn">Compras</CDropdownItem>
           <CDropdownItem onClick={() => signOut()} className="OptionBtn">
-            sair <FiX />
+            Sair <FiX />
           </CDropdownItem>
         </CDropdownMenu>
       </CDropdown>

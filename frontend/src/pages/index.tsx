@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { companiesService } from "../services/companies-service";
-import { useTranslation } from "react-i18next";
 import { ICompany } from "../types/ICompany";
 import "i18next";
 //components
@@ -15,7 +14,6 @@ import { Wrapper, Theme, Content } from "../styles";
 import { customStyles } from "../styles/dataTable/customStyles";
 
 const Home: NextPage = () => {
-  const { t } = useTranslation();
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -47,38 +45,38 @@ const Home: NextPage = () => {
 
   const columns = [
     {
-      name: t("main.companyTable.id"),
+      name: "id",
       selector: (row) => row.id,
       sortable: true,
     },
     {
-      name: t("main.companyTable.name"),
+      name: "nome",
       selector: (row) => row.name,
       sortable: true,
       grow: 2,
     },
     {
-      name: "document",
+      name: "documento",
       selector: (row) => row.document,
       sortable: true,
       grow: 1,
     },
     {
-      name: t("main.companyTable.fantasyName"),
+      name: "nome fantasia",
       selector: (row) => row.fantasy_name,
       sortable: true,
       grow: 2,
     },
     {
-      name: t("main.companyTable.cellphone"),
+      name: "celular",
       selector: (row) => row.cellphone,
     },
     {
-      name: t("main.companyTable.email"),
+      name: "email",
       selector: (row) => row.email,
     },
     {
-      name: t("Select ID"),
+      name: "select id",
       selector: (row) => row.select_id,
     },
   ];

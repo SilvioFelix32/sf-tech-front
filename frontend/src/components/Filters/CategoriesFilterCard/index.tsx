@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { productCategoryService } from "../../../services";
 import { IProductCategories } from "../../../types/IProductCategories";
+import { VscClearAll } from "react-icons/vsc";
 //styles
 import { Wrapper, Text, Button, ProductInfo, ProductFilter } from "./styles";
 
-export function CategoriesFilterCard() {
-  const { t } = useTranslation();
+interface CategorySelector {
+  filter: string;
+  setFilter: (value: string) => void;
+}
+
+export function CategoriesFilterCard({ filter, setFilter }: CategorySelector) {
   const {
     query: { company_id },
   } = useRouter();
@@ -22,19 +26,29 @@ export function CategoriesFilterCard() {
         .getAll(company_id as string)
         .then((data) => setProductCategories(data))
         .catch((err) => alert(err));
-    } else {}
+    } else {
+    }
   }, [company_id, router]);
 
   return (
     <Wrapper>
       <ProductInfo>
-        <Text>{t("main.mainSection.categoriesFilterCard.title")}</Text>
+        <Text>Categorias</Text>
       </ProductInfo>
       <ProductFilter>
+        <Button onClick={() => setFilter("")}>
+          Limpar
+          <VscClearAll />
+        </Button>
         {productCategories
           .filter((category) => category.active)
           .map((category) => (
-            <Button key={category.category_id}>{category.title}</Button>
+            <Button
+              key={category.category_id}
+              onClick={() => setFilter(category.title)}
+            >
+              {category.title}
+            </Button>
           ))}
       </ProductFilter>
     </Wrapper>

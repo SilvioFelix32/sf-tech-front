@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   margin: 0;
   padding: 0;
 
-  .GlobeBtn {
+  .Button {
     margin: 0;
     color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.tertiary};

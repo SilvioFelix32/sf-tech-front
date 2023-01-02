@@ -8,7 +8,8 @@ export const Wrapper = styled.div`
   .Button {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:center;
+    color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.tertiary};
     outline: none;
     border: none;

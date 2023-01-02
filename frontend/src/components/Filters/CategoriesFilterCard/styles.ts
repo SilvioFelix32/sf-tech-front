@@ -35,6 +35,9 @@ export const Text = styled.p`
 `;
 
 export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.background};
   text-transform: uppercase;
@@ -50,6 +53,11 @@ export const Button = styled.button`
     color: ${({ theme }) => theme.colors.tertiary};
   }
 
+  svg {
+    height: 18px;
+    width: 18px;
+    margin-left: 8px;
+  }
 
   @media screen and (max-width: 1200px) {
     font-size: 12px;

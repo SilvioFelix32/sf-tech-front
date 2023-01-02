@@ -1,5 +1,4 @@
 import { BiSearch } from "react-icons/bi";
-import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { productCategoryService } from "../../services";
@@ -8,7 +7,6 @@ import { IProductCategories } from "../../types/IProductCategories";
 import { Search, SearchInput, SearchSelect, InputContainer } from "./styles";
 
 export function SearchBar() {
-  const { t } = useTranslation();
   const {
     query: { company_id },
   } = useRouter();
@@ -33,11 +31,13 @@ export function SearchBar() {
         {productCategories
           .filter((category) => category.active)
           .map((category) => (
-            <option key={category.category_id}>{category.title.toLocaleLowerCase()}</option>
+            <option key={category.category_id}>
+              {category.title.toLocaleLowerCase()}
+            </option>
           ))}
       </SearchSelect>
       <InputContainer>
-        <SearchInput placeholder={t("main.searchbar.serchfield")} />
+        <SearchInput placeholder="Procure um produto ou categoria..." />
         <BiSearch />
       </InputContainer>
     </Search>

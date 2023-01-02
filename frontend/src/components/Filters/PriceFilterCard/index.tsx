@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Slider } from "@mui/material";
-import { useTranslation } from "react-i18next";
 //styles
 import { Wrapper, Text, ProductInfo, ProductFilter } from "./styles";
 
@@ -9,7 +8,6 @@ function valuetext(value: number) {
 }
 
 export function PriceFilterCard() {
-  const { t } = useTranslation();
   const [value, setValue] = useState<number[]>([20, 37]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
@@ -20,8 +18,8 @@ export function PriceFilterCard() {
     <Wrapper>
       <ProductInfo>
         <Text>
-          {t("main.mainSection.priceFilterCard.title")}: {""}
-          {t("main.mainSection.priceFilterCard.priceType")} {""}
+          Filtrar por reço: {""}
+          R$ {""}
           {value},00
         </Text>
       </ProductInfo>

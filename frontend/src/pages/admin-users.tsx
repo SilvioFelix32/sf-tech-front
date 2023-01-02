@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import "i18next";
 import { IUser } from "../types/IUser";
 import { userService } from "../services";
 //components
@@ -13,7 +11,6 @@ import { Wrapper, Content, Text } from "../styles/pages/admin";
 import { customStyles } from "../styles/dataTable/customStyles";
 
 export default function AdminUsers() {
-  const { t } = useTranslation();
   const {
     query: { company_id },
   } = useRouter();
@@ -66,43 +63,43 @@ export default function AdminUsers() {
 
   const columns = [
     {
-      name: t("main.companyTable.name"),
+      name: "nome",
       selector: (row) => row.name,
       sortable: true,
       grow: 2,
     },
     {
-      name: "last_name",
+      name: "ultimo nome",
       selector: (row) => row.last_name,
       sortable: true,
       grow: 1,
     },
     {
-      name: "document",
+      name: "documento",
       selector: (row) => row.document,
       sortable: true,
       grow: 1,
     },
     {
-      name: t("email"),
+      name: "email",
       selector: (row) => row.email,
       sortable: true,
       grow: 2,
     },
     {
-      name: t("celphone"),
+      name: "celphone",
       selector: (row) => row.celphone,
     },
     {
-      name: t("birth_date"),
+      name: "nascimento",
       selector: (row) => row.birth_date,
     },
     {
-      name: t("active"),
+      name: "ativo",
       selector: (row) => row.active,
     },
     {
-      name: t("outros"),
+      name: "outros",
       selector: (row) => row.exclude_alter,
       sortable: true,
     },

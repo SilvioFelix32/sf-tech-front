@@ -15,8 +15,11 @@ import {
   LeftContent,
   Theme,
 } from "../styles/pages/filters";
+import { useState } from "react";
 
 export default function Filters() {
+  const [filter, setFilter] = useState("");
+
   return (
     <Theme>
       <Wrapper>
@@ -24,12 +27,12 @@ export default function Filters() {
         <Header />
         <Content>
           <LeftContent>
-            <CategoriesFilterCard />
+            <CategoriesFilterCard filter={filter} setFilter={setFilter} />
             <BrandsFilterCard />
             <PriceFilterCard />
           </LeftContent>
           <MainSection>
-            <ProductCard />
+            <ProductCard filter={filter} setFilter={setFilter} />
           </MainSection>
         </Content>
         <Footer />

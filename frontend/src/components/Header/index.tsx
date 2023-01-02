@@ -2,8 +2,12 @@
 import { SearchBar } from "../SearchBar";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { CartButton, SignInButton, ThemeToogle } from "../Buttons";
-import { LanguageSelector } from "../Buttons/ChangeLanguage";
+import {
+  CartButton,
+  FavoritesButton,
+  SignInButton,
+  ThemeToogle,
+} from "../Buttons";
 import "i18next";
 //styles
 import { Select, Wrapper, Logo, Button } from "./styles";
@@ -31,7 +35,7 @@ export function Header() {
       <Select>
         <SignInButton />
         <ThemeToogle />
-        <LanguageSelector />
+        <FavoritesButton />
         <CartButton />
         {userHasAdminPermissions && (
           <Button

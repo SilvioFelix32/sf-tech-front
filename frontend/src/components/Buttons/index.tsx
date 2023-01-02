@@ -5,3 +5,4 @@ export * from "./Exclude";
 export * from "./Edit";
 export * from "./ButtonAddOrRemove";
 export * from "./ButtonBuy";
+export * from "./Favorite";

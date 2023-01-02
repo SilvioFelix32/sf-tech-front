@@ -6,3 +6,5 @@ box shadow do card de produtos
 
 
 responsidade dos componentes
+
+resolver problema de hidratação

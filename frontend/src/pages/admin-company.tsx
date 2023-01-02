@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { companiesService } from "../services/companies-service";
-import { useTranslation } from "react-i18next";
 import { ICompany } from "../types/ICompany";
-import "i18next";
 //components
 import DataTable from "react-data-table-component";
 //styles
@@ -10,7 +8,6 @@ import { Wrapper, Content, Text } from "../styles/pages/admin";
 import { customStyles } from "../styles/dataTable/customStyles";
 
 export default function AdminCompany() {
-  const { t } = useTranslation();
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -31,7 +28,7 @@ export default function AdminCompany() {
 
   const columns = [
     {
-      name: t("main.companyTable.name"),
+      name: "nome",
       selector: (row) => row.name,
       sortable: true,
       grow: 2,
@@ -43,17 +40,17 @@ export default function AdminCompany() {
       grow: 1,
     },
     {
-      name: t("main.companyTable.fantasyName"),
+      name: "nome fantasia",
       selector: (row) => row.fantasy_name,
       sortable: true,
       grow: 2,
     },
     {
-      name: t("main.companyTable.cellphone"),
+      name: "celular",
       selector: (row) => row.cellphone,
     },
     {
-      name: t("main.companyTable.email"),
+      name: "email",
       selector: (row) => row.email,
     },
   ];
