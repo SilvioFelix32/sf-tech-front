@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { companiesService } from "../services/companies-service";
 import { ICompany } from "../types/ICompany";
-import "i18next";
 //components
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";

@@ -8,7 +8,6 @@ import {
   SignInButton,
   ThemeToogle,
 } from "../Buttons";
-import "i18next";
 //styles
 import { Select, Wrapper, Logo, Button } from "./styles";
 import { useCan } from "../../context/Authentication/hooks/useCan";
