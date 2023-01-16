@@ -9,13 +9,11 @@ module.exports = {
     formats: ['image/webp'],
     domains: ['i.imgur.com', 'imgur.com']
   },
-}
 
-module.exports = {
   async headers() {
     return [
       {
-        // matching all API routes
+        //matching all API routes
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
@@ -26,4 +24,4 @@ module.exports = {
       }
     ]
   }
-};
+}

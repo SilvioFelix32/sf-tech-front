@@ -13,15 +13,15 @@ export function useCan({ role, permissions }: UseCanParams) {
     return false;
   }
 
-  //   if (permissions?.length > 0) {
-  //     const hasAllPermissions = permissions.every((permission) => {
-  //       return user.permissions.includes(permission);
-  //     });
+  // if (permissions?.length > 0) {
+  //   const hasAllPermissions = permissions.every((permission) => {
+  //     return user.permissions.includes(permission);
+  //   });
 
-  //     if (!hasAllPermissions) {
-  //       return false;
-  //     }
+  //   if (!hasAllPermissions) {
+  //     return false;
   //   }
+  // }
 
   if (role?.length > 0) {
     const hasAllRoles = role.some((role) => {

@@ -1,10 +1,9 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { setCookie, destroyCookie } from "nookies";
 import Router, { useRouter } from "next/router";
 import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
-import { ThemeContext } from "../Theme/ThemeContext";
 
 type User = {
   name: string;

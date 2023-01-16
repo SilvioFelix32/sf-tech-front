@@ -19,6 +19,7 @@ export function Header() {
     query: { company_id },
   } = useRouter();
   const userHasAdminPermissions = useCan({ role: ["ADMIN"] });
+  const userIsAuthenticated = useCan({ role: ["USER", "ADMIN"] });
 
   return (
     <Wrapper>
@@ -34,7 +35,7 @@ export function Header() {
       <Select>
         <SignInButton />
         <ThemeToogle />
-        <FavoritesButton />
+        {userIsAuthenticated && <FavoritesButton />}
         <CartButton />
         {userHasAdminPermissions && (
           <Button

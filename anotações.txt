@@ -4,7 +4,6 @@ conferir porque está inverso o valor do theme.title do cookie em relação ao b
 certificar de como setar o valor do theme no _app.tsx
 box shadow do card de produtos
 
+responsividade dos componentes
 
-responsidade dos componentes
-
-resolver problema de hidratação
+o botão favoritos só aparece no header, quando o usuario está authenticado 
