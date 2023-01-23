@@ -59,7 +59,7 @@ const filterReducer = (state, action) => {
     case "CLEAR_FILTERS":
       let priceArray = action.payload.map((curElem: IProduct) => curElem.value);
       let prodMaxPrice = Math.max(...priceArray);
-      console.log(prodMaxPrice);
+      
       return {
         ...state,
         filters: {

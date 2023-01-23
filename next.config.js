@@ -10,6 +10,15 @@ module.exports = {
     domains: ['i.imgur.com', 'imgur.com']
   },
 
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination: 'https://sf-tech-back.vercel.app/v1',
+  //     }
+  //   ]
+  // },
+
   async headers() {
     return [
       {
