@@ -5,6 +5,7 @@ import { MainApp } from "../components/MainApp";
 import {
   AuthProvider,
   CartProvider,
+  FilterContextProvider,
   ThemePreferenceProvider,
 } from "../context";
 import { ProSidebarProvider } from "react-pro-sidebar";
@@ -17,20 +18,22 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemePreferenceProvider>
       <AuthProvider>
         <CartProvider>
-          <ProSidebarProvider>
-            <Head>
-              <title>Sf-tech</title>
-              <link rel="shortcut icon" href="/favicon.jpg" />
-              <meta
-                name="viewport"
-                content="initial-scale=1.0, width=device-width"
-              />
-            </Head>
-            <MainApp>
-              <Component {...pageProps} />
-              <GlobalStyles />
-            </MainApp>
-          </ProSidebarProvider>
+          <FilterContextProvider>
+            <ProSidebarProvider>
+              <Head>
+                <title>Sf-tech</title>
+                <link rel="shortcut icon" href="/favicon.jpg" />
+                <meta
+                  name="viewport"
+                  content="initial-scale=1.0, width=device-width"
+                />
+              </Head>
+              <MainApp>
+                <Component {...pageProps} />
+                <GlobalStyles />
+              </MainApp>
+            </ProSidebarProvider>
+          </FilterContextProvider>
         </CartProvider>
       </AuthProvider>
     </ThemePreferenceProvider>

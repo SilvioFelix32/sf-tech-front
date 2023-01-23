@@ -25,7 +25,7 @@ export function Header() {
     <Wrapper>
       <Logo onClick={() => router.push("/")}>
         <Image
-          src="/images/logo_sftech.jpg"
+          src="/images/logo_sftech.png"
           alt="sftech"
           width={200}
           height={60}

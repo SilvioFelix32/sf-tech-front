@@ -1,37 +1,36 @@
-import { useState } from "react";
-import { Slider } from "@mui/material";
+import { useFilterContext } from "../../../context";
 //styles
 import { Wrapper, Text, ProductInfo, ProductFilter } from "./styles";
 
-function valuetext(value: number) {
-  return `${value}°C`;
-}
-
 export function PriceFilterCard() {
-  const [value, setValue] = useState<number[]>([20, 37]);
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
-  };
+  const {
+    filters: { price, maxPrice, minPrice },
+    updateFilterValue,
+    clearFilters,
+  } = useFilterContext();
 
   return (
     <Wrapper>
       <ProductInfo>
         <Text>
-          Filtrar por reço: {""}
+          Filtrar por preço: {""}
           R$ {""}
-          {value},00
+          {price},00
         </Text>
       </ProductInfo>
 
       <ProductFilter>
-        <Slider
-          getAriaLabel={() => "Value"}
-          value={value}
-          onChange={handleChange}
-          valueLabelDisplay="auto"
-          getAriaValueText={valuetext}
-        ></Slider>
+        <input
+          type="range"
+          name="price"
+          min={minPrice}
+          max={maxPrice}
+          value={price}
+          onChange={updateFilterValue}
+        />
+        <button className="btn" onClick={clearFilters}>
+          Limpar Filtros
+        </button>
       </ProductFilter>
     </Wrapper>
   );

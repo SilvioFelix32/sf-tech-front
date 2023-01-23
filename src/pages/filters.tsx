@@ -27,11 +27,11 @@ export default function Filters() {
         <Content>
           <LeftContent>
             <CategoriesFilterCard filter={filter} setFilter={setFilter} />
-            <BrandsFilterCard />
+            {/* <BrandsFilterCard /> */}
             <PriceFilterCard />
           </LeftContent>
           <MainSection>
-            <ProductCard filter={filter} setFilter={setFilter} />
+            <ProductCard filter={filter} />
           </MainSection>
         </Content>
         <Footer />

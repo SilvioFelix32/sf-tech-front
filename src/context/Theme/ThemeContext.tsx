@@ -1,5 +1,6 @@
 import nookies, { setCookie } from "nookies";
 import { createContext, useState } from "react";
+
 type ITheme = {
   theme: string;
   setTheme(theme: string): void;
