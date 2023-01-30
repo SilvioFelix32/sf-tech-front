@@ -5,6 +5,7 @@ import { MainApp } from "../components/MainApp";
 import {
   AuthProvider,
   CartProvider,
+  FavoriteProvider,
   FilterContextProvider,
   ThemePreferenceProvider,
 } from "../context";
@@ -18,22 +19,24 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemePreferenceProvider>
       <AuthProvider>
         <CartProvider>
-          <FilterContextProvider>
-            <ProSidebarProvider>
-              <Head>
-                <title>Sf-tech</title>
-                <link rel="shortcut icon" href="/favicon.jpg" />
-                <meta
-                  name="viewport"
-                  content="initial-scale=1.0, width=device-width"
-                />
-              </Head>
-              <MainApp>
-                <Component {...pageProps} />
-                <GlobalStyles />
-              </MainApp>
-            </ProSidebarProvider>
-          </FilterContextProvider>
+          <FavoriteProvider>
+            <FilterContextProvider>
+              <ProSidebarProvider>
+                <Head>
+                  <title>Sf-tech</title>
+                  <link rel="shortcut icon" href="/favicon.jpg" />
+                  <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                  />
+                </Head>
+                <MainApp>
+                  <Component {...pageProps} />
+                  <GlobalStyles />
+                </MainApp>
+              </ProSidebarProvider>
+            </FilterContextProvider>
+          </FavoriteProvider>
         </CartProvider>
       </AuthProvider>
     </ThemePreferenceProvider>

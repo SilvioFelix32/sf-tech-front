@@ -1,6 +1,13 @@
 import { useFilterContext } from "../../../context";
 //styles
-import { Wrapper, Text, ProductInfo, ProductFilter } from "./styles";
+import {
+  Wrapper,
+  Text,
+  ProductInfo,
+  ProductFilter,
+  Input,
+  Button,
+} from "./styles";
 
 export function PriceFilterCard() {
   const {
@@ -20,7 +27,7 @@ export function PriceFilterCard() {
       </ProductInfo>
 
       <ProductFilter>
-        <input
+        <Input
           type="range"
           name="price"
           min={minPrice}
@@ -28,9 +35,9 @@ export function PriceFilterCard() {
           value={price}
           onChange={updateFilterValue}
         />
-        <button className="btn" onClick={clearFilters}>
+        <Button className="btn" onClick={clearFilters}>
           Limpar Filtros
-        </button>
+        </Button>
       </ProductFilter>
     </Wrapper>
   );

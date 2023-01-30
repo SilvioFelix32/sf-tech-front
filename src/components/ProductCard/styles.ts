@@ -59,7 +59,32 @@ export const ProductPrices = styled.div`
   height: 100%;
 `;
 
-export const FavoriteButton = styled.button`
+export const FavoritedButton = styled.button`
+  display: none;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  padding: 0;
+  border-radius: 50%;
+  z-index: 2;
+  outline: none;
+  color: ${({ theme }) => theme.colors.background};
+  border: solid 1px ${({ theme }) => theme.colors.tertiary};
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  svg {
+    margin: 8px;
+    height: 26px;
+    width: 26px;
+  }
+`;
+
+export const NotFavoriteButton = styled.button`
   display: none;
   position: absolute;
   right: 8px;

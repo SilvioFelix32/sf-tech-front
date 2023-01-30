@@ -1,27 +1,26 @@
-import {
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
-} from "@coreui/react";
+import React, { useState } from "react";
+import { useFavorite } from "../../../context";
+//components
+import { FavoriteModal } from "../..";
 import { BsHeart } from "react-icons/bs";
-
 //styles
-import { Wrapper } from "./styled";
-import "@coreui/coreui/dist/css/coreui.min.css";
-import "../../../styles/global";
+import { FavoriteItems, Content, Wrapper } from "./styles";
 
-export function FavoritesButton() {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+
+export const FavoritesButton: React.FC<ButtonProps> = ({ ...rest }) => {
+  const { totalItemsCount } = useFavorite();
+  const [openModal, setOpenModal] = useState(false);
+
   return (
-    <Wrapper>
-      <CDropdown className="Wrapper">
-        <CDropdownToggle className="Button">
+    <>
+      <Wrapper {...rest} onClick={() => setOpenModal(true)}>
+        <Content>
           <BsHeart />
-        </CDropdownToggle>
-        <CDropdownMenu className="DropMenu">
-          <CDropdownItem className="OptionBtn">teste</CDropdownItem>
-        </CDropdownMenu>
-      </CDropdown>
-    </Wrapper>
+          <FavoriteItems>{totalItemsCount}</FavoriteItems>
+        </Content>
+      </Wrapper>
+      <FavoriteModal openModal={openModal} setOpenModal={setOpenModal} />
+    </>
   );
-}
+};

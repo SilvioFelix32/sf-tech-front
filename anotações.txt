@@ -7,3 +7,5 @@ box shadow do card de produtos
 responsividade dos componentes
 
 o botão favoritos só aparece no header, quando o usuario está authenticado 
+
+refatorar os cookies que não estão salvando direito

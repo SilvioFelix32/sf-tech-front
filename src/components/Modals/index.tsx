@@ -8,3 +8,4 @@ export * from "./User/DeleteUser";
 export * from "./User/EditUser";
 export * from "./Cart";
 export * from "./Login";
+export * from "./Favorite";

@@ -2,7 +2,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MdFavoriteBorder } from "react-icons/md";
-import { useFilterContext } from "../../context";
+import { useFavorite, useFilterContext } from "../../context";
+import { useCan } from "../../context/Authentication/hooks/useCan";
 import { productCategoryService } from "../../services";
 import { IProduct } from "../../types";
 import { IProductCategories } from "../../types/IProductCategories";
@@ -11,7 +12,8 @@ import { BuyButton } from "../Buttons";
 import {
   Wrapper,
   Text,
-  FavoriteButton,
+  FavoritedButton,
+  NotFavoriteButton,
   Picture,
   ProductInfo,
   Title,
@@ -28,9 +30,12 @@ export function ProductCard({ filter }: CategorySelector) {
     query: { company_id },
   } = useRouter();
   const {
-    filters: { price }
+    filters: { price },
   } = useFilterContext();
+  const { removeItemFromFavorites, handleAddToFavorites } = useFavorite();
   const [categories, setCategories] = useState<IProductCategories[]>([]);
+  const [buttonType, setButtonType] = useState("isNotFavorited");
+  const userIsAuthenticated = useCan({ role: ["USER", "ADMIN"] });
 
   useEffect(() => {
     productCategoryService
@@ -38,7 +43,7 @@ export function ProductCard({ filter }: CategorySelector) {
       .then((data) => setCategories(data));
   }, [company_id]);
 
-  const products = categories.reduce((acc, cur) => {
+  const categoryOfProducts = categories.reduce((acc, cur) => {
     if (cur.title !== filter && filter !== "") {
       return acc;
     }
@@ -47,7 +52,7 @@ export function ProductCard({ filter }: CategorySelector) {
 
   return (
     <>
-      {products
+      {categoryOfProducts
         .filter((produdct: IProduct) => produdct.value <= price)
         .map((product: IProduct) => (
           <Wrapper key={product.product_id}>
@@ -83,9 +88,27 @@ export function ProductCard({ filter }: CategorySelector) {
               </ProductValue>
               <BuyButton product={product} />
             </ProductInfo>
-            <FavoriteButton className="favorite">
-              <MdFavoriteBorder />
-            </FavoriteButton>
+            {userIsAuthenticated && buttonType === "isNotFavorited" && (
+              <NotFavoriteButton
+                className="favorite"
+                onClick={() => {
+                  handleAddToFavorites(product), setButtonType("isFavorited");
+                }}
+              >
+                <MdFavoriteBorder />
+              </NotFavoriteButton>
+            )}
+            {userIsAuthenticated && buttonType === "isFavorited" && (
+              <FavoritedButton
+                className="favorite"
+                onClick={() => {
+                  removeItemFromFavorites(product.product_id),
+                    setButtonType("isNotFavorited");
+                }}
+              >
+                <MdFavoriteBorder />
+              </FavoritedButton>
+            )}
           </Wrapper>
         ))}
     </>
