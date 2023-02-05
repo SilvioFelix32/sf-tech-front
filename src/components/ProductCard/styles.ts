@@ -41,10 +41,10 @@ export const Picture = styled.div`
 
 export const ProductInfo = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
-  margin: 5px 15px;
-  padding: 10px;
+  padding: 15px 10px;
   width: 80%;
   height: 100%;
 `;

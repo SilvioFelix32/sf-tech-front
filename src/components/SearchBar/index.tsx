@@ -6,7 +6,12 @@ import { IProductCategories } from "../../types/IProductCategories";
 //styles
 import { Search, SearchInput, SearchSelect, InputContainer } from "./styles";
 
-export function SearchBar() {
+interface CategorySelector {
+  filter: string;
+  setFilter: (value: string) => void;
+}
+
+export function SearchBar({ filter, setFilter }: CategorySelector) {
   const {
     query: { company_id },
   } = useRouter();
@@ -20,17 +25,17 @@ export function SearchBar() {
       productCategoryService
         .getAll(company_id as string)
         .then((data) => setProductCategories(data));
-    } else {
     }
   }, [company_id, router]);
 
   return (
     <Search>
-      <SearchSelect>
+      <SearchSelect onChange={(e) => setFilter(e.target.value)}>
+        <option value={""}>Selecionar</option>
         {productCategories
           .filter((category) => category.active)
           .map((category) => (
-            <option key={category.category_id}>
+            <option key={category.category_id} value={category.title}>
               {category.title.toLocaleLowerCase()}
             </option>
           ))}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 80%;
+  width: 150px;
 `;
 
 export const Button = styled.button`
@@ -9,9 +9,8 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
 
-  margin: 10px;
   height: 36px;
-  width: 100%;
+  width: 150px;
   background: ${({ theme }) => theme.colors.background};
   border: none;
 `;
@@ -148,8 +147,8 @@ export const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  margin: 10px;
+  height: 36px;
+  width: 150px;
 
   border: solid 1px ${({ theme }) => theme.colors.tertiary};
   border-radius: 16px;
@@ -161,7 +160,7 @@ export const ButtonAdd = styled.button`
   align-items: center;
   justify-content: center;
   width: 100%;
-
+  max-width: 150px;
   font-weight: bold;
   font-size: 14px;
   background: ${({ theme }) => theme.colors.background};

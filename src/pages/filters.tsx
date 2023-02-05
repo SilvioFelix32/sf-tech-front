@@ -23,7 +23,7 @@ export default function Filters() {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header />
+        <Header filter={filter} setFilter={setFilter} />
         <Content>
           <LeftContent>
             <CategoriesFilterCard filter={filter} setFilter={setFilter} />

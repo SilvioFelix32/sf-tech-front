@@ -4,8 +4,8 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 150px;
+  width: 150px;
+  height: 36px;
   border: solid 1px ${({ theme }) => theme.colors.tertiary};
   border-radius: 16px;
   transition: width 0.3s ease-in-out, opacity 0.17s ease-out;
@@ -45,9 +45,8 @@ export const Content = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 36px;
   width: 100%;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.tertiary};

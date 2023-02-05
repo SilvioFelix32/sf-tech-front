@@ -12,8 +12,13 @@ import {
 import { Select, Wrapper, Logo, Button } from "./styles";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { BiStore } from "react-icons/bi";
+import { useState } from "react";
+interface CategorySelector {
+  filter: string;
+  setFilter: (value: string) => void;
+}
 
-export function Header() {
+export function Header({ filter, setFilter }: CategorySelector) {
   const router = useRouter();
   const {
     query: { company_id },
@@ -31,7 +36,7 @@ export function Header() {
           height={60}
         ></Image>
       </Logo>
-      <SearchBar />
+      <SearchBar filter={filter} setFilter={setFilter} />
       <Select>
         <SignInButton />
         <ThemeToogle />
