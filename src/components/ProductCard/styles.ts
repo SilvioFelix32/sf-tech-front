@@ -131,7 +131,7 @@ export const Title = styled.p`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   margin: 2px;
   padding: 0 5px;
   text-transform: capitalize;

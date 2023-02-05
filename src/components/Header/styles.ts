@@ -40,7 +40,7 @@ export const Logo = styled.button`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
 `;
 
 export const Select = styled.div`

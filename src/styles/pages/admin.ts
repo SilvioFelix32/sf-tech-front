@@ -18,7 +18,7 @@ export const Content = styled.div`
 
 export const Text = styled.p`
   margin: 10px auto;
-  font-size: 32px;
+  font-size: 18px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.title};
   text-align: center;

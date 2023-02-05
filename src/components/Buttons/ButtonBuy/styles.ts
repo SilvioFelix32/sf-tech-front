@@ -161,9 +161,9 @@ export const ButtonAdd = styled.button`
   align-items: center;
   justify-content: center;
   width: 100%;
-  
+
   font-weight: bold;
-  font-size: 24px;
+  font-size: 14px;
   background: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.tertiary};
   border-top-right-radius: 16px;
@@ -178,7 +178,7 @@ export const ButtonRemove = styled.button`
   width: 100%;
 
   font-weight: bold;
-  font-size: 24px;
+  font-size: 14px;
   background: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.tertiary};
   border-top-left-radius: 16px;
@@ -192,7 +192,7 @@ export const Text = styled.div`
   align-items: center;
   width: 100%;
   height: 36px;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text};
   background: ${({ theme }) => theme.colors.tertiary};

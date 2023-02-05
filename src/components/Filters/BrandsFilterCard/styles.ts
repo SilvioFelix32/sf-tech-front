@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  padding: 10px 30px;
+  padding: 8px;
   border-radius: 18px;
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@ export const ProductInfo = styled.div`
   p {
     color: ${({ theme }) => theme.colors.title};
     font-weight: bold;
-    font-size: 18px;
+    font-size: 14px;
     padding: 0 5px;
 
     @media screen and (max-width: 1200px) {
@@ -60,7 +60,7 @@ export const ProductFilter = styled.div`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   margin: 5px 0;
   padding: 0 5px;
 

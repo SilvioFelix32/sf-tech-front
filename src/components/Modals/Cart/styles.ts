@@ -70,7 +70,7 @@ export const Totals = styled.div`
   margin-top: auto;
 
   p {
-    font-size: 16px;
+    font-size: 12px;
     margin: 2px;
   }
 `;

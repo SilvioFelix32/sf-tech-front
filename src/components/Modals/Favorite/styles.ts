@@ -19,7 +19,7 @@ export const FavoriteItems = styled.div`
   width: 100%;
 
   p {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
     margin: 3px;
   }
@@ -71,7 +71,7 @@ export const Totals = styled.div`
   margin-top: auto;
 
   p {
-    font-size: 16px;
+    font-size: 12px;
     margin: 2px;
   }
 `;

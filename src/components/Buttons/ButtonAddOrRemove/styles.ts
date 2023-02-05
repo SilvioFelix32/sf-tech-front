@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
     width: 100%;
 
     font-weight: bold;
-    font-size: 24px;
+    font-size: 14px;
     color: ${({ theme }) => theme.colors.tertiary};
     background-color: ${({ theme }) => theme.colors.background};
     border-top-left-radius: 16px;
@@ -32,7 +32,7 @@ export const Wrapper = styled.div`
     width: 100%;
 
     font-weight: bold;
-    font-size: 24px;
+    font-size: 14px;
     color: ${({ theme }) => theme.colors.tertiary};
     background-color: ${({ theme }) => theme.colors.background};
     border-top-right-radius: 16px;
@@ -47,7 +47,7 @@ export const Content = styled.div`
   align-items: center;
   height: 36px;
   width: 100%;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.tertiary};

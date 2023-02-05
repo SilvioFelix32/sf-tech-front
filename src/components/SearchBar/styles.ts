@@ -21,7 +21,7 @@ export const SearchSelect = styled.select`
   border-radius: 12px 0 0 12px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 12px;
   text-transform: capitalize;
   padding: 5px 10px;
   height: 100%;

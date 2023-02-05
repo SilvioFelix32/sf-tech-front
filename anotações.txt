@@ -1,11 +1,4 @@
-Aprimorar rota de login, context de login (front) - mostrar nome do usuário e redirecionamento
-
-conferir porque está inverso o valor do theme.title do cookie em relação ao botão
-certificar de como setar o valor do theme no _app.tsx
-box shadow do card de produtos
 
 responsividade dos componentes
-
-o botão favoritos só aparece no header, quando o usuario está authenticado 
 
 refatorar os cookies que não estão salvando direito
