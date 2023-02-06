@@ -13,6 +13,7 @@ import { Wrapper, Theme, Content } from "../styles";
 import { customStyles } from "../styles/dataTable/customStyles";
 
 const Home: NextPage = () => {
+  const [filter, setFilter] = useState("");
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -90,7 +91,7 @@ const Home: NextPage = () => {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header />
+        <Header filter={filter} setFilter={setFilter} />
         <Content>
           <DataTable
             columns={columns}
