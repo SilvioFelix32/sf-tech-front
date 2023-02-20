@@ -60,7 +60,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
           <Button
             onClick={() =>
               router.push({
-                pathname: "/",
+                pathname: "/shop-cart",
                 query: { query: company_id },
               })
             }
