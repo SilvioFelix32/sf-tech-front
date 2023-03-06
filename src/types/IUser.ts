@@ -7,6 +7,7 @@ export enum Sex {
 export enum Role {
   USER = "USER",
   ADMIN = "ADMIN",
+  MASTER = "MASTER",
 }
 export interface IUser {
   user_id?: string;

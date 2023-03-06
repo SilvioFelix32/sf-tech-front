@@ -6,6 +6,7 @@ export * from "./Category/DeleteCategory";
 export * from "./Category/EditCategory";
 export * from "./User/DeleteUser";
 export * from "./User/EditUser";
+export * from "./User/EditSuperUser";
 export * from "./Cart";
 export * from "./Login";
 export * from "./Favorite";

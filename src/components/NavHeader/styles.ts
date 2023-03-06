@@ -37,6 +37,11 @@ export const RightNav = styled.div`
   justify-content: flex-end;
   width: 50%;
 
+  a {
+    margin: 0 5px;
+    color: ${({ theme }) => theme.colors.text};
+  }
+
   @media screen and (max-width: 1366px) {
     display: flex;
     align-items: center;

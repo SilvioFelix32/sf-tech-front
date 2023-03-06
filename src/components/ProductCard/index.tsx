@@ -35,7 +35,7 @@ export function ProductCard({ filter }: CategorySelector) {
   const { removeItemFromFavorites, handleAddToFavorites } = useFavorite();
   const [categories, setCategories] = useState<IProductCategories[]>([]);
   const [buttonType, setButtonType] = useState("isNotFavorited");
-  const userIsAuthenticated = useCan({ role: ["USER", "ADMIN"] });
+  const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   useEffect(() => {
     productCategoryService

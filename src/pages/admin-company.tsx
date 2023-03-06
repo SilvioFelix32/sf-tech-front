@@ -5,7 +5,7 @@ import { ICompany } from "../types/ICompany";
 import DataTable from "react-data-table-component";
 //styles
 import { Wrapper, Content, Text } from "../styles/pages/admin";
-import { customStyles } from "../styles/dataTable/customStyles";
+import { customStyles } from "../styles/customDataTable";
 
 export default function AdminCompany() {
   const [companies, setCompanies] = useState([]);

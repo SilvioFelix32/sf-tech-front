@@ -15,11 +15,9 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 import DataTable from "react-data-table-component";
 //styles and theme
 import { Button, Text, Content } from "../styles/pages/admin";
-import light from "../styles/themes/light";
-import { customStyles } from "../styles/dataTable/customStyles";
+import { customStyles } from "../styles/customDataTable";
 
 export default function AdminProducts() {
-  const [theme, setTheme] = useState(light);
   const {
     query: { company_id },
   } = useRouter();
@@ -128,7 +126,6 @@ export default function AdminProducts() {
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
           customStyles={customStyles}
-          theme={theme.title}
         />
       </Content>
       <ModalCreateProduct

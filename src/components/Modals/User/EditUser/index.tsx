@@ -76,12 +76,6 @@ export function ModalEditUser({
       <Wrapper onSubmit={handleSubmit(handleUpdate)}>
         <Context>
           <Content>
-            <Text>Document:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.document}
-              {...register("document")}
-            />
             <Text>Name:</Text>
             <Input
               type="string"
@@ -94,80 +88,12 @@ export function ModalEditUser({
               defaultValue={selectedUser?.last_name}
               {...register("last_name")}
             />
-            <Text>Sex Type:</Text>
-            <Select
-              defaultValue={selectedUser?.sex_type}
-              {...register("sex_type")}
-            >
-              <option value=""></option>
-              <option value="MALE">MALE</option>
-              <option value="FEMALE">FEMALE</option>
-              <option value="OTHERS">OTHERS</option>
-            </Select>
             <Text>Role:</Text>
             <Select defaultValue={selectedUser?.role} {...register("role")}>
               <option value=""></option>
               <option value="USER">USER</option>
               <option value="ADMIN">ADMIN</option>
             </Select>
-          </Content>
-          <Content>
-            <Text>Birth date:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.birth_date}
-              {...(register("birth_date"), { valueAsDate: true })}
-            />
-            <Text>Celphone:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.celphone}
-              {...register("celphone")}
-            />
-            <Text>Email:</Text>
-            <Input
-              type="email"
-              defaultValue={selectedUser?.email}
-              {...register("email")}
-            />
-            <Text>CEP</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.cep}
-              {...register("cep")}
-            />
-          </Content>
-          <Content>
-            <Text>State</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.state}
-              {...register("state")}
-            />
-            <Text>City</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.city}
-              {...register("city")}
-            />
-            <Text>Neighborhood</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.neighborhood}
-              {...register("neighborhood")}
-            />
-            <Text>Address</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.address}
-              {...register("address")}
-            />
-            <Text>Address Number</Text>
-            <Input
-              type="string"
-              defaultValue={selectedUser?.address_number}
-              {...register("address_number")}
-            />
           </Content>
         </Context>
         <Button

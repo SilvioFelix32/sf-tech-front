@@ -7,10 +7,11 @@ import { ICompany } from "../types/ICompany";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NavHeader } from "../components/NavHeader";
-import DataTable from "react-data-table-component";
 //styles
+import { customStyles } from "../styles/customDataTable";
+import DataTable from "react-data-table-component";
+
 import { Wrapper, Theme, Content } from "../styles";
-import { customStyles } from "../styles/dataTable/customStyles";
 
 const Home: NextPage = () => {
   const [filter, setFilter] = useState("");

@@ -23,8 +23,8 @@ export function Header({ filter, setFilter }: CategorySelector) {
   const {
     query: { company_id },
   } = useRouter();
-  const userHasAdminPermissions = useCan({ role: ["ADMIN"] });
-  const userIsAuthenticated = useCan({ role: ["USER", "ADMIN"] });
+  const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
+  const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   return (
     <Wrapper>

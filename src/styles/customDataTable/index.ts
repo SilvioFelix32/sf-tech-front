@@ -1,10 +1,10 @@
-//https://github.com/jbetancur/react-data-table-component/blob/master/src/DataTable/styles.ts
 import { TableStyles } from "react-data-table-component";
 
 export const customStyles: TableStyles = {
   table: {
     style: {
-      overflowX: "auto",
+      color: "#33C1B3",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   tableWrapper: {
@@ -13,25 +13,26 @@ export const customStyles: TableStyles = {
       minHeight: "400px",
       width: "100%",
       margin: "0 auto",
-      overflowX: "auto",
+      color: "#33C1B3",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   rows: {
     style: {
-      textAlign: "center",
       minHeight: "60px",
       padding: "6px",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   headCells: {
     style: {
-      textTransform: "uppercase",
       fontWeight: "400",
-      tableLayout: "fixed",
       fontSize: "14px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      color: "#33C1B3",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   cells: {
@@ -39,17 +40,16 @@ export const customStyles: TableStyles = {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      textAlign: "center",
-      fontWeight: "400",
-      whiteSpace: "nowrap",
       textOverflow: "ellipsis",
+      color: "#33C1B3",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   headRow: {
     style: {
       minHeight: "52px",
-      borderBottomWidth: "1px",
-      borderBottomStyle: "solid",
+      color: "#33C1B3",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
   },
   pagination: {
@@ -60,6 +60,8 @@ export const customStyles: TableStyles = {
       width: "100%",
       fontSize: "13px",
       minHeight: "56px",
+      color: "#33C1B3",
+      backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
     pageButtonsStyle: {
       borderRadius: "50%",

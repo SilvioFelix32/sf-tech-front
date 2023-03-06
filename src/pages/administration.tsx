@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NavHeader } from "../components/NavHeader";
-import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
+import { Menu, useProSidebar } from "react-pro-sidebar";
 import { useCan } from "../context/Authentication/hooks/useCan";
 import AdminProducts from "./admin-products";
 import AdminCategories from "./admin-product-category";
@@ -24,13 +24,18 @@ import {
   Content,
   Section,
 } from "../styles/pages/administration";
+import {
+  CustomSidebar,
+  CustomMenuItem,
+  CustomMenu,
+} from "../styles/customSideBar";
 
 export default function Administration() {
   const { collapseSidebar } = useProSidebar();
   const [filter, setFilter] = useState("");
   const [actualPage, setActualPage] = useState("AdminCompany");
 
-  const userHasAdminPermissions = useCan({ role: ["ADMIN"] });
+  const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
 
   return (
     <Theme>
@@ -40,28 +45,32 @@ export default function Administration() {
         <Content>
           {userHasAdminPermissions && (
             <>
-              <Sidebar>
-                <Menu>
-                  <MenuItem onClick={() => collapseSidebar()}>
+              <CustomSidebar>
+                <CustomMenu>
+                  <CustomMenuItem onClick={() => collapseSidebar()}>
                     <BiMenu />
-                  </MenuItem>
-                  <MenuItem onClick={() => setActualPage("AdminCompany")}>
+                  </CustomMenuItem>
+                  <CustomMenuItem onClick={() => setActualPage("AdminCompany")}>
                     <BiStore /> Company
-                  </MenuItem>
-                  <MenuItem onClick={() => setActualPage("AdminUsers")}>
+                  </CustomMenuItem>
+                  <CustomMenuItem onClick={() => setActualPage("AdminUsers")}>
                     <BiUser /> Users
-                  </MenuItem>
-                  <MenuItem onClick={() => setActualPage("AdminCategories")}>
+                  </CustomMenuItem>
+                  <CustomMenuItem
+                    onClick={() => setActualPage("AdminCategories")}
+                  >
                     <BiNews /> Categories
-                  </MenuItem>
-                  <MenuItem onClick={() => setActualPage("AdminProducts")}>
+                  </CustomMenuItem>
+                  <CustomMenuItem
+                    onClick={() => setActualPage("AdminProducts")}
+                  >
                     <BiPackage /> Products
-                  </MenuItem>
-                  <MenuItem>
+                  </CustomMenuItem>
+                  <CustomMenuItem>
                     <BiWallet /> Sales
-                  </MenuItem>
-                </Menu>
-              </Sidebar>
+                  </CustomMenuItem>
+                </CustomMenu>
+              </CustomSidebar>
               <Section>
                 {actualPage === "AdminProducts" && <AdminProducts />}
                 {actualPage === "AdminUsers" && <AdminUsers />}

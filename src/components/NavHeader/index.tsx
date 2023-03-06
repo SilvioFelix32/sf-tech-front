@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Wrapper, Text, LeftNav, RightNav } from "./styles";
 
 export function NavHeader() {
@@ -10,9 +11,15 @@ export function NavHeader() {
       </LeftNav>
 
       <RightNav>
-        <Text>Linkedin</Text>
-        <Text>GitHub</Text>
-        <Text>Sobre</Text>
+        <Link href={"https://www.linkedin.com/in/silviofelix32/"}>
+          <a target="_blank">Linkedin</a>
+        </Link>
+        <Link href={"https://github.com/SilvioFelix32"}>
+          <a target="_blank">GitHub</a>
+        </Link>
+        <Link href={"https://curriculo-silvio-felix32.vercel.app/"}>
+          <a target="_blank">Sobre</a>
+        </Link>
       </RightNav>
     </Wrapper>
   );
