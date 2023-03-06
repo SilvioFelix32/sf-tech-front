@@ -25,6 +25,12 @@ export const Content = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const LeftContent = styled.div`
@@ -34,6 +40,7 @@ export const LeftContent = styled.div`
   flex-direction: column;
 
   @media screen and (max-width: 1200px) {
+    display: none;
   }
 `;
 

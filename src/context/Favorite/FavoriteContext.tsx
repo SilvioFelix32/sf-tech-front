@@ -1,18 +1,31 @@
-import React, { useContext, useMemo, useState } from "react";
-import nookies, { destroyCookie, setCookie } from "nookies";
+import React, { ReactNode, useContext, useMemo, useState } from "react";
+import Cookies from "js-cookie";
 import { IFavoriteItem } from "../../types/IFavorite";
+interface IFavoriteContext {
+  favoriteItems: IFavoriteItem[];
+  handleAddToFavorites: (clickedItem: IFavoriteItem) => void;
+  getTotalItems: (items: IFavoriteItem[]) => number;
+  removeItemFromFavorites: (product_id: string) => void;
+  totalItemsCount: number;
+}
 
-const FavoriteContext = React.createContext(null);
+interface FavoriteProviderProviderProps {
+  children: ReactNode;
+}
 
-export function FavoriteProvider(props) {
-  const [favoriteItems, setFavoriteItems] = useState([] as IFavoriteItem[]);
+const FavoriteContext = React.createContext<IFavoriteContext | null>(null);
 
-  const cookies = nookies.get();
-  const favoriteCookies = cookies["favorite-items"];
+export function FavoriteProvider({ children }: FavoriteProviderProviderProps) {
+  const [favoriteItems, setFavoriteItems] = useState<IFavoriteItem[]>([]);
+
+  const favoriteCookies = Cookies.get("favorite-items");
+  const favoriteProducts = favoriteCookies
+    ? (JSON.parse(favoriteCookies) as IFavoriteItem[])
+    : [];
 
   const totalItemsCount = useMemo(() => {
-    return favoriteItems.reduce((acumulator, item) => {
-      return acumulator + item.amount;
+    return favoriteItems.reduce((accumulator, item) => {
+      return accumulator + item.amount;
     }, 0);
   }, [favoriteItems]);
 
@@ -24,33 +37,40 @@ export function FavoriteProvider(props) {
   };
 
   function handleAddToFavorites(clickedItem: IFavoriteItem) {
-    const favoriteProducts = favoriteItems.map((item) => item.product_id);
-    const favoriteArray = JSON.stringify(favoriteProducts);
-    setCookie(undefined, "favorite-items", favoriteArray, {
-      maxAge: 60 * 60 * 24,
+    const isItemInFavorites = favoriteItems.some(
+      (item) => item.product_id === clickedItem.product_id
+    );
+
+    if (isItemInFavorites) {
+      const updatedFavoriteItems = favoriteItems.map((item) =>
+        item.product_id === clickedItem.product_id
+          ? { ...item, amount: item.amount + 1 }
+          : item
+      );
+      setFavoriteItems(updatedFavoriteItems);
+    } else {
+      const newFavoriteItem = { ...clickedItem, amount: 1 };
+      const newFavoriteItems = [...favoriteItems, newFavoriteItem];
+      setFavoriteItems(newFavoriteItems);
+      const favoriteArray = JSON.stringify(newFavoriteItems);
+      Cookies.set("favorite-items", favoriteArray, {
+        expires: 7,
+        path: "/",
+      });
+    }
+  }
+
+  const removeItemFromFavorites = (product_id: string) => {
+    const filteredFavoriteItems = favoriteItems.filter(
+      (item) => item.product_id !== product_id
+    );
+    const favoriteArray = JSON.stringify(filteredFavoriteItems);
+    Cookies.set("favorite-items", favoriteArray, {
+      expires: 7,
       path: "/",
     });
-
-    setFavoriteItems((previousState) => {
-      return [...previousState, { ...clickedItem, amount: 1 }];
-    });
-  }
-
-  function removeItemFromFavorites(product_id: string) {
-    // retrieve the cookie value and parse it back to an array
-    const favoritedArray = JSON.parse(favoriteCookies);
-    // remove the object with a specific name
-    const filteredArray = favoritedArray.filter(
-      (item: IFavoriteItem) => item.product_id !== product_id
-    );
-    //store the modified array back in the cookie
-    const filteredArrayAsString = JSON.stringify(filteredArray);
-    setCookie({}, "favorite-items", filteredArrayAsString);
-
-    return setFavoriteItems((previousState) =>
-      previousState.filter((item) => item.product_id !== product_id)
-    );
-  }
+    setFavoriteItems(filteredFavoriteItems);
+  };
 
   return (
     <FavoriteContext.Provider
@@ -62,7 +82,7 @@ export function FavoriteProvider(props) {
         totalItemsCount,
       }}
     >
-      {props.children}
+      {children}
     </FavoriteContext.Provider>
   );
 }

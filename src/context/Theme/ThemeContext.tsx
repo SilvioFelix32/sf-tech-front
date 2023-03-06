@@ -1,32 +1,44 @@
-import nookies, { setCookie } from "nookies";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect, ReactNode } from "react";
+import Cookies from "js-cookie";
 
-type ITheme = {
+interface IThemeContext {
   theme: string;
-  setTheme(theme: string): void;
-};
+  setTheme: (theme: string) => void;
+}
 
-export const ThemeContext = createContext({} as ITheme);
+export const ThemeContext = createContext<IThemeContext>({
+  theme: "light",
+  setTheme: () => {},
+});
 
-export function ThemePreferenceProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    const cookies = nookies.get();
-    if (cookies["color-theme"] === "light") return "light";
-    if (cookies["color-theme"] === "dark") return "dark";
-    return "light";
-  });
+interface ThemePreferenceProviderProps {
+  children: ReactNode;
+}
 
-  function handleTheme(value: string) {
+const ThemePreferenceProvider: React.FC<ThemePreferenceProviderProps> = ({
+  children,
+}) => {
+  const [theme, setTheme] = useState<string>("light");
+
+  useEffect(() => {
+    const savedTheme = Cookies.get("color-theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  function handleTheme(value: string): void {
     setTheme(value);
-    setCookie(undefined, "color-theme", value, {
-      maxAge: 60 * 60 * 24,
-      path: "/",
-    });
+    Cookies.set("color-theme", value, { expires: 7, path: "/" });
   }
 
+  const contextValue: IThemeContext = { theme, setTheme: handleTheme };
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: handleTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
-}
+};
+
+export default ThemePreferenceProvider;

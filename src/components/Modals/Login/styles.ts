@@ -25,6 +25,25 @@ export const Password = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 8px;
+    color: ${({ theme }) => theme.colors.tertiary};
+    background: none;
+    border: none;
+    transition: filter(0.2s);
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
 `;
 
 export const SavePassword = styled.div`
@@ -73,8 +92,23 @@ export const Registration = styled.div`
   width: 100%;
   height: 100%;
 
-  a {
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 100px;
     margin: 5px;
+    padding: 5px;
+    border-radius: 8px;
+    color: ${({ theme }) => theme.colors.tertiary};
+    background: none;
+    border: none;
+    transition: filter(0.2s);
+
+    &:hover {
+      filter: brightness(0.9);
+    }
   }
 `;
 

@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import { MainApp } from "../components/MainApp";
@@ -7,10 +8,9 @@ import {
   CartProvider,
   FavoriteProvider,
   FilterContextProvider,
-  ThemePreferenceProvider,
 } from "../context";
+import ThemePreferenceProvider from "../context/Theme/ThemeContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
-import nookies from "nookies";
 //styles
 import { GlobalStyles } from "../styles/global";
 
@@ -43,9 +43,11 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 
-App.getInitialProps = ({ ctx }) => ({
-  theme: nookies.set(ctx, "color-theme", "light", {
-    maxAge: 30 * 24 * 60 * 60,
+App.getInitialProps = ({ ctx }) => {
+  Cookies.set("color-theme", "light", {
+    expires: 30,
     path: "/",
-  }),
-});
+  });
+
+  return {};
+};

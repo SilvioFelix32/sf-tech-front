@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { setCookie, destroyCookie } from "nookies";
+import Cookies from "js-cookie";
 import Router, { useRouter } from "next/router";
 import { userService } from "../../services";
 import api from "../../services/api";
@@ -35,8 +35,8 @@ type AuthProviderProps = {
 };
 
 export function signOut() {
-  destroyCookie(undefined, "nextauth.token");
-  destroyCookie(undefined, "nextauth.refreshToken");
+  Cookies.remove(undefined, "nextauth.token");
+  Cookies.remove(undefined, "nextauth.refreshToken");
 
   Router.push("/");
 }
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const { access_token, user } = response;
 
       //using nookies to create the nextJS cookies
-      setCookie(undefined, "nextauth.token", access_token, {
+      Cookies.set(undefined, "nextauth.token", access_token, {
         maxAge: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
         path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
       });

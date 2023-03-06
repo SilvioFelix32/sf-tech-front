@@ -3,7 +3,7 @@ import { viaCEPService } from "../services/viaCEP-service";
 
 const { register, setValue, setFocus, handleSubmit } = useForm();
 
-function checkCEP(e: any) {
+export function checkCEP(e: any) {
   const cep = e.target.value.replace(/\D/g, ""); // essa Regex substitui qualquer coisa que n seja numero por um valor vazior, pois a API só aceita numeros.
   if (e.target.value) {
     viaCEPService

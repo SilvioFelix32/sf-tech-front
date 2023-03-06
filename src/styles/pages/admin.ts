@@ -22,6 +22,11 @@ export const Text = styled.p`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.title};
   text-align: center;
+
+  /* Media query for smaller screens */
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 export const Button = styled.button`
@@ -37,5 +42,13 @@ export const Button = styled.button`
 
   &:hover {
     filter: brightness(0.9);
+  }
+
+  /* Media query for smaller screens */
+  @media screen and (max-width: 768px) {
+    height: 32px;
+    margin: 10px auto;
+    padding: 8px;
+    border-radius: 6px;
   }
 `;

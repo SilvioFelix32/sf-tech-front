@@ -1,13 +1,11 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useCallback, useContext, useState } from "react";
 import {
   FaFacebookSquare,
   FaInstagramSquare,
   FaYoutubeSquare,
 } from "react-icons/fa";
-import { Modal as ModalComponent } from "react-responsive-modal";
-//styles
+import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { AuthContext } from "../../../context";
 import {
@@ -20,33 +18,51 @@ import {
   Wrapper,
 } from "./styles";
 
-interface ModalProps {
+interface LoginModalProps {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
 }
 
-export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
+export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const { signIn } = useContext(AuthContext);
   const {
     query: { company_id },
   } = useRouter();
   const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (event: FormEvent) => {
+      event.preventDefault();
 
-    const data = {
-      email,
-      password,
-    };
+      const data = {
+        email,
+        password,
+      };
 
-    await signIn(data);
-  }
+      await signIn(data);
+    },
+    [email, password, signIn]
+  );
+
+  const handleForgotPasswordClick = useCallback(() => {
+    router.push({
+      pathname: "",
+      query: { company_id },
+    });
+  }, [router, company_id]);
+
+  const handleCreateAccountClick = useCallback(() => {
+    router.push({
+      pathname: "create-acount",
+      query: { company_id },
+    });
+  }, [router, company_id]);
 
   return (
-    <ModalComponent
+    <Modal
       classNames={{
         overlay: "customOverlay",
         modal: "customModal",
@@ -56,21 +72,26 @@ export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
       center
     >
       <Wrapper onSubmit={handleSubmit}>
-        <h2>Entre com sua conta</h2> <br />
+        <h2>Entre com sua conta</h2>
+        <br />
         <p>Email:</p>
-        <Input type="text" onChange={(e) => setEmail(e.target.value)} /> <br />
+        <Input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <br />
         <Password>
           <p>Senha:</p>
-          <Link
-            href={{
-              pathname: "",
-              query: { company_id },
-            }}
-          >
+          <button onClick={handleForgotPasswordClick}>
             Esqueceu sua Senha?
-          </Link>
+          </button>
         </Password>
-        <Input type="password" onChange={(e) => setPassword(e.target.value)} />
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <SavePassword>
           <Input type="checkbox" id="remember" />
           <label htmlFor="remember">Salvar Senha?</label>
@@ -78,14 +99,7 @@ export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
         <Button type="submit">Entrar</Button>
         <Registration>
           Não tem uma conta?
-          <Link
-            href={{
-              pathname: "create-acount",
-              query: { company_id },
-            }}
-          >
-            Cadastrar
-          </Link>
+          <button onClick={handleCreateAccountClick}>Cadastrar</button>
         </Registration>
         <Medias>
           <button onClick={() => router.push("/")}>
@@ -99,6 +113,6 @@ export function LoginModal({ isOpen, setIsOpen }: ModalProps) {
           </button>
         </Medias>
       </Wrapper>
-    </ModalComponent>
+    </Modal>
   );
 }

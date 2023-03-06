@@ -1,5 +1,3 @@
-import { ProductType } from "../../types/IProductType";
-
 export type CartItemType = {
   company_id: string;
   product_id: string;

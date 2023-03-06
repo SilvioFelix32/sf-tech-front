@@ -5,31 +5,19 @@ import { ThemeContext } from "../../../context";
 import { Button, Wrapper } from "./styled";
 
 export function ThemeToogle() {
-  const [themeMode, setThemeMode] = useState("light");
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
   const { setTheme } = useContext(ThemeContext);
+
+  function toggleTheme() {
+    setIsDarkTheme(!isDarkTheme);
+    setTheme(isDarkTheme ? "light" : "dark");
+  }
 
   return (
     <Wrapper>
-      {themeMode === "light" && (
-        <Button
-          onClick={() => {
-            setThemeMode("dark");
-            setTheme("dark");
-          }}
-        >
-          <MdDarkMode />
-        </Button>
-      )}
-      {themeMode === "dark" && (
-        <Button
-          onClick={() => {
-            setThemeMode("light");
-            setTheme("light");
-          }}
-        >
-          <MdOutlineLightMode />
-        </Button>
-      )}
+      <Button onClick={toggleTheme}>
+        {isDarkTheme ? <MdOutlineLightMode /> : <MdDarkMode />}
+      </Button>
     </Wrapper>
   );
 }
