@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { useCart } from "../../../context";
+import { CompanyContext, useCart } from "../../../context";
 import { Modal as ModalComponent } from "react-responsive-modal";
 import { BiTrash } from "react-icons/bi";
 //styles
 import "react-responsive-modal/styles.css";
 import { Button, BtnGroup, Wrapper, Totals, CartItems } from "./styles";
 import { CartItemType } from "../../../context/Cart/types";
-import { BtnAddOrRemove } from "../../Buttons";
 
 interface ModalProps {
   openModal: boolean;
@@ -17,9 +16,7 @@ interface ModalProps {
 export function CartModal({ openModal, setOpenModal }: ModalProps) {
   const { cartItems, deleteItemFromCart, cartTotalPrice } = useCart();
   const router = useRouter();
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
 
   return (
     <ModalComponent
@@ -57,14 +54,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
           <p>Total: </p> <p> R$ {cartTotalPrice.replace(".", ",")} </p>
         </Totals>
         <BtnGroup>
-          <Button
-            onClick={() =>
-              router.push({
-                pathname: "/shop-cart",
-                query: { query: company_id },
-              })
-            }
-          >
+          <Button onClick={() => router.push("/shop-cart")}>
             Confirmar Compra
           </Button>
           <Button type="button" onClick={() => setOpenModal(false)}>

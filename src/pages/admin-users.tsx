@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IUser } from "../types/IUser";
+import { CompanyContext } from "../context";
 import { userService } from "../services";
 //components
 import DataTable from "react-data-table-component";
@@ -16,9 +16,7 @@ import { customStyles } from "../styles/customDataTable";
 import { useCan } from "../context/Authentication/hooks/useCan";
 
 export default function AdminUsers() {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const [users, setUsers] = useState<IUser[]>([]);
   //Modals
   const [reloadData, setReloadData] = useState(0);

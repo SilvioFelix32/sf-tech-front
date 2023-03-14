@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { CompanyContext } from "../../../../context";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { productsService, productCategoryService } from "../../../../services";
 import { IProduct } from "../../../../types";
@@ -32,9 +32,7 @@ export function ModalEditProduct({
   product_id,
   setReloadData,
 }: modalProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const [selectedProduct, setSelectedProduct] = useState<IProduct>();
   const [productCategory, setproductCategory] = useState<IProductCategories[]>(
     []
@@ -47,10 +45,10 @@ export function ModalEditProduct({
     if (product_id) {
       productsService
         .getById(product_id as string)
-        .then((data) => setSelectedProduct(data))
+        .then((data) => setSelectedProduct(data));
       productCategoryService
         .getAll(company_id as string)
-        .then((data) => setproductCategory(data))
+        .then((data) => setproductCategory(data));
     }
   }, [product_id]);
 
@@ -62,7 +60,7 @@ export function ModalEditProduct({
     delete data.product_id;
     await productsService
       .update(company_id as string, product_id as string, data)
-      .then(() => setReloadData(Math.random()))
+      .then(() => setReloadData(Math.random()));
   }
 
   return (

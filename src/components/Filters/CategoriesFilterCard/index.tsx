@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { productCategoryService } from "../../../services";
+import { CompanyContext } from "../../../context";
 import { IProductCategories } from "../../../types/IProductCategories";
 import { VscClearAll } from "react-icons/vsc";
 //styles
@@ -12,9 +13,7 @@ interface CategorySelector {
 }
 
 export function CategoriesFilterCard({ filter, setFilter }: CategorySelector) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const router = useRouter();
   const [productCategories, setProductCategories] = useState<
     IProductCategories[]
@@ -23,7 +22,7 @@ export function CategoriesFilterCard({ filter, setFilter }: CategorySelector) {
   useEffect(() => {
     if (company_id) {
       productCategoryService
-        .getAll(company_id as string)
+        .getAll(company_id)
         .then((data) => setProductCategories(data));
     }
   }, [company_id, router]);

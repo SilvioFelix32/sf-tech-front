@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { FormEvent } from "react";
+import { FormEvent, useContext } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
+import { CompanyContext } from "../../../../context";
 import { productCategoryService } from "../../../../services";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
@@ -18,16 +18,14 @@ export function ModalDeleteCategory({
   setOpen,
   setReloadData,
 }: modalProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
 
   async function handleDelete(event: FormEvent) {
     event.preventDefault();
 
     await productCategoryService
       .delete(company_id as string, category_id as string)
-      .then(() => setReloadData(Math.random()))
+      .then(() => setReloadData(Math.random()));
   }
 
   return (

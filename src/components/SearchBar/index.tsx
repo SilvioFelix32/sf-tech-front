@@ -1,6 +1,7 @@
 import { BiSearch } from "react-icons/bi";
+import { CompanyContext } from "../../context";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { productCategoryService } from "../../services";
 import { IProductCategories } from "../../types/IProductCategories";
 //styles
@@ -12,9 +13,7 @@ interface CategorySelector {
 }
 
 export function SearchBar({ filter, setFilter }: CategorySelector) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const router = useRouter();
   const [productCategories, setProductCategories] = useState<
     IProductCategories[]

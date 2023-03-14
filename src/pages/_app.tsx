@@ -10,41 +10,48 @@ import {
   FilterContextProvider,
 } from "../context";
 import ThemePreferenceProvider from "../context/Theme/ThemeContext";
+import CompanyIdProvider from "../context/Company/CompanyContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
 //styles
 import { GlobalStyles } from "../styles/global";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemePreferenceProvider>
-      <AuthProvider>
-        <CartProvider>
-          <FavoriteProvider>
-            <FilterContextProvider>
-              <ProSidebarProvider>
-                <Head>
-                  <title>Sf-tech</title>
-                  <link rel="shortcut icon" href="/favicon.jpg" />
-                  <meta
-                    name="viewport"
-                    content="initial-scale=1.0, width=device-width"
-                  />
-                </Head>
-                <MainApp>
-                  <Component {...pageProps} />
-                  <GlobalStyles />
-                </MainApp>
-              </ProSidebarProvider>
-            </FilterContextProvider>
-          </FavoriteProvider>
-        </CartProvider>
-      </AuthProvider>
-    </ThemePreferenceProvider>
+    <CompanyIdProvider>
+      <ThemePreferenceProvider>
+        <AuthProvider>
+          <CartProvider>
+            <FavoriteProvider>
+              <FilterContextProvider>
+                <ProSidebarProvider>
+                  <Head>
+                    <title>Sf-tech</title>
+                    <link rel="shortcut icon" href="/favicon.jpg" />
+                    <meta
+                      name="viewport"
+                      content="initial-scale=1.0, width=device-width"
+                    />
+                  </Head>
+                  <MainApp>
+                    <Component {...pageProps} />
+                    <GlobalStyles />
+                  </MainApp>
+                </ProSidebarProvider>
+              </FilterContextProvider>
+            </FavoriteProvider>
+          </CartProvider>
+        </AuthProvider>
+      </ThemePreferenceProvider>
+    </CompanyIdProvider>
   );
 }
 
 App.getInitialProps = ({ ctx }) => {
   Cookies.set("color-theme", "light", {
+    expires: 30,
+    path: "/",
+  });
+  Cookies.set("company_id", "55e445bf-f6fd-422f-98ae-0eef24e1f1d7", {
     expires: 30,
     path: "/",
   });

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CompanyContext } from "../../context";
 import { useForm } from "react-hook-form";
 import { userService, viaCEPService } from "../../services";
 import { SweetAlert } from "../../shared/sweet-alert";
@@ -17,9 +18,7 @@ const initialValues = {
 
 export function RegistrationForm() {
   const { SwallSuccess, SwallFailure, SwallCheckPassword } = SweetAlert;
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import Cookies from "js-cookie";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
@@ -11,6 +11,7 @@ type User = {
   email: string;
   password: string;
   role: Role;
+  user_id: string;
 };
 
 type IResponse = {
@@ -44,10 +45,16 @@ export function signOut() {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>(() => {
+    const loggedUser = Cookies.get("user");
+
+    if (loggedUser) {
+      return JSON.parse(loggedUser);
+    }
+
+    return null;
+  });
+
   const isAuthenticated = !!user;
 
   async function signIn({ email, password }: signInCredentials) {
@@ -60,34 +67,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const { access_token, user } = response;
 
       //using nookies to create the nextJS cookies
-      Cookies.set(undefined, "nextauth.token", access_token, {
-        maxAge: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
+      Cookies.set("nextauth.token", access_token, {
+        expires: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
         path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
       });
 
-      setUser({
+      const loggedUser = {
         name: user.name,
         last_name: user.last_name,
         email: user.email,
         password: user.password,
         role: user.role,
-      });
+        user_id: user.user_id,
+      };
+
+      setUser(loggedUser);
+
+      Cookies.set("user", JSON.stringify(loggedUser));
 
       api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
 
       const userHasAdminPermissions = user.role === "ADMIN";
 
-      if (userHasAdminPermissions) {
-        Router.push({
-          pathname: "filters",
-          query: { company_id },
-        }); //THIS PAGE WIL OPEN IF USER IS ADMIN
-      } else {
-        Router.push({
-          pathname: "filters",
-          query: { company_id },
-        }); //SELECT THE PAGE YOU WANT TO OPEN NEXT
-      }
+      // if (userHasAdminPermissions) {
+      //   Router.push("filters"); //THIS PAGE WIL OPEN IF USER IS ADMIN
+      // } else {
+      //   Router.push("filters"); //SELECT THE PAGE YOU WANT TO OPEN NEXT
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -95,6 +101,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signOut() {
     setUser(null);
+    Cookies.remove("user");
+    Cookies.remove("nextauth.token");
 
     Router.push("/");
   }

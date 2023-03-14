@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 import {
   createContext,
   useContext,
@@ -24,9 +24,7 @@ const initialState = {
 };
 
 export const FilterContextProvider = ({ children }) => {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = Cookies.get("company_id");
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {

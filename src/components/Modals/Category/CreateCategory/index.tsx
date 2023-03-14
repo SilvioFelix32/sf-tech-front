@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { CompanyContext } from "../../../../context";
+import { FormEvent, useContext, useState } from "react";
 //components
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
@@ -20,9 +20,7 @@ export function ModalCreateCategory({
   setIsOpen,
   setReloadData,
 }: modalProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   //product data
   const [product_type, setProduct_type] = useState<ProductType>(
     ProductType.OTHERS
@@ -42,8 +40,8 @@ export function ModalCreateCategory({
     };
 
     await productCategoryService
-      .create(company_id as string, data as IProductCategories)
-      .then(() => setReloadData(Math.random()))
+      .create(company_id, data as IProductCategories)
+      .then(() => setReloadData(Math.random()));
   }
 
   return (

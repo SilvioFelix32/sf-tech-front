@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { CompanyContext } from "../../../../context";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { userService } from "../../../../services";
 import { IUser } from "../../../../types/IUser";
@@ -31,9 +31,7 @@ export function ModalEditSuperUser({
   user_id,
   setReloadData,
 }: modalProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const [selectedUser, setSelectedUSer] = useState<IUser>();
   const { SwallSuccess } = SweetAlert;
 

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { CompanyContext } from "../../../../context";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IProductCategories } from "../../../../types/IProductCategories";
 import { productCategoryService } from "../../../../services";
@@ -32,9 +32,7 @@ export function ModalEditCategory({
   category_id,
   setReloadData,
 }: modalProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const [productCategory, setproductCategory] = useState<IProductCategories>();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: { ...productCategory },
@@ -43,7 +41,7 @@ export function ModalEditCategory({
   useEffect(() => {
     if (category_id) {
       productCategoryService
-        .getById(category_id as string)
+        .getById(category_id)
         .then((data) => setproductCategory(data as any));
     }
   }, [category_id]);
@@ -55,7 +53,7 @@ export function ModalEditCategory({
   async function handleUpdate(data: IProductCategories) {
     await productCategoryService
       .update(company_id as string, category_id as string, data)
-      .then(() => setReloadData(Math.random()))
+      .then(() => setReloadData(Math.random()));
   }
 
   return (

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { CompanyContext } from "../../../../context";
 import { v4 as uuidv4 } from "uuid";
 //components
 import { IProductCategories } from "../../../../types/IProductCategories";
@@ -29,10 +30,7 @@ export function ModalCreateProduct({
   setIsOpen,
   setReloadData,
 }: modalProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
-  const router = useRouter();
+  const company_id = useContext(CompanyContext);
   const [productCategory, setProductCategory] = useState<IProductCategories[]>(
     []
   );
@@ -53,8 +51,8 @@ export function ModalCreateProduct({
   useEffect(() => {
     if (company_id) {
       productCategoryService
-        .getAll(company_id as string)
-        .then((data) => setProductCategory(data))
+        .getAll(company_id)
+        .then((data) => setProductCategory(data));
     }
   }, [company_id]);
 
@@ -77,7 +75,7 @@ export function ModalCreateProduct({
 
     await productsService
       .create(category_id as string, company_id as string, data as IProduct)
-      .then(() => setReloadData(Math.random()))
+      .then(() => setReloadData(Math.random()));
   }
 
   return (

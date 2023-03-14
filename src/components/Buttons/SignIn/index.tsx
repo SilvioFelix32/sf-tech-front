@@ -13,9 +13,11 @@ import {
 //styles
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Button, Svg, Text, Wrapper } from "./styles";
+import { useRouter } from "next/router";
 
 export const SignInButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const { user, signOut } = useContext(AuthContext);
 
   return user ? (
@@ -33,7 +35,15 @@ export const SignInButton = () => {
           </Button>
         </CDropdownToggle>
         <CDropdownMenu className="DropMenu">
-          <CDropdownItem className="OptionBtn">Minha conta</CDropdownItem>
+          <CDropdownItem href="/myaccount" className="OptionBtn">
+            Minha conta
+          </CDropdownItem>
+          <CDropdownItem
+            onClick={() => router.push({ pathname: "favorites" })}
+            className="OptionBtn"
+          >
+            Favoritos
+          </CDropdownItem>
           <CDropdownItem className="OptionBtn">Compras</CDropdownItem>
           <CDropdownItem onClick={() => signOut()} className="OptionBtn">
             Sair <FiX />

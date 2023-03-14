@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { FormEvent } from "react";
+import { FormEvent, useContext } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
+import { CompanyContext } from "../../../../context";
 import { userService } from "../../../../services";
 
 import { Button, Content, Text, Wrapper } from "./styles";
@@ -19,16 +19,14 @@ export function ModalDeleteUser({
   setOpen,
   setReloadData,
 }: modalProps) {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
 
   async function handleDelete(event: FormEvent) {
     event.preventDefault();
 
     await userService
       .delete(user_id as string, company_id as string)
-      .then(() => setReloadData(Math.random()))
+      .then(() => setReloadData(Math.random()));
   }
 
   return (

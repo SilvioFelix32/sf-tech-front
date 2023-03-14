@@ -12,7 +12,6 @@ import {
 import { Select, Wrapper, Logo, Button } from "./styles";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { BiStore } from "react-icons/bi";
-import { useState } from "react";
 interface CategorySelector {
   filter: string;
   setFilter: (value: string) => void;
@@ -20,9 +19,6 @@ interface CategorySelector {
 
 export function Header({ filter, setFilter }: CategorySelector) {
   const router = useRouter();
-  const {
-    query: { company_id },
-  } = useRouter();
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
@@ -47,7 +43,6 @@ export function Header({ filter, setFilter }: CategorySelector) {
             onClick={() =>
               router.push({
                 pathname: "administration",
-                query: { company_id },
               })
             }
           >

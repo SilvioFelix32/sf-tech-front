@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from "react";
+import { CompanyContext } from "../context";
 //services an types
 import { productCategoryService } from "../services";
 import { IProductCategories } from "../types/IProductCategories";
@@ -17,9 +17,7 @@ import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
 export default function AdminCategories() {
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   //Data table states and paginator
   const [productCategories, setProductCategories] = useState<
     IProductCategories[]

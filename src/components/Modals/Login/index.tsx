@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import { AuthContext } from "../../../context";
+import { AuthContext, CompanyContext } from "../../../context";
 import {
   Button,
   Input,
@@ -25,9 +25,7 @@ interface LoginModalProps {
 
 export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const { signIn } = useContext(AuthContext);
-  const {
-    query: { company_id },
-  } = useRouter();
+  const company_id = useContext(CompanyContext);
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -48,17 +46,11 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   );
 
   const handleForgotPasswordClick = useCallback(() => {
-    router.push({
-      pathname: "",
-      query: { company_id },
-    });
+    router.push("");
   }, [router, company_id]);
 
   const handleCreateAccountClick = useCallback(() => {
-    router.push({
-      pathname: "create-acount",
-      query: { company_id },
-    });
+    router.push("create-acount");
   }, [router, company_id]);
 
   return (
