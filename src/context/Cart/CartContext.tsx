@@ -1,10 +1,33 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import Cookies from "js-cookie";
 import { CartItemType } from "./types";
 
 const CartContext = React.createContext(null);
 
-export function CartProvider(props) {
+interface ProviderProps {
+  children: ReactNode;
+}
+
+export function CartProvider({ children }: ProviderProps) {
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
+
+  useEffect(() => {
+    const savedCart = Cookies.get("shop-cart");
+
+    const savedProducts = savedCart
+      ? (JSON.parse(savedCart) as CartItemType[])
+      : [];
+
+    if (savedProducts) {
+      setCartItems(savedProducts);
+    }
+  }, []);
 
   const totalItemsCount = useMemo(() => {
     return cartItems.reduce((acumulator, item) => {
@@ -30,7 +53,12 @@ export function CartProvider(props) {
 
   function handleAddToCart(clickedItem: CartItemType) {
     return setCartItems((previousState) => {
-      return [...previousState, { ...clickedItem, amount: 1 }];
+      const newCart = [...previousState, { ...clickedItem, amount: 1 }];
+      Cookies.set("shop-cart", JSON.stringify(newCart), {
+        expires: 7,
+        path: "/",
+      });
+      return newCart;
     });
   }
 
@@ -42,12 +70,17 @@ export function CartProvider(props) {
       );
 
       if (isItemInCart) {
-        //se ja houver retorna esse função
-        return previousState.map((item) =>
+        const newCart = previousState.map((item) =>
           item.product_id === clickedItem.product_id
             ? { ...item, amount: item.amount + 1 } //fiz um spread(...) do item, pego o valor, e adiciono +1 ao clique
             : item
         );
+        //se ja houver retorna esse função
+        Cookies.set("shop-cart", JSON.stringify(newCart), {
+          expires: 7,
+          path: "/",
+        });
+        return newCart;
       }
     });
   }
@@ -71,9 +104,16 @@ export function CartProvider(props) {
   }
 
   function deleteItemFromCart(product_id: string) {
-    return setCartItems((previousState) =>
-      previousState.filter((item) => item.product_id !== product_id)
-    );
+    return setCartItems((previousState) => {
+      const newCart = previousState.filter(
+        (item) => item.product_id !== product_id
+      );
+      Cookies.set("shop-cart", JSON.stringify(newCart), {
+        expires: 7,
+        path: "/",
+      });
+      return newCart;
+    });
   }
 
   return (
@@ -89,7 +129,7 @@ export function CartProvider(props) {
         cartTotalPrice,
       }}
     >
-      {props.children}
+      {children}
     </CartContext.Provider>
   );
 }

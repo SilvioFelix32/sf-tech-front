@@ -1,4 +1,10 @@
-import React, { ReactNode, useContext, useMemo, useState } from "react";
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Cookies from "js-cookie";
 import { IFavoriteItem } from "../../types/IFavorite";
 interface IFavoriteContext {
@@ -18,10 +24,17 @@ const FavoriteContext = React.createContext<IFavoriteContext | null>(null);
 export function FavoriteProvider({ children }: FavoriteProviderProviderProps) {
   const [favoriteItems, setFavoriteItems] = useState<IFavoriteItem[]>([]);
 
-  const favoriteCookies = Cookies.get("favorite-items");
-  const favoriteProducts = favoriteCookies
-    ? (JSON.parse(favoriteCookies) as IFavoriteItem[])
-    : [];
+  useEffect(() => {
+    const savedFavorites = Cookies.get("favorite-items");
+
+    const favoriteProducts = savedFavorites
+      ? (JSON.parse(savedFavorites) as IFavoriteItem[])
+      : [];
+
+    if (favoriteProducts) {
+      setFavoriteItems(favoriteProducts);
+    }
+  }, []);
 
   const totalItemsCount = useMemo(() => {
     return favoriteItems.reduce((accumulator, item) => {
