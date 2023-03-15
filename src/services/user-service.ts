@@ -1,4 +1,5 @@
 import { IUser } from "../types/IUser";
+import cookies from "js-cookie";
 import api from "./api";
 
 export const userService = {
@@ -10,6 +11,7 @@ export const userService = {
   delete: _delete,
 };
 
+const nextauth = cookies.get("nextauth.token");
 const baseUrl = "/users";
 
 async function login(params: any) {
@@ -26,7 +28,7 @@ async function getAll(company_id: string) {
 
 async function getById(company_id: string, user_id: string) {
   const response = await api.get<IUser>(`${baseUrl}/${user_id}`, {
-    headers: { company_id },
+    headers: { company_id, authorization: `Bearer ${nextauth}` },
   });
   return response.data;
 }

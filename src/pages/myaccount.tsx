@@ -14,14 +14,15 @@ export default function MyAccount() {
   const { user } = useContext(AuthContext);
   const [myUser, setMyUser] = useState<IUser>();
   const company_id = useContext(CompanyContext);
+  const user_id = user?.user_id;
 
   useEffect(() => {
-    userService.getById(company_id, user.user_id).then((data) => {
-      setMyUser(data);
-    });
-  }, [company_id, user]);
-
-  console.log("myUser", myUser);
+    if (company_id && user_id) {
+      userService.getById(company_id, user_id).then((data) => {
+        setMyUser(data);
+      });
+    }
+  }, [company_id, user_id]);
 
   return myUser ? (
     <Theme>
@@ -30,13 +31,7 @@ export default function MyAccount() {
         <Header filter={filter} setFilter={setFilter} />
         <Content>
           Meus dados:
-          {
-            (myUser.name,
-            myUser.last_name,
-            myUser.document,
-            myUser.birth_date,
-            myUser.celphone)
-          }
+          {myUser.name}
         </Content>
         <Footer />
       </Wrapper>

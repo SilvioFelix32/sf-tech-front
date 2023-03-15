@@ -16,7 +16,6 @@ interface ModalProps {
 export function CartModal({ openModal, setOpenModal }: ModalProps) {
   const { cartItems, deleteItemFromCart, cartTotalPrice } = useCart();
   const router = useRouter();
-  const company_id = useContext(CompanyContext);
 
   return (
     <ModalComponent

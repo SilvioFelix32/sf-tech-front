@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   width: 100%;
   height: 60px;
-  padding: 0 20px;
+  padding: 0 25px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -17,29 +17,26 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const LeftNav = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 50%;
-
-  @media screen and (max-width: 1366px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-`;
-
-export const RightNav = styled.div`
+export const Navigation = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 50%;
+  width: 100%;
 
   a {
     margin: 0 5px;
     color: ${({ theme }) => theme.colors.text};
+
+    svg {
+      height: 30px;
+      width: 30px;
+      color: ${({ theme }) => theme.colors.tertiary};
+      background-color: ${({ theme }) => theme.colors.background};
+
+      &:hover {
+        color: ${({ theme }) => theme.colors.quaternary};
+      }
+    }
   }
 
   @media screen and (max-width: 1366px) {
@@ -47,19 +44,5 @@ export const RightNav = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-  }
-`;
-
-export const Text = styled.p`
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.text};
-  font-weight: 300;
-  font-size: 14px;
-  margin: 0;
-  padding: 0 5px;
-  transition: filter(0.2s);
-
-  &:hover {
-    filter: brightness(0.9);
   }
 `;
