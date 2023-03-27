@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NavHeader } from "../components/NavHeader";
-import { Menu, useProSidebar } from "react-pro-sidebar";
+import { useProSidebar } from "react-pro-sidebar";
 import { useCan } from "../context/Authentication/hooks/useCan";
 import AdminProducts from "./admin-products";
 import AdminCategories from "./admin-product-category";

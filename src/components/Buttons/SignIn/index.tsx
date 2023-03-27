@@ -35,16 +35,18 @@ export const SignInButton = () => {
           </Button>
         </CDropdownToggle>
         <CDropdownMenu className="DropMenu">
-          <CDropdownItem href="/myaccount" className="OptionBtn">
-            Minha conta
+          <CDropdownItem href="/admin-acount" className="OptionBtn">
+            Meu perfil
           </CDropdownItem>
           <CDropdownItem
-            onClick={() => router.push({ pathname: "favorites" })}
+            onClick={() => router.push({ pathname: "admin-acount" })}
             className="OptionBtn"
           >
             Favoritos
           </CDropdownItem>
-          <CDropdownItem className="OptionBtn">Compras</CDropdownItem>
+          <CDropdownItem href="/admin-acount" className="OptionBtn">
+            Compras
+          </CDropdownItem>
           <CDropdownItem onClick={() => signOut()} className="OptionBtn">
             Sair <FiX />
           </CDropdownItem>

@@ -1,16 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { userService } from "../services";
-//components
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { NavHeader } from "../components/NavHeader";
-//styles
-import { Wrapper, Content, Theme } from "../styles/pages/filters";
-import { IUser } from "../types";
 import { AuthContext, CompanyContext } from "../context";
+import { userService } from "../services";
+import { IUser } from "../types";
+//components
+//styles
+import { Wrapper, Title, Text, Content } from "../styles/pages/myaccount";
 
 export default function MyAccount() {
-  const [filter, setFilter] = useState("");
   const { user } = useContext(AuthContext);
   const [myUser, setMyUser] = useState<IUser>();
   const company_id = useContext(CompanyContext);
@@ -25,25 +21,49 @@ export default function MyAccount() {
   }, [company_id, user_id]);
 
   return myUser ? (
-    <Theme>
-      <Wrapper>
-        <NavHeader />
-        <Header filter={filter} setFilter={setFilter} />
-        <Content>
-          Meus dados:
-          {myUser.name}
-        </Content>
-        <Footer />
-      </Wrapper>
-    </Theme>
+    <Wrapper>
+      <Title style={{ fontSize: "22px" }}>Meus dados:</Title>
+
+      <Title style={{ fontSize: "18px" }}>Dados pessoais:</Title>
+      <Content>
+        <Title>Nome:</Title>
+        <Text>{myUser.name}</Text>
+      </Content>
+      <Content>
+        <Title>Sobrenome:</Title>
+        <Text>{myUser.last_name}</Text>
+      </Content>
+      <Content>
+        <Title>Email:</Title>
+        <Text>{myUser.email}</Text>
+      </Content>
+      <Content>
+        <Title>Nascimento:</Title>
+        <Text>{myUser.birth_date ? myUser.birth_date : "Não informado"}</Text>
+      </Content>
+      <Content>
+        <Title>Telefone:</Title>
+        <Text>{myUser.celphone ? myUser.celphone : "Não informado"}</Text>
+      </Content>
+      <Content>
+        <Title>Documento:</Title>
+        <Text>{myUser.document.replace(/\d/g, "#")}</Text>
+      </Content>
+
+      <Title style={{ fontSize: "18px" }}>Endereço:</Title>
+      <Content>
+        <Text>{myUser.address ? myUser.address : "Não informado"},</Text>
+        <Text>- {myUser.address_complement},</Text>
+        <Text>
+          - Nº {myUser.address_number ? myUser.address_number : "S/N"},
+        </Text>
+        <Text>- {myUser.city ? myUser.city : "Não informado"},</Text>
+        <Text>- {myUser.cep ? myUser.cep : "Não informado"}</Text>
+      </Content>
+    </Wrapper>
   ) : (
-    <Theme>
-      <Wrapper>
-        <NavHeader />
-        <Header filter={filter} setFilter={setFilter} />
-        <Content>Nenhum usuário encontrado</Content>
-        <Footer />
-      </Wrapper>
-    </Theme>
+    <Wrapper>
+      <Title style={{ fontSize: "20px" }}>Nenhum usuário encontrado</Title>
+    </Wrapper>
   );
 }
