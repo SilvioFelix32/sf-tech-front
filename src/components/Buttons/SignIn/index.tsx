@@ -38,10 +38,7 @@ export const SignInButton = () => {
           <CDropdownItem href="/admin-acount" className="OptionBtn">
             Meu perfil
           </CDropdownItem>
-          <CDropdownItem
-            onClick={() => router.push({ pathname: "admin-acount" })}
-            className="OptionBtn"
-          >
+          <CDropdownItem href="/admin-acount" className="OptionBtn">
             Favoritos
           </CDropdownItem>
           <CDropdownItem href="/admin-acount" className="OptionBtn">

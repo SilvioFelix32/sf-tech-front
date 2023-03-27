@@ -14,7 +14,6 @@ import CompanyIdProvider from "../context/Company/CompanyContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
 //styles
 import { GlobalStyles } from "../styles/global";
-
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <CompanyIdProvider>
@@ -47,10 +46,20 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 App.getInitialProps = ({ ctx }) => {
-  Cookies.set("color-theme", "light", {
-    expires: 30,
-    path: "/",
-  });
+  const favoriteTheme = Cookies.get("color-theme");
+
+  if (favoriteTheme) {
+    Cookies.set("color-theme", favoriteTheme, {
+      expires: 30,
+      path: "/",
+    });
+  } else {
+    Cookies.set("color-theme", "light", {
+      expires: 30,
+      path: "/",
+    });
+  }
+
   Cookies.set("company_id", "55e445bf-f6fd-422f-98ae-0eef24e1f1d7", {
     expires: 30,
     path: "/",

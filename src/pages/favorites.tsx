@@ -1,6 +1,7 @@
 import React from "react";
 import Cookies from "js-cookie";
 import Image from "next/image";
+import { useFavorite } from "../context";
 import { IFavoriteItem } from "../types/IFavorite";
 //styles
 import {
@@ -12,13 +13,19 @@ import {
   ProductDescription,
   ProductInfo,
   ProductValue,
+  FavoritedButton,
 } from "../styles/pages/favorites";
+import { MdFavoriteBorder } from "react-icons/md";
 
 export default function Favorites() {
+  const { removeItemFromFavorites } = useFavorite();
   const favoritesArray = Cookies.get("favorite-items");
   const favorites = JSON.parse(favoritesArray);
+  const favoriteProduct = favorites.map(
+    (favorite: IFavoriteItem[]) => favorite
+  );
 
-  return (
+  return favoriteProduct.length >= 1 ? (
     <Wrapper>
       {favorites.map((favorite: IFavoriteItem) => (
         <Content key={favorite.product_id}>
@@ -53,9 +60,19 @@ export default function Favorites() {
               </Text>
             </ProductValue>
           </ProductInfo>
+          <FavoritedButton
+            className="favorite"
+            onClick={() => removeItemFromFavorites(favorite.product_id)}
+          >
+            <MdFavoriteBorder />
+          </FavoritedButton>
           ))
         </Content>
       ))}
+    </Wrapper>
+  ) : (
+    <Wrapper>
+      <Title>Nenhum favorito ainda</Title>
     </Wrapper>
   );
 }
