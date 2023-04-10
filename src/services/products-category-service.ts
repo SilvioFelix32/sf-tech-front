@@ -11,9 +11,10 @@ export const productCategoryService = {
 
 const baseUrl = "/product-categories";
 
-async function getAll(company_id: string) {
-  const response = await api.get<IProductCategories[]>(`${baseUrl}`, {
+async function getAll(company_id: string, params: any) {
+  const response = await api.get(`${baseUrl}`, {
     headers: { company_id },
+    params,
   });
   return response.data;
 }

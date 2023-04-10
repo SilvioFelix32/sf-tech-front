@@ -11,9 +11,10 @@ export const productsService = {
 
 const baseUrl = "/products";
 
-async function getAll(company_id: string) {
-  const response = await api.get<IProduct[]>(`${baseUrl}`, {
+async function getAll(company_id: string, params: any) {
+  const response = await api.get(`${baseUrl}`, {
     headers: { company_id },
+    params,
   });
   return response.data;
 }

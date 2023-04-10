@@ -22,7 +22,10 @@ export function CategoriesFilterCard({ filter, setFilter }: CategorySelector) {
   useEffect(() => {
     if (company_id) {
       productCategoryService
-        .getAll(company_id)
+        .getAll(company_id, {
+          page: 1,
+          limit: 20,
+        })
         .then((data) => setProductCategories(data));
     }
   }, [company_id, router]);

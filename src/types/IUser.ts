@@ -1,3 +1,5 @@
+import { IPagination } from "./IPaganation";
+
 export enum Sex {
   MALE = "MALE",
   FEMALE = "FEMALE",
@@ -29,4 +31,6 @@ export interface IUser {
   active?: boolean | null;
   role?: Role;
   password: string;
+  total_count: number;
+  pagination_options: IPagination;
 }

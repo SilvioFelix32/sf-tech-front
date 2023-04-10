@@ -20,6 +20,11 @@ export default function MyAccount() {
     }
   }, [company_id, user_id]);
 
+  const documentHiden = myUser?.document.slice(0, -2);
+  const documentLastTwoNumbers = myUser?.document.slice(-2);
+  const userdocument =
+    documentHiden?.replace(/\d/g, "#") + documentLastTwoNumbers;
+
   return myUser ? (
     <Wrapper>
       <Title style={{ fontSize: "22px" }}>Meus dados:</Title>
@@ -47,7 +52,7 @@ export default function MyAccount() {
       </Content>
       <Content>
         <Title>Documento:</Title>
-        <Text>{myUser.document.replace(/\d/g, "#")}</Text>
+        <Text>{userdocument}</Text>
       </Content>
 
       <Title style={{ fontSize: "18px" }}>Endereço:</Title>
@@ -63,7 +68,7 @@ export default function MyAccount() {
     </Wrapper>
   ) : (
     <Wrapper>
-      <Title style={{ fontSize: "20px" }}>Nenhum usuário encontrado</Title>
+      <Title style={{ fontSize: "20px" }}>Carregando seus dados</Title>
     </Wrapper>
   );
 }

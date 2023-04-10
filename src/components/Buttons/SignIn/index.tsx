@@ -13,11 +13,9 @@ import {
 //styles
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Button, Svg, Text, Wrapper } from "./styles";
-import { useRouter } from "next/router";
 
 export const SignInButton = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const { user, signOut } = useContext(AuthContext);
 
   return user ? (

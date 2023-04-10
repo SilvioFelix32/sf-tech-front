@@ -27,7 +27,7 @@ export default function Favorites() {
 
   return favoriteProduct.length >= 1 ? (
     <Wrapper>
-      {favorites.map((favorite: IFavoriteItem) => (
+      {favorites?.map((favorite: IFavoriteItem) => (
         <Content key={favorite.product_id}>
           <Picture>
             <Image

@@ -19,23 +19,61 @@ import { customStyles } from "../styles/customDataTable";
 
 export default function AdminProducts() {
   const company_id = useContext(CompanyContext);
-  //Data table states and paginator
+  //Data table states and pagination
   const [products, setProducts] = useState<IProduct[]>([]);
   const [product_id, setProduct_id] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   //Modals
   const [reloadData, setReloadData] = useState(0);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
 
+  async function fetchProducts(page: number) {
+    setLoading(true);
+    await productsService
+      .getAll(company_id, {
+        page: page,
+        limit: perPage,
+      })
+      .then((data) => {
+        console.log(data);
+        setProducts(data);
+        setTotalRows(data.total_count);
+      });
+    setLoading(false);
+  }
+
+  function handlePageChange(page) {
+    fetchProducts(page);
+  }
+
+  async function handlePerRowsChange(newPerPage, page) {
+    setLoading(true);
+
+    await productsService
+      .getAll(company_id, {
+        page: page,
+        limit: newPerPage,
+      })
+      .then((data) => {
+        setProducts(data);
+        setPerPage(newPerPage);
+      })
+      .catch((err) => console.log(err));
+    setLoading(false);
+  }
+
   useEffect(() => {
-    if (company_id) {
-      productsService
-        .getAll(company_id as string)
-        .then((data) => setProducts(data));
-    } else {
-      alert("No company informed!");
-    }
+    fetchProducts(1); // fetch page 1 of users
+  }, [reloadData, company_id]);
+
+  useEffect(() => {
+    productsService.getAll(company_id, {}).then((data) => {
+      setProducts(data);
+    });
   }, [company_id, reloadData]);
 
   //Dados da tabela
@@ -121,8 +159,12 @@ export default function AdminProducts() {
           data={data}
           pagination
           paginationServer
+          progressPending={loading}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
+          paginationTotalRows={totalRows}
           customStyles={customStyles}
         />
       </Content>

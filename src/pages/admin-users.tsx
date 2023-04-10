@@ -17,6 +17,9 @@ import { useCan } from "../context/Authentication/hooks/useCan";
 
 export default function AdminUsers() {
   const company_id = useContext(CompanyContext);
+  const [loading, setLoading] = useState(false);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   const [users, setUsers] = useState<IUser[]>([]);
   //Modals
   const [reloadData, setReloadData] = useState(0);
@@ -26,8 +29,47 @@ export default function AdminUsers() {
   const [superOpen, setSuperOpen] = useState(false);
   const userHasMasterPermissions = useCan({ role: ["MASTER"] });
 
+  async function fetchUsers(page: number) {
+    setLoading(true);
+    await userService
+      .getAll(company_id, {
+        page: page,
+        limit: perPage,
+      })
+      .then((data) => {
+        console.log(data);
+        setUsers(data);
+        setTotalRows(data.total_count);
+      });
+    setLoading(false);
+  }
+
+  function handlePageChange(page) {
+    fetchUsers(page);
+  }
+
+  async function handlePerRowsChange(newPerPage, page) {
+    setLoading(true);
+
+    await userService
+      .getAll(company_id, {
+        page: page,
+        limit: newPerPage,
+      })
+      .then((data) => {
+        setUsers(data);
+        setPerPage(newPerPage);
+      })
+      .catch((err) => console.log(err));
+    setLoading(false);
+  }
+
   useEffect(() => {
-    userService.getAll(company_id as string).then((data) => {
+    fetchUsers(1); // fetch page 1 of users
+  }, [reloadData, company_id]);
+
+  useEffect(() => {
+    userService.getAll(company_id, {}).then((data) => {
       setUsers(data);
     });
   }, [company_id, reloadData]);
@@ -130,8 +172,12 @@ export default function AdminUsers() {
           data={data}
           pagination
           paginationServer
+          progressPending={loading}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
+          paginationTotalRows={totalRows}
           customStyles={customStyles}
         />
       </Content>
