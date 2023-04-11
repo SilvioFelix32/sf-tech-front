@@ -37,8 +37,8 @@ export function ProductCard({ filter }: CategorySelector) {
 
   useEffect(() => {
     productCategoryService
-      .getAll(company_id)
-      .then((data) => setCategories(data));
+      .getAll(company_id, {})
+      .then((res) => setCategories(res.data));
   }, [company_id]);
 
   const categoryOfProducts = categories.reduce((acc, cur) => {

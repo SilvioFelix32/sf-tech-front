@@ -51,8 +51,8 @@ export function ModalCreateProduct({
   useEffect(() => {
     if (company_id) {
       productCategoryService
-        .getAll(company_id)
-        .then((data) => setProductCategory(data));
+        .getAll(company_id, {})
+        .then((res) => setProductCategory(res.data));
     }
   }, [company_id]);
 

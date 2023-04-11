@@ -68,10 +68,9 @@ export const customStyles: TableStyles = {
       height: "40px",
       width: "40px",
       padding: "8px",
-      margin: "px",
       cursor: "pointer",
       transition: "0.4s",
-      backgroundColor: "transparent",
+      color: "#33C1B3",
       "&:disabled": {
         cursor: "unset",
       },
@@ -93,6 +92,7 @@ export const customStyles: TableStyles = {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      color: "#33C1B3",
     },
   },
 };

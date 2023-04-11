@@ -30,8 +30,8 @@ export const FilterContextProvider = ({ children }) => {
   useEffect(() => {
     if (company_id) {
       productsService
-        .getAll(company_id as string)
-        .then((data) => setProducts(data));
+        .getAll(company_id, { page: 1, limit: 20 })
+        .then((res) => setProducts(res.data));
     }
   }, [company_id]);
 

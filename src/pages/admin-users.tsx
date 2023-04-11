@@ -36,10 +36,9 @@ export default function AdminUsers() {
         page: page,
         limit: perPage,
       })
-      .then((data) => {
-        console.log(data);
-        setUsers(data);
-        setTotalRows(data.total_count);
+      .then((res) => {
+        setUsers(res.data);
+        setTotalRows(res.meta.total);
       });
     setLoading(false);
   }
@@ -56,8 +55,8 @@ export default function AdminUsers() {
         page: page,
         limit: newPerPage,
       })
-      .then((data) => {
-        setUsers(data);
+      .then((res) => {
+        setUsers(res.data);
         setPerPage(newPerPage);
       })
       .catch((err) => console.log(err));
@@ -66,11 +65,9 @@ export default function AdminUsers() {
 
   useEffect(() => {
     fetchUsers(1); // fetch page 1 of users
-  }, [reloadData, company_id]);
 
-  useEffect(() => {
-    userService.getAll(company_id, {}).then((data) => {
-      setUsers(data);
+    userService.getAll(company_id, {}).then((res) => {
+      setUsers(res.data);
     });
   }, [company_id, reloadData]);
 

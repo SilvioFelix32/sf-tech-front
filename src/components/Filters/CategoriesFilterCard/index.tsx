@@ -26,7 +26,7 @@ export function CategoriesFilterCard({ filter, setFilter }: CategorySelector) {
           page: 1,
           limit: 20,
         })
-        .then((data) => setProductCategories(data));
+        .then((res) => setProductCategories(res.data));
     }
   }, [company_id, router]);
 

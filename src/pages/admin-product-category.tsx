@@ -39,19 +39,18 @@ export default function AdminCategories() {
         page: page,
         limit: perPage,
       })
-      .then((data) => {
-        console.log(data);
-        setProductCategories(data);
-        setTotalRows(data.total_count);
+      .then((res) => {
+        setProductCategories(res.data);
+        setTotalRows(res.meta.total);
       });
     setLoading(false);
   }
 
-  function handlePageChange(page) {
+  function handlePageChange(page: number) {
     fetchProducts(page);
   }
 
-  async function handlePerRowsChange(newPerPage, page) {
+  async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
 
     await productCategoryService
@@ -59,8 +58,8 @@ export default function AdminCategories() {
         page: page,
         limit: newPerPage,
       })
-      .then((data) => {
-        setProductCategories(data);
+      .then((res) => {
+        setProductCategories(res.data);
         setPerPage(newPerPage);
       })
       .catch((err) => console.log(err));
@@ -69,12 +68,12 @@ export default function AdminCategories() {
 
   useEffect(() => {
     fetchProducts(1); // fetch page 1 of users
-  }, [reloadData, company_id]);
 
-  useEffect(() => {
-    productCategoryService.getAll(company_id, {}).then((data) => {
-      setProductCategories(data);
-    });
+    productCategoryService
+      .getAll(company_id, { page: 1, limit: 20 })
+      .then((res) => {
+        setProductCategories(res.data);
+      });
   }, [company_id, reloadData]);
 
   //Dados da tabela

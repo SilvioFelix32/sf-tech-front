@@ -33,46 +33,43 @@ export default function AdminProducts() {
 
   async function fetchProducts(page: number) {
     setLoading(true);
+
     await productsService
       .getAll(company_id, {
         page: page,
         limit: perPage,
       })
-      .then((data) => {
-        console.log(data);
-        setProducts(data);
-        setTotalRows(data.total_count);
+      .then((res) => {
+        setProducts(res.data);
+        setTotalRows(res.meta.total);
       });
     setLoading(false);
   }
 
-  function handlePageChange(page) {
+  function handlePageChange(page: number) {
     fetchProducts(page);
   }
 
-  async function handlePerRowsChange(newPerPage, page) {
+  async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
-
     await productsService
       .getAll(company_id, {
         page: page,
         limit: newPerPage,
       })
-      .then((data) => {
-        setProducts(data);
+      .then((res) => {
+        setProducts(res.data);
         setPerPage(newPerPage);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("error msg", err));
     setLoading(false);
   }
 
   useEffect(() => {
     fetchProducts(1); // fetch page 1 of users
-  }, [reloadData, company_id]);
 
-  useEffect(() => {
-    productsService.getAll(company_id, {}).then((data) => {
-      setProducts(data);
+    productsService.getAll(company_id, { page: 1, limit: 20 }).then((res) => {
+      setProducts(res.data);
     });
   }, [company_id, reloadData]);
 

@@ -22,8 +22,8 @@ export function SearchBar({ filter, setFilter }: CategorySelector) {
   useEffect(() => {
     if (company_id) {
       productCategoryService
-        .getAll(company_id as string)
-        .then((data) => setProductCategories(data));
+        .getAll(company_id, { page: 1, limit: 20 })
+        .then((res) => setProductCategories(res.data));
     }
   }, [company_id, router]);
 

@@ -47,8 +47,8 @@ export function ModalEditProduct({
         .getById(product_id as string)
         .then((data) => setSelectedProduct(data));
       productCategoryService
-        .getAll(company_id)
-        .then((data) => setproductCategory(data));
+        .getAll(company_id, {})
+        .then((res) => setproductCategory(res.data));
     }
   }, [product_id]);
 

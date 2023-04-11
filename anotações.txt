@@ -10,3 +10,5 @@ o botão de salvar favoritos, não está mantendo nos cookies
 finalizar pagina minha conta
 
 estilizar pagina de favoritos
+
+FINALIZAR PAGINAÇÃO - ELE NÃO ESTÁ ENVIANDO OS NUMEROS CORRETAMENTE, NEM RECEBENDO O VALOR DE 'PAGE e LIMIT"
