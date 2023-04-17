@@ -21,7 +21,7 @@ export default function Favorites() {
   const { removeItemFromFavorites } = useFavorite();
   const favoritesArray = Cookies.get("favorite-items");
   const favorites = JSON.parse(favoritesArray);
-  const favoriteProduct = favorites.map(
+  const favoriteProduct = favorites?.map(
     (favorite: IFavoriteItem[]) => favorite
   );
 

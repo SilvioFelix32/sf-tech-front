@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
 
   @media screen and (max-width: 1200px) {
@@ -140,7 +140,7 @@ export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
   text-transform: capitalize;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   margin: 0;
   padding: 0 5px;
 `;

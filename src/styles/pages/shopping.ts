@@ -31,10 +31,12 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.p`
-  color: ${({ theme }) => theme.colors.title};
-  font-size: 14px;
-  font-weight: 500;
-  margin: 5px;
+  color: ${({ theme }) => theme.colors.text};
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+  padding: 0 5px;
 `;
 
 export const Text = styled.p`
