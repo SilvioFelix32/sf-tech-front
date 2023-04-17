@@ -23,14 +23,13 @@ import {
 
 export default function Administration() {
   const { collapseSidebar } = useProSidebar();
-  const [filter, setFilter] = useState("");
   const [actualPage, setActualPage] = useState("myaccount");
 
   return (
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header filter={filter} setFilter={setFilter} />
+        <Header />
         <Content>
           <>
             <CustomSidebar>

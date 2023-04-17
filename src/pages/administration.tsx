@@ -32,7 +32,6 @@ import {
 
 export default function Administration() {
   const { collapseSidebar } = useProSidebar();
-  const [filter, setFilter] = useState("");
   const [actualPage, setActualPage] = useState("AdminCompany");
 
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
@@ -41,7 +40,7 @@ export default function Administration() {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header filter={filter} setFilter={setFilter} />
+        <Header />
         <Content>
           {userHasAdminPermissions && (
             <>

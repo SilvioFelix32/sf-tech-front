@@ -26,7 +26,6 @@ const stepsContent = [<CartItems />, <Payment />, "Sucesso"];
 export default function ShopCart() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
-  const [filter, setFilter] = useState("");
 
   const isStepOptional = (step: number) => {
     return step === 1; //step is optional, choose from array of steps
@@ -74,7 +73,7 @@ export default function ShopCart() {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header filter={filter} setFilter={setFilter} />
+        <Header />
         <Content>
           <StepWrapper>
             <StepTitle>
