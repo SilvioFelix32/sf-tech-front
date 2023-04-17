@@ -12,12 +12,8 @@ import {
 import { Select, Wrapper, Logo, Button } from "./styles";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { BiStore } from "react-icons/bi";
-interface CategorySelector {
-  filter: string;
-  setFilter: (value: string) => void;
-}
 
-export function Header({ filter, setFilter }: CategorySelector) {
+export function Header() {
   const router = useRouter();
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
@@ -32,7 +28,7 @@ export function Header({ filter, setFilter }: CategorySelector) {
           height={60}
         ></Image>
       </Logo>
-      <SearchBar filter={filter} setFilter={setFilter} />
+      <SearchBar />
       <Select>
         <SignInButton />
         <ThemeToogle />

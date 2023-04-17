@@ -3,7 +3,6 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { NavHeader } from "../components/NavHeader";
 import { ProductCard } from "../components/ProductCard";
-import { BrandsFilterCard } from "../components/Filters/BrandsFilterCard";
 import { CategoriesFilterCard } from "../components/Filters/CategoriesFilterCard";
 import { PriceFilterCard } from "../components/Filters/PriceFilterCard";
 //styles
@@ -23,7 +22,7 @@ export default function Filters() {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header filter={filter} setFilter={setFilter} />
+        <Header />
         <Content>
           <LeftContent>
             <CategoriesFilterCard filter={filter} setFilter={setFilter} />
@@ -31,6 +30,7 @@ export default function Filters() {
             <PriceFilterCard />
           </LeftContent>
           <MainSection>
+            {/* {query} */}
             <ProductCard filter={filter} />
           </MainSection>
         </Content>
