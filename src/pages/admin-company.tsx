@@ -34,7 +34,7 @@ export default function AdminCompany() {
       grow: 2,
     },
     {
-      name: "document",
+      name: "documento",
       selector: (row) => row.document,
       sortable: true,
       grow: 1,

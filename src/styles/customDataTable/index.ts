@@ -10,11 +10,16 @@ export const customStyles: TableStyles = {
   tableWrapper: {
     style: {
       display: "table",
-      minHeight: "400px",
+      borderCollapse: "collapse",
+      textAlign: "center",
+      position: "relative",
+      height: "100%",
       width: "100%",
       margin: "0 auto",
       color: "#33C1B3",
       backgroundColor: `${({ theme }) => theme.colors.background}`,
+      overflowX: "auto",
+      tableLayout: "fixed",
     },
   },
   rows: {
@@ -26,11 +31,13 @@ export const customStyles: TableStyles = {
   },
   headCells: {
     style: {
-      fontWeight: "400",
       fontSize: "14px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      textTransform: "uppercase",
+      letterSpacing: "0.1rem",
+      fontWeight: "400",
       color: "#33C1B3",
       backgroundColor: `${({ theme }) => theme.colors.background}`,
     },
@@ -40,9 +47,11 @@ export const customStyles: TableStyles = {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      textOverflow: "ellipsis",
       color: "#33C1B3",
       backgroundColor: `${({ theme }) => theme.colors.background}`,
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
   },
   headRow: {
@@ -70,9 +79,11 @@ export const customStyles: TableStyles = {
       padding: "8px",
       cursor: "pointer",
       transition: "0.4s",
-      color: "#33C1B3",
       "&:disabled": {
         cursor: "unset",
+      },
+      svg: {
+        fill: "#33C1B3",
       },
       "&:hover:not(:disabled)": {},
       "&:focus": {

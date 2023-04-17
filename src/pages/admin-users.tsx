@@ -43,11 +43,11 @@ export default function AdminUsers() {
     setLoading(false);
   }
 
-  function handlePageChange(page) {
+  function handlePageChange(page: number) {
     fetchUsers(page);
   }
 
-  async function handlePerRowsChange(newPerPage, page) {
+  async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
 
     await userService
@@ -136,7 +136,7 @@ export default function AdminUsers() {
       grow: 2,
     },
     {
-      name: "celphone",
+      name: "celular",
       selector: (row) => row.celphone,
     },
     {
@@ -146,6 +146,8 @@ export default function AdminUsers() {
     {
       name: "ativo",
       selector: (row) => row.active,
+      sortable: true,
+      grow: 1,
     },
     {
       name: "outros",

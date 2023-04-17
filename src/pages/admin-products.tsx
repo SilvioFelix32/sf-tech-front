@@ -81,12 +81,12 @@ export default function AdminProducts() {
       sortable: true,
     },
     {
-      name: "title",
+      name: "titulo",
       selector: (row) => row.title,
       sortable: true,
     },
     {
-      name: " url_banner",
+      name: "imagem",
       selector: (row) => row.url_banner,
     },
     {

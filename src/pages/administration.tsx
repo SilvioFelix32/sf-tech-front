@@ -51,23 +51,23 @@ export default function Administration() {
                     <BiMenu />
                   </CustomMenuItem>
                   <CustomMenuItem onClick={() => setActualPage("AdminCompany")}>
-                    <BiStore /> Company
+                    <BiStore /> Empresa
                   </CustomMenuItem>
                   <CustomMenuItem onClick={() => setActualPage("AdminUsers")}>
-                    <BiUser /> Users
+                    <BiUser /> Usuários
                   </CustomMenuItem>
                   <CustomMenuItem
                     onClick={() => setActualPage("AdminCategories")}
                   >
-                    <BiNews /> Categories
+                    <BiNews /> Categorias
                   </CustomMenuItem>
                   <CustomMenuItem
                     onClick={() => setActualPage("AdminProducts")}
                   >
-                    <BiPackage /> Products
+                    <BiPackage /> Produtos
                   </CustomMenuItem>
                   <CustomMenuItem>
-                    <BiWallet /> Sales
+                    <BiWallet /> Vendas
                   </CustomMenuItem>
                 </CustomMenu>
               </CustomSidebar>

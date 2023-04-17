@@ -79,22 +79,22 @@ export default function AdminCategories() {
   //Dados da tabela
   const columns = [
     {
-      name: "active",
+      name: "ativo",
       selector: (row) => row.active,
       sortable: true,
     },
     {
-      name: "title",
+      name: "titulo",
       selector: (row) => row.title,
       sortable: true,
     },
     {
-      name: "description",
+      name: "descrição",
       selector: (row) => row.description,
       sortable: true,
     },
     {
-      name: "product_type",
+      name: "tipo produto",
       selector: (row) => row.product_type,
       sortable: true,
     },

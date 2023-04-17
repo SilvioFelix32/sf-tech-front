@@ -1,20 +1,32 @@
 import React from "react";
 import Cookies from "js-cookie";
 import Head from "next/head";
-import type { AppProps } from "next/app";
 import { MainApp } from "../components/MainApp";
 import {
   AuthProvider,
   CartProvider,
   FavoriteProvider,
   FilterContextProvider,
+  ProductFilterProvider,
 } from "../context";
 import ThemePreferenceProvider from "../context/Theme/ThemeContext";
 import CompanyIdProvider from "../context/Company/CompanyContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
 //styles
 import { GlobalStyles } from "../styles/global";
-export default function App({ Component, pageProps }: AppProps) {
+import { IProduct } from "../types";
+
+interface AppProps {
+  Component: any;
+  pageProps: AppProps;
+  initialProducts: IProduct[];
+}
+
+export default function App({
+  Component,
+  pageProps,
+  initialProducts,
+}: AppProps) {
   return (
     <CompanyIdProvider>
       <ThemePreferenceProvider>
@@ -22,20 +34,22 @@ export default function App({ Component, pageProps }: AppProps) {
           <CartProvider>
             <FavoriteProvider>
               <FilterContextProvider>
-                <ProSidebarProvider>
-                  <Head>
-                    <title>Sf-tech</title>
-                    <link rel="shortcut icon" href="/favicon.jpg" />
-                    <meta
-                      name="viewport"
-                      content="initial-scale=1.0, width=device-width"
-                    />
-                  </Head>
-                  <MainApp>
-                    <Component {...pageProps} />
-                    <GlobalStyles />
-                  </MainApp>
-                </ProSidebarProvider>
+                <ProductFilterProvider initialProducts={initialProducts}>
+                  <ProSidebarProvider>
+                    <Head>
+                      <title>Sf-tech</title>
+                      <link rel="shortcut icon" href="/favicon.jpg" />
+                      <meta
+                        name="viewport"
+                        content="initial-scale=1.0, width=device-width"
+                      />
+                    </Head>
+                    <MainApp>
+                      <Component {...pageProps} />
+                      <GlobalStyles />
+                    </MainApp>
+                  </ProSidebarProvider>
+                </ProductFilterProvider>
               </FilterContextProvider>
             </FavoriteProvider>
           </CartProvider>
