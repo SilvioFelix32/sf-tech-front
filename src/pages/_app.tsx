@@ -74,7 +74,7 @@ App.getInitialProps = ({ ctx }) => {
     });
   }
 
-  Cookies.set("company_id", "55e445bf-f6fd-422f-98ae-0eef24e1f1d7", {
+  Cookies.set("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
     expires: 30,
     path: "/",
   });

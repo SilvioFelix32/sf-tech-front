@@ -26,11 +26,9 @@ export default function Filters() {
         <Content>
           <LeftContent>
             <CategoriesFilterCard filter={filter} setFilter={setFilter} />
-            {/* <BrandsFilterCard /> */}
             <PriceFilterCard />
           </LeftContent>
           <MainSection>
-            {/* {query} */}
             <ProductCard filter={filter} />
           </MainSection>
         </Content>

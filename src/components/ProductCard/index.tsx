@@ -15,6 +15,7 @@ import { BuyButton } from "../Buttons";
 //styles
 import {
   Wrapper,
+  Content,
   Text,
   FavoritedButton,
   NotFavoriteButton,
@@ -23,7 +24,9 @@ import {
   Title,
   ProductValue,
   ProductDescription,
+  CardWrapper,
 } from "./styles";
+import { PaginationButton } from "../Buttons/Pagination";
 
 interface CategorySelector {
   filter: string;
@@ -40,6 +43,9 @@ export function ProductCard({ filter }: CategorySelector) {
   const [categories, setCategories] = useState<IProductCategories[]>([]);
   const [buttonType, setButtonType] = useState("isNotFavorited");
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(10);
 
   useEffect(() => {
     productCategoryService
@@ -54,6 +60,9 @@ export function ProductCard({ filter }: CategorySelector) {
     return [...acc, ...cur.products];
   }, []);
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+
   const filteredProducts = categoryOfProducts
     .filter((produdct: IProduct) => produdct.value <= price)
     .filter((product: IProduct) => {
@@ -61,69 +70,81 @@ export function ProductCard({ filter }: CategorySelector) {
         return true;
       }
       return filteredProduct.includes(product.title);
-    });
+    })
+    .slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
-    <>
-      {filteredProducts.map((product: IProduct) => (
-        <Wrapper key={product.product_id}>
-          <Picture>
-            <Image
-              src={
-                product.url_banner
-                  ? product.url_banner
-                  : "https://i.imgur.com/2HFGvvT.png"
-              }
-              alt={product?.title}
-              width="300"
-              height="300"
-              priority
-            ></Image>
-          </Picture>
-          <ProductInfo>
-            <Title>{product.title}</Title>
-            <ProductDescription>{product.description}</ProductDescription>
-            <ProductValue>
-              <Text
-                style={{ textDecoration: "line-through", fontSize: "14px" }}
-              >
-                De R$
-                {product?.value.toFixed(2).replace(".", ",")}
-              </Text>
-              <Text>
-                Por R$
-                {(product?.value - product?.discount)
-                  .toFixed(2)
-                  .replace(".", ",")}
-              </Text>
-            </ProductValue>
-            <BuyButton product={product} />
-          </ProductInfo>
-          {userIsAuthenticated &&
-            (favoriteItems.some(
-              (favoriteItem) => favoriteItem.product_id === product.product_id
-            ) ? (
-              <FavoritedButton
-                className="favorite"
-                onClick={() => {
-                  removeItemFromFavorites(product.product_id),
-                    setButtonType("isNotFavorited");
-                }}
-              >
-                <MdFavoriteBorder />
-              </FavoritedButton>
-            ) : (
-              <NotFavoriteButton
-                className="favorite"
-                onClick={() => {
-                  handleAddToFavorites(product), setButtonType("isFavorited");
-                }}
-              >
-                <MdFavoriteBorder />
-              </NotFavoriteButton>
-            ))}
-        </Wrapper>
-      ))}
-    </>
+    <Wrapper>
+      <CardWrapper>
+        {filteredProducts.map((product: IProduct) => (
+          <Content key={product.product_id}>
+            <Picture>
+              <Image
+                src={
+                  product.url_banner
+                    ? product.url_banner
+                    : "https://i.imgur.com/2HFGvvT.png"
+                }
+                alt={product?.title}
+                width="300"
+                height="300"
+                priority
+              ></Image>
+            </Picture>
+            <ProductInfo>
+              <Title>{product.title}</Title>
+              {/* <ProductDescription>{product.description}</ProductDescription> */}
+              <ProductValue>
+                <Text
+                  style={{ textDecoration: "line-through", fontSize: "14px" }}
+                >
+                  De R$
+                  {product?.value.toFixed(2).replace(".", ",")}
+                </Text>
+                <Text>
+                  Por R$
+                  {(product?.value - product?.discount)
+                    .toFixed(2)
+                    .replace(".", ",")}
+                </Text>
+              </ProductValue>
+              <BuyButton product={product} />
+            </ProductInfo>
+            {userIsAuthenticated &&
+              (favoriteItems.some(
+                (favoriteItem) => favoriteItem.product_id === product.product_id
+              ) ? (
+                <FavoritedButton
+                  className="favorite"
+                  onClick={() => {
+                    removeItemFromFavorites(product.product_id),
+                      setButtonType("isNotFavorited");
+                  }}
+                >
+                  <MdFavoriteBorder />
+                </FavoritedButton>
+              ) : (
+                <NotFavoriteButton
+                  className="favorite"
+                  onClick={() => {
+                    handleAddToFavorites(product), setButtonType("isFavorited");
+                  }}
+                >
+                  <MdFavoriteBorder />
+                </NotFavoriteButton>
+              ))}
+          </Content>
+        ))}
+      </CardWrapper>
+      <PaginationButton
+        productsPerPage={productsPerPage}
+        totalProducts={categoryOfProducts.length}
+        paginate={paginate}
+      />
+    </Wrapper>
   );
 }

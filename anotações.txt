@@ -1,14 +1,8 @@
 
 responsividade dos componentes
 
-refatorar os cookies que não estão salvando direito
-
 no LoginModal, fazer filtros para senha digitadas erradas, botão para salvar senha esta fazendo login
-
-o botão de salvar favoritos, não está mantendo nos cookies
 
 finalizar pagina minha conta
 
 estilizar pagina de favoritos
-
-FINALIZAR PAGINAÇÃO - ELE NÃO ESTÁ ENVIANDO OS NUMEROS CORRETAMENTE, NEM RECEBENDO O VALOR DE 'PAGE e LIMIT"

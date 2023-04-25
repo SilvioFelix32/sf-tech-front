@@ -1,14 +1,33 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+`;
+
+
+export const CardWrapper = styled.div`
+  height: 80%;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+`;
+
+export const Content = styled.div`
   height: 280px;
   width: 45%;
   margin: 10px;
   border-radius: 18px;
   position: relative;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: flex-end;
+  justify-content: flex-end;
   outline: solid 1px ${({ theme }) => theme.colors.tertiary};
   transition: all 0.3s ease;
 
