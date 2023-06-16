@@ -7,6 +7,7 @@ import {
   useFavorite,
   useFilterContext,
 } from "../../context";
+import { Modal } from "react-responsive-modal";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { productCategoryService } from "../../services";
 import { IProduct } from "../../types";
@@ -25,11 +26,15 @@ import {
   ProductValue,
   ProductDescription,
   CardWrapper,
+  Button,
 } from "./styles";
 import { PaginationButton } from "../Buttons/Pagination";
+import { ProductModal } from "../Modals";
 
 interface CategorySelector {
   filter: string;
+  //openModal: boolean;
+  //setOpenModal: (value: boolean) => void;
 }
 
 export function ProductCard({ filter }: CategorySelector) {
@@ -42,6 +47,8 @@ export function ProductCard({ filter }: CategorySelector) {
     useFavorite();
   const [categories, setCategories] = useState<IProductCategories[]>([]);
   const [buttonType, setButtonType] = useState("isNotFavorited");
+  const [product_Id, setProductId] = useState("");
+  const [openModal, setOpenModal] = useState(false);
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -97,7 +104,15 @@ export function ProductCard({ filter }: CategorySelector) {
             </Picture>
             <ProductInfo>
               <Title>{product.title}</Title>
-              {/* <ProductDescription>{product.description}</ProductDescription> */}
+              <Title style={{ fontSize: "14px" }}>{product.subtitle}</Title>
+              <Button
+                onClick={() => {
+                  setOpenModal(true);
+                  setProductId(product.product_id);
+                }}
+              >
+                Mais detalhes
+              </Button>
               <ProductValue>
                 <Text
                   style={{ textDecoration: "line-through", fontSize: "14px" }}
@@ -140,10 +155,16 @@ export function ProductCard({ filter }: CategorySelector) {
           </Content>
         ))}
       </CardWrapper>
+
       <PaginationButton
         productsPerPage={productsPerPage}
         totalProducts={categoryOfProducts.length}
         paginate={paginate}
+      />
+      <ProductModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        productId={product_Id}
       />
     </Wrapper>
   );

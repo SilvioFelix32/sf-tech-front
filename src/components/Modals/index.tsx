@@ -10,3 +10,4 @@ export * from "./User/EditSuperUser";
 export * from "./Cart";
 export * from "./Login";
 export * from "./Favorite";
+export * from "./ProductCard";

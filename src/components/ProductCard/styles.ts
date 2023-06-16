@@ -155,3 +155,21 @@ export const Text = styled.p`
   padding: 0 5px;
   text-transform: capitalize;
 `;
+
+export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin-top: auto;
+  padding: 10px;
+  color: ${({ theme }) => theme.colors.tertiary};
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 24px;
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  transition: filter(0.2s);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;

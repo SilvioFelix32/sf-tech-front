@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useRouter } from "next/router";
-import { CompanyContext, useCart } from "../../../context";
+import { useCart } from "../../../context";
 import { Modal as ModalComponent } from "react-responsive-modal";
 import { BiTrash } from "react-icons/bi";
 //styles
