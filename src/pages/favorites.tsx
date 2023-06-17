@@ -1,5 +1,4 @@
 import React from "react";
-import Cookies from "js-cookie";
 import Image from "next/image";
 import { useFavorite } from "../context";
 import { IFavoriteItem } from "../types/IFavorite";

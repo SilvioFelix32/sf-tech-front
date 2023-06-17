@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { format } from "date-fns";
 import { AuthContext, CompanyContext } from "../context";
 import { userService } from "../services";
 import { IUser } from "../types";
@@ -44,7 +45,11 @@ export default function MyAccount() {
       </Content>
       <Content>
         <Title>Nascimento:</Title>
-        <Text>{myUser.birth_date ? myUser.birth_date : "Não informado"}</Text>
+        <Text>
+          {myUser.birth_date
+            ? format(new Date(myUser?.birth_date), "dd/MM/yyyy")
+            : "Não informado"}
+        </Text>
       </Content>
       <Content>
         <Title>Telefone:</Title>
