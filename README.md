@@ -4,6 +4,10 @@
 
 <p align="left">Esse é um projeto pessoal de um e-commerce usando a melhor parte de minhas habilidades no frontend até o momento...</p>
 
+## Demonstração:
+
+  <img src="public/images/sf-tech-front.vercel.app_.png"  alt="demonstration"  />
+  
 ###
 
 <h2 align="left">Esse site foi feito usando:</h2>
@@ -24,10 +28,6 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo"  />
-</div>
-
-<div align="center">
-  <img src="public/images/sf-tech-front.vercel.app_.png" height="100" alt="javascript logo"  />
 </div>
 
 ## Dependencies
