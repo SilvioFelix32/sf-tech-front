@@ -18,16 +18,14 @@ import {
 import { MdFavoriteBorder } from "react-icons/md";
 
 export default function Favorites() {
-  const { removeItemFromFavorites } = useFavorite();
-  const favoritesArray = Cookies.get("favorite-items");
-  const favorites = JSON.parse(favoritesArray);
-  const favoriteProduct = favorites?.map(
-    (favorite: IFavoriteItem[]) => favorite
+  const { removeItemFromFavorites, favoriteItems } = useFavorite();
+  const favoriteProduct = favoriteItems?.map(
+    (favorite: IFavoriteItem) => favorite
   );
 
   return favoriteProduct.length >= 1 ? (
     <Wrapper>
-      {favorites?.map((favorite: IFavoriteItem) => (
+      {favoriteItems?.map((favorite: IFavoriteItem) => (
         <Content key={favorite.product_id}>
           <Picture>
             <Image
