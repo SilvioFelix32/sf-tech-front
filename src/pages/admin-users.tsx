@@ -18,10 +18,12 @@ import { useCan } from "../context/Authentication/hooks/useCan";
 export default function AdminUsers() {
   const company_id = useContext(CompanyContext);
   const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const [pagination, setPagination] = useState({
+    totalRows: 0,
+    perPage: 10,
+  });
   const [users, setUsers] = useState<IUser[]>([]);
-  //Modals
+  // Modals
   const [reloadData, setReloadData] = useState(0);
   const [user_id, setUser_id] = useState("");
   const [open, setOpen] = useState(false);
@@ -31,15 +33,19 @@ export default function AdminUsers() {
 
   async function fetchUsers(page: number) {
     setLoading(true);
-    await userService
-      .getAll(company_id, {
+    try {
+      const res = await userService.getAll(company_id, {
         page: page,
-        limit: perPage,
-      })
-      .then((res) => {
-        setUsers(res.data);
-        setTotalRows(res.meta.total);
+        limit: pagination.perPage,
       });
+      setUsers(res.data);
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        totalRows: res.meta.total,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   }
 
@@ -49,17 +55,20 @@ export default function AdminUsers() {
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
-
-    await userService
-      .getAll(company_id, {
+    console.log(newPerPage, page);
+    try {
+      const res = await userService.getAll(company_id, {
         page: page,
         limit: newPerPage,
-      })
-      .then((res) => {
-        setUsers(res.data);
-        setPerPage(newPerPage);
-      })
-      .catch((err) => console.log(err));
+      });
+      setUsers(res.data);
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        perPage: newPerPage,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   }
 
@@ -176,7 +185,7 @@ export default function AdminUsers() {
           onChangePage={handlePageChange}
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
-          paginationTotalRows={totalRows}
+          paginationTotalRows={pagination.totalRows}
           customStyles={customStyles}
         />
       </Content>
