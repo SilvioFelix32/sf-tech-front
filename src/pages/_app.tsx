@@ -1,7 +1,7 @@
 import React from "react";
-import Cookies from "js-cookie";
-import { setCookie } from "../shared/cookies";
 import Head from "next/head";
+import Cookies from "js-cookie";
+import { GetServerSideProps } from "next";
 import { MainApp } from "../components/MainApp";
 import { IProduct } from "../types";
 import {
@@ -16,7 +16,6 @@ import CompanyIdProvider from "../context/Company/CompanyContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
 //styles
 import { GlobalStyles } from "../styles/global";
-import { GetServerSideProps } from "next";
 
 interface AppProps {
   Component: any;
