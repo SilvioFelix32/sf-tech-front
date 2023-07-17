@@ -20,6 +20,6 @@ export const Wrapper = styled.div`
 
   p {
     text-align: end;
-    font-size: 12px;
+    font-size: 0.8rem;;
   }
 `;

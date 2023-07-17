@@ -191,7 +191,7 @@ export const Text = styled.div`
   align-items: center;
   width: 100%;
   height: 36px;
-  font-size: 12px;
+  font-size: 0.8rem;;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text};
   background: ${({ theme }) => theme.colors.tertiary};

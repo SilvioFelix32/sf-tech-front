@@ -23,7 +23,7 @@ export const ProductInfo = styled.div`
     padding: 0 5px;
 
     @media screen and (max-width: 1200px) {
-      font-size: 12px;
+      font-size: 0.8rem;;
       padding: 0 2px;
     }
   }
@@ -73,7 +73,7 @@ export const Text = styled.p`
   padding: 0 5px;
 
   @media screen and (max-width: 1200px) {
-    font-size: 12px;
+    font-size: 0.8rem;;
     margin: 2px 0;
     padding: 0 2px;
   }

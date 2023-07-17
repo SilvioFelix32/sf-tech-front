@@ -30,7 +30,7 @@ export const Text = styled.p`
   margin: 5px 0;
 
   @media screen and (max-width: 1200px) {
-    font-size: 12px;
+    font-size: 0.8rem;;
   }
 `;
 
@@ -45,7 +45,7 @@ export const Button = styled.button`
   outline: none;
 
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.8rem;;
   margin: 5px 0;
   padding: 0 5px;
 
@@ -60,6 +60,6 @@ export const Button = styled.button`
   }
 
   @media screen and (max-width: 1200px) {
-    font-size: 12px;
+    font-size: 0.8rem;;
   }
 `;

@@ -31,11 +31,6 @@ export const Section = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  
-  @media screen and (max-width: 764px) {
-    margin-left: auto;
-    max-width: 10%;
-  }
 `;
 
 export const Button = styled.button`

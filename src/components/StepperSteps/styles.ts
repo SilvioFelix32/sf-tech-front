@@ -33,7 +33,7 @@ export const Totals = styled.div`
   margin-top: auto;
 
   p {
-    font-size: 12px;
+    font-size: 0.8rem;;
     margin: 2px;
   }
 `;

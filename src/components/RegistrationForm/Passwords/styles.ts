@@ -7,7 +7,7 @@ export const Input = styled.input`
   height: 32px;
   padding: 0 10px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 0.8rem;;
   color: ${({ theme }) => theme.colors.tertiary};
   border: 1px solid ${({ theme }) => theme.colors.quaternary};
 `;

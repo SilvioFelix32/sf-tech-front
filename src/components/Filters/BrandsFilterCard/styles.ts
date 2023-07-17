@@ -60,11 +60,11 @@ export const ProductFilter = styled.div`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.8rem;;
   margin: 5px 0;
   padding: 0 5px;
 
   @media screen and (max-width: 1200px) {
-    font-size: 12px;
+    font-size: 0.8rem;;
   }
 `;

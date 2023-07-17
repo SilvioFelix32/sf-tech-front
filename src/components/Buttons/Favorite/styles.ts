@@ -25,7 +25,7 @@ export const Content = styled.div`
 
 export const Text = styled.p`
   margin-left: 12px;
-  font-size: 12px;
+  font-size: 0.8rem;;
 `;
 
 export const FavoriteItems = styled.div`

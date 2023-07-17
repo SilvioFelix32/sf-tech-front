@@ -150,7 +150,7 @@ export const Title = styled.p`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 400;
-  font-size: 12px;
+  font-size: 0.8rem;;
   margin: 2px;
   padding: 0 5px;
   text-transform: capitalize;
