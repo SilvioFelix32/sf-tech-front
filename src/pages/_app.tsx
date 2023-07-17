@@ -1,5 +1,6 @@
 import React from "react";
 import Cookies from "js-cookie";
+import { GetServerSideProps } from "next";
 import { setCookie } from "../shared/cookies";
 import Head from "next/head";
 import { MainApp } from "../components/MainApp";
@@ -60,25 +61,22 @@ export default function App({
   );
 }
 
-App.getInitialProps = ({ ctx }) => {
-  const favoriteTheme: string = Cookies.get("color-theme");
-  
+export const getServerSideProps: GetServerSideProps = async () => {
+  const favoriteTheme = Cookies.get("color-theme");
+
   setCookie("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
-    expires: 7,
+    maxAge: 60 * 60 * 24 * 7, // 7 dias
     path: "/",
   });
 
-  if (favoriteTheme) {
-    Cookies.set("color-theme", favoriteTheme, {
-      expires: 30,
-      path: "/",
-    });
-  } else {
-    Cookies.set("color-theme", "light", {
-      expires: 30,
+  if (!favoriteTheme) {
+    setCookie("color-theme", "light", {
+      maxAge: 60 * 60 * 24 * 30, // 30 dias
       path: "/",
     });
   }
 
-  return {};
+  return {
+    props: {},
+  };
 };
