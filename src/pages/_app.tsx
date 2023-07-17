@@ -1,7 +1,9 @@
 import React from "react";
 import Cookies from "js-cookie";
+import { setCookie } from "../shared/cookies";
 import Head from "next/head";
 import { MainApp } from "../components/MainApp";
+import { IProduct } from "../types";
 import {
   AuthProvider,
   CartProvider,
@@ -14,7 +16,6 @@ import CompanyIdProvider from "../context/Company/CompanyContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
 //styles
 import { GlobalStyles } from "../styles/global";
-import { IProduct } from "../types";
 
 interface AppProps {
   Component: any;
@@ -27,6 +28,13 @@ export default function App({
   pageProps,
   initialProducts,
 }: AppProps) {
+  if (typeof window === "undefined") {
+    setCookie("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
+      expires: 7,
+      path: "/",
+    });
+  }
+
   return (
     <CompanyIdProvider>
       <ThemePreferenceProvider>
@@ -60,7 +68,7 @@ export default function App({
 }
 
 App.getInitialProps = ({ ctx }) => {
-  const favoriteTheme = Cookies.get("color-theme");
+  const favoriteTheme: string = Cookies.get("color-theme");
 
   if (favoriteTheme) {
     Cookies.set("color-theme", favoriteTheme, {
@@ -73,11 +81,6 @@ App.getInitialProps = ({ ctx }) => {
       path: "/",
     });
   }
-
-  Cookies.set("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
-    expires: 30,
-    path: "/",
-  });
 
   return {};
 };

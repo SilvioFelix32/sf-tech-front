@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Navigation = styled.nav`
+export const Navigation = styled.div`
 padding: 5px;
 box-sizing: border-box;
 text-align: center;

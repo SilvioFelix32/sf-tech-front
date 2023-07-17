@@ -65,5 +65,5 @@ export const Text = styled.p`
   margin-top: 7px;
   margin-left: 3px;
   color: ${({ theme }) => theme.colors.primary};
-  font-size: 14px;
+  font-size: 0.8rem;;
 `;

@@ -140,7 +140,7 @@ export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
   text-transform: capitalize;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 1.2rem;;
   margin: 0;
   padding: 0 5px;
 `;

@@ -162,7 +162,7 @@ export const ButtonAdd = styled.button`
   width: 100%;
   max-width: 150px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 0.8rem;;
   background: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.tertiary};
   border-top-right-radius: 16px;
@@ -177,7 +177,7 @@ export const ButtonRemove = styled.button`
   width: 100%;
 
   font-weight: bold;
-  font-size: 14px;
+  font-size: 0.8rem;;
   background: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.tertiary};
   border-top-left-radius: 16px;

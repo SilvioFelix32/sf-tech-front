@@ -19,7 +19,7 @@ export const CartItems = styled.div`
   width: 100%;
 
   p {
-    font-size: 18px;
+    font-size: 1.2rem;;
     margin: 3px;
   }
 

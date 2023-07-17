@@ -26,7 +26,7 @@ export const ProductFilter = styled.div`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.8rem;;
   margin: 5px 0;
 
   @media screen and (max-width: 1200px) {

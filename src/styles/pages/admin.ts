@@ -18,14 +18,14 @@ export const Content = styled.div`
 
 export const Text = styled.p`
   margin: 10px auto;
-  font-size: 18px;
+  font-size: 1.2rem;;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.title};
   text-align: center;
 
   /* Media query for smaller screens */
   @media screen and (max-width: 768px) {
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 

@@ -19,7 +19,7 @@ export const FavoriteItems = styled.div`
   width: 100%;
 
   p {
-    font-size: 18px;
+    font-size: 1.2rem;;
     font-weight: 500;
     margin: 3px;
   }

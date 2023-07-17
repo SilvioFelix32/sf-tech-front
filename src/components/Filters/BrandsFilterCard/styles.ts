@@ -20,7 +20,7 @@ export const ProductInfo = styled.div`
   p {
     color: ${({ theme }) => theme.colors.title};
     font-weight: bold;
-    font-size: 14px;
+    font-size: 0.8rem;;
     padding: 0 5px;
 
     @media screen and (max-width: 1200px) {

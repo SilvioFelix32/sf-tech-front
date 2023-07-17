@@ -19,7 +19,7 @@ export const ProductInfo = styled.div`
   p {
     color: ${({ theme }) => theme.colors.title};
     font-weight: bold;
-    font-size: 14px;
+    font-size: 0.8rem;;
     padding: 0 5px;
 
     @media screen and (max-width: 1200px) {
@@ -40,7 +40,7 @@ export const Input = styled.input`
   color: ${({ theme }) => theme.colors.tertiary};
   border-radius: 8px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.8rem;;
   margin: 5px 0;
   padding: 8px 0;
 `;
@@ -56,7 +56,7 @@ export const Button = styled.button`
   border: none;
 
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.8rem;;
   margin: 5px 0;
   padding: 5px;
 
@@ -68,7 +68,7 @@ export const Button = styled.button`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.8rem;;
   margin: 5px 0;
   padding: 0 5px;
 

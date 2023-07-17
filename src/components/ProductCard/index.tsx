@@ -7,7 +7,6 @@ import {
   useFavorite,
   useFilterContext,
 } from "../../context";
-import { Modal } from "react-responsive-modal";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { productCategoryService } from "../../services";
 import { IProduct } from "../../types";
@@ -33,8 +32,6 @@ import { ProductModal } from "../Modals";
 
 interface CategorySelector {
   filter: string;
-  //openModal: boolean;
-  //setOpenModal: (value: boolean) => void;
 }
 
 export function ProductCard({ filter }: CategorySelector) {

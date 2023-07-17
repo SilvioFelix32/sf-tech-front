@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 
   h2 {
     text-align: center;
-    font-size: 18px;
+    font-size: 1.2rem;;
   }
 
   p {

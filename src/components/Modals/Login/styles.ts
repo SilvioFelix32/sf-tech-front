@@ -10,12 +10,12 @@ export const Wrapper = styled.form`
   padding: 20px;
 
   h2 {
-    font-size: 18px;
+    font-size: 1.2rem;;
     margin: 0;
   }
 
   p {
-    font-size: 14px;
+    font-size: 0.8rem;;
     margin: 0;
   }
 `;

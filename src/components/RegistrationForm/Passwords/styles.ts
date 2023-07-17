@@ -23,7 +23,7 @@ export const InputContainer = styled.div`
     margin-right: 10px;
     position: absolute;
     color: ${({ theme }) => theme.colors.tertiary};
-    font-size: 20px;
+    font-size: 1.2rem;
   }
 `;
 
@@ -33,7 +33,7 @@ export const Text = styled.p`
   transition: 0.3s;
 
   span {
-    font-size: 14px;
+    font-size: 0.8rem;;
     color: ${({ theme }) => theme.colors.text};
     margin-left: 35px;
   }
