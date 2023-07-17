@@ -8,6 +8,10 @@ export const Wrapper = styled.div`
   padding: 20px;
   width: 100%;
   height: 100%;
+
+  @media screen {
+    padding: 5px;
+  }
 `;
 
 export const Context = styled.div`

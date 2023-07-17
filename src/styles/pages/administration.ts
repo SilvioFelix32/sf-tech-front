@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: ${({ theme }) => theme.colors.background};
+
+  @media screen and (max-width: 764px) {
+    width: 100%;
+  }
 `;
 
 export const Content = styled.div`
@@ -24,8 +28,14 @@ export const Content = styled.div`
 export const Section = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  
+  @media screen and (max-width: 764px) {
+    margin-left: auto;
+    max-width: 10%;
+  }
 `;
 
 export const Button = styled.button`

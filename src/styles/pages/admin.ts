@@ -10,6 +10,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 export const Content = styled.div`

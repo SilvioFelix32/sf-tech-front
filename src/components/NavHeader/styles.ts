@@ -9,11 +9,9 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
+
   @media screen and (max-width: 1366px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: 50px;
   }
 `;
 
@@ -42,7 +40,7 @@ export const Navigation = styled.div`
   @media screen and (max-width: 1366px) {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     width: 100%;
   }
 `;

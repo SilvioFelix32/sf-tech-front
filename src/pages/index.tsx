@@ -12,7 +12,7 @@ import {
   MainSection,
   LeftContent,
   Theme,
-} from "../styles/pages/filters";
+} from "../styles/pages/home";
 import { useState } from "react";
 
 export default function Filters() {

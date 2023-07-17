@@ -1,7 +1,10 @@
+import Image from "next/image";
+import { useCan } from "../../context/Authentication/hooks/useCan";
+import { BiStore } from "react-icons/bi";
 //components
 import { SearchBar } from "../SearchBar";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { SmallDevices } from "../Buttons/SmallDevices";
 import {
   CartButton,
   FavoritesButton,
@@ -10,8 +13,6 @@ import {
 } from "../Buttons";
 //styles
 import { Select, Wrapper, Logo, Button } from "./styles";
-import { useCan } from "../../context/Authentication/hooks/useCan";
-import { BiStore } from "react-icons/bi";
 
 export function Header() {
   const router = useRouter();
@@ -29,9 +30,10 @@ export function Header() {
         ></Image>
       </Logo>
       <SearchBar />
+      <ThemeToogle />
+      <SmallDevices />
       <Select>
         <SignInButton />
-        <ThemeToogle />
         {userIsAuthenticated && <FavoritesButton />}
         <CartButton />
         {userHasAdminPermissions && (

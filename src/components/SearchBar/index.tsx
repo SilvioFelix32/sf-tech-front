@@ -14,7 +14,7 @@ export function SearchBar() {
     <Wrapper>
       <InputContainer>
         <SearchInput
-          placeholder="Procure um produto..."
+          placeholder="Busca..."
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

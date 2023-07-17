@@ -10,17 +10,17 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const FavoritesButton: React.FC<ButtonProps> = ({ ...rest }) => {
   const { totalItemsCount } = useFavorite();
-  const [openModal, setOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
     <>
-      <Wrapper {...rest} onClick={() => setOpenModal(true)}>
+      <Wrapper {...rest} onClick={() => setIsOpenModal(true)}>
         <Content>
           <BsHeart />
           <FavoriteItems>{totalItemsCount}</FavoriteItems>
         </Content>
       </Wrapper>
-      <FavoriteModal openModal={openModal} setOpenModal={setOpenModal} />
+      <FavoriteModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />
     </>
   );
 };

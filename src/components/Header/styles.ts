@@ -19,6 +19,11 @@ export const Wrapper = styled.div`
       color: ${({ theme }) => theme.colors.tertiary};
     }
   }
+
+  @media screen and (max-width: 767px){
+   height: 70px;
+   padding: 5px;
+}
 `;
 
 export const Logo = styled.button`
@@ -45,6 +50,10 @@ export const Text = styled.p`
 
 export const Select = styled.div`
   display: flex;
+
+@media screen and (max-width: 767px){
+   display: none;
+}
 `;
 
 export const Button = styled.button`

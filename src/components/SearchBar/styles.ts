@@ -10,8 +10,8 @@ export const Wrapper = styled.div`
   justify-content: flex-start;
   background-color: ${({ theme }) => theme.colors.background};
 
-  @media screen and (max-width: 1200px) {
-    display: none;
+  @media screen and (max-width: 764px) {
+    height: 40px;
   }
 `;
 

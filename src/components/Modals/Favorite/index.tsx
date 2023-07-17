@@ -8,11 +8,11 @@ import "react-responsive-modal/styles.css";
 import { Button, Wrapper, FavoriteItems } from "./styles";
 
 interface ModalProps {
-  openModal: boolean;
-  setOpenModal: (value: boolean) => void;
+  isOpenModal: boolean;
+  setIsOpenModal: (value: boolean) => void;
 }
 
-export function FavoriteModal({ openModal, setOpenModal }: ModalProps) {
+export function FavoriteModal({ isOpenModal, setIsOpenModal }: ModalProps) {
   const { favoriteItems, removeItemFromFavorites } = useFavorite();
 
   return (
@@ -21,9 +21,9 @@ export function FavoriteModal({ openModal, setOpenModal }: ModalProps) {
         overlay: "customOverlay",
         modal: "customModal",
       }}
-      open={openModal}
+      open={isOpenModal}
       onClose={() => {
-        setOpenModal(false);
+        setIsOpenModal(false);
       }}
       center
     >
@@ -52,7 +52,7 @@ export function FavoriteModal({ openModal, setOpenModal }: ModalProps) {
             </div>
           ))}
         </FavoriteItems>
-        <Button type="button" onClick={() => setOpenModal(false)}>
+        <Button type="button" onClick={() => setIsOpenModal(false)}>
           Fechar
         </Button>
       </Wrapper>
