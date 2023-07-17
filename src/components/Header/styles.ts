@@ -21,12 +21,12 @@ export const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 767px){
-   height: 70px;
+   height: 60px;
    padding: 5px;
 }
 `;
 
-export const Logo = styled.button`
+export const LogoL = styled.button`
   display: flex;
   border: none;
   outline: none;
@@ -39,6 +39,30 @@ export const Logo = styled.button`
 
   &:hover {
     filter: brightness(0.9);
+  }
+
+  @media (max-width:764px){
+    display: none;
+  }
+`;
+
+export const LogoS = styled.button`
+  display: none;
+  border: none;
+  outline: none;
+  transition: filter 0.2s;
+
+  > image {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  @media (max-width:720px){
+    display: flex;
   }
 `;
 

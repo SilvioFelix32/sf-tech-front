@@ -12,7 +12,7 @@ import {
   ThemeToogle,
 } from "../Buttons";
 //styles
-import { Select, Wrapper, Logo, Button } from "./styles";
+import { Select, Wrapper, LogoL, LogoS, Button } from "./styles";
 
 export function Header() {
   const router = useRouter();
@@ -21,14 +21,22 @@ export function Header() {
 
   return (
     <Wrapper>
-      <Logo onClick={() => router.push("/")}>
+      <LogoL onClick={() => router.push("/")}>
         <Image
           src="/images/logo_sftech.png"
           alt="sftech"
           width={200}
           height={60}
         ></Image>
-      </Logo>
+      </LogoL>
+      <LogoS onClick={() => router.push("/")}>
+        <Image
+          src="/images/logo_60x60.png"
+          alt="sftech"
+          width={60}
+          height={60}
+        ></Image>
+      </LogoS>
       <SearchBar />
       <ThemeToogle />
       <SmallDevices />

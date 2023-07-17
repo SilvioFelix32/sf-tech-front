@@ -28,13 +28,6 @@ export default function App({
   pageProps,
   initialProducts,
 }: AppProps) {
-  if (typeof window === "undefined") {
-    setCookie("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
-      expires: 7,
-      path: "/",
-    });
-  }
-
   return (
     <CompanyIdProvider>
       <ThemePreferenceProvider>
@@ -69,6 +62,11 @@ export default function App({
 
 App.getInitialProps = ({ ctx }) => {
   const favoriteTheme: string = Cookies.get("color-theme");
+  
+  setCookie("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
+    expires: 7,
+    path: "/",
+  });
 
   if (favoriteTheme) {
     Cookies.set("color-theme", favoriteTheme, {

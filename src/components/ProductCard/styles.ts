@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-
 export const CardWrapper = styled.div`
   height: 80%;
   width: 100%;

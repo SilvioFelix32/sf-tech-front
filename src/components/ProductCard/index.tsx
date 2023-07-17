@@ -67,10 +67,11 @@ export function ProductCard({ filter }: CategorySelector) {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
+  console.log("cate", categoryOfProducts);
   const filteredProducts = categoryOfProducts
     .filter((produdct: IProduct) => produdct.value <= price)
     .filter((product: IProduct) => {
-      if (filteredProduct.length === 0) {
+      if (filteredProduct?.length === 0) {
         return true;
       }
       return filteredProduct.includes(product.title);

@@ -7,4 +7,16 @@ finalizar pagina minha conta
 
 estilizar pagina de favoritos
 
+paginação das tabelas na area de administração
 
+entender e resolver o porque de não estar carregando os componentes ao acessar a pagina pela primeira vez
+
+resolver o erro de index sendo enviado junto na hora do get na rota products/search
+
+erro de get no endpoint /products ao acessar a pagina pela primeira vez 
+
+remover o modal da area de aparelhos menores (@media)
+
+trocar tamanho de componentes de px para % ou rem
+
+trocar a logo no header para aparelhos menores
