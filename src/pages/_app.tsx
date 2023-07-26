@@ -28,16 +28,12 @@ export default function App({
   pageProps,
   initialProducts,
 }: AppProps) {
-  const companyId: string = Cookies.get("company_id");
-
-  if (companyId) {
-    useEffect(() => {
-      Cookies.set("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
-        expires: 7,
-        path: "/",
-      });
-    }, []);
-  }
+  useEffect(() => {
+    Cookies.set("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
+      expires: 7,
+      path: "/",
+    });
+  }, []);
 
   return (
     <CompanyIdProvider>
