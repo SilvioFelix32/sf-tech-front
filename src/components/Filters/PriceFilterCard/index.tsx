@@ -6,14 +6,12 @@ import {
   ProductInfo,
   ProductFilter,
   Input,
-  Button,
 } from "./styles";
 
 export function PriceFilterCard() {
   const {
     filters: { price, maxPrice, minPrice },
     updateFilterValue,
-    clearFilters,
   } = useFilterContext();
 
   return (
@@ -35,9 +33,6 @@ export function PriceFilterCard() {
           value={price}
           onChange={updateFilterValue}
         />
-        <Button className="btn" onClick={clearFilters}>
-          Limpar Filtros
-        </Button>
       </ProductFilter>
     </Wrapper>
   );

@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
+interface ButtonProps {
+  isSelected: boolean;
+  onClick: () => void;
+}
+
 export const Wrapper = styled.div`
   width: 100%;
-  padding: 8px;
   border-radius: 18px;
   display: flex;
   flex-direction: column;
@@ -34,11 +38,13 @@ export const Text = styled.p`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ isSelected }) => (isSelected
+    ? ({ theme }) => theme.colors.tertiary
+    : ({ theme }) => theme.colors.text)};
   background-color: ${({ theme }) => theme.colors.background};
   text-transform: uppercase;
   border: none;

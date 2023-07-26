@@ -59,3 +59,24 @@ export const MainSection = styled.div`
     flex-direction: column;
   }
 `;
+
+export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  border-radius: 6px;
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.background};
+  outline: solid 0.1px ${({ theme }) => theme.colors.quaternary};
+  text-transform: uppercase;
+  border: none;
+
+  font-weight: 400;
+  font-size: 0.8rem;
+  padding: 5px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.tertiary};
+  }
+`;

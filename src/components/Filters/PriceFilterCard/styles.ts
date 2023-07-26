@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  padding: 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -30,8 +29,7 @@ export const ProductInfo = styled.div`
 `;
 
 export const ProductFilter = styled.div`
-  width: 100%;
-  padding-right: 20px;
+  width: 80%;
   display: flex;
   flex-direction: column;
 `;
@@ -43,26 +41,6 @@ export const Input = styled.input`
   font-size: 0.8rem;;
   margin: 5px 0;
   padding: 8px 0;
-`;
-
-export const Button = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.background};
-  outline: solid 0.1px ${({ theme }) => theme.colors.quaternary};
-  text-transform: uppercase;
-  border: none;
-
-  font-weight: 400;
-  font-size: 0.8rem;;
-  margin: 5px 0;
-  padding: 5px;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.tertiary};
-  }
 `;
 
 export const Text = styled.p`

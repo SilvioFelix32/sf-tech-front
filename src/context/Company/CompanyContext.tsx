@@ -9,16 +9,9 @@ interface ProviderProps {
 
 const CompanyIdProvider: React.FC<ProviderProps> = ({ children }) => {
   const [company_id, setCompanyId] = useState<string>();
-
-  // useEffect(() => {
-  //   const companyId = Cookies.get("company_id");
-  //   if (companyId) {
-  //     setCompanyId(companyId);
-  //   }
-  // }, []);
+  const companyId: string = Cookies.get("company_id");
 
   useEffect(() => {
-    const companyId = "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c";
     if (companyId) {
       setCompanyId(companyId);
     }

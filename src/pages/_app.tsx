@@ -63,7 +63,7 @@ export default function App({
 export const getServerSideProps: GetServerSideProps = async () => {
   const favoriteTheme = Cookies.get("color-theme");
 
-  Cookies.set("ccompany_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
+  Cookies.set("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
     expires: 7,
     path: "/",
   });

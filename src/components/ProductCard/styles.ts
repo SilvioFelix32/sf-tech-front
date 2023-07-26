@@ -100,6 +100,16 @@ export const FavoritedButton = styled.button`
     height: 26px;
     width: 26px;
   }
+
+  @media (max-width: 760px) {
+    display: flex;
+
+  svg {
+    margin: 4px;
+    height: 14px;
+    width: 14px;
+  }
+  }
 `;
 
 export const NotFavoriteButton = styled.button`
@@ -124,6 +134,16 @@ export const NotFavoriteButton = styled.button`
     margin: 8px;
     height: 26px;
     width: 26px;
+  }
+
+  @media (max-width: 760px) {
+    display: flex;
+
+  svg {
+    margin: 4px;
+    height: 14px;
+    width: 14px;
+  }
   }
 `;
 
