@@ -70,13 +70,7 @@ export const SmallDevices = () => {
             <CartModal openModal={openModal} setOpenModal={setOpenModal} />
           </CDropdownItem>
           <CDropdownItem href="/admin-acount" className="OptionBtn">
-            Meu perfil
-          </CDropdownItem>
-          <CDropdownItem href="/admin-acount" className="OptionBtn">
-            Favoritos
-          </CDropdownItem>
-          <CDropdownItem href="/admin-acount" className="OptionBtn">
-            Compras
+            Minha Conta
           </CDropdownItem>
           <CDropdownItem onClick={() => signOut()} className="OptionBtn">
             Sair <FiX />

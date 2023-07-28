@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   height: 100%;
-  min-height: 400px;
-  width: 600px;
+  min-height: 300px;
+  width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,7 +62,6 @@ export const CartItems = styled.div`
     }
   }
 `;
-
 
 export const Button = styled.button`
   display: flex;

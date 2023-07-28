@@ -83,10 +83,6 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <SavePassword>
-          <Input type="checkbox" id="remember" />
-          <label htmlFor="remember">Salvar Senha?</label>
-        </SavePassword>
         <Button type="submit">Entrar</Button>
         <Registration>
           Não tem uma conta?

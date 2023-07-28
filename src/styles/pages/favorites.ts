@@ -130,7 +130,7 @@ export const ProductValue = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin: auto 0 0;
+  margin: auto 0 5px;
   text-align: center;
 `;
 

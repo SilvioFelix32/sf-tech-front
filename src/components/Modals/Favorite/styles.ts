@@ -31,15 +31,16 @@ export const FavoriteItems = styled.div`
     .itemTitle {
       display: flex;
       justify-content: flex-start;
-      align-items: center;
+      align-items: flex-start;
       width: 30%;
+      height: 100%;
       text-transform: capitalize;
     }
 
     .itemValue {
       display: flex;
       justify-content: flex-end;
-      align-items: center;
+      align-items: flex-start;
       width: 70%;
     }
   }

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
-  width: 100%;
+  width: 70%;
   height: 100%;
 `;
 

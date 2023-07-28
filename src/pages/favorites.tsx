@@ -15,6 +15,7 @@ import {
   FavoritedButton,
 } from "../styles/pages/favorites";
 import { MdFavoriteBorder } from "react-icons/md";
+import { BuyButton } from "../components";
 
 export default function Favorites() {
   const { removeItemFromFavorites, favoriteItems } = useFavorite();
@@ -56,6 +57,7 @@ export default function Favorites() {
                   .replace(".", ",")}
               </Text>
             </ProductValue>
+            <BuyButton product={favorite} />
           </ProductInfo>
           <FavoritedButton
             className="favorite"

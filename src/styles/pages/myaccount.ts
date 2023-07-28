@@ -2,22 +2,20 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  width: 100%;
+  width: 70%;
   height: 100%;
 
-  @media screen {
+  @media (min-width: 760px) {
     padding: 5px;
   }
 `;
 
 export const Context = styled.div`
   display: flex;
-
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -33,7 +31,7 @@ export const Content = styled.div`
   background-color: ${({ theme }) => theme.colors.tertiary};
   border-bottom: solid 1px white;
 
-  @media screen {
+  @media (min-width: 760px) {
     height: 40px;
   }
 `;

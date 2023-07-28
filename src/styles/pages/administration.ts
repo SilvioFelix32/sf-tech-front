@@ -19,6 +19,7 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   width: 100%;
+  min-height: 71vh;
   height: 100%;
   display: flex;
   align-items: flex-start;
@@ -28,7 +29,6 @@ export const Content = styled.div`
 export const Section = styled.div`
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 `;

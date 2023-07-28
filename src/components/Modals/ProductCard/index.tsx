@@ -38,9 +38,9 @@ export function ProductModal({
       <Wrapper>
         <CartItems>
           <p>Detalhes do Produto</p>
-          <div>{product?.title}</div>
-          <div>{product?.subtitle}</div>
-          <div>{product?.description}</div>
+          <div>Nome do produto: {product?.title}</div>
+          <div>Subtitulo: {product?.subtitle}</div>
+          <div>Descrição: {product?.description}</div>
         </CartItems>
         <Button type="button" onClick={() => setOpenModal(false)}>
           Fechar
