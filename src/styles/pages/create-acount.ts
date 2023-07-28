@@ -21,8 +21,7 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  padding: 20px;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
 `;

@@ -15,14 +15,14 @@ export const Wrapper = styled.form`
   }
 
   p {
-    font-size: 0.8rem;;
+    font-size: 1rem;;
     margin: 0;
   }
 `;
 
 export const Password = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
   width: 100%;
 
@@ -87,7 +87,7 @@ export const Button = styled.button`
 
 export const Registration = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -112,31 +112,3 @@ export const Registration = styled.div`
   }
 `;
 
-export const Medias = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 5px;
-    border-radius: 8px;
-    border: none;
-    transition: filter(0.2s);
-
-    &:hover {
-      filter: brightness(0.9);
-    }
-
-    svg {
-      height: 36px;
-      width: 36px;
-      color: ${({ theme }) => theme.colors.primary};
-      background-color: ${({ theme }) => theme.colors.tertiary};
-    }
-  }
-`;

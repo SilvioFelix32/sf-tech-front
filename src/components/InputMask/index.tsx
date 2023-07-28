@@ -25,7 +25,7 @@ const MaskedInput = ({ defaultValue, onChange, name, mask, register }) => {
         mask={mask}
         defaultValue={defaultValue}
         onChange={handleChange}
-        placeholder="Seu Documento"
+        placeholder="CPF*"
         className="inputMask"
         {...register("document", { required: true })}
       />

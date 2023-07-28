@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.form`
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 40px;
 `;
+
+export const Title = styled.h1`
+font-size: 3rem;
+color: ${({ theme }) => theme.colors.title};
+`
 
 export const Content = styled.div`
   width: 80%;
@@ -18,10 +24,10 @@ export const Content = styled.div`
 
   .inputMask {
     height: 36px;
-    width: 90%;
+    width: 98%;
     margin: 0 5px;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     font-weight: 400;
     padding: 0 10px;
     color: ${({ theme }) => theme.colors.tertiary};
@@ -38,7 +44,7 @@ export const Input = styled.input`
   width: 90%;
   margin: 0 5px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 400;
   padding: 0 10px;
   color: ${({ theme }) => theme.colors.tertiary};
@@ -55,7 +61,7 @@ export const Select = styled.select`
   width: 90%;
   margin: 0 5px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 400;
   padding: 0 10px;
   text-transform: capitalize;
@@ -68,7 +74,7 @@ export const Button = styled.button`
   width: 30%;
   margin: 10px 5px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 400;
   padding: 0 10px;
   text-transform: capitalize;

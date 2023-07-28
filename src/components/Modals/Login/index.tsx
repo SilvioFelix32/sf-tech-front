@@ -11,7 +11,6 @@ import { AuthContext, CompanyContext } from "../../../context";
 import {
   Button,
   Input,
-  Medias,
   Password,
   Registration,
   SavePassword,
@@ -75,7 +74,7 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
         <br />
         <Password>
           <p>Senha:</p>
-          <button onClick={handleForgotPasswordClick}>
+          <button type="button" onClick={handleForgotPasswordClick}>
             Esqueceu sua Senha?
           </button>
         </Password>
@@ -91,19 +90,10 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
         <Button type="submit">Entrar</Button>
         <Registration>
           Não tem uma conta?
-          <button onClick={handleCreateAccountClick}>Cadastrar</button>
+          <button type="button" onClick={handleCreateAccountClick}>
+            Cadastrar.
+          </button>
         </Registration>
-        <Medias>
-          <button onClick={() => router.push("/")}>
-            <FaFacebookSquare />
-          </button>
-          <button onClick={() => router.push("/")}>
-            <FaInstagramSquare />
-          </button>
-          <button onClick={() => router.push("/")}>
-            <FaYoutubeSquare />
-          </button>
-        </Medias>
       </Wrapper>
     </Modal>
   );

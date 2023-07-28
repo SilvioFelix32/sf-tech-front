@@ -9,11 +9,10 @@ import MaskedInput from "../InputMask";
 import InputMask from "react-input-mask";
 import { ConfirmPassword, CreatePassword } from "./Passwords";
 //styles
-import { Wrapper, Content, Input, Select, Button } from "./styles";
+import { Wrapper, Content, Input, Select, Button, Title } from "./styles";
 
 const initialValues = {
   cpf: "",
-  cnpj: "",
 };
 
 export function RegistrationForm() {
@@ -22,7 +21,6 @@ export function RegistrationForm() {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [documentType, setDocumentType] = useState("CPF");
   const [defaultValues, setValues] = useState(initialValues);
   const { register, setValue, setFocus, handleSubmit } = useForm();
 
@@ -78,74 +76,53 @@ export function RegistrationForm() {
 
   return (
     <Wrapper onSubmit={handleSubmit(handleCreateUser)}>
+      <Title>Criar Conta</Title>
+
       <Content>
         <Input
           type="text"
-          placeholder="Nome"
+          placeholder="Nome*"
           {...register("name", { required: true })}
         />
 
         <Input
           type="text"
-          placeholder="Sobrenome"
+          placeholder="Sobrenome*"
           {...register("last_name", { required: true })}
         />
       </Content>
       <Content>
-        <Input
-          type="date"
-          placeholder="Nascimento"
+        <InputMask
+          name="Nascimento"
+          mask="99/99/9999"
+          placeholder="Data de Nascimento*"
+          className="inputMask"
           {...register("birth_date", { valueAsDate: true })}
         />
 
         <InputMask
-          name="Nascimento"
+          name="Celular"
           mask="(99)99999-9999"
           placeholder="Celular"
           className="inputMask"
           {...register("celphone")}
         />
       </Content>
-
       <Content>
         <Input
           type="text"
-          placeholder="Email"
+          style={{width:'95%'}}
+          placeholder="Email*"
           {...register("email", { required: true })}
         />
 
-        <Select {...register("sex_type")}>
-          <option value="">Sexo</option>
-          <option value="MALE">Masculino</option>
-          <option value="FEMALE">Feminino</option>
-          <option value="OTHERS">Outro</option>
-        </Select>
-      </Content>
-
-      <Content>
-        <Select onChange={(e) => setDocumentType(e.target.value)}>
-          <option value="">Documento</option>
-          <option value="CPF">CPF</option>
-          <option value="CNPJ">CNPJ</option>
-        </Select>
-        {documentType === "CPF" && (
-          <MaskedInput
-            name="cpf"
-            mask="999.999.999-99"
-            defaultValue={defaultValues.cpf}
-            onChange={handleChange}
-            register={register}
-          />
-        )}
-        {documentType === "CNPJ" && (
-          <MaskedInput
-            name="cnpj"
-            mask="99.999.999/9999-99"
-            onChange={handleChange}
-            defaultValue={defaultValues.cnpj}
-            register={register}
-          />
-        )}
+        <MaskedInput
+          name="cpf"
+          mask="999.999.999-99"
+          defaultValue={defaultValues.cpf}
+          onChange={handleChange}
+          register={register}
+        />
       </Content>
       <Content>
         <Input
@@ -177,7 +154,6 @@ export function RegistrationForm() {
           {...register("address_complement")}
         />
       </Content>
-
       <Content>
         <CreatePassword password={password} setPassword={setPassword} />
         <ConfirmPassword

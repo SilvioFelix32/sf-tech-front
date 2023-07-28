@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
     width: 98%;
     margin: 0 5px;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     font-weight: 400;
     padding: 0 10px;
     color: ${({ theme }) => theme.colors.tertiary};
