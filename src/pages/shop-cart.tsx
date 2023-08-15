@@ -21,7 +21,7 @@ import {
 } from "../styles/pages/shop-cart";
 
 const steps = ["Confirme sua compra", "Pagamento", "Sucesso"];
-const stepsContent = [<CartItems />, <Payment />, "Sucesso"];
+const stepsContent = [<CartItems filter={""} />, <Payment />, "Sucesso"];
 
 export default function ShopCart() {
   const [activeStep, setActiveStep] = useState(0);
@@ -77,7 +77,7 @@ export default function ShopCart() {
         <Content>
           <StepWrapper>
             <StepTitle>
-              <Stepper activeStep={activeStep}>
+              <Stepper activeStep={activeStep} className="StepperStep">
                 {steps.map((label, index) => {
                   const stepProps: { completed?: boolean } = {};
                   const labelProps: {
@@ -110,10 +110,14 @@ export default function ShopCart() {
               </StepContent>
             ) : (
               <StepContent>
+                {/* <Section>{stepsContent}</Section> */}
+                <Section>
+                  <CartItems filter={""} />
+                </Section>
                 <div style={{ display: "flex", width: "200px" }}>
-                  <Typography sx={{ mt: 2, mb: 1 }}>
+                  {/* <Typography sx={{ mt: 2, mb: 1 }}>
                     {activeStep + 1}
-                  </Typography>
+                  </Typography> */}
                   <Button
                     color="inherit"
                     disabled={activeStep === 0}
@@ -134,8 +138,6 @@ export default function ShopCart() {
               </StepContent>
             )}
           </StepWrapper>
-
-          <Section>content</Section>
         </Content>
         <Footer />
       </Wrapper>

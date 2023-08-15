@@ -1,36 +1,76 @@
+import Image from "next/image";
 import { BiTrash } from "react-icons/bi";
-import { useCart } from "../../context";
+import { CompanyContext, useCart } from "../../context";
 import { CartItemType } from "../../context/Cart/types";
 
-import { LeftContent, MainSection, Totals } from "./styles";
+import {
+  Aside,
+  MainSection,
+  Totals,
+  Wrapper,
+  Text,
+  ProductContent,
+  ProductValue,
+  Title,
+} from "./styles";
+import { IProduct, IProductCategories } from "../../types";
+import { useContext, useEffect, useState } from "react";
+import { productCategoryService } from "../../services";
+interface CategorySelector {
+  filter: string;
+}
 
-export function CartItems() {
+export function CartItems({ filter }: CategorySelector) {
+  const company_id = useContext(CompanyContext);
   const { cartItems, deleteItemFromCart, cartTotalPrice } = useCart();
+  const [categories, setCategories] = useState<IProductCategories[]>([]);
+
+  useEffect(() => {
+    productCategoryService
+      .getAll(company_id, {})
+      .then((res) => setCategories(res.data));
+  }, [company_id]);
+
+  const combinedArray = [].concat(...categories.map((cat) => cat.products));
+  const filteredArray = combinedArray.filter(
+    (item) => item.highlighted === true
+  );
+  console.log(filteredArray);
   return (
-    <>
-      <LeftContent>Você talvez goste desses produtos!</LeftContent>
+    <Wrapper>
       <MainSection>
-        <p>Detalhes da Compra</p>
-        {cartItems.length === 0 ? <p>Carrinho Vazio!</p> : null}
+        <Title>Detalhes da Compra</Title>
+        {cartItems.length === 0 ? <Text>Carrinho Vazio!</Text> : null}
         {cartItems.map((item: CartItemType) => (
           <div key={item.product_id}>
-            <div className="itemTitle">
-              <p>{item.title}:</p>
-            </div>
-            <div className="itemValue">
-              <p> {item.amount}x</p>
-              <p>R$ {(item.amount * item.value).toFixed(2)}</p>
+            <ProductContent>
+              <Image
+                src={item.url_banner}
+                alt={item.url_banner}
+                width={60}
+                height={60}
+              />{" "}
+              | -<Text>{item.title}:</Text>
+            </ProductContent>
+            <ProductValue>
+              <Text> {item.amount}x</Text>
+              <Text>R$ {(item.amount * item.value).toFixed(2)}</Text>
               {/* <BtnAddOrRemove product={item} /> */}
               <button onClick={() => deleteItemFromCart(item.product_id)}>
                 <BiTrash />
               </button>
-            </div>
+            </ProductValue>
           </div>
         ))}
         <Totals>
-          <p>Total: </p> <p> R$ {cartTotalPrice.replace(".", ",")} </p>
+          <Text>Total: </Text>{" "}
+          <Text> R$ {cartTotalPrice.replace(".", ",")} </Text>
         </Totals>
       </MainSection>
-    </>
+      <Aside>
+        <Text>Você talvez goste desses produtos!</Text>
+        {/* //{combinedArray.map((product) => product.filter(product))} */}
+      </Aside>
+    </Wrapper>
   );
 }

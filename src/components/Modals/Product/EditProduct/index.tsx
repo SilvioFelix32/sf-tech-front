@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CompanyContext } from "../../../../context";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { productsService, productCategoryService } from "../../../../services";
+import { CompanyContext } from "../../../../context";
 import { IProduct } from "../../../../types";
 import { IProductCategories } from "../../../../types/IProductCategories";
 //components
@@ -19,7 +19,7 @@ import {
 } from "./styles";
 import "react-responsive-modal/styles.css";
 
-interface modalProps {
+interface ModalProps {
   onOpen: boolean;
   setOnOpen: (value: boolean) => void;
   setReloadData: (value: number) => void;
@@ -31,24 +31,25 @@ export function ModalEditProduct({
   setOnOpen,
   product_id,
   setReloadData,
-}: modalProps) {
+}: ModalProps) {
   const company_id = useContext(CompanyContext);
   const [selectedProduct, setSelectedProduct] = useState<IProduct>();
-  const [productCategory, setproductCategory] = useState<IProductCategories[]>(
+  const [productCategory, setProductCategory] = useState<IProductCategories[]>(
     []
   );
-  const { register, handleSubmit, reset } = useForm({
+
+  const { register, handleSubmit, reset } = useForm<IProduct>({
     defaultValues: { ...selectedProduct },
   });
 
   useEffect(() => {
     if (product_id) {
       productsService
-        .getById(product_id as string)
+        .getById(product_id)
         .then((data) => setSelectedProduct(data));
       productCategoryService
         .getAll(company_id, {})
-        .then((res) => setproductCategory(res.data));
+        .then((res) => setProductCategory(res.data));
     }
   }, [product_id]);
 
@@ -58,9 +59,14 @@ export function ModalEditProduct({
 
   async function handleUpdate(data: IProduct) {
     delete data.product_id;
-    await productsService
-      .update(company_id, product_id as string, data)
-      .then(() => setReloadData(Math.random()));
+
+    await productsService.update(company_id, product_id, {
+      ...data,
+      highlighted: Boolean(data.highlighted),
+      for_sale: Boolean(data.for_sale),
+      active: Boolean(data.active),
+    });
+    setReloadData(Math.random());
   }
 
   return (
@@ -88,7 +94,7 @@ export function ModalEditProduct({
             <Input
               type="string"
               defaultValue={selectedProduct?.title}
-              {...(register("title"), { required: true })}
+              {...register("title", { required: true })}
             />
             <Text>Subtitle:</Text>
             <Input
@@ -114,8 +120,7 @@ export function ModalEditProduct({
             <Input
               type="number"
               defaultValue={selectedProduct?.value.toFixed(2)}
-              {...(register("value"),
-              {
+              {...register("value", {
                 valueAsNumber: true,
               })}
             />
@@ -123,8 +128,7 @@ export function ModalEditProduct({
             <Input
               type="number"
               defaultValue={selectedProduct?.discount.toFixed(2)}
-              {...(register("discount"),
-              {
+              {...register("discount", {
                 valueAsNumber: true,
               })}
             />
@@ -132,16 +136,11 @@ export function ModalEditProduct({
           <Content>
             <Text>Product Category:</Text>
             <Select {...register("category_id")}>
-              {productCategory.map((category) => {
-                return (
-                  <option
-                    key={category?.category_id}
-                    value={category?.category_id}
-                  >
-                    {category?.title}
-                  </option>
-                );
-              })}
+              {productCategory.map((category) => (
+                <option key={category.category_id} value={category.category_id}>
+                  {category.title}
+                </option>
+              ))}
             </Select>
 
             <Text>A venda:</Text>

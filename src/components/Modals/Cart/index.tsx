@@ -1,12 +1,13 @@
 import React from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCart } from "../../../context";
 import { Modal as ModalComponent } from "react-responsive-modal";
+import { CartItemType } from "../../../context/Cart/types";
 import { BiTrash } from "react-icons/bi";
 //styles
 import "react-responsive-modal/styles.css";
 import { Button, BtnGroup, Wrapper, Totals, CartItems } from "./styles";
-import { CartItemType } from "../../../context/Cart/types";
 
 interface ModalProps {
   openModal: boolean;
@@ -36,12 +37,17 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
           {cartItems.map((item: CartItemType) => (
             <div key={item.product_id}>
               <div className="itemTitle">
-                <p>{item.title}:</p>
+                <Image
+                  src={item.url_banner}
+                  alt={item.url_banner}
+                  width={60}
+                  height={60}
+                />{" "}
+                -<p>{item.title}</p>
               </div>
               <div className="itemValue">
                 <p> {item.amount}x</p>
                 <p>R$ {(item.amount * item.value).toFixed(2)}</p>
-                {/* <BtnAddOrRemove product={item} /> */}
                 <button onClick={() => deleteItemFromCart(item.product_id)}>
                   <BiTrash />
                 </button>

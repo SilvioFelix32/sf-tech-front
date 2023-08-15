@@ -1,3 +1,3 @@
 export function Payment() {
-  return <div> Pagamento</div>;
+  return <div> Pagina de Pagamento</div>;
 }

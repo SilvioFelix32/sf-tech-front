@@ -42,11 +42,18 @@ export const StepTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  span {
+    color: ${({ theme }) => theme.colors.text} !important;
+    font-size: 1rem;
+  }
 `;
 
 export const StepContent = styled.div`
   height: 100%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;

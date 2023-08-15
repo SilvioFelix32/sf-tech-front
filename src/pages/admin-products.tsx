@@ -90,8 +90,8 @@ export default function AdminProducts() {
       selector: (row) => row.url_banner,
     },
     {
-      name: "combo",
-      selector: (row) => row.combo,
+      name: "destaque",
+      selector: (row) => row.highlighted,
       sortable: true,
     },
     {
@@ -114,7 +114,7 @@ export default function AdminProducts() {
           priority
         ></Image>
       ),
-      combo: product.combo ? "Sim" : "Não",
+      highlighted: product.highlighted ? "Sim" : "Não",
       exclude_alter: (
         <div
           style={{
