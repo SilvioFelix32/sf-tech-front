@@ -17,7 +17,7 @@ const baseUrl = "/users";
 
 async function login(params: any) {
   const response = await api.post("login", params);
-  return response.data;
+  return response;
 }
 
 async function getAll(company_id: string, params: any) {

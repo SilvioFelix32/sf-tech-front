@@ -1,13 +1,7 @@
-no LoginModal, fazer filtros para senha digitadas erradas, botão para salvar senha esta fazendo login
+no LoginModal, fazer filtros para senha digitadas erradas
 
 finalizar pagina minha conta
 
 estilizar pagina de favoritos
 
-paginação das tabelas na area de administração
-
 resolver o erro de index sendo enviado junto na hora do get na rota products/search
-
-falha de segurança nas senhas, qualquer senha faz login
-
-o caminho de update está dando unauthorized e o register não está enviando alterados, mas os que já estavam salvos

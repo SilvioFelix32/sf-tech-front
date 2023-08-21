@@ -4,6 +4,7 @@ import Router from "next/router";
 import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
+import { AxiosResponse } from "axios";
 
 type User = {
   name: string;
@@ -29,6 +30,7 @@ type AuthContextData = {
   signOut(): Promise<void>;
   user: User;
   isAuthenticated: boolean;
+  responseStatus: number;
 };
 
 type AuthProviderProps = {
@@ -45,26 +47,22 @@ export function signOut() {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User>(() => {
+  const [responseStatus, setResponseStatus] = useState<number>();
+  const [user, setUser] = useState<User | null>(() => {
     const loggedUser = Cookies.get("user");
-
-    if (loggedUser) {
-      return JSON.parse(loggedUser);
-    }
-
-    return null;
+    return loggedUser ? JSON.parse(loggedUser) : null;
   });
 
   const isAuthenticated = !!user;
 
   async function signIn({ email, password }: signInCredentials) {
     try {
-      const response: IResponse = await userService.login({
+      const response: AxiosResponse = await userService.login({
         email,
         password,
       });
 
-      const { access_token, user } = response;
+      const { access_token, user }: IResponse = response.data;
 
       //using nookies to create the nextJS cookies
       Cookies.set("nextauth.token", access_token, {
@@ -87,7 +85,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      if (error.response.status === 401) {
+        setResponseStatus(error.response.status);
+      }
+      console.error("Erro ao fazer login:", error.response.data);
     }
   }
 
@@ -100,7 +101,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
+    <AuthContext.Provider
+      value={{ signIn, signOut, isAuthenticated, user, responseStatus }}
+    >
       {children}
     </AuthContext.Provider>
   );

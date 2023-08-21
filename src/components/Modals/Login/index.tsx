@@ -1,5 +1,11 @@
 import { useRouter } from "next/router";
-import React, { FormEvent, useCallback, useContext, useState } from "react";
+import React, {
+  FormEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   FaEye,
   FaEyeSlash,
@@ -26,12 +32,17 @@ interface LoginModalProps {
 }
 
 export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, responseStatus } = useContext(AuthContext);
   const company_id = useContext(CompanyContext);
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);
+
+  // if (responseStatus === 401) {
+  //   setIsPasswordIncorrect(true);
+  // }
 
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
@@ -100,7 +111,7 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
             <FaEyeSlash className="showhide" onClick={handleShowHide} />
           )}
         </InputContainer>
-        <Text>Senha não confere</Text>
+        {/* {isPasswordIncorrect ? <Text>Senha não confere</Text> : null} */}
 
         <Button type="submit">Entrar</Button>
         <Registration>
