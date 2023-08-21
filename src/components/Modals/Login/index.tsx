@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import React, { FormEvent, useCallback, useContext, useState } from "react";
 import {
+  FaEye,
+  FaEyeSlash,
   FaFacebookSquare,
   FaInstagramSquare,
   FaYoutubeSquare,
@@ -11,9 +13,10 @@ import { AuthContext, CompanyContext } from "../../../context";
 import {
   Button,
   Input,
+  InputContainer,
   Password,
   Registration,
-  SavePassword,
+  Text,
   Wrapper,
 } from "./styles";
 
@@ -26,7 +29,7 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const { signIn } = useContext(AuthContext);
   const company_id = useContext(CompanyContext);
   const router = useRouter();
-
+  const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -51,6 +54,10 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const handleCreateAccountClick = useCallback(() => {
     router.push("create-acount");
   }, [router, company_id]);
+
+  function handleShowHide() {
+    setShow(!show);
+  }
 
   return (
     <Modal
@@ -78,11 +85,23 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
             Esqueceu sua Senha?
           </button>
         </Password>
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <InputContainer>
+          <Input
+            type={show ? "text" : "password"}
+            placeholder="Senha"
+            defaultValue={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+          />
+          {show ? (
+            <FaEye className="showhide" onClick={handleShowHide} />
+          ) : (
+            <FaEyeSlash className="showhide" onClick={handleShowHide} />
+          )}
+        </InputContainer>
+        <Text>Senha não confere</Text>
+
         <Button type="submit">Entrar</Button>
         <Registration>
           Não tem uma conta?

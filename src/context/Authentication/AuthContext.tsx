@@ -68,7 +68,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       //using nookies to create the nextJS cookies
       Cookies.set("nextauth.token", access_token, {
-        expires: 60 * 60 * 24 * 30, //this set the time tha the cookie will be stored = 30 days
+        expires: 60 * 60 * 24 * 30, //this set the time that the cookie will be stored = 30 days
         path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
       });
 
@@ -86,16 +86,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       Cookies.set("user", JSON.stringify(loggedUser));
 
       api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
-
-      const userHasAdminPermissions = user.role === "ADMIN";
-
-      // if (userHasAdminPermissions) {
-      //   Router.push("filters"); //THIS PAGE WIL OPEN IF USER IS ADMIN
-      // } else {
-      //   Router.push("filters"); //SELECT THE PAGE YOU WANT TO OPEN NEXT
-      // }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
     }
   }
 

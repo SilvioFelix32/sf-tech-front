@@ -10,19 +10,19 @@ export const Wrapper = styled.form`
   padding: 20px;
 
   h2 {
-    font-size: 1.2rem;;
+    font-size: 1.2rem;
     margin: 0;
   }
 
   p {
-    font-size: 1rem;;
+    font-size: 1rem;
     margin: 0;
   }
 `;
 
 export const Password = styled.div`
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   width: 100%;
 
@@ -43,6 +43,21 @@ export const Password = styled.div`
     &:hover {
       filter: brightness(0.9);
     }
+  }
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .showhide {
+    cursor: pointer;
+    transition: 0.4s;
+    margin-right: 10px;
+    position: absolute;
+    color: ${({ theme }) => theme.colors.tertiary};
+    font-size: 1.2rem;
   }
 `;
 
@@ -112,3 +127,8 @@ export const Registration = styled.div`
   }
 `;
 
+export const Text = styled.p`
+  font-size: 0.8rem !important;
+  margin-left: 5px !important;
+  color: red;
+`;
