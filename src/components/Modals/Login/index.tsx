@@ -6,13 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import {
-  FaEye,
-  FaEyeSlash,
-  FaFacebookSquare,
-  FaInstagramSquare,
-  FaYoutubeSquare,
-} from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { AuthContext, CompanyContext } from "../../../context";
@@ -38,11 +32,7 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);
-
-  // if (responseStatus === 401) {
-  //   setIsPasswordIncorrect(true);
-  // }
+  const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);
 
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
@@ -53,7 +43,9 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
         password,
       };
 
-      await signIn(data);
+      signIn(data).catch(() => {
+        setIsPasswordIncorrect(true);
+      });
     },
     [email, password, signIn]
   );
@@ -111,8 +103,7 @@ export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
             <FaEyeSlash className="showhide" onClick={handleShowHide} />
           )}
         </InputContainer>
-        {/* {isPasswordIncorrect ? <Text>Senha não confere</Text> : null} */}
-
+        {isPasswordIncorrect && <Text>Senha não confere</Text>}
         <Button type="submit">Entrar</Button>
         <Registration>
           Não tem uma conta?

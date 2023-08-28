@@ -1,5 +1,3 @@
-no LoginModal, fazer filtros para senha digitadas erradas
-
 finalizar pagina minha conta
 
 estilizar pagina de favoritos

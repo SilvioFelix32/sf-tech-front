@@ -5,6 +5,7 @@ import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
 import { AxiosResponse } from "axios";
+import { error } from "console";
 
 type User = {
   name: string;
@@ -70,7 +71,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
       });
 
-      const loggedUser = {
+      const loggedUser: User = {
         name: user.name,
         last_name: user.last_name,
         email: user.email,
@@ -85,10 +86,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
     } catch (error) {
-      if (error.response.status === 401) {
-        setResponseStatus(error.response.status);
-      }
-      console.error("Erro ao fazer login:", error.response.data);
+      //console.error("Erro ao fazer login:", error.response);
+
+      throw new Error(error.response.data.error);
     }
   }
 

@@ -73,7 +73,7 @@ export function ProductCard({ filter }: CategorySelector) {
       if (filteredProduct?.length === 0) {
         return true;
       }
-      return filteredProduct.includes(product.title);
+      return filteredProduct?.includes(product.title);
     })
     .slice(indexOfFirstProduct, indexOfLastProduct);
 
