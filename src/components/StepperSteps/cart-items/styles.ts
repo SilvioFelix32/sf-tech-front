@@ -9,9 +9,14 @@ export const Wrapper = styled.div`
 `;
 
 export const Aside = styled.div`
-  width: 45%;
+  width: 60%;
   height: 100%;
+  padding: 10px;
+  margin: 5px;
+  outline: solid 1px ${({ theme }) => theme.colors.tertiary};
+  border-radius: 6px;
   display: flex;
+  align-items: center;
   flex-direction: column;
 
   @media screen and (max-width: 1200px) {
@@ -20,7 +25,10 @@ export const Aside = styled.div`
 
 export const MainSection = styled.div`
   width: 100%;
-  height: 100%;
+  padding: 10px;
+  margin: 5px;
+  outline: solid 1px ${({ theme }) => theme.colors.tertiary};
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -30,6 +38,9 @@ export const MainSection = styled.div`
   div {
     display: flex;
     width: 100%;
+    margin: 5px;
+    justify-content: space-between;
+    align-items: center;
   }
 
   @media screen and (max-width: 1200px) {
@@ -43,8 +54,6 @@ export const ProductContent = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
 
   @media screen and (max-width: 1200px) {
     justify-content: center;
@@ -57,7 +66,7 @@ export const ProductValue = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end !important;
   align-items: flex-start;
 
   button {
@@ -89,19 +98,26 @@ export const ProductValue = styled.div`
 export const Totals = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end !important;
   margin-top: auto;
+  margin-right: 5px;
 `;
 
 export const Text = styled.p`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-weight: 400;
   font-size: 1rem;
   margin: 2px;
+  padding: 0 5px;
+  text-transform: capitalize;
 `;
 
 export const Title = styled.h1`
-  color: ${({ theme }) => theme.colors.title};
-  font-size: 1.2rem;
-  margin: 5px;
+  color: ${({ theme }) => theme.colors.text};
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0 5px;
   align-self: center;
 `;

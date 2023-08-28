@@ -1,5 +1,5 @@
 finalizar pagina minha conta
 
-estilizar pagina de favoritos
-
 resolver o erro de index sendo enviado junto na hora do get na rota products/search
+
+Pagina de compras >(Conferir se o usuario esta logado antes) Pagina de pagamento > pagina de sucesso.
