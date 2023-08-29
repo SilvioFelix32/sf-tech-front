@@ -46,7 +46,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
       <Wrapper>
         <ProductCard>
           <Title>Detalhes da Compra</Title>
-          {cartItems.length === 0 ? <p>Carrinho Vazio!</p> : null}
+          {cartItems.length === 0 ? <Text>Carrinho Vazio!</Text> : null}
           {cartItems.map((item: CartItemType) => (
             <Product key={item.product_id}>
               <Image
