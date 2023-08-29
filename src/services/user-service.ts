@@ -1,7 +1,6 @@
 import { IUser } from "../types/IUser";
 import cookies from "js-cookie";
 import api from "./api";
-import { IPagination } from "../types/IPaganation";
 
 export const userService = {
   login,
@@ -20,7 +19,7 @@ async function login(params: any) {
   return response;
 }
 
-async function getAll(company_id: string, params: any) {
+async function getAll(company_id: string, params: IUser[]) {
   const response = await api.get(`${baseUrl}`, {
     headers: { company_id },
     params,

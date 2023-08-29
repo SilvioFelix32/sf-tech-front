@@ -17,6 +17,7 @@ import {
   StepTitle,
   StepWrapper,
 } from "../styles/pages/shop-cart";
+import { HeaderClean } from "../components";
 
 const steps = ["Confirme sua compra", "Pagamento", "Sucesso"];
 const stepsContent = [<CartItems />, <Payment />, "Sucesso"];
@@ -65,7 +66,7 @@ export default function ShopCart() {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header />
+        <HeaderClean />
         <Content>
           <StepWrapper>
             <StepTitle>

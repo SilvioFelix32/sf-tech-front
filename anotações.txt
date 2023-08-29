@@ -4,6 +4,6 @@ resolver o erro de index sendo enviado junto na hora do get na rota products/sea
 
 Pagina de compras >(Conferir se o usuario esta logado antes) Pagina de pagamento > pagina de sucesso.
 
-Aplicar mesmos estilos do modal de carrinho, no modal de favoritos
+Finalizar seção de pagamento
 
 na pagina de pagamento o usuario {"statusCode":401,"message":"Unauthorized"} em produção
