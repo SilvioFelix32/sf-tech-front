@@ -19,7 +19,7 @@ async function login(params: any) {
   return response;
 }
 
-async function getAll(company_id: string, params: IUser[]) {
+async function getAll(company_id: string, params: any) {
   const response = await api.get(`${baseUrl}`, {
     headers: { company_id },
     params,
