@@ -85,9 +85,26 @@ export const Card = styled.div`
 export const ShopTotals = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 80%;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
   height: 100%;
   padding: 10px;
+
+  .totals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px 0;
+    border-top: solid 1px ${({ theme }) => theme.colors.tertiary};
+  }
 `;

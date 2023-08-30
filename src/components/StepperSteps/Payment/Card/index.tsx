@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import InputMask from "react-input-mask";
-import Cards from "react-credit-cards-2";
+import Cards, { Focused } from "react-credit-cards-2";
 
 import { CVC, Content, Div, Expiry, Input, Wrapper } from "./styles";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
@@ -31,7 +30,7 @@ export const CardForm = () => {
         expiry={state.expiry}
         cvc={state.cvc}
         name={state.name}
-        //focused={state.focus}
+        focused={state.focus as Focused}
       />
       <Content>
         <Input

@@ -1,10 +1,11 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { AuthContext, CompanyContext, useCart } from "../../../context";
 import { DeliveryMethod } from "./ClientDelivery";
 import { PaymentInformation } from "./ClientInfo";
-import { userService } from "../../../services";
 import { CardForm } from "./Card";
-import { IProduct, IUser } from "../../../types";
+import { BilletForm } from "./Billet";
+import { PixForm } from "./Pix";
+import { useUser, calculateCartTotals } from "../../../shared/functions";
 import {
   Wrapper,
   Title,
@@ -18,22 +19,14 @@ import {
 
 export function Payment() {
   const { user } = useContext(AuthContext);
-  const { cartItems, deleteItemFromCart, cartTotalPrice } = useCart();
-  const [myUser, setMyUser] = useState<IUser>();
+  const [paymentType, setPaymentType] = useState("");
+  const { cartItems } = useCart();
   const company_id = useContext(CompanyContext);
   const user_id = user?.user_id;
+  const myUser = useUser(company_id, user_id);
 
-  useEffect(() => {
-    if (company_id && user_id) {
-      userService.getById(company_id, user_id).then((data) => {
-        setMyUser(data);
-      });
-    }
-  }, [company_id, user_id]);
-
-  const cartSubtotal = [].concat(...cartItems.map((item: IProduct) => item));
-  console.log("cartSubtotal", cartSubtotal);
-  console.log("cartItems", cartItems);
+  const { cartSubtotal, cartDiscount, cartTotal } =
+    calculateCartTotals(cartItems);
 
   //https://www.behance.net/gallery/168878609/Ecommerce-Website-Checkout-Page?tracking_source=search_projects_recommended|payment+checkout
   return myUser ? (
@@ -45,30 +38,59 @@ export function Payment() {
         <PaymentOptions>
           <Title>3.Forma de Pagamento:</Title>
           <CardSelect>
-            <div className="paymentTypes">Cartão de Cŕedito</div>
-            <div className="paymentTypes">Cartão de Débito</div>
-            <div className="paymentTypes">Boleto Bancário</div>
-            <div className="paymentTypes">Pix</div>
+            <div
+              className="paymentTypes"
+              onClick={() => setPaymentType("creditCard")}
+            >
+              Cartão de Cŕedito
+            </div>
+            <div
+              className="paymentTypes"
+              onClick={() => setPaymentType("debitCard")}
+            >
+              Cartão de Débito
+            </div>
+            <div
+              className="paymentTypes"
+              onClick={() => setPaymentType("billet")}
+            >
+              Boleto Bancário
+            </div>
+            <div className="paymentTypes" onClick={() => setPaymentType("pix")}>
+              Pix
+            </div>
           </CardSelect>
         </PaymentOptions>
       </Content>
       <Card>
-        <CardForm />
+        {paymentType === "creditCard" && <CardForm />}
+        {paymentType === "debitCard" && <CardForm />}
+        {paymentType === "billet" && <BilletForm />}
+        {paymentType === "pix" && <PixForm />}
+        <Text
+          style={{ fontSize: "2rem", alignSelf: "center", fontWeight: "bold" }}
+        >
+          {cartItems.length} Itens
+        </Text>
         <ShopTotals>
-          <Text style={{ fontSize: "2rem" }}>{cartItems.length} Itens</Text>
-          {cartItems.map((item: IProduct) => (
-            <>
-              <Text style={{ fontSize: "1.2rem" }}>
-                Subtotal R$ {item.value.toFixed(2).replace(".", ",")}
-              </Text>
-              <Text style={{ fontSize: "1.2rem" }}>
-                Desconto R$ {item.discount.toFixed(2).replace(".", ",")}
-              </Text>
-            </>
-          ))}
-          <Text style={{ fontSize: "1.2rem" }}>
-            Total R$ {cartTotalPrice.replace(".", ",")}
-          </Text>
+          <div className="totals">
+            <Text style={{ fontSize: "1rem" }}>Subtotal</Text>
+            <Text style={{ fontSize: "1.2rem" }}>
+              R$ {cartSubtotal.toFixed(2).replace(".", ",")}
+            </Text>
+          </div>
+          <div className="totals">
+            <Text style={{ fontSize: "1rem" }}>Disconto</Text>
+            <Text style={{ fontSize: "1.2rem" }}>
+              R$ {cartDiscount.toFixed(2).replace(".", ",")}
+            </Text>
+          </div>
+          <div className="total">
+            <Text style={{ fontSize: "1rem" }}>Total</Text>
+            <Text style={{ fontSize: "1.2rem" }}>
+              R$ {cartTotal.toFixed(2).replace(".", ",")}
+            </Text>
+          </div>
         </ShopTotals>
       </Card>
     </Wrapper>

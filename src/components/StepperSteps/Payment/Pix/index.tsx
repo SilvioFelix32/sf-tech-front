@@ -1,3 +1,12 @@
+import { MdPix } from "react-icons/md";
+import { Wrapper } from "./styles";
+
 export function PixForm() {
-  return <div>Boleto</div>;
+  return (
+    <Wrapper>
+      <p>
+        Pix <MdPix />
+      </p>
+    </Wrapper>
+  );
 }

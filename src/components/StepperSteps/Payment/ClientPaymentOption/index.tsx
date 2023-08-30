@@ -10,7 +10,6 @@ interface ComponentProps {
 }
 
 export function DeliveryMethod({ myUser }: ComponentProps) {
-  //https://www.behance.net/gallery/168878609/Ecommerce-Website-Checkout-Page?tracking_source=search_projects_recommended|payment+checkout
   return (
     <Wrapper>
       <Content>
