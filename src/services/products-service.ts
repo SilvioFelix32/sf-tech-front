@@ -1,5 +1,6 @@
 import api from "./api";
 import { IProduct } from "../types";
+import cookies from "js-cookie";
 
 export const productsService = {
   getAll,
@@ -11,6 +12,7 @@ export const productsService = {
 };
 
 const baseUrl = "/products";
+const nextauth = cookies.get("nextauth.token");
 
 async function getAll(company_id: string, params: any) {
   const response = await api.get(`${baseUrl}`, {
@@ -50,12 +52,14 @@ async function update(
   params: IProduct
 ) {
   const response = await api.patch(`${baseUrl}/${product_id}`, params, {
-    headers: { company_id },
+    headers: { company_id, authorization: `Bearer ${nextauth}` },
   });
   return response.data;
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
 async function _delete(product_id: string) {
-  await api.delete(`${baseUrl}/${product_id}`);
+  await api.delete(`${baseUrl}/${product_id}`, {
+    headers: { authorization: `Bearer ${nextauth}` },
+  });
 }

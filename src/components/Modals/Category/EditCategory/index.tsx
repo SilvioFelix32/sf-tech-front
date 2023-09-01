@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CompanyContext } from "../../../../context";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IProductCategories } from "../../../../types/IProductCategories";
 import { productCategoryService } from "../../../../services";
@@ -17,7 +17,7 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { ProductTypes } from "../../../../types/IProductType";
+import { ProductType, ProductTypes } from "../../../../types/IProductType";
 
 interface modalProps {
   onOpen: boolean;
@@ -33,27 +33,32 @@ export function ModalEditCategory({
   setReloadData,
 }: modalProps) {
   const company_id = useContext(CompanyContext);
-  const [productCategory, setproductCategory] = useState<IProductCategories>();
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: { ...productCategory },
-  });
+  const { register, handleSubmit, reset, setValue } =
+    useForm<IProductCategories>({
+      defaultValues: {
+        title: "",
+        description: "",
+        product_type: ProductType.PERIPHERAL,
+        active: false,
+      },
+    });
 
   useEffect(() => {
     if (category_id) {
-      productCategoryService
-        .getById(category_id)
-        .then((data) => setproductCategory(data as any));
+      productCategoryService.getById(category_id).then((data) => {
+        setValue("title", data?.title || "");
+        setValue("description", data?.description || "");
+        setValue("product_type", data?.product_type || ProductType.PERIPHERAL);
+        setValue("active", data?.active || false);
+      });
     }
-  }, [category_id]);
-
-  useEffect(() => {
-    reset({ ...productCategory });
-  }, [productCategory]);
+  }, [category_id, setValue]);
 
   async function handleUpdate(data: IProductCategories) {
     await productCategoryService
       .update(company_id as string, category_id as string, data)
       .then(() => setReloadData(Math.random()));
+    setOnOpen(false);
   }
 
   return (
@@ -72,24 +77,13 @@ export function ModalEditCategory({
         <Context>
           <Content>
             <Text>Title:</Text>
-            <Input
-              type="string"
-              defaultValue={productCategory?.title}
-              {...register("title")}
-            />
+            <Input type="string" {...register("title")} />
             <Text>Description:</Text>
-            <Input
-              type="string"
-              defaultValue={productCategory?.description}
-              {...register("description")}
-            />
+            <Input type="string" {...register("description")} />
           </Content>
           <Content>
             <Text>Product type:</Text>
-            <Select
-              defaultValue={productCategory?.product_type}
-              {...register("product_type")}
-            >
+            <Select {...register("product_type")}>
               {ProductTypes.map((productType) => (
                 <option key={productType.title} value={productType.value}>
                   {productType.title}
@@ -97,18 +91,13 @@ export function ModalEditCategory({
               ))}
             </Select>
             <Text>Active:</Text>
-            <Select
-              defaultValue={productCategory?.active === true ? "true" : "false"}
-              {...(register("active"), { valueAsBoolean: true })}
-            >
+            <Select {...register("active")}>
               <option value="true">true</option>
               <option value="false">false</option>
             </Select>
           </Content>
         </Context>
-        <Button type="submit" onClick={() => setOnOpen(false)}>
-          Confirmar
-        </Button>
+        <Button type="submit">Confirmar</Button>
       </Wrapper>
     </ModalEdit>
   );

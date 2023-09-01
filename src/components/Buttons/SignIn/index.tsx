@@ -52,7 +52,7 @@ export const SignInButton = () => {
         <Svg>
           <BiUser />
         </Svg>
-        <Text>Entrar</Text>
+        Entrar
       </Button>
       <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>

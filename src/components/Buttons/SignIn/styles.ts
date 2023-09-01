@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   .Button {
     display: flex;
     align-items: center;
-    justify-content:center;
+    justify-content: center;
     color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.tertiary};
     outline: none;
@@ -44,6 +44,7 @@ export const Button = styled.div`
   padding: 10px;
   color: ${({ theme }) => theme.colors.primary};
   background-color: ${({ theme }) => theme.colors.tertiary};
+  font-size: 0.8rem;
   outline: none;
   border: none;
 `;
@@ -65,5 +66,5 @@ export const Text = styled.p`
   margin-top: 7px;
   margin-left: 3px;
   color: ${({ theme }) => theme.colors.primary};
-  font-size: 0.8rem;;
+  font-size: 0.8rem;
 `;

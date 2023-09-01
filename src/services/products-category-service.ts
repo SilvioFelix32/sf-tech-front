@@ -1,4 +1,5 @@
 import { IProductCategories } from "../types/IProductCategories";
+import cookies from "js-cookie";
 import api from "./api";
 
 export const productCategoryService = {
@@ -10,6 +11,7 @@ export const productCategoryService = {
 };
 
 const baseUrl = "/product-categories";
+const nextauth = cookies.get("nextauth.token");
 
 async function getAll(company_id: string, params: any) {
   const response = await api.get(`${baseUrl}`, {
@@ -21,7 +23,10 @@ async function getAll(company_id: string, params: any) {
 
 async function getById(category_id: string) {
   const response = await api.get<IProductCategories>(
-    `${baseUrl}/${category_id}`
+    `${baseUrl}/${category_id}`,
+    {
+      headers: { authorization: `Bearer ${nextauth}` },
+    }
   );
   return response.data;
 }
@@ -39,7 +44,7 @@ async function update(
   params: IProductCategories
 ) {
   const response = await api.patch(`${baseUrl}/${category_id}`, params, {
-    headers: { company_id },
+    headers: { company_id, authorization: `Bearer ${nextauth}` },
   });
   return response.data;
 }

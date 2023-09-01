@@ -1,24 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import { CompanyContext } from "../context";
-//services an types
 import { productCategoryService } from "../services";
 import { IProductCategories } from "../types/IProductCategories";
-//components
 import {
   ModalCreateCategory,
   ModalEditCategory,
   ModalDeleteCategory,
 } from "../components";
 import { EditButton, ExcludeButton } from "../components/Buttons";
-//imported libs
 import DataTable from "react-data-table-component";
-//styles and theme
+import "react-responsive-modal/styles.css";
 import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
 export default function AdminCategories() {
   const company_id = useContext(CompanyContext);
-  //Data table states and pagination
   const [productCategories, setProductCategories] = useState<
     IProductCategories[]
   >([]);
@@ -26,92 +23,78 @@ export default function AdminCategories() {
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
-  //Modals
   const [reloadData, setReloadData] = useState(0);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
 
-  async function fetchProducts(page: number) {
+  async function fetchProducts(page: number, limit: number) {
     setLoading(true);
-    await productCategoryService
-      .getAll(company_id, {
-        page: page,
-        limit: perPage,
-      })
-      .then((res) => {
-        setProductCategories(res.data);
-        setTotalRows(res.meta.total);
+    try {
+      const res = await productCategoryService.getAll(company_id, {
+        page,
+        limit,
       });
+      setProductCategories(res.data);
+      setTotalRows(res.meta.total);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
     setLoading(false);
   }
 
   function handlePageChange(page: number) {
-    fetchProducts(page);
+    fetchProducts(page, perPage);
   }
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
 
-    await productCategoryService
-      .getAll(company_id, {
-        page: page,
+    try {
+      const res = await productCategoryService.getAll(company_id, {
+        page,
         limit: newPerPage,
-      })
-      .then((res) => {
-        setProductCategories(res.data);
-        setPerPage(newPerPage);
-      })
-      .catch((err) => console.log(err));
+      });
+      setProductCategories(res.data);
+      setPerPage(newPerPage);
+    } catch (error) {
+      console.error("Error changing rows per page:", error);
+    }
+
     setLoading(false);
   }
 
   useEffect(() => {
-    fetchProducts(1); // fetch page 1 of users
+    fetchProducts(1, perPage);
+  }, [company_id, reloadData, perPage]);
 
-    productCategoryService
-      .getAll(company_id, { page: 1, limit: 20 })
-      .then((res) => {
-        setProductCategories(res.data);
-      });
-  }, [company_id, reloadData]);
-
-  //Dados da tabela
   const columns = [
     {
       name: "ativo",
-      selector: (row) => row.active,
+      selector: "active",
       sortable: true,
+      cell: (row) => (row.active ? "Sim" : "Não"),
     },
     {
       name: "titulo",
-      selector: (row) => row.title,
+      selector: "title",
       sortable: true,
     },
     {
       name: "descrição",
-      selector: (row) => row.description,
+      selector: "description",
       sortable: true,
     },
     {
       name: "tipo produto",
-      selector: (row) => row.product_type,
+      selector: "product_type",
       sortable: true,
     },
     {
       name: "outros",
-      selector: (row) => row.exclude_alter,
+      selector: "exclude_alter",
       sortable: true,
-    },
-  ];
-
-  const data = productCategories.map((product) => {
-    return {
-      active: product.active ? "Sim" : "Não",
-      title: product.title,
-      description: product.description,
-      product_type: product.product_type,
-      exclude_alter: (
+      cell: (row) => (
         <div
           style={{
             display: "flex",
@@ -122,25 +105,19 @@ export default function AdminCategories() {
           <EditButton
             onClick={() => {
               setOnOpen(true);
-              setCategory_id(product?.category_id);
+              setCategory_id(row.category_id);
             }}
           ></EditButton>
           <ExcludeButton
             onClick={() => {
-              setCategory_id(product?.category_id);
+              setCategory_id(row.category_id);
               setOpen(true);
             }}
           ></ExcludeButton>
         </div>
       ),
-    };
-  });
-
-  const paginationComponentOptions = {
-    rowsPerPageText: "Linhas por página",
-    rangeSeparatorText: "de",
-    selectAllRowsItem: false,
-  };
+    },
+  ];
 
   return (
     <Wrapper>
@@ -150,14 +127,18 @@ export default function AdminCategories() {
           Cadastrar nova Categoria
         </Button>
         <DataTable
-          columns={columns}
-          data={data}
+          columns={columns as any}
+          data={productCategories}
           pagination
           paginationServer
           progressPending={loading}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationComponentOptions={paginationComponentOptions}
+          paginationComponentOptions={{
+            rowsPerPageText: "Linhas por página",
+            rangeSeparatorText: "de",
+            selectAllRowsItem: false,
+          }}
           paginationRowsPerPageOptions={[5, 10, 20]}
           paginationTotalRows={totalRows}
           customStyles={customStyles}
