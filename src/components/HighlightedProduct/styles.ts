@@ -160,7 +160,8 @@ export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
   text-transform: capitalize;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  text-align: center;
   margin: 0;
   padding: 0 5px;
 `;
@@ -178,9 +179,9 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  height: 36px;
   margin-top: auto;
-  padding: 10px;
+  padding: 8px;
   color: ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 24px;

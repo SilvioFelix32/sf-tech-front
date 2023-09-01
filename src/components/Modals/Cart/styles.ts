@@ -54,7 +54,7 @@ export const ProductContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  max-width: 100px;
+  max-width: 180px;
 
   @media screen and (max-width: 1200px) {
     justify-content: center;

@@ -73,7 +73,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
             </Product>
           ))}
           <Totals>
-            <Text>Total: R$ {cartTotalPrice.replace(".", ",")} </Text>
+            <Text>Total: R$ {formatNumber(cartTotalPrice)} </Text>
           </Totals>
         </ProductCard>
         <BtnGroup>

@@ -56,10 +56,11 @@ export const CardSelect = styled.div`
   display: flex;
 
   .paymentTypes {
-    width: 100px;
+    width: 150px;
     margin: 5px;
     padding: 10px;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
+    font-weight: 400;
     border-radius: 8px;
     display: flex;
     flex-direction: row;

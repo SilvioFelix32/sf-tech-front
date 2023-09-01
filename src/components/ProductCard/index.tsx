@@ -101,7 +101,7 @@ export function ProductCard({ filter }: CategorySelector) {
             </Picture>
             <ProductInfo>
               <Title>{product.title}</Title>
-              <Title style={{ fontSize: "14px" }}>{product.subtitle}</Title>
+              <Title style={{ fontSize: "0.8rem" }}>{product.subtitle}</Title>
               <Button
                 onClick={() => {
                   setOpenModal(true);
@@ -112,7 +112,7 @@ export function ProductCard({ filter }: CategorySelector) {
               </Button>
               <ProductValue>
                 <Text
-                  style={{ textDecoration: "line-through", fontSize: "14px" }}
+                  style={{ textDecoration: "line-through", fontSize: "0.8rem" }}
                 >
                   De R$
                   {formatNumber(product?.value)}

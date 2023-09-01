@@ -38,7 +38,9 @@ export function calculateCartTotals(cartItems: IProduct[]) {
 
 export function formatNumber(value: number | string) {
   // Formata o número com ponto para separação de milhares e vírgula com duas casas decimais
-  let formatedNumber = value.toLocaleString("pt-BR", {
+
+  const formatedValueToNumber = Number(value);
+  let formatedNumber = formatedValueToNumber.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });

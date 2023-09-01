@@ -32,9 +32,7 @@ export function Payment() {
   const { cartSubtotal, cartDiscount, cartTotal } =
     calculateCartTotals(cartItems);
 
-  //dribbble.com/shots/21088793-12-Receipt-Page-References
-  //https://www.behance.net/gallery/168878609/Ecommerce-Website-Checkout-Page?tracking_source=search_projects_recommended|payment+checkout
-  https: return myUser ? (
+  return myUser ? (
     <Wrapper>
       <Content>
         <Title>Pagamento</Title>

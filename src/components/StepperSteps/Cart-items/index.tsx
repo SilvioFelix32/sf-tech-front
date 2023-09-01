@@ -23,6 +23,7 @@ import {
 
 export function CartItems() {
   const { cartItems, deleteItemFromCart, cartTotalPrice } = useCart();
+
   return (
     <Wrapper>
       <MainSection>
@@ -55,10 +56,9 @@ export function CartItems() {
           </ProductCard>
         ))}
         <Totals>
-          <Text style={{ fontWeight: 600 }}>Total: </Text>{" "}
+          <Text style={{ fontWeight: 600 }}>Total: </Text>
           <Text style={{ fontWeight: 600 }}>
-            R$
-            {formatNumber(cartTotalPrice)}
+            R$ {formatNumber(cartTotalPrice)}
           </Text>
         </Totals>
       </MainSection>

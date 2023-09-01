@@ -6,4 +6,6 @@ Pagina de compras >(Conferir se o usuario esta logado antes) Pagina de pagamento
 
 Finalizar seção de pagamento
 
-na pagina de pagamento o usuario {"statusCode":401,"message":"Unauthorized"} em produção
+na pagina de pagamento o usuario {"statusCode":401,"message":"Unauthorized"} em produção {
+    Checkar a função na pasta shared > useUser
+}

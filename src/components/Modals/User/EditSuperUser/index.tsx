@@ -3,9 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { userService } from "../../../../services";
 import { IUser } from "../../../../types/IUser";
-//components
 import { Modal as ModalEdit } from "react-responsive-modal";
-//styles
+import "react-responsive-modal/styles.css";
+import { SweetAlert } from "../../../../shared/sweet-alert";
 import {
   Button,
   Content,
@@ -15,10 +15,8 @@ import {
   Select,
   Wrapper,
 } from "./styles";
-import "react-responsive-modal/styles.css";
-import { SweetAlert } from "../../../../shared/sweet-alert";
 
-interface modalProps {
+interface ModalProps {
   superOpen: boolean;
   setSuperOpen: (value: boolean) => void;
   setReloadData: (value: number) => void;
@@ -30,12 +28,12 @@ export function ModalEditSuperUser({
   setSuperOpen,
   user_id,
   setReloadData,
-}: modalProps) {
+}: ModalProps) {
   const company_id = useContext(CompanyContext);
-  const [selectedUser, setSelectedUSer] = useState<IUser>();
+  const [selectedUser, setSelectedUser] = useState<IUser>();
   const { SwallSuccess } = SweetAlert;
 
-  const { register, handleSubmit, reset } = useForm({
+  const { register, handleSubmit, reset } = useForm<IUser>({
     defaultValues: { ...selectedUser },
   });
 
@@ -44,7 +42,7 @@ export function ModalEditSuperUser({
       userService
         .getById(company_id as string, user_id as string)
         .then((data) => {
-          setSelectedUSer(data);
+          setSelectedUser(data);
         });
     }
   }, [user_id, company_id]);
@@ -113,9 +111,9 @@ export function ModalEditSuperUser({
           <Content>
             <Text>Birth date:</Text>
             <Input
-              type="string"
+              type="date"
               defaultValue={selectedUser?.birth_date}
-              {...(register("birth_date"), { valueAsDate: true })}
+              {...register("birth_date")}
             />
             <Text>Celphone:</Text>
             <Input

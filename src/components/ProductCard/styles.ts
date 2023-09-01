@@ -104,11 +104,11 @@ export const FavoritedButton = styled.button`
   @media (max-width: 760px) {
     display: flex;
 
-  svg {
-    margin: 4px;
-    height: 14px;
-    width: 14px;
-  }
+    svg {
+      margin: 4px;
+      height: 14px;
+      width: 14px;
+    }
   }
 `;
 
@@ -139,11 +139,11 @@ export const NotFavoriteButton = styled.button`
   @media (max-width: 760px) {
     display: flex;
 
-  svg {
-    margin: 4px;
-    height: 14px;
-    width: 14px;
-  }
+    svg {
+      margin: 4px;
+      height: 14px;
+      width: 14px;
+    }
   }
 `;
 
@@ -161,7 +161,8 @@ export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
   text-transform: capitalize;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  text-align: center;
   margin: 0;
   padding: 0 5px;
 `;
@@ -169,7 +170,7 @@ export const Title = styled.p`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 400;
-  font-size: 0.8rem;;
+  font-size: 0.8rem;
   margin: 2px;
   padding: 0 5px;
   text-transform: capitalize;
@@ -179,9 +180,9 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  height: 36px;
   margin-top: auto;
-  padding: 10px;
+  padding: 8px;
   color: ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 24px;
