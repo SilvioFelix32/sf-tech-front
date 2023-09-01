@@ -3,9 +3,12 @@ import { AuthContext, CompanyContext, useCart } from "../../../context";
 import { DeliveryMethod } from "./ClientDelivery";
 import { PaymentInformation } from "./ClientInfo";
 import { CardForm } from "./Card";
-import { BilletForm } from "./Billet";
 import { PixForm } from "./Pix";
-import { useUser, calculateCartTotals } from "../../../shared/functions";
+import {
+  useUser,
+  calculateCartTotals,
+  formatNumber,
+} from "../../../shared/functions";
 import {
   Wrapper,
   Title,
@@ -16,6 +19,7 @@ import {
   Text,
   ShopTotals,
 } from "./styles";
+import { IProduct } from "../../../types";
 
 export function Payment() {
   const { user } = useContext(AuthContext);
@@ -28,8 +32,9 @@ export function Payment() {
   const { cartSubtotal, cartDiscount, cartTotal } =
     calculateCartTotals(cartItems);
 
+  //dribbble.com/shots/21088793-12-Receipt-Page-References
   //https://www.behance.net/gallery/168878609/Ecommerce-Website-Checkout-Page?tracking_source=search_projects_recommended|payment+checkout
-  return myUser ? (
+  https: return myUser ? (
     <Wrapper>
       <Content>
         <Title>Pagamento</Title>
@@ -50,12 +55,6 @@ export function Payment() {
             >
               Cartão de Débito
             </div>
-            <div
-              className="paymentTypes"
-              onClick={() => setPaymentType("billet")}
-            >
-              Boleto Bancário
-            </div>
             <div className="paymentTypes" onClick={() => setPaymentType("pix")}>
               Pix
             </div>
@@ -65,7 +64,6 @@ export function Payment() {
       <Card>
         {paymentType === "creditCard" && <CardForm />}
         {paymentType === "debitCard" && <CardForm />}
-        {paymentType === "billet" && <BilletForm />}
         {paymentType === "pix" && <PixForm />}
         <Text
           style={{ fontSize: "2rem", alignSelf: "center", fontWeight: "bold" }}
@@ -73,22 +71,30 @@ export function Payment() {
           {cartItems.length} Itens
         </Text>
         <ShopTotals>
-          <div className="totals">
+          {cartItems.map((item: IProduct) => (
+            <div className="totals">
+              <Text>{item.title}</Text>
+              <Text style={{ fontSize: "1rem" }}>
+                R$ {formatNumber(item.value)}
+              </Text>
+            </div>
+          ))}
+          <div className="total">
             <Text style={{ fontSize: "1rem" }}>Subtotal</Text>
             <Text style={{ fontSize: "1.2rem" }}>
-              R$ {cartSubtotal.toFixed(2).replace(".", ",")}
+              R$ {formatNumber(cartSubtotal)}
             </Text>
           </div>
           <div className="totals">
-            <Text style={{ fontSize: "1rem" }}>Disconto</Text>
+            <Text style={{ fontSize: "1rem" }}>Desconto</Text>
             <Text style={{ fontSize: "1.2rem" }}>
-              R$ {cartDiscount.toFixed(2).replace(".", ",")}
+              R$ {formatNumber(cartDiscount)}
             </Text>
           </div>
           <div className="total">
             <Text style={{ fontSize: "1rem" }}>Total</Text>
             <Text style={{ fontSize: "1.2rem" }}>
-              R$ {cartTotal.toFixed(2).replace(".", ",")}
+              R$ {formatNumber(cartTotal)}
             </Text>
           </div>
         </ShopTotals>

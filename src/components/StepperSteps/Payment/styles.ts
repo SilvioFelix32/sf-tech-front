@@ -79,7 +79,6 @@ export const Card = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  outline: solid 1px lightgreen;
 `;
 
 export const ShopTotals = styled.div`

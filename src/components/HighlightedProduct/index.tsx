@@ -6,6 +6,7 @@ import { useCan } from "../../context/Authentication/hooks/useCan";
 import { productCategoryService } from "../../services";
 import { IProduct } from "../../types";
 import { IProductCategories } from "../../types/IProductCategories";
+import { formatNumber } from "../../shared/functions";
 import { BuyButton } from "../Buttons";
 import { ProductModal } from "../Modals";
 //styles
@@ -78,13 +79,11 @@ export function HighlightedProductCard() {
                   style={{ textDecoration: "line-through", fontSize: "14px" }}
                 >
                   De R$
-                  {product?.value.toFixed(2).replace(".", ",")}
+                  {formatNumber(product?.value)}
                 </Text>
                 <Text>
                   Por R$
-                  {(product?.value - product?.discount)
-                    .toFixed(2)
-                    .replace(".", ",")}
+                  {formatNumber(product?.value - product?.discount)}
                 </Text>
               </ProductValue>
               <BuyButton product={product} />

@@ -1,12 +1,7 @@
 import { useFilterContext } from "../../../context";
+import { formatNumber } from "../../../shared/functions";
 //styles
-import {
-  Wrapper,
-  Text,
-  ProductInfo,
-  ProductFilter,
-  Input,
-} from "./styles";
+import { Wrapper, Text, ProductInfo, ProductFilter, Input } from "./styles";
 
 export function PriceFilterCard() {
   const {
@@ -20,7 +15,7 @@ export function PriceFilterCard() {
         <Text>
           Filtrar por preço: {""}
           R$ {""}
-          {price},00
+          {formatNumber(price)}
         </Text>
       </ProductInfo>
 

@@ -4,6 +4,7 @@ import { BtnAddOrRemove } from "../../Buttons";
 import { useCart } from "../../../context";
 import { CartItemType } from "../../../context/Cart/types";
 import { HighlightedProductCard } from "../../HighlightedProduct";
+import { formatNumber } from "../../../shared/functions";
 
 import {
   Aside,
@@ -22,7 +23,6 @@ import {
 
 export function CartItems() {
   const { cartItems, deleteItemFromCart, cartTotalPrice } = useCart();
-
   return (
     <Wrapper>
       <MainSection>
@@ -46,7 +46,7 @@ export function CartItems() {
                 <BtnAddOrRemove product={item} />
               </ProductQuantity>
               <ProductValue>
-                <Text>R$ {(item.amount * item.value).toFixed(2)}</Text>
+                <Text>R$ {formatNumber(item.amount * item.value)}</Text>
               </ProductValue>
               <Button onClick={() => deleteItemFromCart(item.product_id)}>
                 <BsXLg />
@@ -57,7 +57,8 @@ export function CartItems() {
         <Totals>
           <Text style={{ fontWeight: 600 }}>Total: </Text>{" "}
           <Text style={{ fontWeight: 600 }}>
-            R$ {cartTotalPrice.replace(".", ",")}
+            R$
+            {formatNumber(cartTotalPrice)}
           </Text>
         </Totals>
       </MainSection>

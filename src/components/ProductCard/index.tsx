@@ -12,6 +12,9 @@ import { productCategoryService } from "../../services";
 import { IProduct } from "../../types";
 import { IProductCategories } from "../../types/IProductCategories";
 import { BuyButton } from "../Buttons";
+import { PaginationButton } from "../Buttons/Pagination";
+import { ProductModal } from "../Modals";
+import { formatNumber } from "../../shared/functions";
 //styles
 import {
   Wrapper,
@@ -23,12 +26,9 @@ import {
   ProductInfo,
   Title,
   ProductValue,
-  ProductDescription,
   CardWrapper,
   Button,
 } from "./styles";
-import { PaginationButton } from "../Buttons/Pagination";
-import { ProductModal } from "../Modals";
 
 interface CategorySelector {
   filter: string;
@@ -115,13 +115,11 @@ export function ProductCard({ filter }: CategorySelector) {
                   style={{ textDecoration: "line-through", fontSize: "14px" }}
                 >
                   De R$
-                  {product?.value.toFixed(2).replace(".", ",")}
+                  {formatNumber(product?.value)}
                 </Text>
                 <Text>
                   Por R$
-                  {(product?.value - product?.discount)
-                    .toFixed(2)
-                    .replace(".", ",")}
+                  {formatNumber(product?.value - product?.discount)}
                 </Text>
               </ProductValue>
               <BuyButton product={product} />

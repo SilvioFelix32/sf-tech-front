@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useFavorite } from "../../../context";
 import { IFavoriteItem } from "../../../types/IFavorite";
 import { Modal as ModalComponent } from "react-responsive-modal";
+import { formatNumber } from "../../../shared/functions";
 import { BsXLg } from "react-icons/bs";
 //styles
 import "react-responsive-modal/styles.css";
@@ -64,7 +65,7 @@ export function FavoriteModal({ isOpenModal, setIsOpenModal }: ModalProps) {
               </ProductDescription>
 
               <ProductValue className="itemValue">
-                <Text>R$ {(item.amount * item.value).toFixed(2)}</Text>
+                <Text>R$ {formatNumber(item.amount * item.value)}</Text>
               </ProductValue>
               <Button onClick={() => removeItemFromFavorites(item.product_id)}>
                 <BsXLg />
