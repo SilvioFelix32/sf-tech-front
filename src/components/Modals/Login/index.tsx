@@ -26,7 +26,7 @@ interface LoginModalProps {
 }
 
 export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
-  const { signIn, responseStatus } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   const company_id = useContext(CompanyContext);
   const router = useRouter();
   const [show, setShow] = useState(false);

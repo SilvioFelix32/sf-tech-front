@@ -9,7 +9,7 @@ import {
   CartButton,
   FavoritesButton,
   SignInButton,
-  ThemeToogle,
+  ThemeToggle,
 } from "../Buttons";
 //styles
 import { Select, Wrapper, LogoL, LogoS, Button } from "./styles";
@@ -38,7 +38,7 @@ export function Header() {
         ></Image>
       </LogoS>
       <SearchBar />
-      <ThemeToogle />
+      <ThemeToggle />
       <SmallDevices />
       <Select>
         <SignInButton />

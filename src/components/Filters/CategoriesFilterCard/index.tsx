@@ -17,7 +17,6 @@ interface CategorySelector {
 }
 
 export function CategoriesFilterCard({
-  filter,
   setFilter,
   isSelected,
   setIsSelected,

@@ -31,7 +31,6 @@ type AuthContextData = {
   signOut(): Promise<void>;
   user: User;
   isAuthenticated: boolean;
-  responseStatus: number;
 };
 
 type AuthProviderProps = {
@@ -48,7 +47,6 @@ export function signOut() {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [responseStatus, setResponseStatus] = useState<number>();
   const [user, setUser] = useState<User | null>(() => {
     const loggedUser = Cookies.get("user");
     return loggedUser ? JSON.parse(loggedUser) : null;
@@ -101,9 +99,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider
-      value={{ signIn, signOut, isAuthenticated, user, responseStatus }}
-    >
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   );

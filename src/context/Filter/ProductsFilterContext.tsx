@@ -1,7 +1,13 @@
-import { createContext, useState, ReactNode, useEffect } from "react";
-import Cookies from "js-cookie";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useContext,
+} from "react";
 import { IProduct } from "../../types";
 import { productsService } from "../../services";
+import { CompanyContext } from "../Company/CompanyContext";
 
 interface ProductFilterState {
   searchTerm: string;
@@ -27,7 +33,7 @@ function ProductFilterProvider({
   children,
   initialProducts,
 }: ProductFilterProviderProps) {
-  const company_id = Cookies.get("company_id");
+  const company_id = useContext(CompanyContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState(initialProducts);
 
@@ -37,9 +43,9 @@ function ProductFilterProvider({
       .then((res) => setProducts(res.data));
   }, [company_id, searchTerm]);
 
-  const filteredProducts = products?.filter((product: IProduct) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProducts = products?.filter((product: IProduct) => {
+    product.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   const filteredProduct = filteredProducts?.map(
     (product: IProduct) => product.title

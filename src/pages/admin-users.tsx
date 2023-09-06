@@ -18,10 +18,8 @@ import { useCan } from "../context/Authentication/hooks/useCan";
 export default function AdminUsers() {
   const company_id = useContext(CompanyContext);
   const [loading, setLoading] = useState(false);
-  const [pagination, setPagination] = useState({
-    totalRows: 0,
-    perPage: 10,
-  });
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   const [users, setUsers] = useState<IUser[]>([]);
   // Modals
   const [reloadData, setReloadData] = useState(0);
@@ -33,19 +31,18 @@ export default function AdminUsers() {
 
   async function fetchUsers(page: number) {
     setLoading(true);
+
     try {
-      const res = await userService.getAll(company_id, {
+      const response = await userService.getAll(company_id, {
         page: page,
-        limit: pagination.perPage,
+        limit: perPage,
       });
-      setUsers(res.data);
-      setPagination((prevPagination) => ({
-        ...prevPagination,
-        totalRows: res.meta.total,
-      }));
+      setUsers(response.data);
+      setTotalRows(response.meta.total);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching users:", error);
     }
+
     setLoading(false);
   }
 
@@ -55,69 +52,28 @@ export default function AdminUsers() {
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
-    console.log(newPerPage, page);
+
     try {
-      const res = await userService.getAll(company_id, {
+      const response = await userService.getAll(company_id, {
         page: page,
         limit: newPerPage,
       });
-      setUsers(res.data);
-      setPagination((prevPagination) => ({
-        ...prevPagination,
-        perPage: newPerPage,
-      }));
+      setUsers(response.data);
+      setPerPage(newPerPage);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching users:", error);
     }
+
     setLoading(false);
   }
 
   useEffect(() => {
     fetchUsers(1); // fetch page 1 of users
 
-    userService.getAll(company_id, {}).then((res) => {
+    userService.getAll(company_id, { page: 1, limit: 20 }).then((res) => {
       setUsers(res.data);
     });
   }, [company_id, reloadData]);
-
-  const data = users.map((user) => {
-    return {
-      name: user.name,
-      last_name: user.last_name,
-      document: user.document,
-      email: user.email,
-      celphone: user.celphone,
-      birth_date: user.birth_date,
-      active: user.active ? "Sim" : "Não",
-      exclude_alter: (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <EditButton
-            onClick={() => {
-              if (userHasMasterPermissions) {
-                setSuperOpen(true);
-                setUser_id(user?.user_id);
-              } else {
-                setOnOpen(true);
-                setUser_id(user?.user_id);
-              }
-            }}
-          ></EditButton>
-          <ExcludeButton
-            onClick={() => {
-              setUser_id(user?.user_id);
-              setOpen(true);
-            }}
-          ></ExcludeButton>
-        </div>
-      ),
-    };
-  });
 
   const columns = [
     {
@@ -165,6 +121,45 @@ export default function AdminUsers() {
     },
   ];
 
+  const data = users.map((user) => {
+    return {
+      name: user.name,
+      last_name: user.last_name,
+      document: user.document,
+      email: user.email,
+      celphone: user.celphone,
+      birth_date: user.birth_date,
+      active: user.active ? "Sim" : "Não",
+      exclude_alter: (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <EditButton
+            onClick={() => {
+              if (userHasMasterPermissions) {
+                setSuperOpen(true);
+                setUser_id(user?.user_id);
+              } else {
+                setOnOpen(true);
+                setUser_id(user?.user_id);
+              }
+            }}
+          ></EditButton>
+          <ExcludeButton
+            onClick={() => {
+              setUser_id(user?.user_id);
+              setOpen(true);
+            }}
+          ></ExcludeButton>
+        </div>
+      ),
+    };
+  });
+
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
     rangeSeparatorText: "de",
@@ -185,7 +180,7 @@ export default function AdminUsers() {
           onChangePage={handlePageChange}
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
-          paginationTotalRows={pagination.totalRows}
+          paginationTotalRows={totalRows}
           customStyles={customStyles}
         />
       </Content>

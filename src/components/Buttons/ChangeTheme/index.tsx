@@ -4,19 +4,20 @@ import { ThemeContext } from "../../../context";
 //styles
 import { Button, Wrapper } from "./styled";
 
-export function ThemeToogle() {
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
+export function ThemeToggle() {
+  const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
   const { setTheme } = useContext(ThemeContext);
 
   function toggleTheme() {
-    setIsDarkTheme(!isDarkTheme);
-    setTheme(isDarkTheme ? "light" : "dark");
+    const newTheme = isDarkModeEnabled ? "light" : "dark";
+    setIsDarkModeEnabled(!isDarkModeEnabled);
+    setTheme(newTheme);
   }
 
   return (
     <Wrapper>
       <Button onClick={toggleTheme}>
-        {isDarkTheme ? <MdOutlineLightMode /> : <MdDarkMode />}
+        {isDarkModeEnabled ? <MdOutlineLightMode /> : <MdDarkMode />}
       </Button>
     </Wrapper>
   );

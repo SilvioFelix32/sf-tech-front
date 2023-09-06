@@ -45,7 +45,7 @@ export default function Filters() {
             </Button>
           </LeftContent>
           <MainSection>
-            <ProductCard filter={filter} />
+            <ProductCard filter={filter} isSelected={isSelected} />
           </MainSection>
         </Content>
         <Footer />

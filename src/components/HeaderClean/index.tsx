@@ -9,7 +9,7 @@ import {
   CartButton,
   FavoritesButton,
   SignInButton,
-  ThemeToogle,
+  ThemeToggle,
 } from "../Buttons";
 //styles
 import { Select, Wrapper, LogoL, LogoS, Button } from "./styles";
@@ -39,7 +39,7 @@ export function HeaderClean() {
       </LogoS>
       <SmallDevices />
       <Select>
-        <ThemeToogle />
+        <ThemeToggle />
         <SignInButton />
         {userIsAuthenticated && <FavoritesButton />}
         <CartButton />

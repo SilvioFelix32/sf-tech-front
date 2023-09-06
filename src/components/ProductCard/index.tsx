@@ -32,9 +32,10 @@ import {
 
 interface CategorySelector {
   filter: string;
+  isSelected: string;
 }
 
-export function ProductCard({ filter }: CategorySelector) {
+export function ProductCard({ filter, isSelected }: CategorySelector) {
   const company_id = useContext(CompanyContext);
   const {
     filters: { price },
@@ -58,7 +59,7 @@ export function ProductCard({ filter }: CategorySelector) {
   }, [company_id]);
 
   const categoryOfProducts = categories.reduce((acc, cur) => {
-    if (cur.title !== filter && filter !== "") {
+    if (isSelected && cur.category_id !== isSelected) {
       return acc;
     }
     return [...acc, ...cur.products];
@@ -68,7 +69,7 @@ export function ProductCard({ filter }: CategorySelector) {
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
   const filteredProducts = categoryOfProducts
-    .filter((produdct: IProduct) => produdct.value <= price)
+    .filter((product: IProduct) => product.value <= price)
     .filter((product: IProduct) => {
       if (filteredProduct?.length === 0) {
         return true;

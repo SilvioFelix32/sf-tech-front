@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import {
   createContext,
   useContext,
@@ -9,6 +8,7 @@ import {
 import reducer from "../../helpers/filterReducer";
 import { productsService } from "../../services";
 import { IProduct } from "../../types";
+import { CompanyContext } from "../Company/CompanyContext";
 
 const FilterContext = createContext(null);
 
@@ -24,7 +24,7 @@ const initialState = {
 };
 
 export const FilterContextProvider = ({ children }) => {
-  const company_id = Cookies.get("company_id");
+  const company_id = useContext(CompanyContext);
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
