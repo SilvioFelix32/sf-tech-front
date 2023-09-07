@@ -14,6 +14,7 @@ import {
 import ThemePreferenceProvider from "../context/Theme/ThemeContext";
 import CompanyIdProvider from "../context/Company/CompanyContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import { Analytics } from "@vercel/analytics/react";
 //styles
 import { GlobalStyles } from "../styles/global";
 
@@ -54,6 +55,7 @@ export default function App({
                     </Head>
                     <MainApp>
                       <Component {...pageProps} />
+                      <Analytics />
                       <GlobalStyles />
                     </MainApp>
                   </ProSidebarProvider>
