@@ -5,10 +5,18 @@ import { PaymentInformation } from "./ClientInfo";
 import { CardForm } from "./Card";
 import { PixForm } from "./Pix";
 import {
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from "@coreui/react";
+import {
   useUser,
   calculateCartTotals,
   formatNumber,
 } from "../../../shared/functions";
+import { IProduct } from "../../../types";
+
 import {
   Wrapper,
   Title,
@@ -19,7 +27,6 @@ import {
   Text,
   ShopTotals,
 } from "./styles";
-import { IProduct } from "../../../types";
 
 export function Payment() {
   const { user } = useContext(AuthContext);
@@ -40,29 +47,29 @@ export function Payment() {
         <DeliveryMethod myUser={myUser} />
         <PaymentOptions>
           <Title>3.Forma de Pagamento:</Title>
-          <CardSelect>
-            <div
-              className="paymentTypes"
-              onClick={() => setPaymentType("creditCard")}
-            >
-              Cartão de Cŕedito
-            </div>
-            <div
-              className="paymentTypes"
-              onClick={() => setPaymentType("debitCard")}
-            >
-              Cartão de Débito
-            </div>
-            <div className="paymentTypes" onClick={() => setPaymentType("pix")}>
-              Pix
-            </div>
-          </CardSelect>
+          <CAccordion>
+            <CAccordionItem itemKey={1}>
+              <CAccordionHeader>Cartão de Crédito</CAccordionHeader>
+              <CAccordionBody>
+                <CardForm />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={2}>
+              <CAccordionHeader>Cartão de Débito</CAccordionHeader>
+              <CAccordionBody>
+                <CardForm />
+              </CAccordionBody>
+            </CAccordionItem>
+            <CAccordionItem itemKey={3}>
+              <CAccordionHeader>Pix</CAccordionHeader>
+              <CAccordionBody>
+                <PixForm />
+              </CAccordionBody>
+            </CAccordionItem>
+          </CAccordion>
         </PaymentOptions>
       </Content>
       <Card>
-        {paymentType === "creditCard" && <CardForm />}
-        {paymentType === "debitCard" && <CardForm />}
-        {paymentType === "pix" && <PixForm />}
         <Text
           style={{ fontSize: "2rem", alignSelf: "center", fontWeight: "bold" }}
         >

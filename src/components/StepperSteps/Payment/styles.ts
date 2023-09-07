@@ -22,8 +22,43 @@ export const Content = styled.div`
 export const PaymentOptions = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 83%;
+  padding: 10px;
   height: 100%;
+
+  .accordion {
+    background-color: ${({ theme }) => theme.colors.background};
+    --cui-accordion-border-width: 0;
+    --cui-accordion-bg: ${({ theme }) => theme.colors.background};
+    --cui-accordion-border-color: ${({ theme }) => theme.colors.background};
+    padding: 0;
+    margin: 0;
+    border: solid 1px ${({ theme }) => theme.colors.tertiary};
+    border-radius: 8px;
+  }
+
+  .accordion-item {
+    background-color: ${({ theme }) => theme.colors.background};
+    border: solid 1px ${({ theme }) => theme.colors.tertiary};
+  }
+
+  .header {
+    padding: 0;
+    margin: 0;
+    background-color: ${({ theme }) => theme.colors.background};
+    --cui-header-border-color: ${({ theme }) => theme.colors.background};
+  }
+
+  .accordion-button {
+    margin: 0;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+  }
+
+  .accordion-flush .accordion-collapse {
+    background-color: ${({ theme }) => theme.colors.background};
+    border: solid 1px ${({ theme }) => theme.colors.tertiary};
+  }
 `;
 
 export const Input = styled.input`
@@ -54,22 +89,6 @@ export const CardSelect = styled.div`
   width: 100%;
   padding: 10px;
   display: flex;
-
-  .paymentTypes {
-    width: 150px;
-    margin: 5px;
-    padding: 10px;
-    font-size: 0.9rem;
-    font-weight: 400;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: ${({ theme }) => theme.colors.tertiary};
-    color: ${({ theme }) => theme.colors.text};
-    cursor: pointer;
-  }
 `;
 
 export const Card = styled.div`

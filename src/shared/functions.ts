@@ -6,8 +6,6 @@ export function useUser(company_id: string, user_id: string) {
   const [myUser, setMyUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    console.log("company", company_id);
-    console.log("user_id", user_id);
     if (company_id && user_id) {
       userService.getById(company_id, user_id).then((data) => {
         setMyUser(data);
@@ -15,11 +13,10 @@ export function useUser(company_id: string, user_id: string) {
     }
   }, [company_id, user_id]);
 
-  console.log("myUser", myUser);
   return myUser;
 }
 
-// Extrair a lógica para calcular o subtotal e desconto do carrinho
+//Lógica para calcular o subtotal e desconto do carrinho
 export function calculateCartTotals(cartItems: IProduct[]) {
   const cartSubtotal = cartItems.reduce((acc, item: IProduct) => {
     acc += item?.value;
