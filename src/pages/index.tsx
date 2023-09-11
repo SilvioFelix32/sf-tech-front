@@ -17,7 +17,7 @@ import {
 } from "../styles/pages/home";
 import { useState } from "react";
 
-export default function Filters() {
+export default function Home() {
   const [filter, setFilter] = useState("");
   const [isSelected, setIsSelected] = useState("");
   const { clearFilters } = useFilterContext();

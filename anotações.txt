@@ -1,13 +1,7 @@
 finalizar pagina minha conta
 
-resolver o erro de index sendo enviado junto na hora do get na rota products/search
-
 Pagina de compras >(Conferir se o usuario esta logado antes) Pagina de pagamento > pagina de sucesso.
 
 Finalizar seção de pagamento
-
-na pagina de pagamento o usuario {"statusCode":401,"message":"Unauthorized"} em produção {
-    Checkar a função na pasta shared > useUser
-}
 
 Em produção, alguns get and updates, estão recebendo o codigo 401, conferir os modais de editar, e a pagina de pagamento

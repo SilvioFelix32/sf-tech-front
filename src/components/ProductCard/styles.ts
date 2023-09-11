@@ -39,11 +39,13 @@ export const Content = styled.div`
     }
   }
 
-  @media screen and (max-width: 1200px) {
+  @media (max-width: 1200px) {
     width: 80%;
+    height: 250px;
   }
-  @media screen and (max-width: 720px) {
+  @media (max-width: 720px) {
     width: 100%;
+    height: 250px;
   }
 `;
 

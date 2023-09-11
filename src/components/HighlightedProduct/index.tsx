@@ -44,11 +44,12 @@ export function HighlightedProductCard() {
   const filteredArray = combinedArray.filter(
     (item) => item.highlighted === true
   );
+  const firstThreeItems = filteredArray.slice(0, 3);
 
   return (
     <Wrapper>
       <CardWrapper>
-        {filteredArray.map((product: IProduct) => (
+        {firstThreeItems.map((product: IProduct) => (
           <Content key={product.product_id}>
             <Picture>
               <Image
