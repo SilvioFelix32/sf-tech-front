@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// //prod api
+//prod api
 const api = axios.create({
   baseURL: "https://sf-tech-back.onrender.com/v1",
 });

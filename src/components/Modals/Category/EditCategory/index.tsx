@@ -55,8 +55,13 @@ export function ModalEditCategory({
   }, [category_id, setValue]);
 
   async function handleUpdate(data: IProductCategories) {
+    const isActive = Boolean(data.active);
+
     await productCategoryService
-      .update(company_id as string, category_id as string, data)
+      .update(company_id as string, category_id as string, {
+        ...data,
+        active: isActive,
+      })
       .then(() => setReloadData(Math.random()));
     setOnOpen(false);
   }

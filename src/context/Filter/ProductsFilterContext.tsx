@@ -40,11 +40,12 @@ function ProductFilterProvider({
   useEffect(() => {
     productsService
       .search(company_id, searchTerm)
-      .then((res) => setProducts(res.data));
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error("erro", err));
   }, [company_id, searchTerm]);
 
   const filteredProducts = products?.filter((product: IProduct) => {
-    product.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return product?.title.toLowerCase().includes(searchTerm?.toLowerCase());
   });
 
   const filteredProduct = filteredProducts?.map(

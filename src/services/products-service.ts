@@ -23,9 +23,8 @@ async function getAll(company_id: string, params: any) {
 }
 
 async function search(company_id: string, params: string) {
-  const response = await api.get(`${baseUrl}`, {
+  const response = await api.get(`${baseUrl}?=${params}`, {
     headers: { company_id },
-    params,
   });
   return response.data;
 }
