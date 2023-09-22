@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     html {
-        font-size: 16px;
+        font-size: 14px;
     }
     
     body {
@@ -17,12 +17,12 @@ export const GlobalStyles = createGlobalStyle`
     }
     
     body, input, textarea, button {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Roboto', Arial;
         font-weight: 400;
     }
 
     h1, h2, h3, h4, h5, h6, strong {
-        font-weight: 500;
+        font-weight: 400;
     }
 
     button {
@@ -61,7 +61,7 @@ export const GlobalStyles = createGlobalStyle`
     .react-modal-content {
         width: 100%;
         max-width: 576px;
-        background: var(--background);
+        background:  ${({ theme }) => theme.colors.background};;
         padding: 3rem;
         position: relative;
         border-radius: 0.25rem;

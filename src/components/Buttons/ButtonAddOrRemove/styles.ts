@@ -43,4 +43,17 @@ export const Text = styled.p`
   font-size: 1rem;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.tertiary};
+
+  @media screen and (max-width: 480px) {
+    font-size: 0.5rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    font-size: 0.7rem;
+  }
+  @media screen and (min-width: 1025px) {
+    font-size: 0.75rem;
+  }
+  @media screen and (min-width: 1441px) {
+    font-size: 1rem;
+  }
 `;

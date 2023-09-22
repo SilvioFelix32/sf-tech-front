@@ -13,8 +13,17 @@ export const Wrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background-color: ${({ theme }) => theme.colors.background};
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 480px) {
     width: 100%;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 1025px) {
+    width: 85%;
+  }
+  @media screen and (min-width: 1441px) {
+    width: 75%;
   }
 `;
 
