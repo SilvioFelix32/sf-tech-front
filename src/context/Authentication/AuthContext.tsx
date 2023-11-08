@@ -5,7 +5,6 @@ import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
 import { AxiosResponse } from "axios";
-import { error } from "console";
 
 type User = {
   name: string;

@@ -78,8 +78,6 @@ export function ProductCard({ filter, isSelected }: CategorySelector) {
     })
     .slice(indexOfFirstProduct, indexOfLastProduct);
 
-  console.log("filtereds", filteredProducts);
-
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
