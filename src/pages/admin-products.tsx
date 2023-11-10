@@ -61,7 +61,7 @@ export default function AdminProducts() {
         setProducts(res.data);
         setPerPage(newPerPage);
       })
-      .catch((err) => console.log("error msg", err));
+      .catch((err) => console.error("error msg", err));
     setLoading(false);
   }
 
@@ -155,7 +155,6 @@ export default function AdminProducts() {
           columns={columns}
           data={data}
           pagination
-          paginationServer
           progressPending={loading}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}

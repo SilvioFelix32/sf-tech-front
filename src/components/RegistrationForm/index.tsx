@@ -46,7 +46,7 @@ export function RegistrationForm() {
           setValue("address_complement", data.complemento);
           setFocus("address_number");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     }
   }
 
@@ -111,7 +111,7 @@ export function RegistrationForm() {
       <Content>
         <Input
           type="text"
-          style={{width:'95%'}}
+          style={{ width: "95%" }}
           placeholder="Email*"
           {...register("email", { required: true })}
         />

@@ -69,7 +69,6 @@ export default function AdminCompany() {
           columns={columns}
           data={data}
           pagination
-          paginationServer
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
           customStyles={customStyles}

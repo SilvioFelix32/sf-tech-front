@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { IUser } from "../types/IUser";
 import { CompanyContext } from "../context";
 import { userService } from "../services";
+import { useCan } from "../context/Authentication/hooks/useCan";
 //components
 import DataTable from "react-data-table-component";
 import {
@@ -13,7 +14,6 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 //styles
 import { Wrapper, Content, Text } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
-import { useCan } from "../context/Authentication/hooks/useCan";
 
 export default function AdminUsers() {
   const company_id = useContext(CompanyContext);
@@ -41,13 +41,9 @@ export default function AdminUsers() {
       setTotalRows(response.meta.total);
     } catch (error) {
       console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
-  }
-
-  function handlePageChange(page: number) {
-    fetchUsers(page);
   }
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
@@ -62,17 +58,17 @@ export default function AdminUsers() {
       setPerPage(newPerPage);
     } catch (error) {
       console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    setLoading(false);
+  function handlePageChange(page: number) {
+    fetchUsers(page);
   }
 
   useEffect(() => {
     fetchUsers(1); // fetch page 1 of users
-
-    userService.getAll(company_id, { page: 1, limit: 20 }).then((res) => {
-      setUsers(res.data);
-    });
   }, [company_id, reloadData]);
 
   const columns = [
@@ -173,13 +169,12 @@ export default function AdminUsers() {
         <DataTable
           columns={columns}
           data={data}
-          pagination
-          paginationServer
           progressPending={loading}
+          pagination
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
+          paginationComponentOptions={paginationComponentOptions}
           paginationTotalRows={totalRows}
           customStyles={customStyles}
         />

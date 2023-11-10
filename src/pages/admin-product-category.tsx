@@ -130,7 +130,6 @@ export default function AdminCategories() {
           columns={columns as any}
           data={productCategories}
           pagination
-          paginationServer
           progressPending={loading}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
