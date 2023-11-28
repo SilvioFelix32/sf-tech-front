@@ -74,7 +74,7 @@ export function ProductCard({ filter, isSelected }: CategorySelector) {
       if (filteredProduct?.length === 0) {
         return true;
       }
-      return filteredProduct?.includes(product.title);
+      return filteredProduct;
     })
     .slice(indexOfFirstProduct, indexOfLastProduct);
 
