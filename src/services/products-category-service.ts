@@ -4,6 +4,7 @@ import api from "./api";
 
 export const productCategoryService = {
   getAll,
+  search,
   getById,
   create,
   update,
@@ -17,6 +18,13 @@ async function getAll(company_id: string, params: any) {
   const response = await api.get(`${baseUrl}`, {
     headers: { company_id },
     params,
+  });
+  return response.data;
+}
+
+async function search(company_id: string, params: string) {
+  const response = await api.get(`${baseUrl}?=${params}`, {
+    headers: { company_id },
   });
   return response.data;
 }

@@ -11,7 +11,7 @@ import { CompanyContext } from "../Company/CompanyContext";
 
 interface ProductFilterState {
   searchTerm: string;
-  //products: IProduct[];
+  products: IProduct[];
 }
 
 interface ProductFilterContextData {
@@ -36,15 +36,16 @@ function ProductFilterProvider({ children }: ProductFilterProviderProps) {
 
   useEffect(() => {
     productCategoryService
-      .getAll(company_id, {})
-      .then((res) => setCategories(res.data));
+      .search(company_id, searchTerm)
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.error("erro", err));
   }, [company_id]);
 
-  const categoryOfProducts = categories.reduce((acc, cur) => {
+  const products = categories.reduce((acc, cur) => {
     return [...acc, ...cur.products];
   }, []);
 
-  const filteredProducts = categoryOfProducts?.filter((product: IProduct) => {
+  const filteredProducts = products?.filter((product: IProduct) => {
     return product?.title.toLowerCase().includes(searchTerm?.toLowerCase());
   });
 
@@ -55,7 +56,7 @@ function ProductFilterProvider({ children }: ProductFilterProviderProps) {
   return (
     <ProductFilterContext.Provider
       value={{
-        state: { searchTerm },
+        state: { searchTerm, products },
         setSearchTerm,
         filteredProduct,
       }}
