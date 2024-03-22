@@ -94,7 +94,7 @@ export function ModalEditUser({
               {...register("email")}
             />
             <Text>Regra:</Text>
-            <Select defaultValue={selectedUser.role} {...register("role")}>
+            <Select defaultValue={selectedUser?.role} {...register("role")}>
               <option value="USER">USUÁRIO</option>
               <option value="ADMIN">ADMINISTRADOR</option>
             </Select>
