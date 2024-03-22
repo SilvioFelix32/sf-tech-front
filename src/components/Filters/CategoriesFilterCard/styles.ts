@@ -30,11 +30,11 @@ export const ProductFilter = styled.div`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 600;
-  font-size: 0.8rem;;
+  font-size: 0.8rem;
   margin: 5px 0;
 
   @media screen and (max-width: 1200px) {
-    font-size: 0.8rem;;
+    font-size: 0.8rem;
   }
 `;
 
@@ -42,16 +42,17 @@ export const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ isSelected }) => (isSelected
-    ? ({ theme }) => theme.colors.tertiary
-    : ({ theme }) => theme.colors.text)};
+  color: ${({ isSelected }) =>
+    isSelected
+      ? ({ theme }) => theme.colors.tertiary
+      : ({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.background};
   text-transform: uppercase;
   border: none;
   outline: none;
 
   font-weight: 400;
-  font-size: 0.8rem;;
+  font-size: 0.8rem;
   margin: 5px 0;
   padding: 0 5px;
 
@@ -66,6 +67,6 @@ export const Button = styled.button<ButtonProps>`
   }
 
   @media screen and (max-width: 1200px) {
-    font-size: 0.8rem;;
+    font-size: 0.8rem;
   }
 `;

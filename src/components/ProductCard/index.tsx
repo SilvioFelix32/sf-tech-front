@@ -1,16 +1,13 @@
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { MdFavoriteBorder } from "react-icons/md";
 import {
-  CompanyContext,
   ProductFilterContext,
   useFavorite,
   useFilterContext,
 } from "../../context";
 import { useCan } from "../../context/Authentication/hooks/useCan";
-import { productCategoryService } from "../../services";
 import { IProduct } from "../../types";
-import { IProductCategories } from "../../types/IProductCategories";
 import { BuyButton } from "../Buttons";
 import { PaginationButton } from "../Buttons/Pagination";
 import { ProductModal } from "../Modals";
@@ -29,36 +26,31 @@ import {
   CardWrapper,
   Button,
 } from "./styles";
+import { ProductContext } from "../../context/Products/ProductsContext";
 
 interface CategorySelector {
   filter: string;
   isSelected: string;
 }
 
-export function ProductCard({ filter, isSelected }: CategorySelector) {
-  const company_id = useContext(CompanyContext);
+export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
   const {
     filters: { price },
   } = useFilterContext();
+  const { productCategories } = useContext(ProductContext);
   const { filteredProduct } = useContext(ProductFilterContext);
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
-  const [categories, setCategories] = useState<IProductCategories[]>([]);
   const [buttonType, setButtonType] = useState("isNotFavorited");
   const [product_Id, setProductId] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
+  //TODO: create a select for products
   const [productsPerPage, setProductsPerPage] = useState(10);
 
-  useEffect(() => {
-    productCategoryService
-      .getAll(company_id, {})
-      .then((res) => setCategories(res.data));
-  }, [company_id]);
-
-  const categoryOfProducts = categories.reduce((acc, cur) => {
+  const categoryOfProducts = productCategories?.reduce((acc, cur) => {
     if (isSelected && cur.category_id !== isSelected) {
       return acc;
     }
@@ -69,7 +61,7 @@ export function ProductCard({ filter, isSelected }: CategorySelector) {
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
   const filteredProducts = categoryOfProducts
-    .filter((product: IProduct) => product.value <= price)
+    ?.filter((product: IProduct) => product.price <= price)
     .filter((product: IProduct) => {
       if (filteredProduct?.length === 0) {
         return true;
@@ -82,16 +74,16 @@ export function ProductCard({ filter, isSelected }: CategorySelector) {
     setCurrentPage(pageNumber);
   };
 
-  return (
+  return filteredProducts && filteredProducts.length > 0 ? (
     <Wrapper>
       <CardWrapper>
-        {filteredProducts.map((product: IProduct) => (
+        {filteredProducts?.map((product: IProduct) => (
           <Content key={product.product_id}>
             <Picture>
               <Image
                 src={
-                  product.url_banner
-                    ? product.url_banner
+                  product.urlBanner
+                    ? product.urlBanner
                     : "https://i.imgur.com/2HFGvvT.png"
                 }
                 alt={product?.title}
@@ -113,14 +105,17 @@ export function ProductCard({ filter, isSelected }: CategorySelector) {
               </Button>
               <ProductValue>
                 <Text
-                  style={{ textDecoration: "line-through", fontSize: "0.8rem" }}
+                  style={{
+                    textDecoration: "line-through",
+                    fontSize: "0.8rem",
+                  }}
                 >
                   De R$
-                  {formatNumber(product?.value)}
+                  {formatNumber(product?.price)}
                 </Text>
                 <Text>
                   Por R$
-                  {formatNumber(product?.value - product?.discount)}
+                  {formatNumber(product?.price - product?.discount)}
                 </Text>
               </ProductValue>
               <BuyButton product={product} />
@@ -163,5 +158,19 @@ export function ProductCard({ filter, isSelected }: CategorySelector) {
         productId={product_Id}
       />
     </Wrapper>
+  ) : (
+    <Wrapper>
+      <CardWrapper>
+        <Content
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Title>Carregando produtos</Title>
+        </Content>
+      </CardWrapper>
+    </Wrapper>
   );
-}
+});

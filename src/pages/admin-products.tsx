@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { CompanyContext } from "../context";
 import Image from "next/image";
 //services an types
-import { productsService } from "../services";
 import { IProduct } from "../types";
 //components
 import {
@@ -16,6 +15,7 @@ import DataTable from "react-data-table-component";
 //styles and theme
 import { Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
+import productsService from "../services/products-service";
 
 export default function AdminProducts() {
   const company_id = useContext(CompanyContext);
@@ -87,7 +87,7 @@ export default function AdminProducts() {
     },
     {
       name: "imagem",
-      selector: (row) => row.url_banner,
+      selector: (row) => row.urlBanner,
     },
     {
       name: "destaque",
@@ -105,9 +105,9 @@ export default function AdminProducts() {
       id: product.product_id,
       sku: product.sku,
       title: product.title,
-      url_banner: (
+      urlBanner: (
         <Image
-          src={product?.url_banner}
+          src={product?.urlBanner}
           alt={product?.title}
           width="300"
           height="300"

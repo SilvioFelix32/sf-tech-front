@@ -19,9 +19,7 @@ export default function AdminCompany() {
   const data = companies.map((company: ICompany) => {
     return {
       name: company.name,
-      document: company.document,
-      fantasy_name: company.fantasy_name,
-      cellphone: company.cellphone,
+      fantasyName: company.fantasyName,
       email: company.email,
     };
   });
@@ -34,20 +32,10 @@ export default function AdminCompany() {
       grow: 2,
     },
     {
-      name: "documento",
-      selector: (row) => row.document,
-      sortable: true,
-      grow: 1,
-    },
-    {
       name: "nome fantasia",
-      selector: (row) => row.fantasy_name,
+      selector: (row) => row.fantasyName,
       sortable: true,
       grow: 2,
-    },
-    {
-      name: "celular",
-      selector: (row) => row.cellphone,
     },
     {
       name: "email",

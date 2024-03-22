@@ -38,7 +38,7 @@ export function CartProvider({ children }: ProviderProps) {
   const cartTotalPrice = useMemo(() => {
     return cartItems
       .reduce((acumulator, item) => {
-        const totalPrice = item.amount * item.value;
+        const totalPrice = item.amount * item.price;
         return acumulator + totalPrice;
       }, 0)
       .toFixed(2);

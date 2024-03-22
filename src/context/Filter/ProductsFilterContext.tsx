@@ -5,9 +5,9 @@ import {
   useEffect,
   useContext,
 } from "react";
-import { IProduct, IProductCategories } from "../../types";
-import { productCategoryService, productsService } from "../../services";
+import { IProduct } from "../../types";
 import { CompanyContext } from "../Company/CompanyContext";
+import productsService from "../../services/products-service";
 
 interface ProductFilterState {
   searchTerm: string;
@@ -29,25 +29,30 @@ const ProductFilterContext = createContext<ProductFilterContextData>(
   {} as ProductFilterContextData
 );
 
-function ProductFilterProvider({ children }: ProductFilterProviderProps) {
+function ProductFilterProvider({
+  children,
+  initialProducts,
+}: ProductFilterProviderProps) {
   const company_id = useContext(CompanyContext);
+  const [products, setProducts] = useState<IProduct[]>(initialProducts);
   const [searchTerm, setSearchTerm] = useState("");
-  const [categories, setCategories] = useState<IProductCategories[]>([]);
 
   useEffect(() => {
-    productCategoryService
-      .search(company_id, searchTerm)
-      .then((res) => setCategories(res.data))
-      .catch((err) => console.error("erro", err));
+    async function fetchAllProducts() {
+      try {
+        const response = await productsService.getAll(company_id, searchTerm);
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+
+    fetchAllProducts();
   }, [company_id]);
 
-  const products = categories.reduce((acc, cur) => {
-    return [...acc, ...cur.products];
-  }, []);
-
-  const filteredProducts = products?.filter((product: IProduct) => {
-    return product?.title.toLowerCase().includes(searchTerm?.toLowerCase());
-  });
+  const filteredProducts = products?.filter((product: IProduct) =>
+    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const filteredProduct = filteredProducts?.map(
     (product: IProduct) => product.title

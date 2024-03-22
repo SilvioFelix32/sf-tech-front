@@ -1,5 +1,5 @@
 export * from "./ICompany";
 export * from "./IProducts";
-export * from "./IProductCategories";
+export * from "./IProductCategory";
+export * from "./IFavorite";
 export * from "./IUser";
-export * from "./IProductType";

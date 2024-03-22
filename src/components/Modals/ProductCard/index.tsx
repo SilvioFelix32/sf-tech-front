@@ -3,8 +3,8 @@ import { Modal as ModalComponent } from "react-responsive-modal";
 //styles
 import "react-responsive-modal/styles.css";
 import { Button, Wrapper, CartItems } from "./styles";
-import { productsService } from "../../../services";
 import { IProduct } from "../../../types";
+import productsService from "../../../services/products-service";
 
 interface ModalProps {
   openModal: boolean;
@@ -20,7 +20,9 @@ export function ProductModal({
   const [product, setProduct] = useState<IProduct>();
 
   useEffect(() => {
-    productsService.getById(productId).then((res) => setProduct(res));
+    if (productId) {
+      productsService.getById(productId).then((res) => setProduct(res));
+    }
   }, [productId]);
 
   return (

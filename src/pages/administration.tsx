@@ -6,7 +6,6 @@ import { NavHeader } from "../components/NavHeader";
 import { useProSidebar } from "react-pro-sidebar";
 import { useCan } from "../context/Authentication/hooks/useCan";
 import AdminProducts from "./admin-products";
-import AdminCategories from "./admin-product-category";
 import AdminUsers from "./admin-users";
 import AdminCompany from "./admin-company";
 import {
@@ -73,7 +72,6 @@ export default function Administration() {
               <Section>
                 {actualPage === "AdminProducts" && <AdminProducts />}
                 {actualPage === "AdminUsers" && <AdminUsers />}
-                {actualPage === "AdminCategories" && <AdminCategories />}
                 {actualPage === "AdminCompany" && <AdminCompany />}
               </Section>
             </>

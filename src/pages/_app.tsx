@@ -17,6 +17,7 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 import { Analytics } from "@vercel/analytics/react";
 //styles
 import { GlobalStyles } from "../styles/global";
+import { ProductProvider } from "../context/Products/ProductsContext";
 
 interface AppProps {
   Component: any;
@@ -29,40 +30,35 @@ export default function App({
   pageProps,
   initialProducts,
 }: AppProps) {
-  useEffect(() => {
-    Cookies.set("company_id", "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c", {
-      expires: 7,
-      path: "/",
-    });
-  }, []);
-
   return (
     <CompanyIdProvider>
       <ThemePreferenceProvider>
         <AuthProvider>
-          <CartProvider>
-            <FavoriteProvider>
-              <FilterContextProvider>
-                <ProductFilterProvider initialProducts={initialProducts}>
-                  <ProSidebarProvider>
-                    <Head>
-                      <title>Sf-tech</title>
-                      <link rel="shortcut icon" href="/favicon.jpg" />
-                      <meta
-                        name="viewport"
-                        content="initial-scale=1.0, width=device-width"
-                      />
-                    </Head>
-                    <MainApp>
-                      <Component {...pageProps} />
-                      <Analytics />
-                      <GlobalStyles />
-                    </MainApp>
-                  </ProSidebarProvider>
-                </ProductFilterProvider>
-              </FilterContextProvider>
-            </FavoriteProvider>
-          </CartProvider>
+          <ProductProvider>
+            <CartProvider>
+              <FavoriteProvider>
+                <FilterContextProvider>
+                  <ProductFilterProvider initialProducts={initialProducts}>
+                    <ProSidebarProvider>
+                      <Head>
+                        <title>Sf-tech</title>
+                        <link rel="shortcut icon" href="/favicon.jpg" />
+                        <meta
+                          name="viewport"
+                          content="initial-scale=1.0, width=device-width"
+                        />
+                      </Head>
+                      <MainApp>
+                        <Component {...pageProps} />
+                        <Analytics />
+                        <GlobalStyles />
+                      </MainApp>
+                    </ProSidebarProvider>
+                  </ProductFilterProvider>
+                </FilterContextProvider>
+              </FavoriteProvider>
+            </CartProvider>
+          </ProductProvider>
         </AuthProvider>
       </ThemePreferenceProvider>
     </CompanyIdProvider>

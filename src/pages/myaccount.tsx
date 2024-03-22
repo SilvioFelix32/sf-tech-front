@@ -21,11 +21,6 @@ export default function MyAccount() {
     }
   }, [company_id, user_id]);
 
-  const documentHiden = myUser?.document.slice(0, -2);
-  const documentLastTwoNumbers = myUser?.document.slice(-2);
-  const userdocument =
-    documentHiden?.replace(/\d/g, "#") + documentLastTwoNumbers;
-
   return myUser ? (
     <Wrapper>
       <Title style={{ fontSize: "22px" }}>Meus dados:</Title>
@@ -37,38 +32,11 @@ export default function MyAccount() {
       </Content>
       <Content>
         <Title>Sobrenome:</Title>
-        <Text>{myUser.last_name}</Text>
+        <Text>{myUser.lastName}</Text>
       </Content>
       <Content>
         <Title>Email:</Title>
         <Text>{myUser.email}</Text>
-      </Content>
-      <Content>
-        <Title>Nascimento:</Title>
-        <Text>
-          {myUser.birth_date
-            ? format(new Date(myUser?.birth_date), "dd/MM/yyyy")
-            : "Não informado"}
-        </Text>
-      </Content>
-      <Content>
-        <Title>Telefone:</Title>
-        <Text>{myUser.celphone ? myUser.celphone : "Não informado"}</Text>
-      </Content>
-      <Content>
-        <Title>Documento:</Title>
-        <Text>{userdocument}</Text>
-      </Content>
-
-      <Title style={{ fontSize: "18px" }}>Endereço:</Title>
-      <Content>
-        <Text>{myUser.address ? myUser.address : "Não informado"},</Text>
-        <Text>- {myUser.address_complement},</Text>
-        <Text>
-          - Nº {myUser.address_number ? myUser.address_number : "S/N"},
-        </Text>
-        <Text>- {myUser.city ? myUser.city : "Não informado"},</Text>
-        <Text>- {myUser.cep ? myUser.cep : "Não informado"}</Text>
       </Content>
     </Wrapper>
   ) : (

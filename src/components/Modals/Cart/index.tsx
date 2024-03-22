@@ -51,8 +51,8 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
           {cartItems.map((item: CartItemType) => (
             <Product key={item.product_id}>
               <Image
-                src={item.url_banner}
-                alt={item.url_banner}
+                src={item.urlBanner}
+                alt={item.urlBanner}
                 width={60}
                 height={60}
                 className="image"
@@ -65,7 +65,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
                 <BtnAddOrRemove product={item} />
               </ProductQuantity>
               <ProductValue>
-                <Text>R$ {formatNumber(item.amount * item.value)}</Text>
+                <Text>R$ {formatNumber(item.amount * item.price)}</Text>
               </ProductValue>
               <Button onClick={() => deleteItemFromCart(item.product_id)}>
                 <BsXLg />

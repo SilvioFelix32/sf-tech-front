@@ -86,8 +86,8 @@ export function ModalEditUser({
             <Text>Last name:</Text>
             <Input
               type="string"
-              defaultValue={selectedUser?.last_name}
-              {...register("last_name")}
+              defaultValue={selectedUser?.lastName}
+              {...register("lastName")}
             />
             <Text>Role:</Text>
             <Select defaultValue={selectedUser?.role} {...register("role")}>

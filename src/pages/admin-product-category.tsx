@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CompanyContext } from "../context";
 import { productCategoryService } from "../services";
-import { IProductCategories } from "../types/IProductCategories";
 import {
   ModalCreateCategory,
   ModalEditCategory,
@@ -13,11 +11,12 @@ import DataTable from "react-data-table-component";
 import "react-responsive-modal/styles.css";
 import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
+import { IProductCategory } from "../types";
 
 export default function AdminCategories() {
   const company_id = useContext(CompanyContext);
   const [productCategories, setProductCategories] = useState<
-    IProductCategories[]
+    IProductCategory[]
   >([]);
   const [category_id, setCategory_id] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,31 +69,35 @@ export default function AdminCategories() {
 
   const columns = [
     {
-      name: "ativo",
-      selector: "active",
+      name: "sku",
+      selector: (row) => row.sku,
       sortable: true,
-      cell: (row) => (row.active ? "Sim" : "Não"),
     },
     {
       name: "titulo",
-      selector: "title",
+      selector: (row) => row.title,
       sortable: true,
     },
     {
-      name: "descrição",
-      selector: "description",
-      sortable: true,
+      name: "imagem",
+      selector: (row) => row.urlBanner,
     },
     {
-      name: "tipo produto",
-      selector: "product_type",
+      name: "destaque",
+      selector: (row) => row.highlighted,
       sortable: true,
     },
     {
       name: "outros",
-      selector: "exclude_alter",
-      sortable: true,
-      cell: (row) => (
+      selector: (row) => row.exclude_alter,
+    },
+  ];
+
+  const data = productCategories.map((category) => {
+    return {
+      id: category.category_id,
+      title: category.title,
+      exclude_alter: (
         <div
           style={{
             display: "flex",
@@ -105,19 +108,25 @@ export default function AdminCategories() {
           <EditButton
             onClick={() => {
               setOnOpen(true);
-              setCategory_id(row.category_id);
+              setCategory_id(category?.category_id);
             }}
           ></EditButton>
           <ExcludeButton
             onClick={() => {
-              setCategory_id(row.category_id);
+              setCategory_id(category?.category_id);
               setOpen(true);
             }}
           ></ExcludeButton>
         </div>
       ),
-    },
-  ];
+    };
+  });
+
+  const paginationComponentOptions = {
+    rowsPerPageText: "Linhas por página",
+    rangeSeparatorText: "de",
+    selectAllRowsItem: false,
+  };
 
   return (
     <Wrapper>
@@ -127,17 +136,13 @@ export default function AdminCategories() {
           Cadastrar nova Categoria
         </Button>
         <DataTable
-          columns={columns as any}
-          data={productCategories}
+          columns={columns}
+          data={data}
           pagination
           progressPending={loading}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationComponentOptions={{
-            rowsPerPageText: "Linhas por página",
-            rangeSeparatorText: "de",
-            selectAllRowsItem: false,
-          }}
+          paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
           paginationTotalRows={totalRows}
           customStyles={customStyles}

@@ -38,7 +38,7 @@ export const SmallDevices = () => {
         <CDropdownMenu className="DropMenu">
           {user ? (
             <CDropdownItem style={{ textTransform: "capitalize" }}>
-              Seja bem vindo {user.name} {user.last_name.split("")[0]}.
+              Seja bem vindo {user.name} {user.lastName.split("")[0]}.
             </CDropdownItem>
           ) : (
             <CDropdownItem

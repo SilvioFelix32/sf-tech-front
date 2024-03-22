@@ -2,7 +2,6 @@
 import { CompanyContext } from "../../../../context";
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { IProductCategories } from "../../../../types/IProductCategories";
 import { productCategoryService } from "../../../../services";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
@@ -17,7 +16,7 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { ProductType, ProductTypes } from "../../../../types/IProductType";
+import { IProductCategory } from "../../../../types";
 
 interface modalProps {
   onOpen: boolean;
@@ -33,34 +32,28 @@ export function ModalEditCategory({
   setReloadData,
 }: modalProps) {
   const company_id = useContext(CompanyContext);
-  const { register, handleSubmit, reset, setValue } =
-    useForm<IProductCategories>({
+  const { register, handleSubmit, reset, setValue } = useForm<IProductCategory>(
+    {
       defaultValues: {
         title: "",
         description: "",
-        product_type: ProductType.PERIPHERAL,
-        active: false,
       },
-    });
+    }
+  );
 
   useEffect(() => {
     if (category_id) {
       productCategoryService.getById(category_id).then((data) => {
         setValue("title", data?.title || "");
         setValue("description", data?.description || "");
-        setValue("product_type", data?.product_type || ProductType.PERIPHERAL);
-        setValue("active", data?.active || false);
       });
     }
   }, [category_id, setValue]);
 
-  async function handleUpdate(data: IProductCategories) {
-    const isActive = Boolean(data.active);
-
+  async function handleUpdate(data: IProductCategory) {
     await productCategoryService
       .update(company_id as string, category_id as string, {
         ...data,
-        active: isActive,
       })
       .then(() => setReloadData(Math.random()));
     setOnOpen(false);
@@ -85,21 +78,6 @@ export function ModalEditCategory({
             <Input type="string" {...register("title")} />
             <Text>Description:</Text>
             <Input type="string" {...register("description")} />
-          </Content>
-          <Content>
-            <Text>Product type:</Text>
-            <Select {...register("product_type")}>
-              {ProductTypes.map((productType) => (
-                <option key={productType.title} value={productType.value}>
-                  {productType.title}
-                </option>
-              ))}
-            </Select>
-            <Text>Active:</Text>
-            <Select {...register("active")}>
-              <option value="true">true</option>
-              <option value="false">false</option>
-            </Select>
           </Content>
         </Context>
         <Button type="submit">Confirmar</Button>

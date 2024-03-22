@@ -120,12 +120,8 @@ export default function AdminUsers() {
   const data = users.map((user) => {
     return {
       name: user.name,
-      last_name: user.last_name,
-      document: user.document,
+      lastName: user.lastName,
       email: user.email,
-      celphone: user.celphone,
-      birth_date: user.birth_date,
-      active: user.active ? "Sim" : "Não",
       exclude_alter: (
         <div
           style={{

@@ -8,7 +8,7 @@ import { AxiosResponse } from "axios";
 
 type User = {
   name: string;
-  last_name: string;
+  lastName: string;
   email: string;
   password: string;
   role: Role;
@@ -37,8 +37,8 @@ type AuthProviderProps = {
 };
 
 export function signOut() {
-  Cookies.remove(undefined, "nextauth.token");
-  Cookies.remove(undefined, "nextauth.refreshToken");
+  Cookies.remove(undefined, ["nextauth.token"]);
+  Cookies.remove(undefined, ["nextauth.refreshToken"]);
 
   Router.push("/");
 }
@@ -70,7 +70,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const loggedUser: User = {
         name: user.name,
-        last_name: user.last_name,
+        lastName: user.lastName,
         email: user.email,
         password: user.password,
         role: user.role,

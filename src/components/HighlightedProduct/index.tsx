@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { MdFavoriteBorder } from "react-icons/md";
+import productsService from "../../services/products-service";
 import { CompanyContext, useFavorite } from "../../context";
 import { useCan } from "../../context/Authentication/hooks/useCan";
-import { productCategoryService } from "../../services";
 import { IProduct } from "../../types";
-import { IProductCategories } from "../../types/IProductCategories";
 import { formatNumber } from "../../shared/functions";
 import { BuyButton } from "../Buttons";
 import { ProductModal } from "../Modals";
@@ -28,22 +27,17 @@ export function HighlightedProductCard() {
   const company_id = useContext(CompanyContext);
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
-  const [categories, setCategories] = useState<IProductCategories[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [buttonType, setButtonType] = useState("isNotFavorited");
   const [product_Id, setProductId] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   useEffect(() => {
-    productCategoryService
-      .getAll(company_id, {})
-      .then((res) => setCategories(res.data));
+    productsService.getAll(company_id, {}).then((res) => setProducts(res.data));
   }, [company_id]);
 
-  const combinedArray = [].concat(...categories.map((cat) => cat.products));
-  const filteredArray = combinedArray.filter(
-    (item) => item.highlighted === true
-  );
+  const filteredArray = products.filter((item) => item.highlighted === true);
   const firstThreeItems = filteredArray.slice(0, 3);
 
   return (
@@ -54,8 +48,8 @@ export function HighlightedProductCard() {
             <Picture>
               <Image
                 src={
-                  product.url_banner
-                    ? product.url_banner
+                  product.urlBanner
+                    ? product.urlBanner
                     : "https://i.imgur.com/2HFGvvT.png"
                 }
                 alt={product?.title}
@@ -80,11 +74,11 @@ export function HighlightedProductCard() {
                   style={{ textDecoration: "line-through", fontSize: "14px" }}
                 >
                   De R$
-                  {formatNumber(product?.value)}
+                  {formatNumber(product?.price)}
                 </Text>
                 <Text>
                   Por R$
-                  {formatNumber(product?.value - product?.discount)}
+                  {formatNumber(product?.price - product?.discount)}
                 </Text>
               </ProductValue>
               <BuyButton product={product} />

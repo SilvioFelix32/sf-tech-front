@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { CompanyContext } from "../../../../context";
 import { v4 as uuidv4 } from "uuid";
 //components
-import { IProductCategories } from "../../../../types/IProductCategories";
-import { productCategoryService, productsService } from "../../../../services";
+import { productCategoryService } from "../../../../services";
+import productsService from "../../../../services/products-service";
 import { IProduct } from "../../../../types";
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
@@ -31,28 +30,22 @@ export function ModalCreateProduct({
   setReloadData,
 }: modalProps) {
   const company_id = useContext(CompanyContext);
-  const [productCategory, setProductCategory] = useState<IProductCategories[]>(
-    []
-  );
+  const [product, setProduct] = useState<IProduct[]>([]);
   //product data
-  const [category_id, setCategory_id] = useState<string>();
   const [sku, setSku] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [subtitle, setSubtitle] = useState<string>();
   const [description, setDescription] = useState<string>();
-  const [url_banner, setUrl] = useState<string>();
-  const [value, setValue] = useState<number>();
+  const [urlBanner, setUrl] = useState<string>();
+  const [price, setPrice] = useState<number>();
   const [discount, setDiscount] = useState<number>();
-  const [active, setActive] = useState(true);
-  const [combo, setCombo] = useState(true);
-  const [for_sale, setFor_sale] = useState(true);
   const [highlighted, setHighlighted] = useState(true);
 
   useEffect(() => {
     if (company_id) {
       productCategoryService
         .getAll(company_id, {})
-        .then((res) => setProductCategory(res.data));
+        .then((res) => setProduct(res.data));
     }
   }, [company_id]);
 
@@ -64,17 +57,14 @@ export function ModalCreateProduct({
       title,
       subtitle,
       description,
-      url_banner: url_banner || "https://i.imgur.com/2HFGvvT.png",
-      value,
+      urlBanner: urlBanner || "https://i.imgur.com/2HFGvvT.png",
+      price,
       discount,
-      active,
-      combo,
-      for_sale,
       highlighted,
     };
 
     await productsService
-      .create(category_id as string, company_id as string, data as IProduct)
+      .create(company_id as string, data as IProduct)
       .then(() => setReloadData(Math.random()));
   }
 
@@ -113,7 +103,7 @@ export function ModalCreateProduct({
             />
           </Content>
           <Content>
-            <Text>Url_banner:</Text>
+            <Text>urlBanner:</Text>
             <Input
               type="string"
               placeholder="(Optional)"
@@ -122,7 +112,7 @@ export function ModalCreateProduct({
             <Text>Valor:</Text>
             <Input
               type="number"
-              onChange={(e) => setValue(Number(e.target.value))}
+              onChange={(e) => setPrice(Number(e.target.value))}
             />
             <Text>Valor Desconto:</Text>
             <Input
@@ -131,47 +121,12 @@ export function ModalCreateProduct({
             />
           </Content>
           <Content>
-            <Text>Product Category:</Text>
-            <Select onChange={(e) => setCategory_id(e.target.value)}>
-              <option></option>
-              {productCategory.map((category) => {
-                return (
-                  <option
-                    key={category?.category_id}
-                    value={category?.category_id}
-                  >
-                    {category?.product_type}
-                  </option>
-                );
-              })}
-            </Select>
-
-            <Text>A venda:</Text>
-            <Select
-              onChange={(e) =>
-                setFor_sale(e.target.value === "true" ? true : false)
-              }
-              defaultValue="true"
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
             <Text>Em destaque:</Text>
             <Select
               onChange={(e) =>
                 setHighlighted(e.target.value === "true" ? true : false)
               }
               defaultValue="false"
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
-            <Text>Ativo:</Text>
-            <Select
-              onChange={(e) =>
-                setActive(e.target.value === "true" ? true : false)
-              }
-              defaultValue="true"
             >
               <option value="true">Sim</option>
               <option value="false">Não</option>

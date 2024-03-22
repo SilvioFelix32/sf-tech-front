@@ -3,7 +3,7 @@ import { IProduct } from "../types";
 const filterReducer = (state, action) => {
   switch (action.type) {
     case "LOAD_FILTER_PRODUCTS":
-      let priceArr = action.payload.map((curElem: IProduct) => curElem.value);
+      let priceArr = action.payload.map((curElem: IProduct) => curElem.price);
       let maxPrice = Math.max(...priceArr);
       let minPrice = Math.min(...priceArr);
 
@@ -18,7 +18,7 @@ const filterReducer = (state, action) => {
       const { name, value } = action.payload;
 
       const filteredProducts = action.payload.products.filter(
-        (prod: IProduct) => prod.value <= value
+        (prod: IProduct) => prod.price <= value
       );
 
       return {
@@ -44,11 +44,11 @@ const filterReducer = (state, action) => {
 
       if (price === 0) {
         tempFilterProduct = tempFilterProduct.filter(
-          (curElem: IProduct) => curElem.value == price
+          (curElem: IProduct) => curElem.price == price
         );
       } else {
         tempFilterProduct = tempFilterProduct.filter(
-          (curElem: IProduct) => curElem.value <= price
+          (curElem: IProduct) => curElem.price <= price
         );
       }
       return {
@@ -57,9 +57,9 @@ const filterReducer = (state, action) => {
       };
 
     case "CLEAR_FILTERS":
-      let priceArray = action.payload.map((curElem: IProduct) => curElem.value);
+      let priceArray = action.payload.map((curElem: IProduct) => curElem.price);
       let prodMaxPrice = Math.max(...priceArray);
-      
+
       return {
         ...state,
         filters: {

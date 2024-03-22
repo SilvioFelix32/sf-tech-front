@@ -28,7 +28,7 @@ export const SignInButton = () => {
             </Svg>
             <Text style={{ textTransform: "uppercase" }}>
               {user.name.split("")[0]}
-              {user.last_name.split("")[0]}
+              {user.lastName.split("")[0]}
             </Text>
           </Button>
         </CDropdownToggle>

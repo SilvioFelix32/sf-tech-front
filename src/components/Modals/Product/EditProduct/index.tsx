@@ -1,10 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { productsService, productCategoryService } from "../../../../services";
 import { CompanyContext } from "../../../../context";
 import { IProduct } from "../../../../types";
-import { IProductCategories } from "../../../../types/IProductCategories";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
@@ -18,6 +15,7 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
+import productsService from "../../../../services/products-service";
 
 interface ModalProps {
   onOpen: boolean;
@@ -34,9 +32,7 @@ export function ModalEditProduct({
 }: ModalProps) {
   const company_id = useContext(CompanyContext);
   const [selectedProduct, setSelectedProduct] = useState<IProduct>();
-  const [productCategory, setProductCategory] = useState<IProductCategories[]>(
-    []
-  );
+  const [product, setProduct] = useState<IProduct[]>([]);
 
   const { register, handleSubmit, reset } = useForm<IProduct>({
     defaultValues: { ...selectedProduct },
@@ -47,9 +43,9 @@ export function ModalEditProduct({
       productsService
         .getById(product_id)
         .then((data) => setSelectedProduct(data));
-      productCategoryService
+      productsService
         .getAll(company_id, {})
-        .then((res) => setProductCategory(res.data));
+        .then((res) => setProduct(res.data));
     }
   }, [product_id]);
 
@@ -63,8 +59,6 @@ export function ModalEditProduct({
     await productsService.update(company_id, product_id, {
       ...data,
       highlighted: Boolean(data.highlighted),
-      for_sale: Boolean(data.for_sale),
-      active: Boolean(data.active),
     });
     setReloadData(Math.random());
   }
@@ -110,17 +104,17 @@ export function ModalEditProduct({
             />
           </Content>
           <Content>
-            <Text>Url_banner:</Text>
+            <Text>urlBanner:</Text>
             <Input
               type="string"
-              defaultValue={selectedProduct?.url_banner}
-              {...register("url_banner")}
+              defaultValue={selectedProduct?.urlBanner}
+              {...register("urlBanner")}
             />
             <Text>Valor:</Text>
             <Input
               type="number"
-              defaultValue={selectedProduct?.value.toFixed(2)}
-              {...register("value", {
+              defaultValue={selectedProduct?.price.toFixed(2)}
+              {...register("price", {
                 valueAsNumber: true,
               })}
             />
@@ -134,35 +128,10 @@ export function ModalEditProduct({
             />
           </Content>
           <Content>
-            <Text>Product Category:</Text>
-            <Select {...register("category_id")}>
-              {productCategory.map((category) => (
-                <option key={category.category_id} value={category.category_id}>
-                  {category.title}
-                </option>
-              ))}
-            </Select>
-
-            <Text>A venda:</Text>
-            <Select
-              defaultValue={selectedProduct?.for_sale.toString()}
-              {...register("for_sale")}
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
             <Text>Em destaque:</Text>
             <Select
               defaultValue={selectedProduct?.highlighted.toString()}
               {...register("highlighted")}
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
-            <Text>Ativo:</Text>
-            <Select
-              defaultValue={selectedProduct?.active.toString()}
-              {...register("active")}
             >
               <option value="true">Sim</option>
               <option value="false">Não</option>

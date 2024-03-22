@@ -48,29 +48,14 @@ export function PaymentInformation({ company_id, myUser }: ComponentProps) {
               <MainData>
                 <Text>Sobrenome:</Text>
                 <Input
-                  defaultValue={myUser.last_name}
-                  {...register("last_name", { required: true })}
+                  defaultValue={myUser.lastName}
+                  {...register("lastName", { required: true })}
                 />
               </MainData>
             </Divisory>
           </Card>
         </Column>
         <Column>
-          <Card>
-            <Divisory>
-              <GiSmartphone />
-              <MainData>
-                <Text>Telefone:</Text>
-                <Input
-                  defaultValue={
-                    myUser.celphone ? myUser.celphone : "Não informado"
-                  }
-                  {...register("celphone", { required: true })}
-                />
-              </MainData>
-            </Divisory>
-          </Card>
-
           <Card>
             <Divisory>
               <HiOutlineMail />
