@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { IUser } from "../types/IUser";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { IUser, Role } from "../types/IUser";
 import { CompanyContext } from "../context";
 import { userService } from "../services";
 import { useCan } from "../context/Authentication/hooks/useCan";
@@ -17,17 +17,16 @@ import { customStyles } from "../styles/customDataTable";
 
 export default function AdminUsers() {
   const company_id = useContext(CompanyContext);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
-  const [users, setUsers] = useState<IUser[]>([]);
   // Modals
   const [reloadData, setReloadData] = useState(0);
   const [user_id, setUser_id] = useState("");
   const [open, setOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
-  const [superOpen, setSuperOpen] = useState(false);
-  const userHasMasterPermissions = useCan({ role: ["MASTER"] });
+  const userHasMasterPermissions = useCan({ role: [Role.MASTER] });
 
   async function fetchUsers(page: number) {
     setLoading(true);
@@ -44,6 +43,10 @@ export default function AdminUsers() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handlePageChange(page: number) {
+    fetchUsers(page);
   }
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
@@ -63,62 +66,46 @@ export default function AdminUsers() {
     }
   }
 
-  function handlePageChange(page: number) {
-    fetchUsers(page);
-  }
-
   useEffect(() => {
     fetchUsers(1); // fetch page 1 of users
   }, [company_id, reloadData]);
 
-  const columns = [
-    {
-      name: "nome",
-      selector: (row) => row.name,
-      sortable: true,
-      grow: 2,
-    },
-    {
-      name: "ultimo nome",
-      selector: (row) => row.last_name,
-      sortable: true,
-      grow: 1,
-    },
-    {
-      name: "documento",
-      selector: (row) => row.document,
-      sortable: true,
-      grow: 1,
-    },
-    {
-      name: "email",
-      selector: (row) => row.email,
-      sortable: true,
-      grow: 2,
-    },
-    {
-      name: "celular",
-      selector: (row) => row.celphone,
-    },
-    {
-      name: "nascimento",
-      selector: (row) => row.birth_date,
-    },
-    {
-      name: "ativo",
-      selector: (row) => row.active,
-      sortable: true,
-      grow: 1,
-    },
-    {
-      name: "outros",
-      selector: (row) => row.exclude_alter,
-      sortable: true,
-    },
-  ];
+  const columns = useMemo(() => {
+    const baseColumns = [
+      {
+        name: "nome",
+        selector: (row) => row.name,
+        sortable: true,
+        grow: 2,
+      },
+      {
+        name: "sobrenome",
+        selector: (row) => row.lastName,
+        sortable: true,
+        grow: 1,
+      },
+      {
+        name: "email",
+        selector: (row) => row.email,
+        sortable: true,
+        grow: 2,
+      },
+    ];
 
-  const data = users.map((user) => {
-    return {
+    if (userHasMasterPermissions) {
+      baseColumns.push({
+        name: "outros",
+        selector: (row) => row.exclude_alter,
+        sortable: true,
+        grow: 1,
+      });
+    }
+
+    return baseColumns;
+  }, [userHasMasterPermissions]);
+
+  const data = useMemo(() => {
+    return users?.map((user) => ({
       name: user.name,
       lastName: user.lastName,
       email: user.email,
@@ -132,13 +119,8 @@ export default function AdminUsers() {
         >
           <EditButton
             onClick={() => {
-              if (userHasMasterPermissions) {
-                setSuperOpen(true);
-                setUser_id(user?.user_id);
-              } else {
-                setOnOpen(true);
-                setUser_id(user?.user_id);
-              }
+              setUser_id(user?.user_id);
+              setOnOpen(true);
             }}
           ></EditButton>
           <ExcludeButton
@@ -149,8 +131,8 @@ export default function AdminUsers() {
           ></ExcludeButton>
         </div>
       ),
-    };
-  });
+    }));
+  }, [users]);
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
@@ -165,22 +147,16 @@ export default function AdminUsers() {
         <DataTable
           columns={columns}
           data={data}
-          progressPending={loading}
           pagination
+          progressPending={loading}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationRowsPerPageOptions={[5, 10, 20]}
           paginationComponentOptions={paginationComponentOptions}
+          paginationRowsPerPageOptions={[5, 10, 20]}
           paginationTotalRows={totalRows}
           customStyles={customStyles}
         />
       </Content>
-      <ModalEditSuperUser
-        user_id={user_id}
-        superOpen={superOpen}
-        setSuperOpen={setSuperOpen}
-        setReloadData={setReloadData}
-      />
       <ModalEditUser
         user_id={user_id}
         onOpen={onOpen}

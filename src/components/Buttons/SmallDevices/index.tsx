@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { useCan } from "../../../context/Authentication/hooks/useCan";
-import { BiListUl, BiUser } from "react-icons/bi";
+import { BiListUl } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
 import { AuthContext } from "../../../context";
 //components
-import { CartModal, FavoriteModal, FavoritesButton, LoginModal } from "../..";
+import { CartModal, LoginModal } from "../..";
 import {
   CDropdown,
   CDropdownToggle,
@@ -14,15 +14,13 @@ import {
 } from "@coreui/react";
 //styles
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { Button, Svg, Text, Wrapper } from "./styles";
+import { Button, Svg, Wrapper } from "./styles";
 
 export const SmallDevices = () => {
   const router = useRouter();
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
-  const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   const [isOpen, setIsOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const { user, signOut } = useContext(AuthContext);
 
   return (

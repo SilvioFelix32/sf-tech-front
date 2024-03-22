@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { CompanyContext } from "../context";
 import { productCategoryService } from "../services";
+import { IProductCategory } from "../types";
 import {
   ModalCreateCategory,
   ModalEditCategory,
@@ -11,7 +12,6 @@ import DataTable from "react-data-table-component";
 import "react-responsive-modal/styles.css";
 import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
-import { IProductCategory } from "../types";
 
 export default function AdminCategories() {
   const company_id = useContext(CompanyContext);
@@ -45,7 +45,6 @@ export default function AdminCategories() {
   function handlePageChange(page: number) {
     fetchProducts(page, perPage);
   }
-
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
 
@@ -69,22 +68,13 @@ export default function AdminCategories() {
 
   const columns = [
     {
-      name: "sku",
-      selector: (row) => row.sku,
-      sortable: true,
-    },
-    {
       name: "titulo",
       selector: (row) => row.title,
       sortable: true,
     },
     {
-      name: "imagem",
-      selector: (row) => row.urlBanner,
-    },
-    {
-      name: "destaque",
-      selector: (row) => row.highlighted,
+      name: "descrição",
+      selector: (row) => row.description,
       sortable: true,
     },
     {
@@ -93,10 +83,10 @@ export default function AdminCategories() {
     },
   ];
 
-  const data = productCategories.map((category) => {
-    return {
-      id: category.category_id,
+  const data = useMemo(() => {
+    return productCategories?.map((category) => ({
       title: category.title,
+      description: category.description,
       exclude_alter: (
         <div
           style={{
@@ -119,8 +109,8 @@ export default function AdminCategories() {
           ></ExcludeButton>
         </div>
       ),
-    };
-  });
+    }));
+  }, [productCategories]);
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",

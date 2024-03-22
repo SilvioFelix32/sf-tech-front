@@ -1,6 +1,7 @@
 import { IUser } from "../types/IUser";
 import cookies from "js-cookie";
 import api from "./api";
+import { IUserResponse } from "../types/IUserResponse";
 
 export const userService = {
   login,
@@ -19,12 +20,17 @@ async function login(params: any) {
   return response;
 }
 
-async function getAll(company_id: string, params: any) {
-  const response = await api.get(`${baseUrl}`, {
-    headers: { company_id },
-    params,
-  });
-  return response.data;
+async function getAll(company_id: string, params: any): Promise<IUserResponse> {
+  try {
+    const response = await api.get<IUserResponse>(`${baseUrl}`, {
+      headers: { company_id },
+      params,
+    });
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error);
+    throw error;
+  }
 }
 
 async function getById(company_id: string, user_id: string) {
@@ -53,4 +59,7 @@ async function _delete(company_id: string, user_id: string) {
   await api.delete(`${baseUrl}/${user_id}`, {
     headers: { company_id },
   });
+}
+function handleAxiosError(error: any) {
+  throw new Error("Function not implemented.");
 }

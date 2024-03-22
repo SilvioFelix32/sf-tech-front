@@ -39,11 +39,9 @@ export function ModalEditUser({
 
   useEffect(() => {
     if (user_id) {
-      userService
-        .getById(company_id as string, user_id as string)
-        .then((data) => {
-          setSelectedUser(data);
-        });
+      userService.getById(company_id, user_id).then((data) => {
+        setSelectedUser(data);
+      });
     }
   }, [user_id, company_id]);
 
@@ -53,7 +51,7 @@ export function ModalEditUser({
 
   async function handleUpdate(data: IUser) {
     await userService
-      .update(company_id as string, user_id as string, data)
+      .update(company_id, user_id, data)
       .then(() => setReloadData(Math.random()));
   }
 
@@ -77,23 +75,28 @@ export function ModalEditUser({
       <Wrapper onSubmit={handleSubmit(handleUpdate)}>
         <Context>
           <Content>
-            <Text>Name:</Text>
+            <Text>Nome:</Text>
             <Input
               type="string"
               defaultValue={selectedUser?.name}
               {...register("name")}
             />
-            <Text>Last name:</Text>
+            <Text>Sobrenome:</Text>
             <Input
               type="string"
               defaultValue={selectedUser?.lastName}
               {...register("lastName")}
             />
-            <Text>Role:</Text>
-            <Select defaultValue={selectedUser?.role} {...register("role")}>
-              <option value=""></option>
-              <option value="USER">USER</option>
-              <option value="ADMIN">ADMIN</option>
+            <Text>Email:</Text>
+            <Input
+              type="string"
+              defaultValue={selectedUser?.email}
+              {...register("email")}
+            />
+            <Text>Regra:</Text>
+            <Select defaultValue={selectedUser.role} {...register("role")}>
+              <option value="USER">USUÁRIO</option>
+              <option value="ADMIN">ADMINISTRADOR</option>
             </Select>
           </Content>
         </Context>

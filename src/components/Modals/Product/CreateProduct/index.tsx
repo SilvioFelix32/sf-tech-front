@@ -31,6 +31,7 @@ export function ModalCreateProduct({
 }: modalProps) {
   const company_id = useContext(CompanyContext);
   const [product, setProduct] = useState<IProduct[]>([]);
+  const [category, setCategory] = useState<string>();
   //product data
   const [sku, setSku] = useState<string>();
   const [title, setTitle] = useState<string>();
@@ -54,6 +55,7 @@ export function ModalCreateProduct({
 
     const data: Partial<IProduct> = {
       sku: sku || uuidv4(),
+      category_id: category,
       title,
       subtitle,
       description,
@@ -83,27 +85,21 @@ export function ModalCreateProduct({
       <Wrapper onSubmit={handleSubmit}>
         <Context>
           <Content>
-            <Text>Sku:</Text>
-            <Input
-              type="string"
-              placeholder="(Optional)"
-              onChange={(e) => setSku(e.target.value)}
-            />
-            <Text>Title:</Text>
+            <Text>Titulo:</Text>
             <Input type="string" onChange={(e) => setTitle(e.target.value)} />
-            <Text>Subtitle:</Text>
+            <Text>Subtitulo:</Text>
             <Input
               type="string"
               onChange={(e) => setSubtitle(e.target.value)}
             />
-            <Text>Description:</Text>
+            <Text>Descrição do produto:</Text>
             <Input
               type="string"
               onChange={(e) => setDescription(e.target.value)}
             />
           </Content>
           <Content>
-            <Text>urlBanner:</Text>
+            <Text>Imagem de capa:</Text>
             <Input
               type="string"
               placeholder="(Optional)"
@@ -131,6 +127,24 @@ export function ModalCreateProduct({
               <option value="true">Sim</option>
               <option value="false">Não</option>
             </Select>
+            <Text>Categoria de produto:</Text>
+            <Select
+              onChange={(e) => setCategory(e.target.value)}
+              defaultValue=""
+            >
+              <option value=""></option>
+              {product?.map((category) => (
+                <option key={category.category_id} value={category.category_id}>
+                  {category.title}
+                </option>
+              ))}
+            </Select>
+            <Text>Sku:</Text>
+            <Input
+              type="string"
+              placeholder="(Opcional)"
+              onChange={(e) => setSku(e.target.value)}
+            />
           </Content>
         </Context>
         <Button type="submit" onClick={() => setIsOpen(false)}>

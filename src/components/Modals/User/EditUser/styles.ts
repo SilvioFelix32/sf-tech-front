@@ -23,8 +23,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 10px;
-  height: 100%;
-  width: 100%;
+  width: 300px;
 `;
 
 export const Text = styled.p`

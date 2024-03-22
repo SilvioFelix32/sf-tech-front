@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { CompanyContext } from "../context";
 import Image from "next/image";
 //services an types
+import productsService from "../services/products-service";
 import { IProduct } from "../types";
 //components
 import {
@@ -13,9 +14,8 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 //imported libs
 import DataTable from "react-data-table-component";
 //styles and theme
-import { Button, Text, Content } from "../styles/pages/admin";
+import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
-import productsService from "../services/products-service";
 
 export default function AdminProducts() {
   const company_id = useContext(CompanyContext);
@@ -71,7 +71,7 @@ export default function AdminProducts() {
     productsService.getAll(company_id, { page: 1, limit: 20 }).then((res) => {
       setProducts(res.data);
     });
-  }, [company_id, reloadData]);
+  }, [reloadData]);
 
   //Dados da tabela
   const columns = [
@@ -100,19 +100,21 @@ export default function AdminProducts() {
     },
   ];
 
-  const data = products.map((product) => {
-    return {
+  const data = useMemo(() => {
+    return products?.map((product) => ({
       id: product.product_id,
       sku: product.sku,
       title: product.title,
       urlBanner: (
-        <Image
-          src={product?.urlBanner}
-          alt={product?.title}
-          width="300"
-          height="300"
-          priority
-        ></Image>
+        <Picture>
+          <Image
+            src={product?.urlBanner}
+            alt={product?.title}
+            width="200"
+            height="200"
+            priority
+          ></Image>
+        </Picture>
       ),
       highlighted: product.highlighted ? "Sim" : "Não",
       exclude_alter: (
@@ -137,8 +139,8 @@ export default function AdminProducts() {
           ></ExcludeButton>
         </div>
       ),
-    };
-  });
+    }));
+  }, [products]);
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
