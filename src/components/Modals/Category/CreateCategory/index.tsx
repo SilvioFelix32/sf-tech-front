@@ -6,7 +6,7 @@ import { Modal as ModalCreate } from "react-responsive-modal";
 import { Button, Text, Content, Wrapper, Input, Select } from "./styles";
 import "react-responsive-modal/styles.css";
 import { IProductCategory } from "../../../../types";
-import { productCategoryService } from "../../../../services";
+import { categoryService } from "../../../../services";
 
 interface modalProps {
   isOpen: boolean;
@@ -32,7 +32,7 @@ export function ModalCreateCategory({
       description,
     };
 
-    await productCategoryService
+    await categoryService
       .create(company_id, data as IProductCategory)
       .then(() => setReloadData(Math.random()));
   }

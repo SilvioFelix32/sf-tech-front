@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { CompanyContext } from "../context";
 import Image from "next/image";
 //services an types
-import productsService from "../services/products-service";
 import { IProduct } from "../types";
 //components
 import {
@@ -16,6 +15,7 @@ import DataTable from "react-data-table-component";
 //styles and theme
 import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
+import { productsService } from "../services";
 
 export default function AdminProducts() {
   const company_id = useContext(CompanyContext);
@@ -31,11 +31,11 @@ export default function AdminProducts() {
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
 
-  async function fetchProducts(page: number) {
+  async function fetchProducts(page: number, perPage: number) {
     setLoading(true);
 
     await productsService
-      .getAll(company_id, {
+      .getAll({
         page: page,
         limit: perPage,
       })
@@ -47,13 +47,13 @@ export default function AdminProducts() {
   }
 
   function handlePageChange(page: number) {
-    fetchProducts(page);
+    fetchProducts(page, perPage);
   }
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
     await productsService
-      .getAll(company_id, {
+      .getAll({
         page: page,
         limit: newPerPage,
       })
@@ -66,12 +66,8 @@ export default function AdminProducts() {
   }
 
   useEffect(() => {
-    fetchProducts(1); // fetch page 1 of users
-
-    productsService.getAll(company_id, { page: 1, limit: 20 }).then((res) => {
-      setProducts(res.data);
-    });
-  }, [reloadData]);
+    fetchProducts(1, perPage);
+  }, [perPage]);
 
   //Dados da tabela
   const columns = [

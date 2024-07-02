@@ -1,10 +1,9 @@
 import { createContext, ReactNode, useState } from "react";
-import Cookies from "js-cookie";
 import Router from "next/router";
-import { userService } from "../../services";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
 import { AxiosResponse } from "axios";
+import { cookiesService, userService } from "../../services";
 
 type User = {
   name: string;
@@ -37,8 +36,8 @@ type AuthProviderProps = {
 };
 
 export function signOut() {
-  Cookies.remove(undefined, ["nextauth.token"]);
-  Cookies.remove(undefined, ["nextauth.refreshToken"]);
+  cookiesService?.removeCookie("nextauth.token");
+  cookiesService?.removeCookie("nextauth.refreshToken");
 
   Router.push("/");
 }
@@ -47,7 +46,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(() => {
-    const loggedUser = Cookies.get("user");
+    const loggedUser = cookiesService?.getCookie("user");
     return loggedUser ? JSON.parse(loggedUser) : null;
   });
 
@@ -62,11 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { access_token, user }: IResponse = response.data;
 
-      //using nookies to create the nextJS cookies
-      Cookies.set("nextauth.token", access_token, {
-        expires: 60 * 60 * 24 * 30, //this set the time that the cookie will be stored = 30 days
-        path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
-      });
+      cookiesService?.createCookie("nextauth.token", access_token);
 
       const loggedUser: User = {
         name: user.name,
@@ -79,7 +74,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser(loggedUser);
 
-      Cookies.set("user", JSON.stringify(loggedUser));
+      cookiesService?.createCookie("user", JSON.stringify(loggedUser));
 
       api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
     } catch (error) {
@@ -91,8 +86,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signOut() {
     setUser(null);
-    Cookies.remove("user");
-    Cookies.remove("nextauth.token");
+    cookiesService?.removeCookie("user");
+    cookiesService?.removeCookie("nextauth.token");
 
     Router.push("/");
   }

@@ -1,7 +1,6 @@
 export interface IProduct {
   product_id: string;
   category_id: string;
-  company_id: string;
   sku?: string;
   title?: string;
   subtitle?: string;

@@ -1,6 +1,6 @@
 {
   "name": "sf-tech",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,6 +19,7 @@
     "axios": "^1.6.8",
     "bootstrap": "5.3.3",
     "date-fns": "^3.6.0",
+    "ioredis": "^5.3.2",
     "js-cookie": "^3.0.5",
     "next": "14.1.4",
     "next-images": "^1.8.5",

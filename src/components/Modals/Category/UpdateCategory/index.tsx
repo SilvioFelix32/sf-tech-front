@@ -2,7 +2,7 @@
 import { CompanyContext } from "../../../../context";
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { productCategoryService } from "../../../../services";
+import { categoryService } from "../../../../services";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
@@ -43,7 +43,7 @@ export function ModalEditCategory({
 
   useEffect(() => {
     if (category_id) {
-      productCategoryService.getById(category_id).then((data) => {
+      categoryService.getById(category_id).then((data) => {
         setValue("title", data?.title || "");
         setValue("description", data?.description || "");
       });
@@ -51,7 +51,7 @@ export function ModalEditCategory({
   }, [category_id, setValue]);
 
   async function handleUpdate(data: IProductCategory) {
-    await productCategoryService
+    await categoryService
       .update(company_id as string, category_id as string, {
         ...data,
       })

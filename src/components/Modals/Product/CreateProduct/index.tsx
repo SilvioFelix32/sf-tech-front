@@ -2,9 +2,8 @@ import { FormEvent, useContext, useEffect, useState } from "react";
 import { CompanyContext } from "../../../../context";
 import { v4 as uuidv4 } from "uuid";
 //components
-import { productCategoryService } from "../../../../services";
-import productsService from "../../../../services/products-service";
-import { IProduct } from "../../../../types";
+import { categoryService, productsService } from "../../../../services";
+import { IProduct, IProductCategory } from "../../../../types";
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
 import {
@@ -30,7 +29,7 @@ export function ModalCreateProduct({
   setReloadData,
 }: modalProps) {
   const company_id = useContext(CompanyContext);
-  const [product, setProduct] = useState<IProduct[]>([]);
+  const [product, setProduct] = useState<IProductCategory[]>([]);
   const [category, setCategory] = useState<string>();
   //product data
   const [sku, setSku] = useState<string>();
@@ -44,8 +43,8 @@ export function ModalCreateProduct({
 
   useEffect(() => {
     if (company_id) {
-      productCategoryService
-        .getAll(company_id, {})
+      categoryService
+        .getAll(company_id, { page: 1, limit: 20 })
         .then((res) => setProduct(res.data));
     }
   }, [company_id]);
@@ -66,7 +65,7 @@ export function ModalCreateProduct({
     };
 
     await productsService
-      .create(company_id as string, data as IProduct)
+      .create(company_id, data as IProduct)
       .then(() => setReloadData(Math.random()));
   }
 

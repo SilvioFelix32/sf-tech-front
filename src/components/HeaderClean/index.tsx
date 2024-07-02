@@ -27,6 +27,7 @@ export function HeaderClean() {
           alt="sftech"
           width={200}
           height={60}
+          priority={true}
         ></Image>
       </LogoL>
       <LogoS onClick={() => router.push("/")}>

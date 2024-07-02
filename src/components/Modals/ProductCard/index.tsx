@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Modal as ModalComponent } from "react-responsive-modal";
+import { IProduct } from "../../../types";
+import { productsService } from "../../../services";
 //styles
 import "react-responsive-modal/styles.css";
 import { Button, Wrapper, CartItems } from "./styles";
-import { IProduct } from "../../../types";
-import productsService from "../../../services/products-service";
 
 interface ModalProps {
   openModal: boolean;

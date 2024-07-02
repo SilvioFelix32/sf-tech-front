@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { MdFavoriteBorder } from "react-icons/md";
-import productsService from "../../services/products-service";
 import { CompanyContext, useFavorite } from "../../context";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { IProduct } from "../../types";
@@ -22,6 +21,7 @@ import {
   CardWrapper,
   Button,
 } from "./styles";
+import { productsService } from "../../services";
 
 export function HighlightedProductCard() {
   const company_id = useContext(CompanyContext);
@@ -34,7 +34,9 @@ export function HighlightedProductCard() {
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   useEffect(() => {
-    productsService.getAll(company_id, {}).then((res) => setProducts(res.data));
+    productsService
+      .getAll({ page: 1, limit: 20 })
+      .then((res) => setProducts(res.data));
   }, [company_id]);
 
   const filteredArray = products.filter((item) => item.highlighted === true);

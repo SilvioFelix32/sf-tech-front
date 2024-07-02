@@ -36,8 +36,8 @@ export default function AdminUsers() {
         page: page,
         limit: perPage,
       });
-      setUsers(response.data);
-      setTotalRows(response.meta.total);
+      setUsers(response.data.data);
+      setTotalRows(response.data.meta.total);
     } catch (error) {
       console.error("Error fetching users:", error);
     } finally {
@@ -57,7 +57,7 @@ export default function AdminUsers() {
         page: page,
         limit: newPerPage,
       });
-      setUsers(response.data);
+      setUsers(response.data.data);
       setPerPage(newPerPage);
     } catch (error) {
       console.error("Error fetching users:", error);

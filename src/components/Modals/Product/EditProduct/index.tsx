@@ -15,7 +15,7 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import productsService from "../../../../services/products-service";
+import { productsService } from "../../../../services";
 
 interface ModalProps {
   onOpen: boolean;
@@ -32,7 +32,6 @@ export function ModalEditProduct({
 }: ModalProps) {
   const company_id = useContext(CompanyContext);
   const [selectedProduct, setSelectedProduct] = useState<IProduct>();
-  const [product, setProduct] = useState<IProduct[]>([]);
 
   const { register, handleSubmit, reset } = useForm<IProduct>({
     defaultValues: { ...selectedProduct },
@@ -43,9 +42,6 @@ export function ModalEditProduct({
       productsService
         .getById(product_id)
         .then((data) => setSelectedProduct(data));
-      productsService
-        .getAll(company_id, {})
-        .then((res) => setProduct(res.data));
     }
   }, [product_id]);
 
@@ -56,7 +52,7 @@ export function ModalEditProduct({
   async function handleUpdate(data: IProduct) {
     delete data.product_id;
 
-    await productsService.update(company_id, product_id, {
+    await productsService.update(product_id, {
       ...data,
       highlighted: Boolean(data.highlighted),
     });

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { CompanyContext } from "../context";
-import { productCategoryService } from "../services";
+import { categoryService } from "../services";
 import { IProductCategory } from "../types";
 import {
   ModalCreateCategory,
@@ -30,7 +30,7 @@ export default function AdminCategories() {
   async function fetchProducts(page: number, limit: number) {
     setLoading(true);
     try {
-      const res = await productCategoryService.getAll(company_id, {
+      const res = await categoryService.getAll(company_id, {
         page,
         limit,
       });
@@ -49,7 +49,7 @@ export default function AdminCategories() {
     setLoading(true);
 
     try {
-      const res = await productCategoryService.getAll(company_id, {
+      const res = await categoryService.getAll(company_id, {
         page,
         limit: newPerPage,
       });

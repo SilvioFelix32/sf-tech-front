@@ -1,8 +1,15 @@
 import api from "./api";
+import { AxiosError } from "axios";
+import { cookiesService } from ".";
 import { IProductCategory } from "../types";
-import cookies from "js-cookie";
+import { IParamsRequest } from "./interfaces/IParamsRequest";
+import {
+  ICategoryResponse,
+  IProductCategories,
+  CategoryService,
+} from "./interfaces/ICategoryResponse";
 
-export const productCategoryService = {
+export const categoryService: CategoryService = {
   getAll,
   getById,
   create,
@@ -11,17 +18,25 @@ export const productCategoryService = {
 };
 
 const baseUrl = "/categories";
-const nextauth = cookies.get("nextauth.token");
+const nextauth = cookiesService?.getCookie("nextauth.token");
 
-async function getAll(company_id: string, params: any) {
-  const response = await api.get(`${baseUrl}`, {
-    headers: { company_id },
-    params,
-  });
-  return response.data;
+async function getAll(
+  company_id: string,
+  params: IParamsRequest
+): Promise<IProductCategories> {
+  try {
+    const response = await api.get<ICategoryResponse>(`${baseUrl}`, {
+      headers: { company_id },
+      params,
+    });
+    return response.data.data;
+  } catch (error) {
+    handleAxiosError(error);
+    throw error;
+  }
 }
 
-async function getById(category_id: string) {
+async function getById(category_id: string): Promise<IProductCategory> {
   const response = await api.get<IProductCategory>(`${baseUrl}/${category_id}`);
   return response.data;
 }
@@ -49,4 +64,14 @@ async function _delete(category_id: string) {
   await api.delete(`${baseUrl}/${category_id}`, {
     headers: { authorization: `Bearer ${nextauth}` },
   });
+}
+
+function handleAxiosError(error: AxiosError) {
+  if (error.response) {
+    console.error("Response error:", error.response.data);
+  } else if (error.request) {
+    console.error("Request error:", error.request);
+  } else {
+    console.error("Error:", error.message);
+  }
 }

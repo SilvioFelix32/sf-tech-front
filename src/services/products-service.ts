@@ -1,24 +1,16 @@
 import api from "./api";
 import { AxiosError } from "axios";
+import { cookiesService } from ".";
 import { IProduct } from "../types";
-import cookies from "js-cookie";
-import { IProductResponse } from "../types/IProductResponse";
+import {
+  IProductResponse,
+  IProductInterface,
+  ProductsService,
+} from "./interfaces/IProductResponse";
 
-const nextauth = cookies.get("nextauth.token");
-interface ProductsService {
-  getAll: (company_id: string, params: any) => Promise<IProductResponse>;
-  search: (company_id: string, params: string) => Promise<IProductResponse>;
-  getById: (product_id: string) => Promise<IProduct>;
-  create: (company_id: string, params: IProduct) => Promise<IProduct>;
-  update: (
-    company_id: string,
-    product_id: string,
-    params: IProduct
-  ) => Promise<IProduct>;
-  delete: (product_id: string) => Promise<void>;
-}
+const nextauth = cookiesService?.getCookie("nextauth.token");
 
-const productsService: ProductsService = {
+export const productsService: ProductsService = {
   getAll,
   search,
   getById,
@@ -29,31 +21,24 @@ const productsService: ProductsService = {
 
 const baseUrl = "/products";
 
-async function getAll(
-  company_id: string,
-  params: any
-): Promise<IProductResponse> {
+async function getAll(params: any): Promise<IProductInterface> {
   try {
     const response = await api.get<IProductResponse>(`${baseUrl}`, {
-      headers: { company_id },
       params,
     });
-    return response.data;
+    return response.data.data;
   } catch (error) {
     handleAxiosError(error);
     throw error;
   }
 }
 
-async function search(
-  company_id: string,
-  params: string
-): Promise<IProductResponse> {
+async function search(searchTerm: string): Promise<IProductInterface> {
   try {
-    const response = await api.get<IProductResponse>(`${baseUrl}?=${params}`, {
-      headers: { company_id },
-    });
-    return response.data;
+    const response = await api.get<IProductResponse>(
+      `${baseUrl}?=${searchTerm}`
+    );
+    return response.data.data;
   } catch (error) {
     handleAxiosError(error);
     throw error;
@@ -70,10 +55,13 @@ async function getById(product_id: string): Promise<IProduct> {
   }
 }
 
-async function create(company_id: string, params: IProduct): Promise<IProduct> {
+async function create(
+  category_id: string,
+  params: IProduct
+): Promise<IProduct> {
   try {
     const response = await api.post<IProduct>(`${baseUrl}`, params, {
-      headers: { company_id },
+      headers: { category_id },
     });
     return response.data;
   } catch (error) {
@@ -82,17 +70,13 @@ async function create(company_id: string, params: IProduct): Promise<IProduct> {
   }
 }
 
-async function update(
-  company_id: string,
-  product_id: string,
-  params: IProduct
-): Promise<IProduct> {
+async function update(product_id: string, params: IProduct): Promise<IProduct> {
   try {
     const response = await api.patch<IProduct>(
       `${baseUrl}/${product_id}`,
       params,
       {
-        headers: { company_id, authorization: `Bearer ${nextauth}` },
+        headers: { authorization: `Bearer ${nextauth}` },
       }
     );
     return response.data;
@@ -115,15 +99,10 @@ async function _delete(product_id: string): Promise<void> {
 
 function handleAxiosError(error: AxiosError) {
   if (error.response) {
-    // Erro de resposta do servidor (por exemplo, status de erro HTTP)
     console.error("Response error:", error.response.data);
   } else if (error.request) {
-    // A requisição foi feita, mas não houve resposta do servidor
     console.error("Request error:", error.request);
   } else {
-    // Erro ao configurar a requisição ou ao processar a resposta
     console.error("Error:", error.message);
   }
 }
-
-export default productsService;

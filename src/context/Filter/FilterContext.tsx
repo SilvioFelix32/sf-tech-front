@@ -7,8 +7,6 @@ import {
 } from "react";
 import reducer from "../../helpers/filterReducer";
 import { IProduct } from "../../types";
-import { CompanyContext } from "../Company/CompanyContext";
-import productsService from "../../services/products-service";
 import { ProductContext } from "../Products/ProductsContext";
 
 const FilterContext = createContext(null);

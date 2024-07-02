@@ -1,9 +1,14 @@
-import { IUser } from "../types/IUser";
-import cookies from "js-cookie";
 import api from "./api";
-import { IUserResponse } from "../types/IUserResponse";
+import { IUser } from "../types/IUser";
+import { cookiesService } from ".";
+import {
+  IUserLoginParams,
+  IUsersResponse,
+  UserService,
+} from "./interfaces/IUserResponse";
+import { IParamsRequest } from "./interfaces/IParamsRequest";
 
-export const userService = {
+export const userService: UserService = {
   login,
   getAll,
   getById,
@@ -12,17 +17,20 @@ export const userService = {
   delete: _delete,
 };
 
-const nextauth = cookies.get("nextauth.token");
+const nextauth = cookiesService?.getCookie("nextauth.token");
 const baseUrl = "/users";
 
-async function login(params: any) {
+async function login(params: IUserLoginParams) {
   const response = await api.post("login", params);
   return response;
 }
 
-async function getAll(company_id: string, params: any): Promise<IUserResponse> {
+async function getAll(
+  company_id: string,
+  params: IParamsRequest
+): Promise<IUsersResponse> {
   try {
-    const response = await api.get<IUserResponse>(`${baseUrl}`, {
+    const response = await api.get<IUsersResponse>(`${baseUrl}`, {
       headers: { company_id },
       params,
     });
@@ -33,7 +41,7 @@ async function getAll(company_id: string, params: any): Promise<IUserResponse> {
   }
 }
 
-async function getById(company_id: string, user_id: string) {
+async function getById(company_id: string, user_id: string): Promise<IUser> {
   const response = await api.get<IUser>(`${baseUrl}/${user_id}`, {
     headers: { company_id, authorization: `Bearer ${nextauth}` },
   });
@@ -54,12 +62,12 @@ async function update(company_id: string, user_id: string, params: IUser) {
   return response.data;
 }
 
-// prefixed with underscored because delete is a reserved word in javascript
 async function _delete(company_id: string, user_id: string) {
   await api.delete(`${baseUrl}/${user_id}`, {
     headers: { company_id },
   });
 }
+
 function handleAxiosError(error: any) {
   throw new Error("Function not implemented.");
 }

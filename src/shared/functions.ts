@@ -16,7 +16,6 @@ export function useUser(company_id: string, user_id: string) {
   return myUser;
 }
 
-//Lógica para calcular o subtotal e desconto do carrinho
 export function calculateCartTotals(cartItems: IProduct[]) {
   const cartSubtotal = cartItems.reduce((acc, item: IProduct) => {
     acc += item?.price;

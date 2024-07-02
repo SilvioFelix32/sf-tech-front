@@ -47,7 +47,6 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
-  //TODO: create a select for products
   const [productsPerPage, setProductsPerPage] = useState(10);
 
   const categoryOfProducts = productCategories?.reduce((acc, cur) => {

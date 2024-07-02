@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { productCategoryService } from "../../../../services";
+import { categoryService } from "../../../../services";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
 
@@ -20,7 +20,7 @@ export function ModalDeleteCategory({
   async function handleDelete(event: FormEvent) {
     event.preventDefault();
 
-    await productCategoryService
+    await categoryService
       .delete(category_id as string)
       .then(() => setReloadData(Math.random()));
   }

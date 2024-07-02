@@ -6,7 +6,7 @@ import React, {
   useReducer,
 } from "react";
 import { IProduct, IProductCategory } from "../../types";
-import { productCategoryService } from "../../services";
+import { categoryService } from "../../services";
 import reducer from "../../helpers/filterReducer";
 
 interface ProductFilterContextData {
@@ -52,10 +52,13 @@ function ProductProvider({ children }: ProductProviderProps) {
   const [filteredProducts, dispatch] = useReducer(reducer, initialState);
   const [isSelected, setIsSelected] = useState<string>(""); // Added state and setter for iSelected
 
+  // TODO: change this paginate properly
   useEffect(() => {
-    productCategoryService
-      .getAll(company_id, {})
-      .then((res) => setCategories(res.data))
+    categoryService
+      .getAll(company_id, { page: 1, limit: 20 })
+      .then((res) => {
+        setCategories(res.data);
+      })
       .catch((err) => console.error("error", err));
   }, [company_id]);
 
@@ -86,8 +89,8 @@ function ProductProvider({ children }: ProductProviderProps) {
         filteredProducts: filteredProducts.filter_products,
         filter: filteredProducts.filters.text,
         setFilter,
-        isSelected, // Include iSelected in the context value
-        setIsSelected, // Include setISelected in the context value
+        isSelected,
+        setIsSelected,
         updateFilterValue,
         clearFilters,
       }}
