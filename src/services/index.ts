@@ -1,5 +1,5 @@
 export * from "./companies-service";
 export * from "./products-service";
-export * from "./products-category-service";
 export * from "./user-service";
-export * from "./viaCEP-service";
+export * from "./product-category-service";
+export * from "./cookie-service";

@@ -1,11 +1,9 @@
-import { useRouter } from "next/router";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { CompanyContext } from "../../../../context";
 import { v4 as uuidv4 } from "uuid";
 //components
-import { IProductCategories } from "../../../../types/IProductCategories";
-import { productCategoryService, productsService } from "../../../../services";
-import { IProduct } from "../../../../types";
+import { categoryService, productsService } from "../../../../services";
+import { IProduct, IProductCategory } from "../../../../types";
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
 import {
@@ -31,28 +29,23 @@ export function ModalCreateProduct({
   setReloadData,
 }: modalProps) {
   const company_id = useContext(CompanyContext);
-  const [productCategory, setProductCategory] = useState<IProductCategories[]>(
-    []
-  );
+  const [product, setProduct] = useState<IProductCategory[]>([]);
+  const [category, setCategory] = useState<string>();
   //product data
-  const [category_id, setCategory_id] = useState<string>();
   const [sku, setSku] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [subtitle, setSubtitle] = useState<string>();
   const [description, setDescription] = useState<string>();
-  const [url_banner, setUrl] = useState<string>();
-  const [value, setValue] = useState<number>();
+  const [urlBanner, setUrl] = useState<string>();
+  const [price, setPrice] = useState<number>();
   const [discount, setDiscount] = useState<number>();
-  const [active, setActive] = useState(true);
-  const [combo, setCombo] = useState(true);
-  const [for_sale, setFor_sale] = useState(true);
   const [highlighted, setHighlighted] = useState(true);
 
   useEffect(() => {
     if (company_id) {
-      productCategoryService
-        .getAll(company_id, {})
-        .then((res) => setProductCategory(res.data));
+      categoryService
+        .getAll(company_id, { page: 1, limit: 20 })
+        .then((res) => setProduct(res.data));
     }
   }, [company_id]);
 
@@ -61,20 +54,18 @@ export function ModalCreateProduct({
 
     const data: Partial<IProduct> = {
       sku: sku || uuidv4(),
+      category_id: category,
       title,
       subtitle,
       description,
-      url_banner: url_banner || "https://i.imgur.com/2HFGvvT.png",
-      value,
+      urlBanner: urlBanner || "https://i.imgur.com/2HFGvvT.png",
+      price,
       discount,
-      active,
-      combo,
-      for_sale,
       highlighted,
     };
 
     await productsService
-      .create(category_id as string, company_id as string, data as IProduct)
+      .create(company_id, data as IProduct)
       .then(() => setReloadData(Math.random()));
   }
 
@@ -93,27 +84,21 @@ export function ModalCreateProduct({
       <Wrapper onSubmit={handleSubmit}>
         <Context>
           <Content>
-            <Text>Sku:</Text>
-            <Input
-              type="string"
-              placeholder="(Optional)"
-              onChange={(e) => setSku(e.target.value)}
-            />
-            <Text>Title:</Text>
+            <Text>Titulo:</Text>
             <Input type="string" onChange={(e) => setTitle(e.target.value)} />
-            <Text>Subtitle:</Text>
+            <Text>Subtitulo:</Text>
             <Input
               type="string"
               onChange={(e) => setSubtitle(e.target.value)}
             />
-            <Text>Description:</Text>
+            <Text>Descrição do produto:</Text>
             <Input
               type="string"
               onChange={(e) => setDescription(e.target.value)}
             />
           </Content>
           <Content>
-            <Text>Url_banner:</Text>
+            <Text>Imagem de capa:</Text>
             <Input
               type="string"
               placeholder="(Optional)"
@@ -122,7 +107,7 @@ export function ModalCreateProduct({
             <Text>Valor:</Text>
             <Input
               type="number"
-              onChange={(e) => setValue(Number(e.target.value))}
+              onChange={(e) => setPrice(Number(e.target.value))}
             />
             <Text>Valor Desconto:</Text>
             <Input
@@ -131,31 +116,6 @@ export function ModalCreateProduct({
             />
           </Content>
           <Content>
-            <Text>Product Category:</Text>
-            <Select onChange={(e) => setCategory_id(e.target.value)}>
-              <option></option>
-              {productCategory.map((category) => {
-                return (
-                  <option
-                    key={category?.category_id}
-                    value={category?.category_id}
-                  >
-                    {category?.product_type}
-                  </option>
-                );
-              })}
-            </Select>
-
-            <Text>A venda:</Text>
-            <Select
-              onChange={(e) =>
-                setFor_sale(e.target.value === "true" ? true : false)
-              }
-              defaultValue="true"
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
             <Text>Em destaque:</Text>
             <Select
               onChange={(e) =>
@@ -166,16 +126,24 @@ export function ModalCreateProduct({
               <option value="true">Sim</option>
               <option value="false">Não</option>
             </Select>
-            <Text>Ativo:</Text>
+            <Text>Categoria de produto:</Text>
             <Select
-              onChange={(e) =>
-                setActive(e.target.value === "true" ? true : false)
-              }
-              defaultValue="true"
+              onChange={(e) => setCategory(e.target.value)}
+              defaultValue=""
             >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
+              <option value=""></option>
+              {product?.map((category) => (
+                <option key={category.category_id} value={category.category_id}>
+                  {category.title}
+                </option>
+              ))}
             </Select>
+            <Text>Sku:</Text>
+            <Input
+              type="string"
+              placeholder="(Opcional)"
+              onChange={(e) => setSku(e.target.value)}
+            />
           </Content>
         </Context>
         <Button type="submit" onClick={() => setIsOpen(false)}>

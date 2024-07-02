@@ -30,8 +30,8 @@ export default function Favorites() {
           <Picture>
             <Image
               src={
-                favorite.url_banner
-                  ? favorite.url_banner
+                favorite.urlBanner
+                  ? favorite.urlBanner
                   : "https://i.imgur.com/2HFGvvT.png"
               }
               alt={favorite?.title}
@@ -48,11 +48,11 @@ export default function Favorites() {
                 style={{ textDecoration: "line-through", fontSize: "14px" }}
               >
                 De R$
-                {favorite?.value.toFixed(2).replace(".", ",")}
+                {favorite?.price.toFixed(2).replace(".", ",")}
               </Text>
               <Text>
                 Por R$
-                {(favorite?.value - favorite?.discount)
+                {(favorite?.price - favorite?.discount)
                   .toFixed(2)
                   .replace(".", ",")}
               </Text>

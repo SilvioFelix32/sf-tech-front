@@ -33,8 +33,8 @@ export function CartItems() {
           <ProductCard key={item.product_id}>
             <Product>
               <Image
-                src={item.url_banner}
-                alt={item.url_banner}
+                src={item.urlBanner}
+                alt={item.urlBanner}
                 width={100}
                 height={100}
                 className="image"
@@ -47,7 +47,7 @@ export function CartItems() {
                 <BtnAddOrRemove product={item} />
               </ProductQuantity>
               <ProductValue>
-                <Text>R$ {formatNumber(item.amount * item.value)}</Text>
+                <Text>R$ {formatNumber(item.amount * item.price)}</Text>
               </ProductValue>
               <Button onClick={() => deleteItemFromCart(item.product_id)}>
                 <BsXLg />

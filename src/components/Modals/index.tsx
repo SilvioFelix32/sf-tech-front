@@ -3,7 +3,7 @@ export * from "./Product/DeleteProduct";
 export * from "./Product/EditProduct";
 export * from "./Category/CreateCategory";
 export * from "./Category/DeleteCategory";
-export * from "./Category/EditCategory";
+export * from "./Category/UpdateCategory";
 export * from "./User/DeleteUser";
 export * from "./User/EditUser";
 export * from "./User/EditSuperUser";

@@ -23,7 +23,6 @@ import {
   Content,
   PaymentOptions,
   Card,
-  CardSelect,
   Text,
   ShopTotals,
 } from "./styles";
@@ -44,7 +43,7 @@ export function Payment() {
       <Content>
         <Title>Pagamento</Title>
         <PaymentInformation myUser={myUser} company_id={company_id} />
-        <DeliveryMethod myUser={myUser} />
+        <DeliveryMethod />
         <PaymentOptions>
           <Title>3.Forma de Pagamento:</Title>
           <CAccordion>
@@ -80,7 +79,7 @@ export function Payment() {
             <div className="totals">
               <Text>{item.title}</Text>
               <Text style={{ fontSize: "1rem" }}>
-                R$ {formatNumber(item.value)}
+                R$ {formatNumber(item.price)}
               </Text>
             </div>
           ))}

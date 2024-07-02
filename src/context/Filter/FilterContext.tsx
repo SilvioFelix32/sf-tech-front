@@ -6,9 +6,8 @@ import {
   useState,
 } from "react";
 import reducer from "../../helpers/filterReducer";
-import { productsService } from "../../services";
 import { IProduct } from "../../types";
-import { CompanyContext } from "../Company/CompanyContext";
+import { ProductContext } from "../Products/ProductsContext";
 
 const FilterContext = createContext(null);
 
@@ -24,16 +23,12 @@ const initialState = {
 };
 
 export const FilterContextProvider = ({ children }) => {
-  const company_id = useContext(CompanyContext);
+  const { filteredProducts } = useContext(ProductContext);
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    if (company_id) {
-      productsService
-        .getAll(company_id, { page: 1, limit: 20 })
-        .then((res) => setProducts(res.data));
-    }
-  }, [company_id]);
+    setProducts(filteredProducts);
+  }, [filteredProducts]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 

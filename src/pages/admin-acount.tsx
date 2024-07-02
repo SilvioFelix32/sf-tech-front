@@ -1,8 +1,6 @@
 import { useState } from "react";
 //components
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { NavHeader } from "../components/NavHeader";
+import { Footer, HeaderClean, NavHeader } from "../components";
 import { useProSidebar } from "react-pro-sidebar";
 import MyAccount from "./myaccount";
 import Favorites from "./favorites";
@@ -29,7 +27,7 @@ export default function Administration() {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header />
+        <HeaderClean />
         <Content>
           <>
             <CustomSidebar>

@@ -53,10 +53,10 @@ export const Picture = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-
-  span {
-    border-radius: 18px 0 0 18px;
-  }
+  max-width: 300px;
+  max-height: 280px;
+  overflow: hidden;
+  border-radius: 18px 0 0 18px;
 `;
 
 export const ProductInfo = styled.div`

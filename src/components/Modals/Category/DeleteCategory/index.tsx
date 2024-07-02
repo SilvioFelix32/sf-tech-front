@@ -1,7 +1,6 @@
-import { FormEvent, useContext } from "react";
+import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { CompanyContext } from "../../../../context";
-import { productCategoryService } from "../../../../services";
+import { categoryService } from "../../../../services";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
 
@@ -18,13 +17,11 @@ export function ModalDeleteCategory({
   setOpen,
   setReloadData,
 }: modalProps) {
-  const company_id = useContext(CompanyContext);
-
   async function handleDelete(event: FormEvent) {
     event.preventDefault();
 
-    await productCategoryService
-      .delete(company_id as string, category_id as string)
+    await categoryService
+      .delete(category_id as string)
       .then(() => setReloadData(Math.random()));
   }
 

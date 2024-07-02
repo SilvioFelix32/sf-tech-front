@@ -1,14 +1,12 @@
 import { useState } from "react";
 //components
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { NavHeader } from "../components/NavHeader";
+import { NavHeader, HeaderClean, Footer } from "../components";
 import { useProSidebar } from "react-pro-sidebar";
 import { useCan } from "../context/Authentication/hooks/useCan";
 import AdminProducts from "./admin-products";
-import AdminCategories from "./admin-product-category";
 import AdminUsers from "./admin-users";
 import AdminCompany from "./admin-company";
+import AdminCategories from "./admin-product-category";
 import {
   BiMenu,
   BiNews,
@@ -40,7 +38,7 @@ export default function Administration() {
     <Theme>
       <Wrapper>
         <NavHeader />
-        <Header />
+        <HeaderClean />
         <Content>
           {userHasAdminPermissions && (
             <>
@@ -72,8 +70,8 @@ export default function Administration() {
               </CustomSidebar>
               <Section>
                 {actualPage === "AdminProducts" && <AdminProducts />}
-                {actualPage === "AdminUsers" && <AdminUsers />}
                 {actualPage === "AdminCategories" && <AdminCategories />}
+                {actualPage === "AdminUsers" && <AdminUsers />}
                 {actualPage === "AdminCompany" && <AdminCompany />}
               </Section>
             </>

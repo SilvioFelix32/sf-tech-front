@@ -48,8 +48,8 @@ export function FavoriteModal({ isOpenModal, setIsOpenModal }: ModalProps) {
           {favoriteItems.map((item: IFavoriteItem) => (
             <Product key={item.product_id}>
               <Image
-                src={item.url_banner}
-                alt={item.url_banner}
+                src={item.urlBanner}
+                alt={item.urlBanner}
                 width={60}
                 height={60}
                 className="image"
@@ -65,7 +65,7 @@ export function FavoriteModal({ isOpenModal, setIsOpenModal }: ModalProps) {
               </ProductDescription>
 
               <ProductValue className="itemValue">
-                <Text>R$ {formatNumber(item.amount * item.value)}</Text>
+                <Text>R$ {formatNumber(item.amount * item.price)}</Text>
               </ProductValue>
               <Button onClick={() => removeItemFromFavorites(item.product_id)}>
                 <BsXLg />

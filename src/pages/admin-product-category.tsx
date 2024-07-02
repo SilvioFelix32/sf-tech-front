@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { CompanyContext } from "../context";
-import { productCategoryService } from "../services";
-import { IProductCategories } from "../types/IProductCategories";
+import { categoryService } from "../services";
+import { IProductCategory } from "../types";
 import {
   ModalCreateCategory,
   ModalEditCategory,
@@ -17,7 +16,7 @@ import { customStyles } from "../styles/customDataTable";
 export default function AdminCategories() {
   const company_id = useContext(CompanyContext);
   const [productCategories, setProductCategories] = useState<
-    IProductCategories[]
+    IProductCategory[]
   >([]);
   const [category_id, setCategory_id] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,7 +30,7 @@ export default function AdminCategories() {
   async function fetchProducts(page: number, limit: number) {
     setLoading(true);
     try {
-      const res = await productCategoryService.getAll(company_id, {
+      const res = await categoryService.getAll(company_id, {
         page,
         limit,
       });
@@ -46,12 +45,11 @@ export default function AdminCategories() {
   function handlePageChange(page: number) {
     fetchProducts(page, perPage);
   }
-
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
 
     try {
-      const res = await productCategoryService.getAll(company_id, {
+      const res = await categoryService.getAll(company_id, {
         page,
         limit: newPerPage,
       });
@@ -70,31 +68,26 @@ export default function AdminCategories() {
 
   const columns = [
     {
-      name: "ativo",
-      selector: "active",
-      sortable: true,
-      cell: (row) => (row.active ? "Sim" : "Não"),
-    },
-    {
       name: "titulo",
-      selector: "title",
+      selector: (row) => row.title,
       sortable: true,
     },
     {
       name: "descrição",
-      selector: "description",
-      sortable: true,
-    },
-    {
-      name: "tipo produto",
-      selector: "product_type",
+      selector: (row) => row.description,
       sortable: true,
     },
     {
       name: "outros",
-      selector: "exclude_alter",
-      sortable: true,
-      cell: (row) => (
+      selector: (row) => row.exclude_alter,
+    },
+  ];
+
+  const data = useMemo(() => {
+    return productCategories?.map((category) => ({
+      title: category.title,
+      description: category.description,
+      exclude_alter: (
         <div
           style={{
             display: "flex",
@@ -105,19 +98,25 @@ export default function AdminCategories() {
           <EditButton
             onClick={() => {
               setOnOpen(true);
-              setCategory_id(row.category_id);
+              setCategory_id(category?.category_id);
             }}
           ></EditButton>
           <ExcludeButton
             onClick={() => {
-              setCategory_id(row.category_id);
+              setCategory_id(category?.category_id);
               setOpen(true);
             }}
           ></ExcludeButton>
         </div>
       ),
-    },
-  ];
+    }));
+  }, [productCategories]);
+
+  const paginationComponentOptions = {
+    rowsPerPageText: "Linhas por página",
+    rangeSeparatorText: "de",
+    selectAllRowsItem: false,
+  };
 
   return (
     <Wrapper>
@@ -127,17 +126,13 @@ export default function AdminCategories() {
           Cadastrar nova Categoria
         </Button>
         <DataTable
-          columns={columns as any}
-          data={productCategories}
+          columns={columns}
+          data={data}
           pagination
           progressPending={loading}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationComponentOptions={{
-            rowsPerPageText: "Linhas por página",
-            rangeSeparatorText: "de",
-            selectAllRowsItem: false,
-          }}
+          paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
           paginationTotalRows={totalRows}
           customStyles={customStyles}

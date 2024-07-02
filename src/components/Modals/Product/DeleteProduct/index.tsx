@@ -1,8 +1,8 @@
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { productsService } from "../../../../services";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
+import { productsService } from "../../../../services";
 
 interface modalProps {
   product_id: string;
@@ -21,8 +21,8 @@ export function ModalDeleteProduct({
     event.preventDefault();
 
     await productsService
-      .delete(product_id as string)
-      .then(() => setReloadData(Math.random()))
+      .delete(product_id)
+      .then(() => setReloadData(Math.random()));
   }
 
   return (

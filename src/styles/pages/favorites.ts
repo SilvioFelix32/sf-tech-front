@@ -50,10 +50,10 @@ export const Picture = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-
-  span {
-    border-radius: 18px 0 0 18px;
-  }
+  max-width: 300px;
+  max-height: 280px;
+  overflow: hidden;
+  border-radius: 18px 0 0 18px;
 `;
 
 export const ProductInfo = styled.div`
@@ -134,13 +134,22 @@ export const ProductValue = styled.div`
   text-align: center;
 `;
 
-export const ProductDescription = styled.div``;
+export const ProductDescription = styled.div`
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 400;
+  text-align: center;
+  font-size: 0.8rem;
+  margin: 2px;
+  padding: 0 5px;
+  text-transform: capitalize;
+`;
 
 export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
   text-transform: capitalize;
   font-weight: 600;
-  font-size: 1.2rem;;
+  font-size: 1.2rem;
+  text-align: center;
   margin: 0;
   padding: 0 5px;
 `;
@@ -148,7 +157,7 @@ export const Title = styled.p`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 400;
-  font-size: 0.8rem;;
+  font-size: 0.8rem;
   margin: 2px;
   padding: 0 5px;
   text-transform: capitalize;

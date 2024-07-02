@@ -20,9 +20,18 @@ export const Content = styled.div`
   width: 100%;
 `;
 
+export const Picture = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  max-width: 200px;
+  max-height: 200px;
+  overflow: hidden;
+`;
+
 export const Text = styled.p`
   margin: 10px auto;
-  font-size: 1.2rem;;
+  font-size: 1.2rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.title};
   text-align: center;

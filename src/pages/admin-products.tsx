@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { CompanyContext } from "../context";
 import Image from "next/image";
 //services an types
-import { productsService } from "../services";
 import { IProduct } from "../types";
 //components
 import {
@@ -14,8 +13,9 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 //imported libs
 import DataTable from "react-data-table-component";
 //styles and theme
-import { Button, Text, Content } from "../styles/pages/admin";
+import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
+import { productsService } from "../services";
 
 export default function AdminProducts() {
   const company_id = useContext(CompanyContext);
@@ -31,11 +31,11 @@ export default function AdminProducts() {
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
 
-  async function fetchProducts(page: number) {
+  async function fetchProducts(page: number, perPage: number) {
     setLoading(true);
 
     await productsService
-      .getAll(company_id, {
+      .getAll({
         page: page,
         limit: perPage,
       })
@@ -47,13 +47,13 @@ export default function AdminProducts() {
   }
 
   function handlePageChange(page: number) {
-    fetchProducts(page);
+    fetchProducts(page, perPage);
   }
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
     await productsService
-      .getAll(company_id, {
+      .getAll({
         page: page,
         limit: newPerPage,
       })
@@ -66,12 +66,8 @@ export default function AdminProducts() {
   }
 
   useEffect(() => {
-    fetchProducts(1); // fetch page 1 of users
-
-    productsService.getAll(company_id, { page: 1, limit: 20 }).then((res) => {
-      setProducts(res.data);
-    });
-  }, [company_id, reloadData]);
+    fetchProducts(1, perPage);
+  }, [perPage]);
 
   //Dados da tabela
   const columns = [
@@ -87,7 +83,7 @@ export default function AdminProducts() {
     },
     {
       name: "imagem",
-      selector: (row) => row.url_banner,
+      selector: (row) => row.urlBanner,
     },
     {
       name: "destaque",
@@ -100,19 +96,21 @@ export default function AdminProducts() {
     },
   ];
 
-  const data = products.map((product) => {
-    return {
+  const data = useMemo(() => {
+    return products?.map((product) => ({
       id: product.product_id,
       sku: product.sku,
       title: product.title,
-      url_banner: (
-        <Image
-          src={product?.url_banner}
-          alt={product?.title}
-          width="300"
-          height="300"
-          priority
-        ></Image>
+      urlBanner: (
+        <Picture>
+          <Image
+            src={product?.urlBanner}
+            alt={product?.title}
+            width="200"
+            height="200"
+            priority
+          ></Image>
+        </Picture>
       ),
       highlighted: product.highlighted ? "Sim" : "Não",
       exclude_alter: (
@@ -137,8 +135,8 @@ export default function AdminProducts() {
           ></ExcludeButton>
         </div>
       ),
-    };
-  });
+    }));
+  }, [products]);
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
