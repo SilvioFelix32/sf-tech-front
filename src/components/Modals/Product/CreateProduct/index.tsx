@@ -1,6 +1,7 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
-import { CompanyContext } from "../../../../context";
+import { FormEvent, useState } from "react";
+import { environment } from "../../../../utils/environment";
 import { v4 as uuidv4 } from "uuid";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 //components
 import { categoryService, productsService } from "../../../../services";
 import { IProduct, IProductCategory } from "../../../../types";
@@ -16,11 +17,12 @@ import {
   Context,
 } from "./styles";
 import "react-responsive-modal/styles.css";
+import { IProductCategories } from "../../../../services/interfaces/ICategoryResponse";
 
 interface modalProps {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  setReloadData(value: number);
+  setReloadData(value: number): void;
 }
 
 export function ModalCreateProduct({
@@ -28,10 +30,33 @@ export function ModalCreateProduct({
   setIsOpen,
   setReloadData,
 }: modalProps) {
-  const company_id = useContext(CompanyContext);
-  const [product, setProduct] = useState<IProductCategory[]>([]);
+  const company_id = environment.companyId;
+  const queryClient = useQueryClient();
+
+  const {
+    data: categories,
+    isLoading,
+    isError,
+  } = useQuery<IProductCategories, Error>(
+    ["categories", company_id],
+    () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
+    {
+      enabled: !!company_id,
+    }
+  );
+
+  const mutation = useMutation(
+    (newProduct: Partial<IProduct>) =>
+      productsService.create(company_id, newProduct as IProduct),
+    {
+      onSuccess: () => {
+        setReloadData(Math.random());
+        queryClient.invalidateQueries("products");
+      },
+    }
+  );
+
   const [category, setCategory] = useState<string>();
-  //product data
   const [sku, setSku] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [subtitle, setSubtitle] = useState<string>();
@@ -40,14 +65,6 @@ export function ModalCreateProduct({
   const [price, setPrice] = useState<number>();
   const [discount, setDiscount] = useState<number>();
   const [highlighted, setHighlighted] = useState(true);
-
-  useEffect(() => {
-    if (company_id) {
-      categoryService
-        .getAll(company_id, { page: 1, limit: 20 })
-        .then((res) => setProduct(res.data));
-    }
-  }, [company_id]);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -64,9 +81,8 @@ export function ModalCreateProduct({
       highlighted,
     };
 
-    await productsService
-      .create(company_id, data as IProduct)
-      .then(() => setReloadData(Math.random()));
+    mutation.mutate(data);
+    setIsOpen(false);
   }
 
   return (
@@ -76,9 +92,7 @@ export function ModalCreateProduct({
         modal: "customModal",
       }}
       open={isOpen}
-      onClose={() => {
-        setIsOpen(false);
-      }}
+      onClose={() => setIsOpen(false)}
       center
     >
       <Wrapper onSubmit={handleSubmit}>
@@ -101,7 +115,7 @@ export function ModalCreateProduct({
             <Text>Imagem de capa:</Text>
             <Input
               type="string"
-              placeholder="(Optional)"
+              placeholder="(Opcional)"
               onChange={(e) => setUrl(e.target.value)}
             />
             <Text>Valor:</Text>
@@ -127,17 +141,26 @@ export function ModalCreateProduct({
               <option value="false">Não</option>
             </Select>
             <Text>Categoria de produto:</Text>
-            <Select
-              onChange={(e) => setCategory(e.target.value)}
-              defaultValue=""
-            >
-              <option value=""></option>
-              {product?.map((category) => (
-                <option key={category.category_id} value={category.category_id}>
-                  {category.title}
-                </option>
-              ))}
-            </Select>
+            {isLoading ? (
+              <Text>Carregando categorias...</Text>
+            ) : isError ? (
+              <Text>Erro ao carregar categorias</Text>
+            ) : (
+              <Select
+                onChange={(e) => setCategory(e.target.value)}
+                defaultValue=""
+              >
+                <option value=""></option>
+                {categories?.data.map((category: IProductCategory) => (
+                  <option
+                    key={category.category_id}
+                    value={category.category_id}
+                  >
+                    {category.title}
+                  </option>
+                ))}
+              </Select>
+            )}
             <Text>Sku:</Text>
             <Input
               type="string"
@@ -146,9 +169,7 @@ export function ModalCreateProduct({
             />
           </Content>
         </Context>
-        <Button type="submit" onClick={() => setIsOpen(false)}>
-          Cadastrar
-        </Button>
+        <Button type="submit">Cadastrar</Button>
       </Wrapper>
     </ModalCreate>
   );

@@ -1,5 +1,5 @@
-import { CompanyContext } from "../../../../context";
-import { FormEvent, useContext, useState } from "react";
+import { environment } from "../../../../utils/environment";
+import { FormEvent, useState } from "react";
 //components
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
@@ -19,7 +19,7 @@ export function ModalCreateCategory({
   setIsOpen,
   setReloadData,
 }: modalProps) {
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
 
   const [title, setTitle] = useState<string>();
   const [description, setDescription] = useState<string>();

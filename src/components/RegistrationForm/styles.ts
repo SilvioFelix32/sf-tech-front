@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.form`
-  width: 80%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,17 +10,15 @@ export const Wrapper = styled.form`
 `;
 
 export const Title = styled.h1`
-font-size: 3rem;
-color: ${({ theme }) => theme.colors.title};
-`
+  font-size: 3rem;
+  color: ${({ theme }) => theme.colors.title};
+`;
 
 export const Content = styled.div`
   width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 5px;
-  margin: 5px;
 
   .inputMask {
     height: 36px;
@@ -39,9 +37,18 @@ export const Content = styled.div`
   }
 `;
 
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 5px;
+  padding: 5px;
+`;
+
 export const Input = styled.input`
   height: 36px;
-  width: 90%;
+  width: 100%;
   margin: 0 5px;
   border: none;
   border-radius: 4px;
@@ -84,4 +91,10 @@ export const Button = styled.button`
   &:hover {
     filter: brightness(0.9);
   }
+`;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: 12px;
+  margin: 4px 0;
 `;

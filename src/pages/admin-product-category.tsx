@@ -1,7 +1,8 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { CompanyContext } from "../context";
-import { categoryService } from "../services";
+import { memo, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { IProductCategory } from "../types";
+import { categoryService } from "../services";
+import { environment } from "../utils/environment";
 import {
   ModalCreateCategory,
   ModalEditCategory,
@@ -9,62 +10,62 @@ import {
 } from "../components";
 import { EditButton, ExcludeButton } from "../components/Buttons";
 import DataTable from "react-data-table-component";
-import "react-responsive-modal/styles.css";
 import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
+import "react-responsive-modal/styles.css";
+import { IProductCategories } from "../services/interfaces/ICategoryResponse";
 
-export default function AdminCategories() {
-  const company_id = useContext(CompanyContext);
-  const [productCategories, setProductCategories] = useState<
-    IProductCategory[]
-  >([]);
+function AdminCategories() {
+  const company_id = environment.companyId;
+  const queryClient = useQueryClient();
   const [category_id, setCategory_id] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(10);
-  const [reloadData, setReloadData] = useState(0);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
+  const [perPage, setPerPage] = useState(10);
 
-  async function fetchProducts(page: number, limit: number) {
-    setLoading(true);
-    try {
-      const res = await categoryService.getAll(company_id, {
-        page,
-        limit,
-      });
-      setProductCategories(res.data);
-      setTotalRows(res.meta.total);
-    } catch (error) {
-      console.error("Error fetching products:", error);
+  const {
+    data: categories = {
+      data: [],
+      meta: { total: 0, currentPage: 1, perPage: 10, next: 1 },
+    },
+    isLoading,
+    isFetching,
+    refetch,
+  } = useQuery<IProductCategories>(
+    ["productCategories", company_id, perPage],
+    () => categoryService.getAll(company_id, { page: 1, limit: perPage }),
+    {
+      keepPreviousData: true,
+      enabled: !!company_id,
+      select: (data) => ({
+        data: data.data,
+        meta: data.meta,
+      }),
+      staleTime: 60000,
+      cacheTime: 300000,
     }
-    setLoading(false);
-  }
+  );
 
-  function handlePageChange(page: number) {
-    fetchProducts(page, perPage);
-  }
-  async function handlePerRowsChange(newPerPage: number, page: number) {
-    setLoading(true);
-
-    try {
-      const res = await categoryService.getAll(company_id, {
-        page,
-        limit: newPerPage,
-      });
-      setProductCategories(res.data);
-      setPerPage(newPerPage);
-    } catch (error) {
-      console.error("Error changing rows per page:", error);
+  const mutation = useMutation(
+    async ({ page, limit }: { page: number; limit: number }) => {
+      return categoryService.getAll(company_id, { page, limit });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["productCategories"]);
+      },
     }
+  );
 
-    setLoading(false);
-  }
+  const handlePageChange = (page: number) => {
+    mutation.mutate({ page, limit: perPage });
+  };
 
-  useEffect(() => {
-    fetchProducts(1, perPage);
-  }, [company_id, reloadData, perPage]);
+  const handlePerRowsChange = (newPerPage: number, page: number) => {
+    setPerPage(newPerPage);
+    mutation.mutate({ page, limit: newPerPage });
+  };
 
   const columns = [
     {
@@ -83,34 +84,32 @@ export default function AdminCategories() {
     },
   ];
 
-  const data = useMemo(() => {
-    return productCategories?.map((category) => ({
-      title: category.title,
-      description: category.description,
-      exclude_alter: (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+  const data = categories.data.map((category: IProductCategory) => ({
+    title: category.title,
+    description: category.description,
+    exclude_alter: (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <EditButton
+          onClick={() => {
+            setOnOpen(true);
+            setCategory_id(category.category_id);
           }}
-        >
-          <EditButton
-            onClick={() => {
-              setOnOpen(true);
-              setCategory_id(category?.category_id);
-            }}
-          ></EditButton>
-          <ExcludeButton
-            onClick={() => {
-              setCategory_id(category?.category_id);
-              setOpen(true);
-            }}
-          ></ExcludeButton>
-        </div>
-      ),
-    }));
-  }, [productCategories]);
+        ></EditButton>
+        <ExcludeButton
+          onClick={() => {
+            setCategory_id(category.category_id);
+            setOpen(true);
+          }}
+        ></ExcludeButton>
+      </div>
+    ),
+  }));
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
@@ -129,32 +128,34 @@ export default function AdminCategories() {
           columns={columns}
           data={data}
           pagination
-          progressPending={loading}
+          progressPending={isLoading || isFetching}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
           paginationComponentOptions={paginationComponentOptions}
           paginationRowsPerPageOptions={[5, 10, 20]}
-          paginationTotalRows={totalRows}
+          paginationTotalRows={categories.meta.total}
           customStyles={customStyles}
         />
       </Content>
       <ModalCreateCategory
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        setReloadData={setReloadData}
+        setReloadData={() => refetch()}
       />
       <ModalEditCategory
         category_id={category_id}
         onOpen={onOpen}
         setOnOpen={setOnOpen}
-        setReloadData={setReloadData}
+        setReloadData={() => refetch()}
       />
       <ModalDeleteCategory
         category_id={category_id}
         open={open}
         setOpen={setOpen}
-        setReloadData={setReloadData}
+        setReloadData={() => refetch()}
       />
     </Wrapper>
   );
 }
+
+export default memo(AdminCategories);

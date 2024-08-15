@@ -11,7 +11,7 @@ import { IProduct } from "../../types";
 import { BuyButton } from "../Buttons";
 import { PaginationButton } from "../Buttons/Pagination";
 import { ProductModal } from "../Modals";
-import { formatNumber } from "../../shared/functions";
+import { formatNumber } from "../../utils/functions";
 //styles
 import {
   Wrapper,

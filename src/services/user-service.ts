@@ -1,6 +1,6 @@
 import api from "./api";
 import { IUser } from "../types/IUser";
-import { cookiesService } from ".";
+import { getCookie } from "./cookie-service";
 import {
   IUserLoginParams,
   IUsersResponse,
@@ -17,7 +17,7 @@ export const userService: UserService = {
   delete: _delete,
 };
 
-const nextauth = cookiesService?.getCookie("nextauth.token");
+const nextauth = getCookie("nextauth.token");
 const baseUrl = "/users";
 
 async function login(params: IUserLoginParams) {

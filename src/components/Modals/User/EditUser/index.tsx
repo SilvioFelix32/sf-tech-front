@@ -1,11 +1,11 @@
-import { CompanyContext } from "../../../../context";
-import { useContext, useEffect, useState } from "react";
+import { environment } from "../../../../utils/environment";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { userService } from "../../../../services";
 import { IUser } from "../../../../types/IUser";
 import { Modal as ModalEdit } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import { SweetAlert } from "../../../../shared/sweet-alert";
+import { GetSwallAlert } from "../../../../utils/sweet-alert";
 import {
   Button,
   Content,
@@ -29,9 +29,8 @@ export function ModalEditUser({
   user_id,
   setReloadData,
 }: ModalProps) {
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const [selectedUser, setSelectedUser] = useState<IUser>();
-  const { SwallSuccess } = SweetAlert;
 
   const { register, handleSubmit, reset } = useForm<IUser>({
     defaultValues: { ...selectedUser },
@@ -57,7 +56,7 @@ export function ModalEditUser({
 
   const closeModal = () => {
     setOnOpen(false);
-    SwallSuccess();
+    GetSwallAlert("top-end", "success", "Sucesso", 1500);
   };
 
   return (

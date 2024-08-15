@@ -1,3 +1,10 @@
 {
-  "extends": ["next/babel","next/core-web-vitals"]
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }],
+    "no-unused-imports/no-unused-imports": "error"
+  },
+  "plugins": [
+    "no-unused-imports"
+  ]
 }

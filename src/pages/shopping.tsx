@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext, CompanyContext } from "../context";
+import { AuthContext } from "../context";
 import { userService } from "../services";
+import { environment } from "../utils/environment";
 import { IUser } from "../types";
 //components
 //styles
@@ -9,7 +10,7 @@ import { Content, Title, Wrapper, Text } from "../styles/pages/shopping";
 export default function MyShopping() {
   const { user } = useContext(AuthContext);
   const [myUser, setMyUser] = useState<IUser>();
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const user_id = user?.user_id;
 
   useEffect(() => {

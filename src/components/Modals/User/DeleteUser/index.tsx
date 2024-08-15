@@ -1,6 +1,6 @@
 import { FormEvent, useContext } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { CompanyContext } from "../../../../context";
+import { environment } from "../../../../utils/environment";
 import { userService } from "../../../../services";
 
 import { Button, Content, Text, Wrapper } from "./styles";
@@ -19,7 +19,7 @@ export function ModalDeleteUser({
   setOpen,
   setReloadData,
 }: modalProps) {
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
 
   async function handleDelete(event: FormEvent) {
     event.preventDefault();

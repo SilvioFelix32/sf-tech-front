@@ -5,8 +5,8 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import Cookies from "js-cookie";
 import { IFavoriteItem } from "../../types/IFavorite";
+import { getCookie, setCookie } from "../../services";
 interface IFavoriteContext {
   favoriteItems: IFavoriteItem[];
   handleAddToFavorites: (clickedItem: IFavoriteItem) => void;
@@ -25,7 +25,7 @@ export function FavoriteProvider({ children }: FavoriteProviderProviderProps) {
   const [favoriteItems, setFavoriteItems] = useState<IFavoriteItem[]>([]);
 
   useEffect(() => {
-    const savedFavorites = Cookies.get("favorite-items");
+    const savedFavorites = getCookie("favorite-items");
 
     const favoriteProducts = savedFavorites
       ? (JSON.parse(savedFavorites) as IFavoriteItem[])
@@ -66,7 +66,7 @@ export function FavoriteProvider({ children }: FavoriteProviderProviderProps) {
       const newFavoriteItems = [...favoriteItems, newFavoriteItem];
       setFavoriteItems(newFavoriteItems);
       const favoriteArray = JSON.stringify(newFavoriteItems);
-      Cookies.set("favorite-items", favoriteArray, {
+      setCookie("favorite-items", favoriteArray, {
         expires: 7,
         path: "/",
       });
@@ -78,7 +78,7 @@ export function FavoriteProvider({ children }: FavoriteProviderProviderProps) {
       (item) => item.product_id !== product_id
     );
     const favoriteArray = JSON.stringify(filteredFavoriteItems);
-    Cookies.set("favorite-items", favoriteArray, {
+    setCookie("favorite-items", favoriteArray, {
       expires: 7,
       path: "/",
     });

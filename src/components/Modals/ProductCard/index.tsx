@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Modal as ModalComponent } from "react-responsive-modal";
 import { IProduct } from "../../../types";
 import { productsService } from "../../../services";
+import { useQuery } from "react-query";
 //styles
 import "react-responsive-modal/styles.css";
 import { Button, Wrapper, CartItems } from "./styles";
@@ -17,13 +18,13 @@ export function ProductModal({
   setOpenModal,
   productId,
 }: ModalProps) {
-  const [product, setProduct] = useState<IProduct>();
-
-  useEffect(() => {
-    if (productId) {
-      productsService.getById(productId).then((res) => setProduct(res));
+  const { data: product } = useQuery<IProduct>(
+    ["product", productId],
+    () => productsService.getById(productId),
+    {
+      enabled: !!productId,
     }
-  }, [productId]);
+  );
 
   return (
     <ModalComponent

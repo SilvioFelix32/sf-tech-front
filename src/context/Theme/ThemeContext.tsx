@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
-import Cookies from "js-cookie";
+import { getCookie, setCookie } from "../../services/cookie-service";
 
 interface IThemeContext {
   theme: string;
@@ -21,7 +21,7 @@ const ThemePreferenceProvider: React.FC<ThemePreferenceProviderProps> = ({
   const [theme, setTheme] = useState<string>("light");
 
   useEffect(() => {
-    const savedTheme = Cookies.get("color-theme");
+    const savedTheme = getCookie("color-theme");
     if (savedTheme) {
       setTheme(savedTheme);
     }
@@ -29,7 +29,7 @@ const ThemePreferenceProvider: React.FC<ThemePreferenceProviderProps> = ({
 
   function handleTheme(value: string): void {
     setTheme(value);
-    Cookies.set("color-theme", value, { expires: 7, path: "/" });
+    setCookie("color-theme", value, { expires: 7, path: "/" });
   }
 
   const contextValue: IThemeContext = { theme, setTheme: handleTheme };

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { CompanyContext } from "../context";
 import Image from "next/image";
 //services an types
 import { IProduct } from "../types";
+import { productsService } from "../services";
+import { environment } from "../utils/environment";
 //components
 import {
   ModalCreateProduct,
@@ -15,10 +16,9 @@ import DataTable from "react-data-table-component";
 //styles and theme
 import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
-import { productsService } from "../services";
 
 export default function AdminProducts() {
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   //Data table states and pagination
   const [products, setProducts] = useState<IProduct[]>([]);
   const [product_id, setProduct_id] = useState("");

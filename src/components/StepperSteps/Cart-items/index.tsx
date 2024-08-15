@@ -4,7 +4,7 @@ import { BtnAddOrRemove } from "../../Buttons";
 import { useCart } from "../../../context";
 import { CartItemType } from "../../../context/Cart/types";
 import { HighlightedProductCard } from "../../HighlightedProduct";
-import { formatNumber } from "../../../shared/functions";
+import { formatNumber } from "../../../utils/functions";
 
 import {
   Aside,

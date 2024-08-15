@@ -3,7 +3,6 @@ import InputMask from "react-input-mask";
 //styles
 import { Wrapper } from "./styles";
 
-//essa regex substitui o que não for um numero de 0-9 por uma string vazia
 const onlyNumbers = (str: string) => str.replace(/[^0-9]/g, "");
 
 const MaskedInput = ({ defaultValue, onChange, name, mask, register }) => {

@@ -5,8 +5,8 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import Cookies from "js-cookie";
 import { CartItemType } from "./types";
+import { getCookie, setCookie } from "../../services";
 
 const CartContext = React.createContext(null);
 
@@ -18,7 +18,7 @@ export function CartProvider({ children }: ProviderProps) {
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
 
   useEffect(() => {
-    const savedCart = Cookies.get("shop-cart");
+    const savedCart = getCookie("shop-cart");
 
     const savedProducts = savedCart
       ? (JSON.parse(savedCart) as CartItemType[])
@@ -54,7 +54,7 @@ export function CartProvider({ children }: ProviderProps) {
   function handleAddToCart(clickedItem: CartItemType) {
     return setCartItems((previousState) => {
       const newCart = [...previousState, { ...clickedItem, amount: 1 }];
-      Cookies.set("shop-cart", JSON.stringify(newCart), {
+      setCookie("shop-cart", JSON.stringify(newCart), {
         expires: 7,
         path: "/",
       });
@@ -76,7 +76,7 @@ export function CartProvider({ children }: ProviderProps) {
             : item
         );
         //se ja houver retorna esse função
-        Cookies.set("shop-cart", JSON.stringify(newCart), {
+        setCookie("shop-cart", JSON.stringify(newCart), {
           expires: 7,
           path: "/",
         });
@@ -108,7 +108,7 @@ export function CartProvider({ children }: ProviderProps) {
       const newCart = previousState.filter(
         (item) => item.product_id !== product_id
       );
-      Cookies.set("shop-cart", JSON.stringify(newCart), {
+      setCookie("shop-cart", JSON.stringify(newCart), {
         expires: 7,
         path: "/",
       });

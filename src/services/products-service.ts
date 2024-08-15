@@ -1,6 +1,6 @@
 import api from "./api";
 import { AxiosError } from "axios";
-import { cookiesService } from ".";
+import { getCookie } from "./cookie-service";
 import { IProduct } from "../types";
 import {
   IProductResponse,
@@ -8,7 +8,7 @@ import {
   ProductsService,
 } from "./interfaces/IProductResponse";
 
-const nextauth = cookiesService?.getCookie("nextauth.token");
+const nextauth = getCookie("nextauth.token");
 
 export const productsService: ProductsService = {
   getAll,
