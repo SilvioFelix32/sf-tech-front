@@ -1,37 +1,37 @@
-import Cookies from "js-cookie";
+import Cookies, { CookieAttributes } from "js-cookie";
 
-export const cookiesService = {
-  createCookie,
-  getCookie,
-  removeCookie,
+export const setCookie = (
+  key: string,
+  value: any,
+  options?: CookieAttributes
+): void => {
+  if (typeof window !== "undefined") {
+    try {
+      Cookies.set(key, value, options);
+    } catch (error) {
+      console.error(`Failed to set cookie ${key}:`, error);
+    }
+  }
 };
 
-function createCookie(name: string, content: any): void {
-  try {
-    Cookies.set(name, content, {
-      expires: 60 * 60 * 24 * 30, //this set the time that the cookie will be stored = 30 days
-      path: "/", //any adres you have acces to this cookie, this means that this is a global cookie
-    });
-  } catch (error) {
-    throw error;
+export const getCookie = (name: string) => {
+  if (typeof window !== "undefined") {
+    try {
+      return Cookies.get(name);
+    } catch (error) {
+      console.error(`Failed to get cookie ${name}:`, error);
+      return null;
+    }
   }
-}
+  return null;
+};
 
-function getCookie(name: string): any {
-  try {
-    const data = Cookies.get(name);
-    return data;
-  } catch (error) {
-    throw error;
+export const removeCookie = (name: string, options?: CookieAttributes) => {
+  if (typeof window !== "undefined") {
+    try {
+      Cookies.remove(name, options);
+    } catch (error) {
+      console.error(`Failed to remove cookie ${name}:`, error);
+    }
   }
-}
-
-function removeCookie(name: string): void {
-  try {
-    Cookies.remove(name, {
-      path: "/",
-    });
-  } catch (error) {
-    throw error;
-  }
-}
+};

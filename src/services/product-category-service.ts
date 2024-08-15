@@ -1,6 +1,5 @@
 import api from "./api";
 import { AxiosError } from "axios";
-import { cookiesService } from ".";
 import { IProductCategory } from "../types";
 import { IParamsRequest } from "./interfaces/IParamsRequest";
 import {
@@ -8,6 +7,7 @@ import {
   IProductCategories,
   CategoryService,
 } from "./interfaces/ICategoryResponse";
+import { getCookie } from "./cookie-service";
 
 export const categoryService: CategoryService = {
   getAll,
@@ -18,7 +18,7 @@ export const categoryService: CategoryService = {
 };
 
 const baseUrl = "/categories";
-const nextauth = cookiesService?.getCookie("nextauth.token");
+const nextauth = getCookie("nextauth.token");
 
 async function getAll(
   company_id: string,

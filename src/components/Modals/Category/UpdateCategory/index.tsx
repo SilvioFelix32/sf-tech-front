@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CompanyContext } from "../../../../context";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { categoryService } from "../../../../services";
+import { environment } from "../../../../utils/environment";
+import { IProductCategory } from "../../../../types";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
@@ -16,7 +17,6 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { IProductCategory } from "../../../../types";
 
 interface modalProps {
   onOpen: boolean;
@@ -31,7 +31,7 @@ export function ModalEditCategory({
   category_id,
   setReloadData,
 }: modalProps) {
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const { register, handleSubmit, reset, setValue } = useForm<IProductCategory>(
     {
       defaultValues: {

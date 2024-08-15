@@ -1,5 +1,5 @@
 import { useFilterContext } from "../../../context";
-import { formatNumber } from "../../../shared/functions";
+import { formatNumber } from "../../../utils/functions";
 //styles
 import { Wrapper, Text, ProductInfo, ProductFilter, Input } from "./styles";
 

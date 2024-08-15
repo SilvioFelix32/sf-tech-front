@@ -2,12 +2,15 @@ import React, {
   createContext,
   useState,
   ReactNode,
-  useEffect,
   useReducer,
+  useMemo,
 } from "react";
+import { useQuery } from "react-query";
 import { IProduct, IProductCategory } from "../../types";
 import { categoryService } from "../../services";
 import reducer from "../../helpers/filterReducer";
+import { useQueryClient } from "react-query";
+import { environment } from "../../utils/environment";
 
 interface ProductFilterContextData {
   productCategories: IProductCategory[];
@@ -47,27 +50,27 @@ const ProductContext = createContext<ProductFilterContextData>({
 });
 
 function ProductProvider({ children }: ProductProviderProps) {
-  const company_id = "b4cce349-7c0b-41c7-9b3e-c21c9f0c2e4c";
-  const [categories, setCategories] = useState<IProductCategory[]>([]);
+  const company_id = environment.companyId;
   const [filteredProducts, dispatch] = useReducer(reducer, initialState);
-  const [isSelected, setIsSelected] = useState<string>(""); // Added state and setter for iSelected
+  const [isSelected, setIsSelected] = useState<string>("");
 
-  // TODO: change this paginate properly
-  useEffect(() => {
-    categoryService
-      .getAll(company_id, { page: 1, limit: 20 })
-      .then((res) => {
-        setCategories(res.data);
-      })
-      .catch((err) => console.error("error", err));
-  }, [company_id]);
-
-  useEffect(() => {
-    if (categories && Array.isArray(categories) && categories.length > 0) {
-      const allProducts = categories.flatMap((category) => category.products);
-      dispatch({ type: "LOAD_FILTER_PRODUCTS", payload: allProducts });
+  const {
+    data: categories = [],
+    isLoading,
+    isError,
+  } = useQuery(
+    ["productCategories", company_id],
+    () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
+    {
+      select: (res) => res.data,
+      onSuccess: (data) => {
+        const allProducts = data.flatMap(
+          (category: IProductCategory) => category.products
+        );
+        dispatch({ type: "LOAD_FILTER_PRODUCTS", payload: allProducts });
+      },
     }
-  }, [categories]);
+  );
 
   const setFilter = (filter: string) => {
     dispatch({ type: "SET_FILTER", payload: filter });
@@ -82,21 +85,25 @@ function ProductProvider({ children }: ProductProviderProps) {
     dispatch({ type: "CLEAR_FILTERS" });
   };
 
+  const value = useMemo(
+    () => ({
+      productCategories: categories,
+      filteredProducts: filteredProducts.filter_products,
+      filter: filteredProducts.filters.text,
+      setFilter,
+      isSelected,
+      setIsSelected,
+      updateFilterValue,
+      clearFilters,
+    }),
+    [categories, filteredProducts, isSelected]
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading data</div>;
+
   return (
-    <ProductContext.Provider
-      value={{
-        productCategories: categories,
-        filteredProducts: filteredProducts.filter_products,
-        filter: filteredProducts.filters.text,
-        setFilter,
-        isSelected,
-        setIsSelected,
-        updateFilterValue,
-        clearFilters,
-      }}
-    >
-      {children}
-    </ProductContext.Provider>
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
   );
 }
 

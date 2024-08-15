@@ -1,10 +1,6 @@
-import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { CompanyContext } from "../../../../context";
 import { IProduct } from "../../../../types";
-//components
 import { Modal as ModalEdit } from "react-responsive-modal";
-//styles
 import {
   Button,
   Content,
@@ -16,6 +12,7 @@ import {
 } from "./styles";
 import "react-responsive-modal/styles.css";
 import { productsService } from "../../../../services";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 interface ModalProps {
   onOpen: boolean;
@@ -30,34 +27,43 @@ export function ModalEditProduct({
   product_id,
   setReloadData,
 }: ModalProps) {
-  const company_id = useContext(CompanyContext);
-  const [selectedProduct, setSelectedProduct] = useState<IProduct>();
+  const queryClient = useQueryClient();
 
-  const { register, handleSubmit, reset } = useForm<IProduct>({
-    defaultValues: { ...selectedProduct },
-  });
+  const { register, handleSubmit, reset } = useForm<IProduct>();
 
-  useEffect(() => {
-    if (product_id) {
-      productsService
-        .getById(product_id)
-        .then((data) => setSelectedProduct(data));
+  const { data: selectedProduct, isLoading } = useQuery(
+    ["product", product_id],
+    () => productsService.getById(product_id),
+    {
+      enabled: !!product_id,
+      onSuccess: (data) => {
+        reset({ ...data });
+      },
     }
-  }, [product_id]);
+  );
 
-  useEffect(() => {
-    reset({ ...selectedProduct });
-  }, [selectedProduct]);
+  const mutation = useMutation(
+    (data: IProduct) => {
+      delete data.product_id;
+      return productsService.update(product_id, {
+        ...data,
+        highlighted: Boolean(data.highlighted),
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["products"]);
+        setReloadData(Math.random());
+        setOnOpen(false);
+      },
+    }
+  );
 
-  async function handleUpdate(data: IProduct) {
-    delete data.product_id;
-
-    await productsService.update(product_id, {
-      ...data,
-      highlighted: Boolean(data.highlighted),
-    });
-    setReloadData(Math.random());
+  function handleUpdate(data: IProduct) {
+    mutation.mutate(data);
   }
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <ModalEdit
@@ -66,77 +72,44 @@ export function ModalEditProduct({
         modal: "customModal",
       }}
       open={onOpen}
-      onClose={() => {
-        setOnOpen(false);
-      }}
+      onClose={() => setOnOpen(false)}
       center
     >
       <Wrapper onSubmit={handleSubmit(handleUpdate)}>
         <Context>
           <Content>
             <Text>Sku:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedProduct?.sku}
-              {...register("sku")}
-            />
+            <Input type="string" {...register("sku")} />
             <Text>Title:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedProduct?.title}
-              {...register("title", { required: true })}
-            />
+            <Input type="string" {...register("title", { required: true })} />
             <Text>Subtitle:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedProduct?.subtitle}
-              {...register("subtitle")}
-            />
+            <Input type="string" {...register("subtitle")} />
             <Text>Description:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedProduct?.description}
-              {...register("description")}
-            />
+            <Input type="string" {...register("description")} />
           </Content>
           <Content>
             <Text>urlBanner:</Text>
-            <Input
-              type="string"
-              defaultValue={selectedProduct?.urlBanner}
-              {...register("urlBanner")}
-            />
+            <Input type="string" {...register("urlBanner")} />
             <Text>Valor:</Text>
             <Input
               type="number"
-              defaultValue={selectedProduct?.price.toFixed(2)}
-              {...register("price", {
-                valueAsNumber: true,
-              })}
+              {...register("price", { valueAsNumber: true })}
             />
             <Text>Valor Desconto:</Text>
             <Input
               type="number"
-              defaultValue={selectedProduct?.discount.toFixed(2)}
-              {...register("discount", {
-                valueAsNumber: true,
-              })}
+              {...register("discount", { valueAsNumber: true })}
             />
           </Content>
           <Content>
             <Text>Em destaque:</Text>
-            <Select
-              defaultValue={selectedProduct?.highlighted.toString()}
-              {...register("highlighted")}
-            >
+            <Select {...register("highlighted")}>
               <option value="true">Sim</option>
               <option value="false">Não</option>
             </Select>
           </Content>
         </Context>
-        <Button type="submit" onClick={() => setOnOpen(false)}>
-          Confirmar
-        </Button>
+        <Button type="submit">Confirmar</Button>
       </Wrapper>
     </ModalEdit>
   );

@@ -6,7 +6,7 @@ import { Modal as ModalComponent } from "react-responsive-modal";
 import { CartItemType } from "../../../context/Cart/types";
 import { BtnAddOrRemove } from "../../Buttons";
 import { BsXLg } from "react-icons/bs";
-import { formatNumber } from "../../../shared/functions";
+import { formatNumber } from "../../../utils/functions";
 //styles
 import "react-responsive-modal/styles.css";
 import {

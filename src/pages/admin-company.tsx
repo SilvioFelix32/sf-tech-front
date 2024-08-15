@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { companiesService } from "../services/companies-service";
 import { ICompany } from "../types/ICompany";
-//components
 import DataTable from "react-data-table-component";
-//styles
 import { Wrapper, Content, Text } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
 export default function AdminCompany() {
-  const [companies, setCompanies] = useState([]);
+  const { data: companies = [] } = useQuery<ICompany[]>(
+    "companies",
+    companiesService.getAll
+  );
 
-  useEffect(() => {
-    companiesService.getAll().then((data) => {
-      setCompanies(data);
-    });
-  }, []);
-
-  const data = companies.map((company: ICompany) => {
-    return {
-      name: company.name,
-      fantasyName: company.fantasyName,
-      email: company.email,
-    };
-  });
+  const data = companies.map((company) => ({
+    name: company.name,
+    fantasyName: company.fantasyName,
+    email: company.email,
+  }));
 
   const columns = [
     {

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
-import { AuthContext, CompanyContext, useCart } from "../../../context";
+import { AuthContext, useCart } from "../../../context";
 import { DeliveryMethod } from "./ClientDelivery";
+import { environment } from "../../../utils/environment";
 import { PaymentInformation } from "./ClientInfo";
 import { CardForm } from "./Card";
 import { PixForm } from "./Pix";
@@ -14,7 +15,7 @@ import {
   useUser,
   calculateCartTotals,
   formatNumber,
-} from "../../../shared/functions";
+} from "../../../utils/functions";
 import { IProduct } from "../../../types";
 
 import {
@@ -31,7 +32,7 @@ export function Payment() {
   const { user } = useContext(AuthContext);
   const [paymentType, setPaymentType] = useState("");
   const { cartItems } = useCart();
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const user_id = user?.user_id;
   const myUser = useUser(company_id, user_id);
 

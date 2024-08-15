@@ -1,15 +1,10 @@
 import { useRouter } from "next/router";
-import React, {
-  FormEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { FormEvent, useCallback, useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { environment } from "../../../utils/environment";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import { AuthContext, CompanyContext } from "../../../context";
+import { AuthContext } from "../../../context";
 import {
   Button,
   Input,
@@ -27,7 +22,7 @@ interface LoginModalProps {
 
 export function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const { signIn } = useContext(AuthContext);
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");

@@ -5,6 +5,8 @@ export const Wrapper = styled.form`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.background};
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -35,7 +37,7 @@ export const Password = styled.div`
     margin: 5px;
     padding: 5px;
     border-radius: 8px;
-    color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.text};
     background: none;
     border: none;
     transition: filter(0.2s);
@@ -90,7 +92,7 @@ export const Button = styled.button`
   margin: 10px auto;
   padding: 10px;
   border-radius: 8px;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.tertiary};
   border: none;
   transition: filter(0.2s);

@@ -3,7 +3,12 @@ import Router from "next/router";
 import api from "../../services/api";
 import { IUser, Role } from "../../types/IUser";
 import { AxiosResponse } from "axios";
-import { cookiesService, userService } from "../../services";
+import {
+  getCookie,
+  removeCookie,
+  setCookie,
+  userService,
+} from "../../services";
 
 type User = {
   name: string;
@@ -36,8 +41,8 @@ type AuthProviderProps = {
 };
 
 export function signOut() {
-  cookiesService?.removeCookie("nextauth.token");
-  cookiesService?.removeCookie("nextauth.refreshToken");
+  removeCookie("nextauth.token");
+  removeCookie("nextauth.refreshToken");
 
   Router.push("/");
 }
@@ -46,7 +51,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(() => {
-    const loggedUser = cookiesService?.getCookie("user");
+    const loggedUser = getCookie("user");
     return loggedUser ? JSON.parse(loggedUser) : null;
   });
 
@@ -61,7 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { access_token, user }: IResponse = response.data;
 
-      cookiesService?.createCookie("nextauth.token", access_token);
+      setCookie("nextauth.token", access_token);
 
       const loggedUser: User = {
         name: user.name,
@@ -74,7 +79,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser(loggedUser);
 
-      cookiesService?.createCookie("user", JSON.stringify(loggedUser));
+      setCookie("user", JSON.stringify(loggedUser));
 
       api.defaults.headers["Authorization"] = `Bearer ${access_token}`;
     } catch (error) {
@@ -86,8 +91,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signOut() {
     setUser(null);
-    cookiesService?.removeCookie("user");
-    cookiesService?.removeCookie("nextauth.token");
+    removeCookie("user");
+    removeCookie("nextauth.token");
 
     Router.push("/");
   }

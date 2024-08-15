@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { IUser, Role } from "../types/IUser";
-import { CompanyContext } from "../context";
 import { userService } from "../services";
+import { environment } from "../utils/environment";
 import { useCan } from "../context/Authentication/hooks/useCan";
 //components
 import DataTable from "react-data-table-component";
@@ -16,7 +16,7 @@ import { Wrapper, Content, Text } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
 export default function AdminUsers() {
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);

@@ -1,27 +1,39 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Head from "next/head";
-import Cookies from "js-cookie";
 import { GetServerSideProps } from "next";
 import { MainApp } from "../components/MainApp";
 import { IProduct } from "../types";
+import { getCookie, setCookie } from "../services";
 import {
   AuthProvider,
   CartProvider,
   FavoriteProvider,
   FilterContextProvider,
   ProductFilterProvider,
+  ProductProvider,
 } from "../context";
 import ThemePreferenceProvider from "../context/Theme/ThemeContext";
-import CompanyIdProvider from "../context/Company/CompanyContext";
 import { ProSidebarProvider } from "react-pro-sidebar";
-import { Analytics } from "@vercel/analytics/react";
-//styles
+import { QueryClientProvider, QueryClient } from "react-query";
 import { GlobalStyles } from "../styles/global";
-import { ProductProvider } from "../context/Products/ProductsContext";
+
+const queryClient = new QueryClient();
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const favoriteTheme = getCookie("color-theme");
+
+  if (favoriteTheme) {
+    setCookie("color-theme", favoriteTheme, { expires: 30, path: "/" });
+  } else {
+    setCookie("color-theme", "light", { expires: 30, path: "/" });
+  }
+
+  return { props: {} };
+};
 
 interface AppProps {
-  Component: any;
-  pageProps: AppProps;
+  Component: React.ComponentType<any>;
+  pageProps: any;
   initialProducts: IProduct[];
 }
 
@@ -31,7 +43,7 @@ export default function App({
   initialProducts,
 }: AppProps) {
   return (
-    <CompanyIdProvider>
+    <QueryClientProvider client={queryClient}>
       <ThemePreferenceProvider>
         <AuthProvider>
           <ProductProvider>
@@ -50,7 +62,6 @@ export default function App({
                       </Head>
                       <MainApp>
                         <Component {...pageProps} />
-                        <Analytics />
                         <GlobalStyles />
                       </MainApp>
                     </ProSidebarProvider>
@@ -61,26 +72,6 @@ export default function App({
           </ProductProvider>
         </AuthProvider>
       </ThemePreferenceProvider>
-    </CompanyIdProvider>
+    </QueryClientProvider>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const favoriteTheme = Cookies.get("color-theme");
-
-  if (favoriteTheme) {
-    Cookies.set("color-theme", favoriteTheme, {
-      expires: 30,
-      path: "/",
-    });
-  } else {
-    Cookies.set("color-theme", "light", {
-      expires: 30,
-      path: "/",
-    });
-  }
-
-  return {
-    props: {},
-  };
-};

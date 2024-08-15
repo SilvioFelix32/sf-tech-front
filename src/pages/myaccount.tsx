@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { format } from "date-fns";
-import { AuthContext, CompanyContext } from "../context";
+import { AuthContext } from "../context";
 import { userService } from "../services";
+import { environment } from "../utils/environment";
 import { IUser } from "../types";
 //components
 //styles
@@ -10,7 +10,7 @@ import { Wrapper, Title, Text, Content } from "../styles/pages/myaccount";
 export default function MyAccount() {
   const { user } = useContext(AuthContext);
   const [myUser, setMyUser] = useState<IUser>();
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const user_id = user?.user_id;
 
   useEffect(() => {

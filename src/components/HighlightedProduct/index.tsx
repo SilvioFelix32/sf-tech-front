@@ -1,13 +1,15 @@
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { environment } from "../../utils/environment";
 import { MdFavoriteBorder } from "react-icons/md";
-import { CompanyContext, useFavorite } from "../../context";
+import { useFavorite } from "../../context";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { IProduct } from "../../types";
-import { formatNumber } from "../../shared/functions";
+import { formatNumber } from "../../utils/functions";
 import { BuyButton } from "../Buttons";
 import { ProductModal } from "../Modals";
-//styles
+// styles
 import {
   Wrapper,
   Content,
@@ -24,20 +26,29 @@ import {
 import { productsService } from "../../services";
 
 export function HighlightedProductCard() {
-  const company_id = useContext(CompanyContext);
+  const company_id = environment.companyId;
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
-  const [products, setProducts] = useState<IProduct[]>([]);
   const [buttonType, setButtonType] = useState("isNotFavorited");
   const [product_Id, setProductId] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
-  useEffect(() => {
-    productsService
-      .getAll({ page: 1, limit: 20 })
-      .then((res) => setProducts(res.data));
-  }, [company_id]);
+  const {
+    data: products,
+    error,
+    isLoading,
+  } = useQuery<IProduct[], Error>(
+    ["products", company_id],
+    () =>
+      productsService.getAll({ page: 1, limit: 20 }).then((res) => res.data),
+    {
+      enabled: !!company_id,
+    }
+  );
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   const filteredArray = products.filter((item) => item.highlighted === true);
   const firstThreeItems = filteredArray.slice(0, 3);
@@ -58,7 +69,7 @@ export function HighlightedProductCard() {
                 width="300"
                 height="300"
                 priority
-              ></Image>
+              />
             </Picture>
             <ProductInfo>
               <Title>{product.title}</Title>
@@ -92,8 +103,8 @@ export function HighlightedProductCard() {
                 <FavoritedButton
                   className="favorite"
                   onClick={() => {
-                    removeItemFromFavorites(product.product_id),
-                      setButtonType("isNotFavorited");
+                    removeItemFromFavorites(product.product_id);
+                    setButtonType("isNotFavorited");
                   }}
                 >
                   <MdFavoriteBorder />
@@ -102,7 +113,8 @@ export function HighlightedProductCard() {
                 <NotFavoriteButton
                   className="favorite"
                   onClick={() => {
-                    handleAddToFavorites(product), setButtonType("isFavorited");
+                    handleAddToFavorites(product);
+                    setButtonType("isFavorited");
                   }}
                 >
                   <MdFavoriteBorder />

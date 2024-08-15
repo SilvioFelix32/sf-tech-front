@@ -33,15 +33,12 @@ export function calculateCartTotals(cartItems: IProduct[]) {
 }
 
 export function formatNumber(value: number | string) {
-  // Formata o número com ponto para separação de milhares e vírgula com duas casas decimais
-
   const formatedValueToNumber = Number(value);
   let formatedNumber = formatedValueToNumber.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  // Substitui a vírgula por zeros quando os dois últimos dígitos são zero
   formatedNumber = formatedNumber.replace(/,00$/, ",0").replace(/,0$/, ",00");
 
   return formatedNumber;
