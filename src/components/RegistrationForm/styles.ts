@@ -2,15 +2,17 @@ import styled from "styled-components";
 
 export const Wrapper = styled.form`
   width: 60%;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 export const Title = styled.h1`
-  font-size: 3rem;
+  font-size: 2rem;
   color: ${({ theme }) => theme.colors.title};
 `;
 
@@ -86,7 +88,8 @@ export const Button = styled.button`
   padding: 0 10px;
   text-transform: capitalize;
   outline: solid 1px ${({ theme }) => theme.colors.quaternary};
-  color: ${({ theme }) => theme.colors.tertiary};
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.tertiary};
 
   &:hover {
     filter: brightness(0.9);

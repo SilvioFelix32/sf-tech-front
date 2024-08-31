@@ -5,7 +5,7 @@ import { BiListUl } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
 import { AuthContext } from "../../../context";
 //components
-import { CartModal, LoginModal } from "../..";
+import { CartModal } from "../..";
 import {
   CDropdown,
   CDropdownToggle,
@@ -41,11 +41,10 @@ export const SmallDevices = () => {
           ) : (
             <CDropdownItem
               onClick={() => {
-                setIsOpen(true);
+                router.push("/login");
               }}
             >
               Entrar
-              <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
             </CDropdownItem>
           )}
           {userHasAdminPermissions && (

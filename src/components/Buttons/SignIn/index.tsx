@@ -1,9 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { BiUser } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
 import { AuthContext } from "../../../context";
 //components
-import { LoginModal } from "../..";
 import {
   CDropdown,
   CDropdownToggle,
@@ -13,9 +12,10 @@ import {
 //styles
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Button, Svg, Text, Wrapper } from "./styles";
+import { useRouter } from "next/router";
 
 export const SignInButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const { user, signOut } = useContext(AuthContext);
 
   return user ? (
@@ -45,16 +45,17 @@ export const SignInButton = () => {
   ) : (
     <>
       <Button
-        onClick={() => {
-          setIsOpen(true);
-        }}
+        onClick={() =>
+          router.push({
+            pathname: "login",
+          })
+        }
       >
         <Svg>
           <BiUser />
         </Svg>
         Entrar
       </Button>
-      <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

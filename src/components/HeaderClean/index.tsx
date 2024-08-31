@@ -43,7 +43,6 @@ export function HeaderClean() {
         <ThemeToggle />
         <SignInButton />
         {userIsAuthenticated && <FavoritesButton />}
-        <CartButton />
         {userHasAdminPermissions && (
           <Button
             onClick={() =>
