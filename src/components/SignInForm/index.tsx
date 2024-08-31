@@ -16,6 +16,7 @@ import {
   ErrorText,
   Registration,
   Text,
+  RouterButton,
 } from "./styles";
 
 export function SignInForm() {
@@ -75,7 +76,9 @@ export function SignInForm() {
           <Text>Senha</Text>
           <PasswordInput password={password} setPassword={setPassword} />
         </Column>
-        <a href="/">Esqueceu sua senha?</a>
+        <RouterButton type="button" onClick={() => router.push("/")}>
+          Esqueceu sua senha?
+        </RouterButton>
       </Content>
 
       <Content>
@@ -86,7 +89,12 @@ export function SignInForm() {
 
       <Registration>
         Não tem uma conta?
-        <a href="create-acount">Cadastrar.</a>
+        <RouterButton
+          type="button"
+          onClick={() => router.push("create-acount")}
+        >
+          Cadastrar.
+        </RouterButton>
       </Registration>
     </Wrapper>
   );

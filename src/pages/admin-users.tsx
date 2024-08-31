@@ -19,8 +19,10 @@ export default function AdminUsers() {
   const company_id = environment.companyId;
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
   // Modals
   const [reloadData, setReloadData] = useState(0);
   const [user_id, setUser_id] = useState("");
@@ -28,7 +30,7 @@ export default function AdminUsers() {
   const [onOpen, setOnOpen] = useState(false);
   const userHasMasterPermissions = useCan({ role: [Role.MASTER] });
 
-  async function fetchUsers(page: number) {
+  async function fetchUsers(page: number, perPage: number) {
     setLoading(true);
 
     try {
@@ -38,6 +40,8 @@ export default function AdminUsers() {
       });
       setUsers(response.data.data);
       setTotalRows(response.data.meta.total);
+      setPage(response.data.meta.currentPage);
+      setLastPage(response.data.meta.lastPage || 1);
     } catch (error) {
       console.error("Error fetching users:", error);
     } finally {
@@ -45,8 +49,11 @@ export default function AdminUsers() {
     }
   }
 
-  function handlePageChange(page: number) {
-    fetchUsers(page);
+  function handlePageChange(newPage: number) {
+    if (newPage <= lastPage) {
+      setPage(newPage);
+      fetchUsers(newPage, perPage);
+    }
   }
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
@@ -67,9 +74,8 @@ export default function AdminUsers() {
   }
 
   useEffect(() => {
-    fetchUsers(1); // fetch page 1 of users
-  }, [company_id, reloadData]);
-
+    fetchUsers(page, perPage);
+  }, [perPage]);
   const columns = useMemo(() => {
     const baseColumns = [
       {
@@ -149,12 +155,15 @@ export default function AdminUsers() {
           data={data}
           pagination
           progressPending={loading}
-          onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationComponentOptions={paginationComponentOptions}
-          paginationRowsPerPageOptions={[5, 10, 20]}
           paginationTotalRows={totalRows}
+          paginationPerPage={perPage}
+          paginationServer
+          paginationComponentOptions={paginationComponentOptions}
+          paginationDefaultPage={page}
           customStyles={customStyles}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          onChangeRowsPerPage={handlePerRowsChange}
         />
       </Content>
       <ModalEditUser

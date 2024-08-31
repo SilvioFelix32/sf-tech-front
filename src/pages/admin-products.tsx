@@ -18,13 +18,14 @@ import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
 export default function AdminProducts() {
-  const company_id = environment.companyId;
   //Data table states and pagination
   const [products, setProducts] = useState<IProduct[]>([]);
   const [product_id, setProduct_id] = useState("");
   const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
   //Modals
   const [reloadData, setReloadData] = useState(0);
   const [open, setOpen] = useState(false);
@@ -32,22 +33,28 @@ export default function AdminProducts() {
   const [onOpen, setOnOpen] = useState(false);
 
   async function fetchProducts(page: number, perPage: number) {
-    setLoading(true);
-
-    await productsService
-      .getAll({
+    try {
+      setLoading(true);
+      const res = await productsService.getAll({
         page: page,
         limit: perPage,
-      })
-      .then((res) => {
-        setProducts(res.data);
-        setTotalRows(res.meta.total);
       });
-    setLoading(false);
+      setProducts(res.data);
+      setTotalRows(res.meta.total);
+      setPage(res.meta.currentPage);
+      setLastPage(res.meta.lastPage || 1);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  function handlePageChange(page: number) {
-    fetchProducts(page, perPage);
+  function handlePageChange(newPage: number) {
+    if (newPage <= lastPage) {
+      setPage(newPage);
+      fetchProducts(newPage, perPage);
+    }
   }
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
@@ -66,7 +73,7 @@ export default function AdminProducts() {
   }
 
   useEffect(() => {
-    fetchProducts(1, perPage);
+    fetchProducts(page, perPage);
   }, [perPage]);
 
   //Dados da tabela
@@ -96,47 +103,45 @@ export default function AdminProducts() {
     },
   ];
 
-  const data = useMemo(() => {
-    return products?.map((product) => ({
-      id: product.product_id,
-      sku: product.sku,
-      title: product.title,
-      urlBanner: (
-        <Picture>
-          <Image
-            src={product?.urlBanner}
-            alt={product?.title}
-            width="200"
-            height="200"
-            priority
-          ></Image>
-        </Picture>
-      ),
-      highlighted: product.highlighted ? "Sim" : "Não",
-      exclude_alter: (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+  const data = products?.map((product) => ({
+    id: product.product_id,
+    sku: product.sku,
+    title: product.title,
+    urlBanner: (
+      <Picture>
+        <Image
+          src={product?.urlBanner}
+          alt={product?.title}
+          width="200"
+          height="200"
+          priority
+        ></Image>
+      </Picture>
+    ),
+    highlighted: product.highlighted ? "Sim" : "Não",
+    exclude_alter: (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <EditButton
+          onClick={() => {
+            setOnOpen(true);
+            setProduct_id(product?.product_id);
           }}
-        >
-          <EditButton
-            onClick={() => {
-              setOnOpen(true);
-              setProduct_id(product?.product_id);
-            }}
-          ></EditButton>
-          <ExcludeButton
-            onClick={() => {
-              setProduct_id(product?.product_id);
-              setOpen(true);
-            }}
-          ></ExcludeButton>
-        </div>
-      ),
-    }));
-  }, [products]);
+        ></EditButton>
+        <ExcludeButton
+          onClick={() => {
+            setProduct_id(product?.product_id);
+            setOpen(true);
+          }}
+        ></ExcludeButton>
+      </div>
+    ),
+  }));
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
@@ -154,12 +159,15 @@ export default function AdminProducts() {
           data={data}
           pagination
           progressPending={loading}
-          onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationComponentOptions={paginationComponentOptions}
-          paginationRowsPerPageOptions={[5, 10, 20]}
           paginationTotalRows={totalRows}
+          paginationPerPage={perPage}
+          paginationServer
+          paginationComponentOptions={paginationComponentOptions}
+          paginationDefaultPage={page}
           customStyles={customStyles}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          onChangeRowsPerPage={handlePerRowsChange}
         />
       </Content>
       <ModalCreateProduct

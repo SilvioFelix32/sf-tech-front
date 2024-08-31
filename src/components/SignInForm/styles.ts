@@ -75,6 +75,19 @@ export const Button = styled.button`
   }
 `;
 
+export const RouterButton = styled.button`
+  color: ${({ theme }) => theme.colors.tertiary};
+  margin-left: 5px;
+  border: none;
+  background: none;
+  text-decoration: none;
+  transition: filter(0.2s);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+
 export const ErrorText = styled.p`
   height: 36px;
   width: 100%;
@@ -91,9 +104,11 @@ export const Registration = styled.div`
   align-items: center;
   color: ${({ theme }) => theme.colors.text};
 
-  a {
+  button {
     color: ${({ theme }) => theme.colors.tertiary};
     margin-left: 5px;
+    border: none;
+    background: none;
     text-decoration: none;
     transition: filter(0.2s);
 
