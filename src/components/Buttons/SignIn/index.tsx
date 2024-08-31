@@ -33,7 +33,10 @@ export const SignInButton = () => {
           </Button>
         </CDropdownToggle>
         <CDropdownMenu className="DropMenu">
-          <CDropdownItem href="/admin-acount" className="OptionBtn">
+          <CDropdownItem
+            onClick={() => router.push("/admin-acount")}
+            className="OptionBtn"
+          >
             Minha Conta
           </CDropdownItem>
           <CDropdownItem onClick={() => signOut()} className="OptionBtn">
