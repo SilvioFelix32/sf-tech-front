@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 82%;
+  width: 75%;
   height: 80px;
   padding: 10px 20px;
   display: flex;
