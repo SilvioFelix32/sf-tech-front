@@ -30,12 +30,13 @@ export const Content = styled.div`
   padding: 10px;
   border-radius: 6px;
   outline: solid 1px ${({ theme }) => theme.colors.tertiary};
-  transition: all 0.3s ease;
   transition-duration: 0.3s;
-  transition-property: transform;
+  transition: box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    box-shadow: 0px 0px 30px 0px rgba(0, 1, 1, 0.3);
+    box-shadow: 0 8px 12px rgba(255, 255, 255, 0.2),
+      0 8px 12px rgba(0, 0, 0, 0.4);
     cursor: pointer;
 
     .favorite {
@@ -48,6 +49,7 @@ export const Picture = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
+  width: 100%;
   overflow: visible;
 `;
 
@@ -145,6 +147,22 @@ export const Title = styled.p`
   font-size: 1rem;
   text-align: center;
   margin: 0;
+`;
+
+export const Description = styled.p`
+  color: ${({ theme }) => theme.colors.text};
+  text-transform: capitalize;
+  margin: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 `;
 
 export const Text = styled.p`

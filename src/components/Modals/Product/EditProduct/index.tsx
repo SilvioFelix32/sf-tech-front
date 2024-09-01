@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { IProduct } from "../../../../types";
+import { IProduct, IProductCategory, IUpdateProduct } from "../../../../types";
 import { Modal as ModalEdit } from "react-responsive-modal";
 import {
   Button,
@@ -11,8 +11,10 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { productsService } from "../../../../services";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { categoryService, productsService } from "../../../../services";
+import { useQuery, useMutation, useQueryClient, isError } from "react-query";
+import { environment } from "../../../../utils/environment";
+import { IProductCategories } from "../../../../services/interfaces/ICategoryResponse";
 
 interface ModalProps {
   onOpen: boolean;
@@ -28,10 +30,11 @@ export function ModalEditProduct({
   setReloadData,
 }: ModalProps) {
   const queryClient = useQueryClient();
-
   const { register, handleSubmit, reset } = useForm<IProduct>();
+  const company_id = environment.companyId;
 
-  const { data: selectedProduct, isLoading } = useQuery(
+  // Query para obter o produto selecionado
+  const { data: selectedProduct, isLoading: isProductLoading } = useQuery(
     ["product", product_id],
     () => productsService.getById(product_id),
     {
@@ -42,14 +45,24 @@ export function ModalEditProduct({
     }
   );
 
+  const {
+    data: categories,
+    isLoading: isCategoriesLoading,
+    isError: isCategoriesError,
+  } = useQuery<IProductCategories, Error>(
+    ["categories", company_id],
+    () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
+    {
+      enabled: !!company_id,
+    }
+  );
+
   const mutation = useMutation(
-    (data: IProduct) => {
-      console.log(data);
-      delete data.product_id;
-      delete data.updatedAt;
-      delete data.createdAt;
+    (data: IUpdateProduct) => {
+      console.log("update product data", data);
+      const { product_id, updatedAt, createdAt, ...rest } = data;
       return productsService.update(product_id, {
-        ...data,
+        ...rest,
         highlighted: Boolean(data.highlighted),
       });
     },
@@ -66,7 +79,7 @@ export function ModalEditProduct({
     mutation.mutate(data);
   }
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isProductLoading) return <div>Loading...</div>;
 
   return (
     <ModalEdit
@@ -110,6 +123,25 @@ export function ModalEditProduct({
               <option value="true">Sim</option>
               <option value="false">Não</option>
             </Select>
+
+            <Text>Categoria de produto:</Text>
+            {isCategoriesLoading ? (
+              <Text>Carregando categorias...</Text>
+            ) : isCategoriesError ? (
+              <Text>Erro ao carregar categorias</Text>
+            ) : (
+              <Select {...register("category_id")} defaultValue="">
+                <option value=""></option>
+                {categories.data?.map((category: IProductCategory) => (
+                  <option
+                    key={category.category_id}
+                    value={category.category_id}
+                  >
+                    {category.title}
+                  </option>
+                ))}
+              </Select>
+            )}
           </Content>
         </Context>
         <Button type="submit">Confirmar</Button>

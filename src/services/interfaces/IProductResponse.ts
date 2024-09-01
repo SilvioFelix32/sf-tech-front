@@ -1,4 +1,4 @@
-import { IProduct } from "../../types/IProducts";
+import { IProduct, IUpdateProduct } from "../../types/IProducts";
 import { IParamsRequest } from "./IParamsRequest";
 
 export interface IProductResponse {
@@ -23,6 +23,6 @@ export interface ProductsService {
   search: (params: string) => Promise<IProductInterface>;
   getById: (product_id: string) => Promise<IProduct>;
   create: (category_id: string, params: IProduct) => Promise<IProduct>;
-  update: (product_id: string, params: IProduct) => Promise<IProduct>;
+  update: (product_id: string, params: IUpdateProduct) => Promise<IProduct>;
   delete: (product_id: string) => Promise<void>;
 }

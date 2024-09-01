@@ -25,6 +25,7 @@ import {
   ProductValue,
   CardWrapper,
   Button,
+  Description,
 } from "./styles";
 import { ProductContext } from "../../context/Products/ProductsContext";
 
@@ -89,13 +90,14 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
                 width="200"
                 height="200"
                 priority
+                style={{ objectFit: "contain" }}
               ></Image>
             </Picture>
             <ProductInfo>
               <Title>{product.title}</Title>
-              <Title style={{ fontWeight: 400, marginBottom: "10px" }}>
+              <Description style={{ fontWeight: 400, marginBottom: "10px" }}>
                 {product.description}
-              </Title>
+              </Description>
               <Button
                 onClick={() => {
                   setOpenModal(true);

@@ -1,31 +1,52 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context";
 import { userService } from "../services";
 import { environment } from "../utils/environment";
 import { IUser } from "../types";
 //components
-//styles
 import { Wrapper, Title, Text, Content } from "../styles/pages/myaccount";
+import { useQuery } from "react-query";
 
 export default function MyAccount() {
   const { user } = useContext(AuthContext);
-  const [myUser, setMyUser] = useState<IUser>();
   const company_id = environment.companyId;
   const user_id = user?.user_id;
 
-  useEffect(() => {
-    if (company_id && user_id) {
-      userService.getById(company_id, user_id).then((data) => {
-        setMyUser(data);
-      });
+  const {
+    data: myUser,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<IUser>(
+    ["user", company_id, user_id],
+    () => userService.getById(company_id, user_id),
+    {
+      enabled: !!company_id && !!user_id,
     }
-  }, [company_id, user_id]);
+  );
+
+  if (isLoading)
+    return (
+      <Wrapper>
+        <Title style={{ fontSize: "20px" }}>Carregando seus dados...</Title>
+      </Wrapper>
+    );
+
+  if (isError)
+    return (
+      <Wrapper>
+        <Title style={{ fontSize: "20px", color: "red" }}>
+          {error instanceof Error
+            ? error.message
+            : "Erro ao carregar seus dados."}
+        </Title>
+      </Wrapper>
+    );
 
   return myUser ? (
     <Wrapper>
-      <Title style={{ fontSize: "22px" }}>Meus dados:</Title>
+      <Title style={{ fontSize: "22px", color: "#333" }}>Meus dados:</Title>
 
-      <Title style={{ fontSize: "18px" }}>Dados pessoais:</Title>
       <Content>
         <Title>Nome:</Title>
         <Text>{myUser.name}</Text>
@@ -41,7 +62,9 @@ export default function MyAccount() {
     </Wrapper>
   ) : (
     <Wrapper>
-      <Title style={{ fontSize: "20px" }}>Carregando seus dados</Title>
+      <Title style={{ fontSize: "20px", color: "#333" }}>
+        Nenhum dado disponível
+      </Title>
     </Wrapper>
   );
 }

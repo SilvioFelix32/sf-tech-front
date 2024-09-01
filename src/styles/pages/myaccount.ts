@@ -5,8 +5,9 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
   padding: 20px;
-  width: 70%;
+  width: 80%;
   height: 100%;
 
   @media (min-width: 760px) {
@@ -24,9 +25,12 @@ export const Context = styled.div`
 
 export const Content = styled.div`
   display: flex;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: center;
   padding: 5px;
-  height: 50px;
+  margin: 10px;
+  border-radius: 6px;
+  height: 50px !important;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.tertiary};
   border-bottom: solid 1px white;
@@ -48,7 +52,7 @@ export const Title = styled.p`
 export const Text = styled.p`
   display: flex;
   color: ${({ theme }) => theme.colors.text};
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 400;
   text-transform: capitalize;
   margin: 1px;

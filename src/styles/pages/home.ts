@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   width: 80% !important;
   margin: 0 auto;
   position: relative;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background-color: ${({ theme }) => theme.colors.background};
 
   @media screen and (max-width: 480px) {

@@ -114,6 +114,7 @@ export default function AdminProducts() {
           alt={product?.title}
           width="200"
           height="200"
+          style={{ objectFit: "contain" }}
           priority
         ></Image>
       </Picture>
