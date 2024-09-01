@@ -5,9 +5,9 @@ import { Content, Theme, Wrapper } from "../styles/pages/login";
 export default function Login() {
   return (
     <Theme>
+      <NavHeader />
+      <HeaderClean />
       <Wrapper>
-        <NavHeader />
-        <HeaderClean />
         <Content>
           <SignInForm />
         </Content>

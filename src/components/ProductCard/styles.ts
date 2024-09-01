@@ -24,15 +24,15 @@ export const Content = styled.div`
   justify-content: space-around;
   position: relative;
   flex-shrink: 0;
-  height: 100%;
-  min-height: 560px;
-  width: 350px;
+  height: 32rem;
+  width: 20rem;
   margin: 10px;
+  padding: 10px;
   border-radius: 6px;
-  transition-property: transform;
   outline: solid 1px ${({ theme }) => theme.colors.tertiary};
   transition: all 0.3s ease;
   transition-duration: 0.3s;
+  transition-property: transform;
 
   &:hover {
     box-shadow: 0px 0px 30px 0px rgba(0, 1, 1, 0.3);
@@ -49,7 +49,6 @@ export const Picture = styled.div`
   justify-content: center;
   height: 100%;
   overflow: visible;
-  border-radius: 6px 0 0 0;
 `;
 
 export const ProductInfo = styled.div`
@@ -57,7 +56,6 @@ export const ProductInfo = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
-  padding: 15px 10px;
   width: 100%;
   height: 100%;
 `;
@@ -144,18 +142,16 @@ export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
   text-transform: capitalize;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: center;
   margin: 0;
-  padding: 0 5px;
 `;
 
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
-  font-weight: 400;
+  font-weight: 600;
   font-size: 0.8rem;
   margin: 2px;
-  padding: 0 5px;
   text-transform: capitalize;
 `;
 

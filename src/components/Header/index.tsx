@@ -12,7 +12,7 @@ import {
   ThemeToggle,
 } from "../Buttons";
 //styles
-import { Select, Wrapper, LogoL, LogoS, Button } from "./styles";
+import { Select, Wrapper, LogoL, LogoS, Button, Content } from "./styles";
 
 export function Header() {
   const router = useRouter();
@@ -21,42 +21,44 @@ export function Header() {
 
   return (
     <Wrapper>
-      <LogoL onClick={() => router.push("/")}>
-        <Image
-          src="/images/logo_sftech.png"
-          alt="sftech"
-          width={200}
-          height={60}
-          priority={true}
-        ></Image>
-      </LogoL>
-      <LogoS onClick={() => router.push("/")}>
-        <Image
-          src="/images/logo_60x60.png"
-          alt="sftech"
-          width={60}
-          height={60}
-        ></Image>
-      </LogoS>
-      <SearchBar />
-      <ThemeToggle />
-      <SmallDevices />
-      <Select>
-        <SignInButton />
-        {userIsAuthenticated && <FavoritesButton />}
-        <CartButton />
-        {userHasAdminPermissions && (
-          <Button
-            onClick={() =>
-              router.push({
-                pathname: "administration",
-              })
-            }
-          >
-            <BiStore />
-          </Button>
-        )}
-      </Select>
+      <Content>
+        <LogoL onClick={() => router.push("/")}>
+          <Image
+            src="/images/logo_sftech.png"
+            alt="sftech"
+            width={200}
+            height={60}
+            priority={true}
+          ></Image>
+        </LogoL>
+        <LogoS onClick={() => router.push("/")}>
+          <Image
+            src="/images/logo_60x60.png"
+            alt="sftech"
+            width={60}
+            height={60}
+          ></Image>
+        </LogoS>
+        <SearchBar />
+        <ThemeToggle />
+        <SmallDevices />
+        <Select>
+          <SignInButton />
+          {userIsAuthenticated && <FavoritesButton />}
+          <CartButton />
+          {userHasAdminPermissions && (
+            <Button
+              onClick={() =>
+                router.push({
+                  pathname: "administration",
+                })
+              }
+            >
+              <BiStore />
+            </Button>
+          )}
+        </Select>
+      </Content>
     </Wrapper>
   );
 }

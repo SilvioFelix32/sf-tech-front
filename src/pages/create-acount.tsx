@@ -5,9 +5,9 @@ import { Theme, Wrapper, Content } from "../styles/pages/create-acount";
 export default function CreateAcount() {
   return (
     <Theme>
+      <NavHeader />
+      <HeaderClean />
       <Wrapper>
-        <NavHeader />
-        <HeaderClean />
         <Content>
           <RegistrationForm />
         </Content>

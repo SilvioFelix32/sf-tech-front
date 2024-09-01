@@ -21,9 +21,9 @@ export default function Home() {
 
   return (
     <Theme>
+      <NavHeader />
+      <Header />
       <Wrapper>
-        <NavHeader />
-        <Header />
         <Content>
           <LeftContent>
             <CategoriesFilterCard

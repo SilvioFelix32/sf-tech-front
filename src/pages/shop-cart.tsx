@@ -64,9 +64,9 @@ export default function ShopCart() {
 
   return (
     <Theme>
+      <NavHeader />
+      <HeaderClean />
       <Wrapper>
-        <NavHeader />
-        <HeaderClean />
         <Content>
           <StepWrapper>
             <StepTitle>

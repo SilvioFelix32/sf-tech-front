@@ -25,9 +25,9 @@ export default function Administration() {
 
   return (
     <Theme>
+      <NavHeader />
+      <HeaderClean />
       <Wrapper>
-        <NavHeader />
-        <HeaderClean />
         <Content>
           <>
             <CustomSidebar>

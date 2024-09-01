@@ -76,7 +76,10 @@ async function update(product_id: string, params: IProduct): Promise<IProduct> {
       `${baseUrl}/${product_id}`,
       params,
       {
-        headers: { authorization: `Bearer ${nextauth}` },
+        headers: {
+          category_id: params.category_id,
+          authorization: `Bearer ${nextauth}`,
+        },
       }
     );
     return response.data;

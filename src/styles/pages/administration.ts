@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  min-height: 71vh;
+  min-height: 76vh;
   height: 100%;
   display: flex;
   align-items: flex-start;

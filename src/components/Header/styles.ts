@@ -1,13 +1,20 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  background-color: ${({ theme }) => theme.colors.tertiary};
+`;
+
+export const Content = styled.div`
+  width: 75%;
   height: 80px;
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.tertiary};
 
   > svg {
     color: ${({ theme }) => theme.colors.secondary};

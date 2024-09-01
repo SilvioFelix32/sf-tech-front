@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-
   @media screen and (max-width: 1366px) {
     height: 50px;
   }
@@ -19,7 +18,7 @@ export const Navigation = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 100%;
+  width: 87%;
 
   a {
     margin: 0 5px;

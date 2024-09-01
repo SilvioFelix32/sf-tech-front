@@ -1,13 +1,20 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  background-color: ${({ theme }) => theme.colors.tertiary};
+`;
+
+export const Content = styled.div`
+  width: 75%;
   height: 80px;
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.tertiary};
 
   > svg {
     color: ${({ theme }) => theme.colors.secondary};
@@ -20,10 +27,10 @@ export const Wrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: 767px){
-   height: 60px;
-   padding: 5px;
-}
+  @media screen and (max-width: 767px) {
+    height: 60px;
+    padding: 5px;
+  }
 `;
 
 export const LogoL = styled.button`
@@ -41,7 +48,7 @@ export const LogoL = styled.button`
     filter: brightness(0.9);
   }
 
-  @media (max-width:764px){
+  @media (max-width: 764px) {
     display: none;
   }
 `;
@@ -61,7 +68,7 @@ export const LogoS = styled.button`
     filter: brightness(0.9);
   }
 
-  @media (max-width:720px){
+  @media (max-width: 720px) {
     display: flex;
   }
 `;
@@ -75,9 +82,9 @@ export const Text = styled.p`
 export const Select = styled.div`
   display: flex;
 
-@media screen and (max-width: 767px){
-   display: none;
-}
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const Button = styled.button`

@@ -7,7 +7,7 @@ module.exports = {
   reactStrictMode: true,
   images: {
     formats: ['image/webp'],
-    domains: ['i.imgur.com', 'imgur.com', "loremflickr.com"]
+    domains: ['i.imgur.com', 'imgur.com', "loremflickr.com", "img2.gratispng.com"]
   },
 
   // async rewrites() {

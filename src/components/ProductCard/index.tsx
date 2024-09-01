@@ -47,7 +47,7 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(9);
+  const [productsPerPage, setProductsPerPage] = useState(12);
 
   const categoryOfProducts = productCategories?.reduce((acc, cur) => {
     if (isSelected && cur.category_id !== isSelected) {
@@ -86,8 +86,8 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
                     : "https://i.imgur.com/2HFGvvT.png"
                 }
                 alt={product?.title}
-                width="320"
-                height="300"
+                width="200"
+                height="200"
                 priority
               ></Image>
             </Picture>
