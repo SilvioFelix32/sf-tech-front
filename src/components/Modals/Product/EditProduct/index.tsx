@@ -44,7 +44,10 @@ export function ModalEditProduct({
 
   const mutation = useMutation(
     (data: IProduct) => {
+      console.log(data);
       delete data.product_id;
+      delete data.updatedAt;
+      delete data.createdAt;
       return productsService.update(product_id, {
         ...data,
         highlighted: Boolean(data.highlighted),

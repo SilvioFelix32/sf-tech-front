@@ -10,7 +10,6 @@ export const Wrapper = styled.div`
   width: 75%;
   margin: 0 auto;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background-color: ${({ theme }) => theme.colors.background};
 
   @media screen and (max-width: 480px) {
@@ -73,11 +72,12 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 75%;
+  height: 30px;
   border-radius: 6px;
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.background};
-  outline: solid 0.1px ${({ theme }) => theme.colors.quaternary};
+  outline: solid 0.1px ${({ theme }) => theme.colors.tertiary};
   text-transform: uppercase;
   border: none;
 
@@ -86,6 +86,7 @@ export const Button = styled.button`
   padding: 5px;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.text};
+    background-color: ${({ theme }) => theme.colors.tertiary};
   }
 `;

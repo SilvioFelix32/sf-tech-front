@@ -30,12 +30,8 @@ export const ProductFilter = styled.div`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin: 5px 0;
-
-  @media screen and (max-width: 1200px) {
-    font-size: 0.8rem;
-  }
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -47,26 +43,16 @@ export const Button = styled.button<ButtonProps>`
       ? ({ theme }) => theme.colors.tertiary
       : ({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.background};
-  text-transform: uppercase;
+  text-transform: capitalize;
   border: none;
   outline: none;
 
   font-weight: 400;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin: 5px 0;
   padding: 0 5px;
 
   &:hover {
     color: ${({ theme }) => theme.colors.tertiary};
-  }
-
-  svg {
-    height: 18px;
-    width: 18px;
-    margin-left: 8px;
-  }
-
-  @media screen and (max-width: 1200px) {
-    font-size: 0.8rem;
   }
 `;

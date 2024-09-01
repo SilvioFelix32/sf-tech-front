@@ -110,6 +110,24 @@ export const Button = styled.button`
   }
 `;
 
+export const ConfirmButton = styled.button`
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+  margin: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  transition: filter(0.2s);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 600;

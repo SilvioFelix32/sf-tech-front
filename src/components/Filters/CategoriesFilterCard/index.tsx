@@ -39,7 +39,7 @@ export function CategoriesFilterCard({
                 handleButtonClick(category.category_id);
             }}
           >
-            {category.title}
+            {category.title.toLowerCase()}
           </Button>
         ))}
       </ProductFilter>

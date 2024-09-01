@@ -1,7 +1,15 @@
 import { useFilterContext } from "../../../context";
 import { formatNumber } from "../../../utils/functions";
 //styles
-import { Wrapper, Text, ProductInfo, ProductFilter, Input } from "./styles";
+import {
+  Wrapper,
+  Text,
+  ProductInfo,
+  ProductFilter,
+  Input,
+  RangeInput,
+  Button,
+} from "./styles";
 
 export function PriceFilterCard() {
   const {
@@ -13,14 +21,14 @@ export function PriceFilterCard() {
     <Wrapper>
       <ProductInfo>
         <Text>
-          Filtrar por preço: {""}
+          Preço: {""}
           R$ {""}
           {formatNumber(price)}
         </Text>
       </ProductInfo>
 
       <ProductFilter>
-        <Input
+        <RangeInput
           type="range"
           name="price"
           min={minPrice}
@@ -31,4 +39,35 @@ export function PriceFilterCard() {
       </ProductFilter>
     </Wrapper>
   );
+}
+
+{
+  /* <Button onClick={() => updateFilterValue("maxPrice", 1000)}>
+        Até {formatNumber(1000)}
+      </Button>
+      <Button onClick={() => updateFilterValue("maxPrice", 5000)}>
+        Até {formatNumber(5000)}
+      </Button> */
+}
+
+{
+  /* <ProductFilter>
+        <Input
+          type="number"
+          name="minPrice"
+          value={minPrice}
+          min={0}
+          onChange={handleMinPriceChange}
+          placeholder="Mínimo"
+        />
+        -
+        <Input
+          type="number"
+          name="maxPrice"
+          value={maxPrice}
+          min={minPrice}
+          onChange={handleMaxPriceChange}
+          placeholder="Máximo"
+        />
+      </ProductFilter> */
 }

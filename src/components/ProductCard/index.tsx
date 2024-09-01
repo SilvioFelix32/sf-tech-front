@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { memo, useContext, useState } from "react";
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import {
   ProductFilterContext,
   useFavorite,
@@ -47,7 +47,7 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(10);
+  const [productsPerPage, setProductsPerPage] = useState(9);
 
   const categoryOfProducts = productCategories?.reduce((acc, cur) => {
     if (isSelected && cur.category_id !== isSelected) {
@@ -86,14 +86,16 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
                     : "https://i.imgur.com/2HFGvvT.png"
                 }
                 alt={product?.title}
-                width="300"
+                width="320"
                 height="300"
                 priority
               ></Image>
             </Picture>
             <ProductInfo>
               <Title>{product.title}</Title>
-              <Title style={{ fontSize: "0.8rem" }}>{product.subtitle}</Title>
+              <Title style={{ fontWeight: 400, marginBottom: "10px" }}>
+                {product.description}
+              </Title>
               <Button
                 onClick={() => {
                   setOpenModal(true);
@@ -107,12 +109,13 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
                   style={{
                     textDecoration: "line-through",
                     fontSize: "0.8rem",
+                    marginTop: "5px",
                   }}
                 >
                   De R$
                   {formatNumber(product?.price)}
                 </Text>
-                <Text>
+                <Text style={{ fontSize: "1rem" }}>
                   Por R$
                   {formatNumber(product?.price - product?.discount)}
                 </Text>
@@ -130,7 +133,7 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
                       setButtonType("isNotFavorited");
                   }}
                 >
-                  <MdFavoriteBorder />
+                  <MdFavorite />
                 </FavoritedButton>
               ) : (
                 <NotFavoriteButton

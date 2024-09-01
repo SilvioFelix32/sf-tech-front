@@ -21,6 +21,7 @@ import {
   Product,
   ProductQuantity,
   BtnGroup,
+  ConfirmButton,
 } from "./styles";
 
 interface ModalProps {
@@ -77,12 +78,12 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
           </Totals>
         </ProductCard>
         <BtnGroup>
-          <Button onClick={() => router.push("/shop-cart")}>
+          <ConfirmButton onClick={() => router.push("/shop-cart")}>
             Confirmar Compra
-          </Button>
-          <Button type="button" onClick={() => setOpenModal(false)}>
+          </ConfirmButton>
+          <ConfirmButton type="button" onClick={() => setOpenModal(false)}>
             Cancelar
-          </Button>
+          </ConfirmButton>
         </BtnGroup>
       </Wrapper>
     </ModalComponent>

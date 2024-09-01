@@ -7,7 +7,6 @@ import {
   ButtonAdd,
   ButtonRemove,
   Content,
-  ShopButton,
   Wrapper,
   Text,
 } from "./styles";
@@ -44,13 +43,7 @@ export function BuyButton({ product }: ButtonProps) {
             setButtonType("howMany");
           }}
         >
-          <ShopButton>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Comprar
-          </ShopButton>
+          Comprar
         </Button>
       )}
 

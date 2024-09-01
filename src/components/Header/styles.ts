@@ -20,28 +20,23 @@ export const Wrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: 767px){
-   height: 60px;
-   padding: 5px;
-}
+  @media screen and (max-width: 767px) {
+    height: 60px;
+    padding: 5px;
+  }
 `;
 
 export const LogoL = styled.button`
   display: flex;
   border: none;
   outline: none;
-  transition: filter 0.2s;
 
   > image {
     width: 100%;
     height: 100%;
   }
 
-  &:hover {
-    filter: brightness(0.9);
-  }
-
-  @media (max-width:764px){
+  @media (max-width: 764px) {
     display: none;
   }
 `;
@@ -50,18 +45,13 @@ export const LogoS = styled.button`
   display: none;
   border: none;
   outline: none;
-  transition: filter 0.2s;
 
   > image {
     width: 100%;
     height: 100%;
   }
 
-  &:hover {
-    filter: brightness(0.9);
-  }
-
-  @media (max-width:720px){
+  @media (max-width: 720px) {
     display: flex;
   }
 `;
@@ -75,9 +65,9 @@ export const Text = styled.p`
 export const Select = styled.div`
   display: flex;
 
-@media screen and (max-width: 767px){
-   display: none;
-}
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const Button = styled.button`

@@ -7,7 +7,7 @@ export const Theme = styled.div`
 
 export const Wrapper = styled.div`
   height: 100%;
-  width: 75%;
+  width: 80%;
   margin: 0 auto;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
