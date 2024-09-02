@@ -47,13 +47,7 @@ export const SignInButton = () => {
     </Wrapper>
   ) : (
     <>
-      <Button
-        onClick={() =>
-          router.push({
-            pathname: "login",
-          })
-        }
-      >
+      <Button onClick={() => router.push("/login")}>
         <Svg>
           <BiUser />
         </Svg>

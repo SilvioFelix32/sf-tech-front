@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { useCart } from "../../../context";
 import { CartItemType } from "../../../context/Cart/types";
 //styles
@@ -13,9 +13,10 @@ import {
 
 interface ButtonProps {
   product: CartItemType;
+  styles?: CSSProperties;
 }
 
-export function BuyButton({ product }: ButtonProps) {
+export function BuyButton({ product, styles }: ButtonProps) {
   const [buttonType, setButtonType] = useState("buy");
   const {
     cartItems,
@@ -35,7 +36,7 @@ export function BuyButton({ product }: ButtonProps) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={styles}>
       {buttonType === "buy" && (
         <Button
           onClick={() => {

@@ -59,7 +59,6 @@ export function ModalEditProduct({
 
   const mutation = useMutation(
     (data: IUpdateProduct) => {
-      console.log("update product data", data);
       const { product_id, updatedAt, createdAt, ...rest } = data;
       return productsService.update(product_id, {
         ...rest,

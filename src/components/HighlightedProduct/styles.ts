@@ -21,7 +21,7 @@ export const Content = styled.div`
   height: 280px;
   width: 100%;
   margin: 10px;
-  border-radius: 18px;
+  border-radius: 6px;
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -30,7 +30,7 @@ export const Content = styled.div`
   transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0px 0px 30px 0px rgba(0, 1, 1, 0.3);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: pointer;
 
     .favorite {
@@ -48,12 +48,10 @@ export const Content = styled.div`
 
 export const Picture = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-
-  span {
-    border-radius: 18px 0 0 18px;
-  }
 `;
 
 export const ProductInfo = styled.div`
@@ -148,13 +146,34 @@ export const NotFavoriteButton = styled.button`
 
 export const ProductValue = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: flex-end;
   margin: auto 0 0;
-  text-align: center;
+  text-align: start;
 `;
 
 export const ProductDescription = styled.div``;
+
+export const Description = styled.p`
+  color: ${({ theme }) => theme.colors.text};
+  text-transform: capitalize;
+  margin: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    font-size: 0.7rem;
+  }
+`;
 
 export const Title = styled.p`
   color: ${({ theme }) => theme.colors.text};
@@ -169,7 +188,7 @@ export const Title = styled.p`
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 400;
-  font-size: 0.8rem;
+  font-size: 1.5rem;
   margin: 2px;
   padding: 0 5px;
   text-transform: capitalize;
@@ -180,15 +199,18 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
   height: 36px;
+  width: 100%;
   margin-top: auto;
   padding: 8px;
+  border-radius: 6px;
   color: ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 24px;
   border: 1px solid ${({ theme }) => theme.colors.tertiary};
-  transition: filter(0.2s);
+  transition: all 0.1s linear;
+  transition-duration: 0.3s;
 
   &:hover {
-    filter: brightness(0.9);
+    background-color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.text};
   }
 `;

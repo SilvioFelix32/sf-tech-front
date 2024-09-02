@@ -50,13 +50,10 @@ export const ProductCard = styled.div`
   padding: 15px;
   justify-content: space-between;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 6px;
 
   .image {
-    width: 90px;
-    height: 90px;
-    border-radius: 100%;
-    //background-color: ${({ theme }) => theme.colors.background};
+    object-fit: contain;
   }
 `;
 
@@ -68,7 +65,7 @@ export const Product = styled.div`
   padding: 10px;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 0px 30px 0px rgba(0, 1, 1, 0.3);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 6px;
 `;
 

@@ -22,7 +22,12 @@ export default function Home() {
   return (
     <Theme>
       <NavHeader />
-      <Header />
+      <Header
+        showSignInButton={true}
+        showCartButton={true}
+        showFavoritesButton={true}
+        showAdminButton={true}
+      />
       <Wrapper>
         <Content>
           <LeftContent>

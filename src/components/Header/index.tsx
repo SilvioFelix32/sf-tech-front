@@ -13,15 +13,30 @@ import {
 } from "../Buttons";
 //styles
 import { Select, Wrapper, LogoL, LogoS, Button, Content } from "./styles";
+import { CSSProperties } from "react";
 
-export function Header() {
+interface HeaderProps {
+  showSignInButton?: boolean;
+  showCartButton?: boolean;
+  showFavoritesButton?: boolean;
+  showAdminButton?: boolean;
+  styles?: CSSProperties;
+}
+
+export function Header({
+  showSignInButton = true,
+  showCartButton = true,
+  showFavoritesButton = true,
+  showAdminButton = false,
+  styles,
+}: HeaderProps) {
   const router = useRouter();
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   return (
     <Wrapper>
-      <Content>
+      <Content style={styles}>
         <LogoL onClick={() => router.push("/")}>
           <Image
             src="/images/logo_sftech.png"
@@ -43,17 +58,11 @@ export function Header() {
         <ThemeToggle />
         <SmallDevices />
         <Select>
-          <SignInButton />
-          {userIsAuthenticated && <FavoritesButton />}
-          <CartButton />
-          {userHasAdminPermissions && (
-            <Button
-              onClick={() =>
-                router.push({
-                  pathname: "administration",
-                })
-              }
-            >
+          {showSignInButton && <SignInButton />}
+          {userIsAuthenticated && showFavoritesButton && <FavoritesButton />}
+          {showCartButton && <CartButton />}
+          {userHasAdminPermissions && showAdminButton && (
+            <Button onClick={() => router.push("/administration")}>
               <BiStore />
             </Button>
           )}

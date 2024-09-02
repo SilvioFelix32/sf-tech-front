@@ -1,4 +1,4 @@
-import { NavHeader, HeaderClean } from "../components";
+import { NavHeader, Header } from "../components";
 import { SignInForm } from "../components/SignInForm";
 import { Content, Theme, Wrapper } from "../styles/pages/login";
 
@@ -6,7 +6,12 @@ export default function Login() {
   return (
     <Theme>
       <NavHeader />
-      <HeaderClean />
+      <Header
+        showSignInButton={false}
+        showCartButton={false}
+        showFavoritesButton={false}
+        showAdminButton={false}
+      />
       <Wrapper>
         <Content>
           <SignInForm />

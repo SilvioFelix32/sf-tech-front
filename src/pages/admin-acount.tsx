@@ -1,6 +1,6 @@
 import { useState } from "react";
 //components
-import { Footer, HeaderClean, NavHeader } from "../components";
+import { Footer, Header, NavHeader } from "../components";
 import { useProSidebar } from "react-pro-sidebar";
 import MyAccount from "./myaccount";
 import Favorites from "./favorites";
@@ -26,7 +26,12 @@ export default function Administration() {
   return (
     <Theme>
       <NavHeader />
-      <HeaderClean />
+      <Header
+        showSignInButton={true}
+        showCartButton={true}
+        showFavoritesButton={true}
+        showAdminButton={true}
+      />
       <Wrapper>
         <Content>
           <>

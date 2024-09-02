@@ -22,6 +22,7 @@ import {
   ProductValue,
   CardWrapper,
   Button,
+  Description,
 } from "./styles";
 import { productsService } from "../../services";
 
@@ -66,25 +67,20 @@ export function HighlightedProductCard() {
                     : "https://i.imgur.com/2HFGvvT.png"
                 }
                 alt={product?.title}
-                width="300"
-                height="300"
+                width="250"
+                height="250"
                 priority
+                style={{ objectFit: "contain" }}
               />
             </Picture>
             <ProductInfo>
               <Title>{product.title}</Title>
-              <Title style={{ fontSize: "14px" }}>{product.subtitle}</Title>
-              <Button
-                onClick={() => {
-                  setOpenModal(true);
-                  setProductId(product.product_id);
-                }}
-              >
-                Mais detalhes
-              </Button>
+              <Description style={{ fontSize: "0.8rem" }}>
+                {product.description}
+              </Description>
               <ProductValue>
                 <Text
-                  style={{ textDecoration: "line-through", fontSize: "14px" }}
+                  style={{ textDecoration: "line-through", fontSize: "0.8rem" }}
                 >
                   De R$
                   {formatNumber(product?.price)}
@@ -93,6 +89,7 @@ export function HighlightedProductCard() {
                   Por R$
                   {formatNumber(product?.price - product?.discount)}
                 </Text>
+                <Text style={{ fontSize: "0.8rem" }}>Até 10x sem juros</Text>
               </ProductValue>
               <BuyButton product={product} />
             </ProductInfo>

@@ -3,9 +3,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { NavHeader } from "../components/NavHeader";
+import { Footer, Header, NavHeader } from "../components";
 import { CartItems, Payment } from "../components/StepperSteps";
 import {
   Wrapper,
@@ -17,7 +15,6 @@ import {
   StepTitle,
   StepWrapper,
 } from "../styles/pages/shop-cart";
-import { HeaderClean } from "../components";
 
 const steps = ["Confirme sua compra", "Pagamento", "Sucesso"];
 const stepsContent = [<CartItems />, <Payment />, "Sucesso"];
@@ -65,7 +62,12 @@ export default function ShopCart() {
   return (
     <Theme>
       <NavHeader />
-      <HeaderClean />
+      <Header
+        showSignInButton={true}
+        showCartButton={false}
+        showFavoritesButton={true}
+        showAdminButton={false}
+      />
       <Wrapper>
         <Content>
           <StepWrapper>

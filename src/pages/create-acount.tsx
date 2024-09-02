@@ -1,4 +1,4 @@
-import { HeaderClean, NavHeader, RegistrationForm } from "../components";
+import { Header, NavHeader, RegistrationForm } from "../components";
 //styles
 import { Theme, Wrapper, Content } from "../styles/pages/create-acount";
 
@@ -6,7 +6,12 @@ export default function CreateAcount() {
   return (
     <Theme>
       <NavHeader />
-      <HeaderClean />
+      <Header
+        showSignInButton={true}
+        showCartButton={false}
+        showFavoritesButton={false}
+        showAdminButton={false}
+      />
       <Wrapper>
         <Content>
           <RegistrationForm />

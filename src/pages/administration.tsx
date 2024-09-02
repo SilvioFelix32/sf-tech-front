@@ -1,6 +1,6 @@
 import { useState } from "react";
 //components
-import { NavHeader, HeaderClean, Footer } from "../components";
+import { NavHeader, Footer, Header } from "../components";
 import { useProSidebar } from "react-pro-sidebar";
 import { useCan } from "../context/Authentication/hooks/useCan";
 import AdminProducts from "./admin-products";
@@ -37,7 +37,12 @@ export default function Administration() {
   return (
     <Theme>
       <NavHeader />
-      <HeaderClean />
+      <Header
+        showSignInButton={true}
+        showCartButton={false}
+        showFavoritesButton={false}
+        showAdminButton={true}
+      />
       <Wrapper>
         <Content>
           {userHasAdminPermissions && (
