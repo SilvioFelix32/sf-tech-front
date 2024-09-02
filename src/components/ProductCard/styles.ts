@@ -10,8 +10,6 @@ export const Wrapper = styled.div`
 `;
 
 export const CardWrapper = styled.div`
-  height: 80%;
-  width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -42,6 +40,13 @@ export const Content = styled.div`
     .favorite {
       display: block;
     }
+  }
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    height: 28rem;
+    width: 18rem;
+    margin: 8px;
+    padding: 8px;
   }
 `;
 
@@ -147,6 +152,10 @@ export const Title = styled.p`
   font-size: 1rem;
   text-align: center;
   margin: 0;
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const Description = styled.p`
@@ -163,6 +172,10 @@ export const Description = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   white-space: normal;
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    font-size: 0.7rem;
+  }
 `;
 
 export const Text = styled.p`
@@ -171,6 +184,10 @@ export const Text = styled.p`
   font-size: 0.8rem;
   margin: 2px;
   text-transform: capitalize;
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    font-size: 0.7rem;
+  }
 `;
 
 export const Button = styled.button`
