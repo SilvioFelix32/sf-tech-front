@@ -7,23 +7,14 @@ export const Theme = styled.div`
 
 export const Wrapper = styled.div`
   height: 100%;
-  width: 80% !important;
+  width: 80%;
   margin: 0 auto;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background-color: ${({ theme }) => theme.colors.background};
 
-  @media screen and (max-width: 480px) {
-    width: 100%;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1024px) {
-    width: 100%;
-  }
   @media screen and (min-width: 1025px) {
     width: 85%;
-  }
-  @media screen and (min-width: 1441px) {
-    width: 75%;
   }
 `;
 
@@ -48,8 +39,8 @@ export const LeftContent = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 1200px) {
-    display: none;
+  @media screen and (min-width: 1025px) {
+    width: 18%;
   }
 `;
 

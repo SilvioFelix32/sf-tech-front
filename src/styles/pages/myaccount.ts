@@ -30,14 +30,10 @@ export const Content = styled.div`
   padding: 5px;
   margin: 10px;
   border-radius: 6px;
-  height: 50px !important;
+  height: 50px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.tertiary};
   border-bottom: solid 1px white;
-
-  @media (min-width: 760px) {
-    height: 40px;
-  }
 `;
 
 export const Title = styled.p`

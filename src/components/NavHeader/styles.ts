@@ -18,7 +18,7 @@ export const Navigation = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 87%;
+  width: 91%;
 
   a {
     margin: 0 5px;
@@ -36,10 +36,7 @@ export const Navigation = styled.div`
     }
   }
 
-  @media screen and (max-width: 1366px) {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
+  @media screen and (min-width: 1025px) {
+    width: 93%;
   }
 `;

@@ -27,9 +27,8 @@ export const Content = styled.div`
     }
   }
 
-  @media screen and (max-width: 767px) {
-    height: 60px;
-    padding: 5px;
+  @media screen and (min-width: 1025px) {
+    width: 86%;
   }
 `;
 

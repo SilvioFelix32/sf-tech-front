@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 75%;
+  width: 82%;
   height: 80px;
   padding: 10px 20px;
   display: flex;
@@ -27,9 +27,8 @@ export const Content = styled.div`
     }
   }
 
-  @media screen and (max-width: 767px) {
-    height: 60px;
-    padding: 5px;
+  @media screen and (min-width: 1025px) {
+    width: 86%;
   }
 `;
 
