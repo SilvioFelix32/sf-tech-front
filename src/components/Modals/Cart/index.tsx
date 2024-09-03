@@ -30,7 +30,8 @@ interface ModalProps {
 }
 
 export function CartModal({ openModal, setOpenModal }: ModalProps) {
-  const { cartItems, deleteItemFromCart, cartTotalPrice } = useCart();
+  const { cartItems, deleteItemFromCart, cartTotalPrice, totalItemsCount } =
+    useCart();
   const router = useRouter();
 
   return (
@@ -78,7 +79,10 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
           </Totals>
         </ProductCard>
         <BtnGroup>
-          <ConfirmButton onClick={() => router.push("/shop-cart")}>
+          <ConfirmButton
+            onClick={() => totalItemsCount > 0 && router.push("/shop-cart")}
+            disabled={totalItemsCount <= 0}
+          >
             Confirmar Compra
           </ConfirmButton>
           <ConfirmButton type="button" onClick={() => setOpenModal(false)}>

@@ -106,22 +106,32 @@ export const Text = styled.p`
 `;
 
 export const Button = styled.button`
+  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 36px;
   width: 100%;
-  padding: 8px;
+  padding: 10px;
+  border: none;
   border-radius: 6px;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.background};
-  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  outline: solid 1px ${({ theme }) => theme.colors.tertiary};
   transition: all 0.1s linear;
   transition-duration: 0.3s;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.tertiary};
     color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.tertiary};
+  }
+
+  &:disabled {
+    color: ${({ theme }) => theme.colors.tertiary};
+    background-color: ${({ theme }) => theme.colors.background};
+    cursor: not-allowed;
+    outline: solid 1px ${({ theme }) => theme.colors.tertiary};
   }
 `;
 

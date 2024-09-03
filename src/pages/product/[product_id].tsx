@@ -1,9 +1,11 @@
 import Image from "next/image";
+import { useCart } from "../../context";
 import { useRouter } from "next/router";
 import { NavHeader, BuyButton, Header } from "../../components";
 import { useQuery } from "react-query";
 import { categoryService, productsService } from "../../services";
 import { formatNumber } from "../../utils/functions";
+import { IProduct, IProductCategory } from "../../types";
 import {
   Content,
   Description,
@@ -18,12 +20,13 @@ import {
   Section,
   Categories,
   SectionProduct,
+  Button,
 } from "../../styles/pages/product";
-import { IProduct, IProductCategory } from "../../types";
 
 export default function Product() {
   const router = useRouter();
   const { product_id } = router.query;
+  const { totalItemsCount } = useCart();
   const { data: product, isLoading: isProductLoading } = useQuery(
     ["product", product_id],
     () => productsService.getById(product_id as string),
@@ -89,7 +92,17 @@ export default function Product() {
                   {formatNumber(product?.price - product?.discount)}
                 </Text>
               </ProductPrices>
-              <BuyButton product={product} styles={{ width: "50%" }} />
+              <ProductPrices>
+                <BuyButton product={product} />
+                <Button
+                  onClick={() =>
+                    totalItemsCount > 0 && router.push("/shop-cart")
+                  }
+                  disabled={totalItemsCount <= 0}
+                >
+                  Confirmar Compra
+                </Button>
+              </ProductPrices>
             </ProductValue>
           </ProductInfo>
         </Content>

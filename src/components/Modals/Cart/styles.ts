@@ -18,7 +18,7 @@ export const ProductCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 6px;
 `;
 
 export const Product = styled.div`
@@ -54,7 +54,7 @@ export const ProductContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  max-width: 180px;
+  width: 180px;
 
   @media screen and (max-width: 1200px) {
     justify-content: center;
@@ -67,7 +67,7 @@ export const ProductValue = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 100px;
+  width: 100px;
 
   @media screen and (max-width: 1200px) {
     justify-content: center;
@@ -119,12 +119,22 @@ export const ConfirmButton = styled.button`
   padding: 10px;
   border: none;
   border-radius: 6px;
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  transition: filter(0.2s);
+  color: ${({ theme }) => theme.colors.tertiary};
+  background-color: ${({ theme }) => theme.colors.background};
+  outline: solid 1px ${({ theme }) => theme.colors.tertiary};
+  transition: all 0.1s linear;
+  transition-duration: 0.3s;
 
   &:hover {
-    filter: brightness(0.9);
+    color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.tertiary};
+  }
+
+  &:disabled {
+    color: ${({ theme }) => theme.colors.tertiary};
+    background-color: ${({ theme }) => theme.colors.background};
+    cursor: not-allowed;
+    outline: solid 1px ${({ theme }) => theme.colors.tertiary};
   }
 `;
 

@@ -11,16 +11,9 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 11px 21px;
   height: 36px;
   width: 100%;
-
-  position: relative;
-  text-decoration: none;
-  text-transform: uppercase;
   border-radius: 6px;
-  text-decoration: none;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.tertiary};
   background: ${({ theme }) => theme.colors.background};
