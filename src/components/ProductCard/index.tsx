@@ -10,7 +10,6 @@ import { useCan } from "../../context/Authentication/hooks/useCan";
 import { IProduct } from "../../types";
 import { BuyButton } from "../Buttons";
 import { PaginationButton } from "../Buttons/Pagination";
-import { ProductModal } from "../Modals";
 import { formatNumber } from "../../utils/functions";
 import { useRouter } from "next/router";
 import { ProductContext } from "../../context/Products/ProductsContext";
@@ -44,8 +43,6 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
   const [buttonType, setButtonType] = useState("isNotFavorited");
-  const [product_Id, setProductId] = useState("");
-  const [openModal, setOpenModal] = useState(false);
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -151,11 +148,6 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
         productsPerPage={productsPerPage}
         totalProducts={categoryOfProducts.length}
         paginate={paginate}
-      />
-      <ProductModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        productId={product_Id}
       />
     </Wrapper>
   ) : (

@@ -8,7 +8,6 @@ import { useCan } from "../../context/Authentication/hooks/useCan";
 import { IProduct } from "../../types";
 import { formatNumber } from "../../utils/functions";
 import { BuyButton } from "../Buttons";
-import { ProductModal } from "../Modals";
 // styles
 import {
   Wrapper,
@@ -31,8 +30,6 @@ export function HighlightedProductCard() {
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
   const [buttonType, setButtonType] = useState("isNotFavorited");
-  const [product_Id, setProductId] = useState("");
-  const [openModal, setOpenModal] = useState(false);
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   const {
@@ -48,7 +45,7 @@ export function HighlightedProductCard() {
     }
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Carregando...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   const filteredArray = products.filter((item) => item.highlighted === true);
@@ -120,12 +117,6 @@ export function HighlightedProductCard() {
           </Content>
         ))}
       </CardWrapper>
-
-      <ProductModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        productId={product_Id}
-      />
     </Wrapper>
   );
 }

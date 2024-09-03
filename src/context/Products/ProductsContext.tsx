@@ -4,12 +4,13 @@ import React, {
   ReactNode,
   useReducer,
   useMemo,
+  CSSProperties,
 } from "react";
+import { MoonLoader } from "react-spinners";
 import { useQuery } from "react-query";
 import { IProduct, IProductCategory } from "../../types";
 import { categoryService } from "../../services";
 import reducer from "../../helpers/filterReducer";
-import { useQueryClient } from "react-query";
 import { environment } from "../../utils/environment";
 
 interface ProductFilterContextData {
@@ -32,6 +33,11 @@ const initialState = {
     price: 0,
     minPrice: 0,
   },
+};
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
 };
 
 interface ProductProviderProps {
@@ -99,8 +105,41 @@ function ProductProvider({ children }: ProductProviderProps) {
     [categories, filteredProducts, isSelected]
   );
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading data</div>;
+  if (isLoading)
+    return (
+      <div
+        className="sweet-loading"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <MoonLoader
+          size={150}
+          color="#1A615A"
+          loading={true}
+          cssOverride={override}
+          speedMultiplier={0.5}
+        />
+      </div>
+    );
+  if (isError)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        Falha ao carregar produtos
+      </div>
+    );
 
   return (
     <ProductContext.Provider value={value}>{children}</ProductContext.Provider>

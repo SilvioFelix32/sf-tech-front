@@ -78,7 +78,7 @@ export function ModalEditProduct({
     mutation.mutate(data);
   }
 
-  if (isProductLoading) return <div>Loading...</div>;
+  if (isProductLoading) return <div>Carregando...</div>;
 
   return (
     <ModalEdit
