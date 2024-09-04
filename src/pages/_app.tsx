@@ -5,7 +5,7 @@ import { MainApp } from "../components/MainApp";
 import { IProduct } from "../types";
 import { getCookie, setCookie } from "../services";
 import { Amplify } from "aws-amplify";
-import config from "../aws/aws-exports";
+import config from "../aws/aws-config";
 import {
   CartProvider,
   FavoriteProvider,
