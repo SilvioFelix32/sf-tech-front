@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
+import { signUp } from "aws-amplify/auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { userService } from "../../services";
 import { GetSwallAlert } from "../../utils/sweet-alert";
-import { IUser, Role } from "../../types/IUser";
+import { IUser } from "../../types/IUser";
 import { environment } from "../../utils/environment";
 import { ConfirmPassword, CreatePassword } from "./Passwords";
 //styles
@@ -15,9 +15,11 @@ import {
   Button,
   Title,
   ErrorText,
+  Text,
+  RouterButton,
 } from "./styles";
 
-export function RegistrationForm() {
+export function SignUpForm() {
   const company_id = environment.companyId;
   const router = useRouter();
   const [password, setPassword] = useState("");
@@ -38,19 +40,33 @@ export function RegistrationForm() {
   }
 
   async function handleCreateUser(data: IUser) {
-    const sendData = {
-      ...data,
-      password: password as string,
-      role: "USER" as Role,
-    };
-
-    await userService
-      .create(company_id as string, sendData)
-      .then(() => {
-        GetSwallAlert("top-end", "success", "Sucesso", 1500);
-        router.push("/");
-      })
-      .catch(() => GetSwallAlert("top-end", "error", "Falha", 1500));
+    try {
+      await signUp({
+        username: data.email,
+        password: data.password,
+        options: {
+          userAttributes: {
+            email: data.email,
+            name: data.name,
+            family_name: data.lastName,
+            "custom:company_id": company_id,
+            "custom:role": "USER",
+          },
+        },
+      }).then(() => {
+        router.push({
+          pathname: "/confirm-signup",
+          query: { email: data.email },
+        });
+      });
+    } catch (error) {
+      GetSwallAlert(
+        "top-end",
+        "error",
+        `Erro: ${error.message as Error}`,
+        1500
+      );
+    }
   }
 
   return (
@@ -102,6 +118,18 @@ export function RegistrationForm() {
       <Button onClick={() => verifyPasswords()} type="submit">
         Cadastrar
       </Button>
+      <Content
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "5px",
+        }}
+      >
+        <Text>Já tem uma conta?</Text>
+        <RouterButton type="button" onClick={() => router.push("login")}>
+          Faça login.
+        </RouterButton>
+      </Content>
     </Wrapper>
   );
 }

@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const Theme = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 84.5vh;
   background: ${({ theme }) => theme.colors.background};
 `;
 

@@ -16,7 +16,11 @@ import { useRouter } from "next/router";
 
 export const SignInButton = () => {
   const router = useRouter();
-  const { user, signOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  async function handleSingOut() {
+    await logOut();
+  }
 
   return user ? (
     <Wrapper>
@@ -27,8 +31,8 @@ export const SignInButton = () => {
               <BiUser />
             </Svg>
             <Text style={{ textTransform: "uppercase" }}>
-              {user.name.split("")[0]}
-              {user.lastName.split("")[0]}
+              {user.name?.split("")[0] ?? "U"}
+              {user.lastName?.split("")[0] ?? "S"}
             </Text>
           </Button>
         </CDropdownToggle>
@@ -39,7 +43,7 @@ export const SignInButton = () => {
           >
             Minha Conta
           </CDropdownItem>
-          <CDropdownItem onClick={() => signOut()} className="OptionBtn">
+          <CDropdownItem onClick={handleSingOut} className="OptionBtn">
             Sair <FiX />
           </CDropdownItem>
         </CDropdownMenu>
@@ -47,7 +51,7 @@ export const SignInButton = () => {
     </Wrapper>
   ) : (
     <>
-      <Button onClick={() => router.push("/login")}>
+      <Button onClick={() => router.push("/signIn")}>
         <Svg>
           <BiUser />
         </Svg>
