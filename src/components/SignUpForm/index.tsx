@@ -66,6 +66,7 @@ export function SignUpForm() {
         `Erro: ${error.message as Error}`,
         1500
       );
+      console.log("Erro ao criar usuário", error);
     }
   }
 
@@ -126,7 +127,7 @@ export function SignUpForm() {
         }}
       >
         <Text>Já tem uma conta?</Text>
-        <RouterButton type="button" onClick={() => router.push("login")}>
+        <RouterButton type="button" onClick={() => router.push("signIn")}>
           Faça login.
         </RouterButton>
       </Content>
