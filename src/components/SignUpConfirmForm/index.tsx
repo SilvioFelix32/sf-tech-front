@@ -61,6 +61,7 @@ export function SignUpConfirmForm() {
   }
 
   function censorEmail(email: string) {
+    if (!email) return "";
     const [localPart, domainPart] = email.split("@");
     const censoredLocal = localPart[0] + "***";
     const [domainName, domainExtension] = domainPart.split(".");

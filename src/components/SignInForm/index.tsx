@@ -44,7 +44,7 @@ export function SignInForm() {
       });
     } catch (e) {
       const error = e as Error;
-      console.log("Erro", error.message);
+      console.log("Erro ao realizar login", error);
       setIsPasswordIncorrect(true);
     }
   }
@@ -91,10 +91,7 @@ export function SignInForm() {
       </Content>
       <Registration>
         Não tem uma conta?
-        <RouterButton
-          type="button"
-          onClick={() => router.push("create-acount")}
-        >
+        <RouterButton type="button" onClick={() => router.push("signUp")}>
           Cadastrar.
         </RouterButton>
       </Registration>

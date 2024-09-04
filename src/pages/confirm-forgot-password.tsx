@@ -1,8 +1,8 @@
 import { NavHeader, Header } from "../components";
 import { Content, Theme, Wrapper } from "../styles/pages/login";
-import { ForgotPasswordForm } from "../components/ForgotPasswordForm";
+import { ConfirmForgotPasswordForm } from "../components/ConfirmForgotPasswordForm";
 
-export default function ForgotPassword() {
+export default function ConfirmForgotPassword() {
   return (
     <Theme>
       <NavHeader />
@@ -14,7 +14,7 @@ export default function ForgotPassword() {
       />
       <Wrapper>
         <Content>
-          <ForgotPasswordForm />
+          <ConfirmForgotPasswordForm />
         </Content>
       </Wrapper>
     </Theme>
