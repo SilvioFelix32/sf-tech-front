@@ -1,3 +1,13 @@
+import {
+  fetchUserAttributes,
+  confirmSignIn,
+  fetchAuthSession,
+  signIn,
+  signOut,
+  SignInInput,
+  SignInOutput,
+  deleteUser,
+} from "aws-amplify/auth";
 import api from "./api";
 import { IUser } from "../types/IUser";
 import { getCookie } from "./cookie-service";
@@ -62,10 +72,8 @@ async function update(company_id: string, user_id: string, params: IUser) {
   return response.data;
 }
 
-async function _delete(company_id: string, user_id: string) {
-  await api.delete(`${baseUrl}/${user_id}`, {
-    headers: { company_id },
-  });
+async function _delete() {
+  await deleteUser();
 }
 
 function handleAxiosError(error: any) {

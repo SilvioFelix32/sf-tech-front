@@ -5,14 +5,18 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
   padding: 20px;
-  width: 70%;
+  width: 80%;
   height: 100%;
+
+  @media (min-width: 760px) {
+    padding: 5px;
+  }
 `;
 
 export const Context = styled.div`
   display: flex;
-
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -21,16 +25,15 @@ export const Context = styled.div`
 
 export const Content = styled.div`
   display: flex;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: center;
   padding: 5px;
+  margin: 10px;
+  border-radius: 6px;
   height: 50px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.tertiary};
   border-bottom: solid 1px white;
-
-  @media screen {
-    height: 40px;
-  }
 `;
 
 export const Title = styled.p`
@@ -45,7 +48,7 @@ export const Title = styled.p`
 export const Text = styled.p`
   display: flex;
   color: ${({ theme }) => theme.colors.text};
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 400;
   text-transform: capitalize;
   margin: 1px;

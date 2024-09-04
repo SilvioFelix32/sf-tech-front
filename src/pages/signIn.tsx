@@ -1,20 +1,19 @@
-import { Header, NavHeader, SignUpForm } from "../components";
-//styles
-import { Theme, Wrapper, Content } from "../styles/pages/create-acount";
+import { NavHeader, Header, SignInForm } from "../components";
+import { Content, Theme, Wrapper } from "../styles/pages/login";
 
-export default function CreateAcount() {
+export default function Login() {
   return (
     <Theme>
       <NavHeader />
       <Header
-        showSignInButton={true}
+        showSignInButton={false}
         showCartButton={false}
         showFavoritesButton={false}
         showAdminButton={false}
       />
       <Wrapper>
         <Content>
-          <SignUpForm />
+          <SignInForm />
         </Content>
       </Wrapper>
     </Theme>

@@ -1,8 +1,8 @@
 import { NavHeader, Header } from "../components";
-import { SignInForm } from "../components/SignInForm";
+import { SignUpConfirmForm } from "../components/SignUpConfirmForm";
 import { Content, Theme, Wrapper } from "../styles/pages/login";
 
-export default function Login() {
+export default function ConfirmSignUp() {
   return (
     <Theme>
       <NavHeader />
@@ -14,7 +14,7 @@ export default function Login() {
       />
       <Wrapper>
         <Content>
-          <SignInForm />
+          <SignUpConfirmForm />
         </Content>
       </Wrapper>
     </Theme>

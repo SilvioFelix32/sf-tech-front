@@ -101,3 +101,22 @@ export const ErrorText = styled.p`
   font-size: 12px;
   margin: 4px 0;
 `;
+
+export const Text = styled.p`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1rem;
+  margin: 0;
+`;
+
+export const RouterButton = styled.button`
+  color: ${({ theme }) => theme.colors.tertiary};
+  margin-left: 5px;
+  border: none;
+  background: none;
+  text-decoration: none;
+  transition: filter(0.2s);
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;

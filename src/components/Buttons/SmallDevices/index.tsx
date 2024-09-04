@@ -19,9 +19,12 @@ import { Button, Svg, Wrapper } from "./styles";
 export const SmallDevices = () => {
   const router = useRouter();
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
-  const [isOpen, setIsOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const { user, signOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  async function handleSingOut() {
+    await logOut();
+  }
 
   return (
     <Wrapper>
@@ -41,7 +44,7 @@ export const SmallDevices = () => {
           ) : (
             <CDropdownItem
               onClick={() => {
-                router.push("/login");
+                router.push("/signIn");
               }}
             >
               Entrar
@@ -69,7 +72,7 @@ export const SmallDevices = () => {
           <CDropdownItem href="/admin-acount" className="OptionBtn">
             Minha Conta
           </CDropdownItem>
-          <CDropdownItem onClick={() => signOut()} className="OptionBtn">
+          <CDropdownItem onClick={handleSingOut} className="OptionBtn">
             Sair <FiX />
           </CDropdownItem>
         </CDropdownMenu>
