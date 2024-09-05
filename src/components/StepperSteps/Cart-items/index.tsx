@@ -47,7 +47,9 @@ export function CartItems() {
                 <BtnAddOrRemove product={item} />
               </ProductQuantity>
               <ProductValue>
-                <Text>R$ {formatNumber(item.amount * item.price)}</Text>
+                <Text>
+                  R$ {formatNumber(item.amount * item.price - item.discount)}
+                </Text>
               </ProductValue>
               <Button onClick={() => deleteItemFromCart(item.product_id)}>
                 <BsXLg />

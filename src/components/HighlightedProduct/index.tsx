@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { useState } from "react";
+import { MoonLoader } from "react-spinners";
+import { CSSProperties, useState } from "react";
 import { useQuery } from "react-query";
 import { environment } from "../../utils/environment";
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useFavorite } from "../../context";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { IProduct } from "../../types";
@@ -20,16 +21,20 @@ import {
   Title,
   ProductValue,
   CardWrapper,
-  Button,
   Description,
 } from "./styles";
 import { productsService } from "../../services";
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+};
 
 export function HighlightedProductCard() {
   const company_id = environment.companyId;
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
-  const [buttonType, setButtonType] = useState("isNotFavorited");
+  const [, setButtonType] = useState("isNotFavorited");
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   const {
@@ -45,7 +50,27 @@ export function HighlightedProductCard() {
     }
   );
 
-  if (isLoading) return <p>Carregando...</p>;
+  if (isLoading)
+    return (
+      <div
+        className="sweet-loading"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <MoonLoader
+          size={150}
+          color="#1A615A"
+          loading={true}
+          cssOverride={override}
+          speedMultiplier={0.5}
+        />
+      </div>
+    );
   if (error) return <p>Error: {error.message}</p>;
 
   const filteredArray = products.filter((item) => item.highlighted === true);
@@ -101,7 +126,7 @@ export function HighlightedProductCard() {
                     setButtonType("isNotFavorited");
                   }}
                 >
-                  <MdFavoriteBorder />
+                  <MdFavorite />
                 </FavoritedButton>
               ) : (
                 <NotFavoriteButton

@@ -1,13 +1,4 @@
-import {
-  fetchUserAttributes,
-  confirmSignIn,
-  fetchAuthSession,
-  signIn,
-  signOut,
-  SignInInput,
-  SignInOutput,
-  deleteUser,
-} from "aws-amplify/auth";
+import { deleteUser } from "aws-amplify/auth";
 import api from "./api";
 import { IUser } from "../types/IUser";
 import { getCookie } from "./cookie-service";
@@ -17,6 +8,7 @@ import {
   UserService,
 } from "./interfaces/IUserResponse";
 import { IParamsRequest } from "./interfaces/IParamsRequest";
+import { AxiosError } from "axios";
 
 export const userService: UserService = {
   login,
@@ -76,6 +68,6 @@ async function _delete() {
   await deleteUser();
 }
 
-function handleAxiosError(error: any) {
-  throw new Error("Function not implemented.");
+function handleAxiosError(error: AxiosError) {
+  throw new Error("Function not implemented.", error);
 }

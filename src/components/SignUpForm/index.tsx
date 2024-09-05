@@ -66,7 +66,7 @@ export function SignUpForm() {
         `Erro: ${error.message as Error}`,
         1500
       );
-      console.log("Erro ao criar usuário", error);
+      console.error("Erro ao criar usuário", error);
     }
   }
 
@@ -97,8 +97,9 @@ export function SignUpForm() {
       <Content>
         <Column>
           <Input
-            type="text"
+            type="email"
             placeholder="Email*"
+            autoComplete="off"
             {...register("email", { required: "Email* é obrigatório" })}
           />
           {errors.email && <ErrorText>{errors.email.message}</ErrorText>}

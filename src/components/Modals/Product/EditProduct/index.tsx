@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useForm } from "react-hook-form";
 import { IProduct, IProductCategory, IUpdateProduct } from "../../../../types";
 import { Modal as ModalEdit } from "react-responsive-modal";
@@ -12,7 +14,7 @@ import {
 } from "./styles";
 import "react-responsive-modal/styles.css";
 import { categoryService, productsService } from "../../../../services";
-import { useQuery, useMutation, useQueryClient, isError } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { environment } from "../../../../utils/environment";
 import { IProductCategories } from "../../../../services/interfaces/ICategoryResponse";
 
@@ -33,7 +35,6 @@ export function ModalEditProduct({
   const { register, handleSubmit, reset } = useForm<IProduct>();
   const company_id = environment.companyId;
 
-  // Query para obter o produto selecionado
   const { data: selectedProduct, isLoading: isProductLoading } = useQuery(
     ["product", product_id],
     () => productsService.getById(product_id),

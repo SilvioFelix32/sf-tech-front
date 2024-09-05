@@ -112,8 +112,27 @@ export const Text = styled.p`
   font-weight: 600;
   font-size: 1rem;
   margin: 2px;
-  padding: 0 5px;
   text-transform: capitalize;
+`;
+
+export const Description = styled.p`
+  color: ${({ theme }) => theme.colors.tertiary};
+  text-transform: capitalize;
+  margin: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+    font-size: 0.7rem;
+  }
 `;
 
 export const Title = styled.h1`

@@ -55,7 +55,7 @@ export function ConfirmForgotPasswordForm() {
       GetSwallAlert("center", "success", "Senha alterada com sucesso", 3000);
       router.push("confirm-forgot-password");
     } catch (error) {
-      console.log("Erro ao verificar cadastro", error);
+      console.error("Erro ao verificar cadastro", error);
       setIsCodeIncorrect(true);
     }
   }

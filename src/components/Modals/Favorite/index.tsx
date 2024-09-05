@@ -17,6 +17,7 @@ import {
   Title,
   Text,
   ProductDescription,
+  Description,
 } from "./styles";
 
 interface ModalProps {
@@ -56,12 +57,11 @@ export function FavoriteModal({ isOpenModal, setIsOpenModal }: ModalProps) {
               />
               <ProductContent>
                 <Text>{item.title}</Text>
-                <Text>{item.subtitle}</Text>
               </ProductContent>
               <ProductDescription>
-                <Text style={{ fontSize: "12px", fontWeight: "300" }}>
+                <Description style={{ fontSize: "12px", fontWeight: "300" }}>
                   {item.description}
-                </Text>
+                </Description>
               </ProductDescription>
 
               <ProductValue className="itemValue">

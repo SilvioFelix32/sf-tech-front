@@ -21,6 +21,7 @@ export function PasswordInput({ password, setPassword }: formProps) {
         <Input
           type={show ? "text" : "password"}
           placeholder="Senha"
+          required={true}
           defaultValue={password}
           onChange={(event) => {
             setPassword(event.target.value);

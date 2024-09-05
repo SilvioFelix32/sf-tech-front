@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext, useCart } from "../../../context";
 import { DeliveryMethod } from "./ClientDelivery";
 import { environment } from "../../../utils/environment";
@@ -30,7 +30,6 @@ import {
 
 export function Payment() {
   const { user } = useContext(AuthContext);
-  const [paymentType, setPaymentType] = useState("");
   const { cartItems } = useCart();
   const company_id = environment.companyId;
   const user_id = user?.user_id;
@@ -77,7 +76,7 @@ export function Payment() {
         </Text>
         <ShopTotals>
           {cartItems.map((item: IProduct) => (
-            <div className="totals">
+            <div key={item.product_id} className="totals">
               <Text>{item.title}</Text>
               <Text style={{ fontSize: "1rem" }}>
                 R$ {formatNumber(item.price)}

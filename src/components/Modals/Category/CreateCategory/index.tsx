@@ -1,9 +1,8 @@
 import { environment } from "../../../../utils/environment";
 import { FormEvent, useState } from "react";
-//components
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
-import { Button, Text, Content, Wrapper, Input, Select } from "./styles";
+import { Button, Text, Content, Wrapper, Input } from "./styles";
 import "react-responsive-modal/styles.css";
 import { IProductCategory } from "../../../../types";
 import { categoryService } from "../../../../services";
@@ -11,7 +10,7 @@ import { categoryService } from "../../../../services";
 interface modalProps {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  setReloadData(value: number);
+  setReloadData: (value: number) => void;
 }
 
 export function ModalCreateCategory({

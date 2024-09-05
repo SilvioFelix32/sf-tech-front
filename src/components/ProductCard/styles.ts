@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-wrap: wrap;
 `;
 
@@ -93,16 +91,6 @@ export const FavoritedButton = styled.button`
     height: 35px;
     width: 35px;
   }
-
-  @media (max-width: 760px) {
-    display: flex;
-
-    svg {
-      margin: 4px;
-      height: 14px;
-      width: 14px;
-    }
-  }
 `;
 
 export const NotFavoriteButton = styled.button`
@@ -122,16 +110,6 @@ export const NotFavoriteButton = styled.button`
     margin: 8px;
     height: 35px;
     width: 35px;
-  }
-
-  @media (max-width: 760px) {
-    display: flex;
-
-    svg {
-      margin: 4px;
-      height: 14px;
-      width: 14px;
-    }
   }
 `;
 

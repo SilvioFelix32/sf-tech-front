@@ -3,6 +3,7 @@ import { getCookie, setCookie } from "../../services/cookie-service";
 
 interface IThemeContext {
   theme: string;
+
   setTheme: (theme: string) => void;
 }
 

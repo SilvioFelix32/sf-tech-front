@@ -8,17 +8,13 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-
-  @media screen and (max-width: 1366px) {
-    height: 50px;
-  }
 `;
 
 export const Navigation = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 91%;
+  width: 90%;
 
   a {
     margin: 0 5px;
@@ -34,9 +30,5 @@ export const Navigation = styled.div`
         color: ${({ theme }) => theme.colors.quaternary};
       }
     }
-  }
-
-  @media screen and (min-width: 1025px) {
-    width: 93%;
   }
 `;

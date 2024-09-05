@@ -1,15 +1,11 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IUser, Role } from "../types/IUser";
 import { userService } from "../services";
 import { environment } from "../utils/environment";
 import { useCan } from "../context/Authentication/hooks/useCan";
 //components
 import DataTable from "react-data-table-component";
-import {
-  ModalEditUser,
-  ModalDeleteUser,
-  ModalEditSuperUser,
-} from "../components";
+import { ModalEditUser, ModalDeleteUser } from "../components";
 import { EditButton, ExcludeButton } from "../components/Buttons";
 //styles
 import { Wrapper, Content, Text } from "../styles/pages/admin";
@@ -75,7 +71,8 @@ export default function AdminUsers() {
 
   useEffect(() => {
     fetchUsers(page, perPage);
-  }, [perPage]);
+  }, [page, perPage, reloadData]);
+
   const columns = useMemo(() => {
     const baseColumns = [
       {

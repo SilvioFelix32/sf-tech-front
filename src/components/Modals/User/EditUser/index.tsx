@@ -46,7 +46,7 @@ export function ModalEditUser({
 
   useEffect(() => {
     reset({ ...selectedUser });
-  }, [selectedUser]);
+  }, [reset, selectedUser]);
 
   async function handleUpdate(data: IUser) {
     await userService

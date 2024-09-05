@@ -6,9 +6,7 @@ import {
   Text,
   ProductInfo,
   ProductFilter,
-  Input,
   RangeInput,
-  Button,
 } from "./styles";
 
 export function PriceFilterCard() {

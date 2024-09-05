@@ -44,7 +44,7 @@ export function SignInForm() {
       });
     } catch (e) {
       const error = e as Error;
-      console.log("Erro ao realizar login", error);
+      console.error("Erro ao realizar login", error);
       setIsPasswordIncorrect(true);
     }
   }
@@ -64,12 +64,20 @@ export function SignInForm() {
           <Text>Email</Text>
           <Input
             type="email"
-            placeholder="example@example.com"
             {...register("email", {
-              required: "Email obrigatório",
+              required: "Campo 'Email' não pode estar vazio",
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: "Insira um email válido",
+              },
             })}
+            placeholder="Email"
           />
-          {errors.name && <ErrorText>{errors.email.message}</ErrorText>}
+          {errors.email && (
+            <ErrorText style={{ marginTop: "10px" }}>
+              {errors.email.message}
+            </ErrorText>
+          )}
         </Column>
       </Content>
       <Content>
