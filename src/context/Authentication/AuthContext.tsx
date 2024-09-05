@@ -101,10 +101,13 @@ function AuthProvider({ children }: AuthProviderProps) {
       if (error instanceof AuthError) {
         await signOut();
         setUser(null);
+        setUser({
+          userStatus: "AuthError",
+        });
         removeCookie("user");
         removeCookie("nextauth.token");
 
-        Router.push("/login");
+        Router.push("/signIn");
       }
       throw new Error(error.message);
     }

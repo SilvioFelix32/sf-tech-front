@@ -25,7 +25,7 @@ interface ILoginBody {
 
 export function SignInForm() {
   const router = useRouter();
-  const { login } = useContext(AuthContext);
+  const { login, user } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);
   const {
@@ -52,13 +52,17 @@ export function SignInForm() {
   return (
     <Wrapper onSubmit={handleSubmit(handleSignIn)}>
       <Title>Entre com seu email e senha</Title>
-      {isPasswordIncorrect && (
+      {isPasswordIncorrect ? (
         <Content>
           <Column>
-            <ErrorText>Email ou senha incorretos.</ErrorText>
+            <ErrorText>
+              {user?.userStatus === "AuthError"
+                ? "Erro de autenticação."
+                : "Email ou senha incorretos."}
+            </ErrorText>
           </Column>
         </Content>
-      )}
+      ) : null}
       <Content>
         <Column>
           <Text>Email</Text>
