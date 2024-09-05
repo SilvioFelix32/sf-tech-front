@@ -6,7 +6,7 @@ type UseCanParams = {
   role: string[];
 };
 
-export function useCan({ role, permissions }: UseCanParams) {
+export function useCan({ role }: UseCanParams) {
   const { user, isAuthenticated } = useContext(AuthContext);
 
   if (!isAuthenticated) {

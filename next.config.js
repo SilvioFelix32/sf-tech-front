@@ -7,17 +7,24 @@ module.exports = {
   reactStrictMode: true,
   images: {
     formats: ['image/webp'],
-    domains: ['i.imgur.com', 'imgur.com', "loremflickr.com", "img2.gratispng.com"]
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.imgur.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'imgur.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
-
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/api/:path*',
-  //       destination: 'https://sf-tech-back.vercel.app/v1',
-  //     }
-  //   ]
-  // },
+  experimental: {
+    middleware: true,
+  },
 
   async headers() {
     return [

@@ -15,6 +15,7 @@ interface ProductFilterState {
 
 interface ProductFilterContextData {
   state: ProductFilterState;
+
   setSearchTerm: (searchTerm: string) => void;
   filteredProduct: string[];
 }

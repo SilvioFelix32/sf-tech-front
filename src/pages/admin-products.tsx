@@ -1,24 +1,19 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-//services an types
 import { IProduct } from "../types";
 import { productsService } from "../services";
-import { environment } from "../utils/environment";
-//components
 import {
   ModalCreateProduct,
   ModalDeleteProduct,
   ModalEditProduct,
 } from "../components";
-import { EditButton, ExcludeButton } from "../components/Buttons";
-//imported libs
 import DataTable from "react-data-table-component";
-//styles and theme
+import { EditButton, ExcludeButton } from "../components/Buttons";
+//styles
 import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
 export default function AdminProducts() {
-  //Data table states and pagination
   const [products, setProducts] = useState<IProduct[]>([]);
   const [product_id, setProduct_id] = useState("");
   const [loading, setLoading] = useState(false);
@@ -74,7 +69,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     fetchProducts(page, perPage);
-  }, [perPage]);
+  }, [perPage, page, reloadData]);
 
   //Dados da tabela
   const columns = [

@@ -1,11 +1,12 @@
+/* eslint-disable no-case-declarations */
 import { IProduct } from "../types";
 
 const filterReducer = (state, action) => {
   switch (action.type) {
     case "LOAD_FILTER_PRODUCTS":
-      let priceArr = action.payload.map((curElem: IProduct) => curElem.price);
-      let maxPrice = Math.max(...priceArr);
-      let minPrice = Math.min(...priceArr);
+      const priceArr = action.payload.map((curElem: IProduct) => curElem.price);
+      const maxPrice = Math.max(...priceArr);
+      const minPrice = Math.min(...priceArr);
 
       return {
         ...state,
@@ -31,7 +32,7 @@ const filterReducer = (state, action) => {
       };
 
     case "FILTER_PRODUCTS":
-      let { all_products } = state;
+      const { all_products } = state;
       let tempFilterProduct = [...all_products];
 
       const { text, price } = state.filters;
@@ -57,8 +58,10 @@ const filterReducer = (state, action) => {
       };
 
     case "CLEAR_FILTERS":
-      let priceArray = action.payload.map((curElem: IProduct) => curElem.price);
-      let prodMaxPrice = Math.max(...priceArray);
+      const priceArray = action.payload.map(
+        (curElem: IProduct) => curElem.price
+      );
+      const prodMaxPrice = Math.max(...priceArray);
 
       return {
         ...state,

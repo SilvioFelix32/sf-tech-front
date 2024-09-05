@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useFavorite } from "../context";
+import { BuyButton } from "../components";
 import { IFavoriteItem } from "../types/IFavorite";
+import { MdFavorite } from "react-icons/md";
 //styles
 import {
   Wrapper,
@@ -9,15 +12,14 @@ import {
   Title,
   Text,
   Picture,
-  ProductDescription,
   ProductInfo,
   ProductValue,
   FavoritedButton,
+  Description,
 } from "../styles/pages/favorites";
-import { MdFavoriteBorder } from "react-icons/md";
-import { BuyButton } from "../components";
 
 export default function Favorites() {
+  const router = useRouter();
   const { removeItemFromFavorites, favoriteItems } = useFavorite();
   const favoriteProduct = favoriteItems?.map(
     (favorite: IFavoriteItem) => favorite
@@ -27,7 +29,9 @@ export default function Favorites() {
     <Wrapper>
       {favoriteItems?.map((favorite: IFavoriteItem) => (
         <Content key={favorite.product_id}>
-          <Picture>
+          <Picture
+            onClick={() => router.push(`/product/${favorite.product_id}`)}
+          >
             <Image
               src={
                 favorite.urlBanner
@@ -35,14 +39,18 @@ export default function Favorites() {
                   : "https://i.imgur.com/2HFGvvT.png"
               }
               alt={favorite?.title}
-              width="300"
-              height="300"
+              width="200"
+              height="200"
               priority
             ></Image>
           </Picture>
           <ProductInfo>
             <Title>{favorite.title}</Title>
-            <ProductDescription>{favorite.description}</ProductDescription>
+            <Description
+              onClick={() => router.push(`/product/${favorite.product_id}`)}
+            >
+              {favorite.description}
+            </Description>
             <ProductValue>
               <Text
                 style={{ textDecoration: "line-through", fontSize: "14px" }}
@@ -60,18 +68,22 @@ export default function Favorites() {
             <BuyButton product={favorite} />
           </ProductInfo>
           <FavoritedButton
-            className="favorite"
-            onClick={() => removeItemFromFavorites(favorite.product_id)}
+            onClick={() => {
+              removeItemFromFavorites(favorite.product_id);
+            }}
           >
-            <MdFavoriteBorder />
+            <MdFavorite />
           </FavoritedButton>
-          ))
         </Content>
       ))}
     </Wrapper>
   ) : (
     <Wrapper>
-      <Title>Nenhum favorito ainda</Title>
+      <Title
+        style={{ fontSize: "1.5rem", textAlign: "center", marginTop: "3rem" }}
+      >
+        Nenhum favorito ainda
+      </Title>
     </Wrapper>
   );
 }

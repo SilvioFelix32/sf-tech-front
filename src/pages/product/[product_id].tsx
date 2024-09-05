@@ -5,7 +5,7 @@ import { NavHeader, BuyButton, Header } from "../../components";
 import { useQuery } from "react-query";
 import { categoryService, productsService } from "../../services";
 import { formatNumber } from "../../utils/functions";
-import { IProduct, IProductCategory } from "../../types";
+import { IProductCategory } from "../../types";
 import {
   Content,
   Description,
@@ -22,6 +22,13 @@ import {
   SectionProduct,
   Button,
 } from "../../styles/pages/product";
+import { CSSProperties } from "react";
+import { MoonLoader } from "react-spinners";
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+};
 
 export default function Product() {
   const router = useRouter();
@@ -44,7 +51,27 @@ export default function Product() {
     }
   );
 
-  if (isProductLoading) return <div>Carregando...</div>;
+  if (isProductLoading)
+    return (
+      <div
+        className="sweet-loading"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <MoonLoader
+          size={150}
+          color="#1A615A"
+          loading={true}
+          cssOverride={override}
+          speedMultiplier={0.5}
+        />
+      </div>
+    );
 
   return product ? (
     <Theme>

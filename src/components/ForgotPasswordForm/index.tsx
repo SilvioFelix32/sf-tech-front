@@ -38,7 +38,7 @@ export function ForgotPasswordForm() {
         query: { email: data.email },
       });
     } catch (error) {
-      console.log("Erro ao verificar cadastro", error);
+      console.error("Erro ao verificar cadastro", error);
       setIsCodeIncorrect(true);
     }
   }

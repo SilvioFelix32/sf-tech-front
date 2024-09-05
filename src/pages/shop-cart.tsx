@@ -17,6 +17,7 @@ import {
 } from "../styles/pages/shop-cart";
 
 const steps = ["Confirme sua compra", "Pagamento", "Sucesso"];
+// eslint-disable-next-line react/jsx-key
 const stepsContent = [<CartItems />, <Payment />, "Sucesso"];
 
 export default function ShopCart() {

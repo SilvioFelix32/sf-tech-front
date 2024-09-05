@@ -5,6 +5,7 @@ import { Wrapper, Input, InputContainer, Text } from "./styles";
 
 interface formProps {
   password: string;
+
   setPassword: (value: string) => void;
 }
 
@@ -55,6 +56,7 @@ export function CreatePassword({ password, setPassword }: formProps) {
         <Input
           type={show ? "text" : "password"}
           placeholder="Senha"
+          autoComplete="off"
           defaultValue={password}
           onChange={(event) => {
             handleInputChange(event.target.value);

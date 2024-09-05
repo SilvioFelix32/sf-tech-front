@@ -5,6 +5,7 @@ import { Input, InputContainer, Wrapper, Text } from "./styles";
 
 interface formProps {
   passwordConfirm: string;
+
   setPasswordConfirm: (value: string) => void;
 }
 

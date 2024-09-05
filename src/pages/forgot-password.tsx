@@ -7,7 +7,7 @@ export default function ForgotPassword() {
     <Theme>
       <NavHeader />
       <Header
-        showSignInButton={false}
+        showSignInButton={true}
         showCartButton={false}
         showFavoritesButton={false}
         showAdminButton={false}

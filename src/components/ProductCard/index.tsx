@@ -33,7 +33,7 @@ interface CategorySelector {
   isSelected: string;
 }
 
-export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
+export const ProductCard = memo(({ isSelected }: CategorySelector) => {
   const {
     filters: { price },
   } = useFilterContext();
@@ -42,11 +42,11 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
   const { filteredProduct } = useContext(ProductFilterContext);
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
-  const [buttonType, setButtonType] = useState("isNotFavorited");
+  const [, setButtonType] = useState("isNotFavorited");
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(12);
+  const [productsPerPage] = useState(12);
 
   const categoryOfProducts = productCategories?.reduce((acc, cur) => {
     if (isSelected && cur.category_id !== isSelected) {
@@ -166,3 +166,5 @@ export const ProductCard = memo(({ filter, isSelected }: CategorySelector) => {
     </Wrapper>
   );
 });
+
+ProductCard.displayName = "ProductCard";

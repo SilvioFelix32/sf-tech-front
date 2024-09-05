@@ -1,10 +1,9 @@
 import Image from "next/image";
+import { CSSProperties } from "react";
 import { useCan } from "../../context/Authentication/hooks/useCan";
 import { BiStore } from "react-icons/bi";
-//components
 import { SearchBar } from "../SearchBar";
 import { useRouter } from "next/router";
-import { SmallDevices } from "../Buttons/SmallDevices";
 import {
   CartButton,
   FavoritesButton,
@@ -13,7 +12,6 @@ import {
 } from "../Buttons";
 //styles
 import { Select, Wrapper, LogoL, LogoS, Button, Content } from "./styles";
-import { CSSProperties } from "react";
 
 interface HeaderProps {
   showSignInButton?: boolean;
@@ -56,7 +54,6 @@ export function Header({
         </LogoS>
         <SearchBar />
         <ThemeToggle />
-        <SmallDevices />
         <Select>
           {showSignInButton && <SignInButton />}
           {userIsAuthenticated && showFavoritesButton && <FavoritesButton />}

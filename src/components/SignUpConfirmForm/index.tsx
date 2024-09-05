@@ -48,9 +48,9 @@ export function SignUpConfirmForm() {
         );
         router.push("/signIn");
       }
-    } catch {
+    } catch (error) {
       setIsCodeIncorrect(true);
-      console.log("Erro ao verificar cadastro");
+      console.error("Erro ao verificar cadastro", error);
     }
   }
 
@@ -92,9 +92,20 @@ export function SignUpConfirmForm() {
         <Column>
           <Text>Código de verificação</Text>
           <Input
-            {...register("confirmationCode")}
+            {...register("confirmationCode", {
+              required: "Campo 'Código' não pode estar vazio",
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: "Insira um token válido",
+              },
+            })}
             placeholder="Digite o código de confirmação"
           />
+          {errors.confirmationCode && (
+            <ErrorText style={{ marginTop: "10px" }}>
+              {errors.confirmationCode.message}
+            </ErrorText>
+          )}
         </Column>
       </Content>
       <Content>

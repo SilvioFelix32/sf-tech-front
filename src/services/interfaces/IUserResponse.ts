@@ -23,7 +23,7 @@ export interface IUserLoginParams {
 }
 
 export interface UserService {
-  login: (prams: IUserLoginParams) => Promise<AxiosResponse>;
+  login: (params: IUserLoginParams) => Promise<AxiosResponse>;
   getAll: (
     company_id: string,
     params: IParamsRequest

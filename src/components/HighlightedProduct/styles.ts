@@ -75,75 +75,43 @@ export const ProductPrices = styled.div`
 `;
 
 export const FavoritedButton = styled.button`
-  display: none;
   position: absolute;
-  right: 8px;
+  left: 8px;
   top: 8px;
   padding: 0;
-  border-radius: 50%;
   z-index: 2;
   outline: none;
-  color: ${({ theme }) => theme.colors.background};
-  border: solid 1px ${({ theme }) => theme.colors.tertiary};
-  background-color: ${({ theme }) => theme.colors.tertiary};
+  border: none;
+  color: ${({ theme }) => theme.colors.tertiary};
+  background: none;
   transition: filter 0.2s;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
 
   svg {
     margin: 8px;
-    height: 26px;
-    width: 26px;
-  }
-
-  @media (max-width: 760px) {
-    display: flex;
-
-    svg {
-      margin: 4px;
-      height: 14px;
-      width: 14px;
-    }
+    height: 35px;
+    width: 35px;
   }
 `;
 
 export const NotFavoriteButton = styled.button`
   display: none;
   position: absolute;
-  right: 8px;
+  left: 8px;
   top: 8px;
   padding: 0;
-  border-radius: 50%;
   z-index: 2;
   outline: none;
+  border: none;
+  background: none;
   color: ${({ theme }) => theme.colors.tertiary};
-  border: solid 1px ${({ theme }) => theme.colors.tertiary};
-  background-color: ${({ theme }) => theme.colors.background};
   transition: filter 0.2s;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
 
   svg {
     margin: 8px;
-    height: 26px;
-    width: 26px;
-  }
-
-  @media (max-width: 760px) {
-    display: flex;
-
-    svg {
-      margin: 4px;
-      height: 14px;
-      width: 14px;
-    }
+    height: 35px;
+    width: 35px;
   }
 `;
-
 export const ProductValue = styled.div`
   display: flex;
   width: 100%;

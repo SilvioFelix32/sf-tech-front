@@ -1,5 +1,4 @@
 import { HiOutlineMail, HiOutlineUser, HiOutlineUsers } from "react-icons/hi";
-import { GiSmartphone } from "react-icons/gi";
 import { userService } from "../../../../services";
 import { IUser } from "../../../../types";
 import { Card, Divisory, MainData, Wrapper } from "./styles";
@@ -13,7 +12,7 @@ interface ComponentProps {
 }
 
 export function PaymentInformation({ company_id, myUser }: ComponentProps) {
-  const { register, handleSubmit, reset } = useForm<IUser>({
+  const { register, handleSubmit } = useForm<IUser>({
     defaultValues: { ...myUser },
   });
   const user_id = myUser?.user_id;
