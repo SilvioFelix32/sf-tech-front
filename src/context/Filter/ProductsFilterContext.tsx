@@ -41,6 +41,7 @@ function ProductFilterProvider({
     setProducts(filteredProducts);
   }, [filteredProducts]);
 
+  // TODO: Otimizar a busca, hoje ela não deveria paginar se fossem poucos
   const searchProducts = products?.filter((product: IProduct) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );

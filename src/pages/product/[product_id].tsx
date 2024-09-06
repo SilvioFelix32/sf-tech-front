@@ -73,7 +73,7 @@ export default function Product() {
       </div>
     );
 
-  return product ? (
+  return (
     <Theme>
       <NavHeader />
       <Header
@@ -174,7 +174,5 @@ export default function Product() {
         </Section>
       </Wrapper>
     </Theme>
-  ) : (
-    <div>Carregando...</div>
   );
 }

@@ -10,7 +10,7 @@ import { MoonLoader } from "react-spinners";
 import { useQuery } from "react-query";
 import { IProduct, IProductCategory } from "../../types";
 import { categoryService } from "../../services";
-import reducer from "../../helpers/filterReducer";
+import reducer from "../../utils/filterReducer";
 import { environment } from "../../utils/environment";
 
 interface ProductFilterContextData {
@@ -19,7 +19,7 @@ interface ProductFilterContextData {
   filter: string;
   setFilter: (filter: string) => void;
   isSelected: string;
-  setIsSelected: (iSelected: string) => void;
+  setisSelected: (iSelected: string) => void;
   updateFilterValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
   clearFilters: () => void;
 }
@@ -50,7 +50,7 @@ const ProductContext = createContext<ProductFilterContextData>({
   filter: "",
   setFilter: () => {},
   isSelected: "",
-  setIsSelected: () => {},
+  setisSelected: () => {},
   updateFilterValue: () => {},
   clearFilters: () => {},
 });
@@ -58,7 +58,7 @@ const ProductContext = createContext<ProductFilterContextData>({
 function ProductProvider({ children }: ProductProviderProps) {
   const company_id = environment.companyId;
   const [filteredProducts, dispatch] = useReducer(reducer, initialState);
-  const [isSelected, setIsSelected] = useState<string>("");
+  const [isSelected, setisSelected] = useState<string>("");
 
   const {
     data: categories = [],
@@ -98,7 +98,7 @@ function ProductProvider({ children }: ProductProviderProps) {
       filter: filteredProducts.filters.text,
       setFilter,
       isSelected,
-      setIsSelected,
+      setisSelected,
       updateFilterValue,
       clearFilters,
     }),

@@ -14,7 +14,7 @@ import {
   ErrorText,
   RouterButton,
 } from "./styles";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { GetSwallAlert } from "../../utils/sweet-alert";
 
 interface IConfirmSignUpBody {
@@ -25,18 +25,16 @@ interface IConfirmSignUpBody {
 export function SignUpConfirmForm() {
   const router = useRouter();
   const { email } = router.query;
-  const [isCodeIncorrect, setIsCodeIncorrect] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IConfirmSignUpBody>();
+  const [code, setCode] = useState("");
+  const [isCodeInvalid, setIsCodeInvalid] = useState(false);
 
-  async function handleSignUp(data: IConfirmSignUpBody) {
+  async function handleConfirmSignUp(event: FormEvent) {
+    event.preventDefault();
+
     try {
       const { isSignUpComplete } = await confirmSignUp({
         username: email as string,
-        confirmationCode: data.confirmationCode,
+        confirmationCode: code,
       });
 
       if (isSignUpComplete) {
@@ -46,10 +44,10 @@ export function SignUpConfirmForm() {
           "Conta criada com você será redicionado para a página de login",
           3000
         );
-        router.push("/signIn");
+        router.push("/");
       }
     } catch (error) {
-      setIsCodeIncorrect(true);
+      setIsCodeInvalid(true);
       console.error("Erro ao verificar cadastro", error);
     }
   }
@@ -70,16 +68,9 @@ export function SignUpConfirmForm() {
   }
 
   return (
-    <Wrapper onSubmit={handleSubmit(handleSignUp)}>
+    <Wrapper onSubmit={handleConfirmSignUp}>
       <Title>Confirme sua conta</Title>
       <Content>
-        {isCodeIncorrect && (
-          <Content>
-            <Column>
-              <ErrorText>Email ou senha incorretos.</ErrorText>
-            </Column>
-          </Content>
-        )}
         <Column>
           <Text>
             Um email de confirmação foi enviado para{" "}
@@ -92,18 +83,12 @@ export function SignUpConfirmForm() {
         <Column>
           <Text>Código de verificação</Text>
           <Input
-            {...register("confirmationCode", {
-              required: "Campo 'Código' não pode estar vazio",
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: "Insira um token válido",
-              },
-            })}
+            onChange={(e) => setCode(e.target.value)}
             placeholder="Digite o código de confirmação"
           />
-          {errors.confirmationCode && (
+          {isCodeInvalid && (
             <ErrorText style={{ marginTop: "10px" }}>
-              {errors.confirmationCode.message}
+              Insira um código válido
             </ErrorText>
           )}
         </Column>

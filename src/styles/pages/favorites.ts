@@ -111,20 +111,21 @@ export const ProductValue = styled.div`
 `;
 
 export const Title = styled.p`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   text-transform: capitalize;
   font-weight: 600;
   font-size: 1rem;
-  text-align: center;
   margin: 0;
+  padding: 0 5px;
 `;
 
 export const Text = styled.p`
-  color: ${({ theme }) => theme.colors.tertiary};
-  font-weight: 600;
-  font-size: 0.8rem;
-  margin: 2px;
+  display: flex;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1rem;
+  font-weight: 400;
   text-transform: capitalize;
+  margin: 1px;
 `;
 
 export const Description = styled.p`
@@ -141,10 +142,6 @@ export const Description = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   white-space: normal;
-
-  @media (min-width: 768px) and (max-width: 1280px) {
-    font-size: 0.7rem;
-  }
 `;
 
 export const Button = styled.button`

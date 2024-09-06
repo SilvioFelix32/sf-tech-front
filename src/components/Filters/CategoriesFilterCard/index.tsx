@@ -6,21 +6,21 @@ interface CategorySelector {
   filter: string;
   setFilter: (value: string) => void;
   isSelected: string;
-  setIsSelected: (value: string) => void;
+  setisSelected: (value: string) => void;
 }
 
 export function CategoriesFilterCard({
   setFilter,
   isSelected,
-  setIsSelected,
+  setisSelected,
 }: CategorySelector) {
   const { productCategories } = useContext(ProductContext);
 
   const handleButtonClick = (id: string) => {
     if (isSelected === id) {
-      setIsSelected("");
+      setisSelected("");
     } else {
-      setIsSelected(id);
+      setisSelected(id);
     }
   };
 

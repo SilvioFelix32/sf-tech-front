@@ -17,7 +17,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [filter, setFilter] = useState("");
-  const [isSelected, setIsSelected] = useState("");
+  const [isSelected, setisSelected] = useState("");
 
   return (
     <Theme>
@@ -35,7 +35,7 @@ export default function Home() {
               filter={filter}
               setFilter={setFilter}
               isSelected={isSelected}
-              setIsSelected={setIsSelected}
+              setisSelected={setisSelected}
             />
             <PriceFilterCard />
           </LeftContent>

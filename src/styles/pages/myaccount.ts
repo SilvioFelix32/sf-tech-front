@@ -5,14 +5,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 3rem;
   padding: 20px;
   width: 80%;
   height: 100%;
-
-  @media (min-width: 760px) {
-    padding: 5px;
-  }
 `;
 
 export const Context = styled.div`
@@ -37,7 +33,7 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.p`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   text-transform: capitalize;
   font-weight: 600;
   font-size: 1rem;

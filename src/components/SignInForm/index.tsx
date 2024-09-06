@@ -27,7 +27,7 @@ export function SignInForm() {
   const router = useRouter();
   const { login, user } = useContext(AuthContext);
   const [password, setPassword] = useState("");
-  const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);
+  const [isInputValid, setIsInputValid] = useState(false);
   const {
     register,
     handleSubmit,
@@ -45,14 +45,14 @@ export function SignInForm() {
     } catch (e) {
       const error = e as Error;
       console.error("Erro ao realizar login", error);
-      setIsPasswordIncorrect(true);
+      setIsInputValid(true);
     }
   }
 
   return (
     <Wrapper onSubmit={handleSubmit(handleSignIn)}>
       <Title>Entre com seu email e senha</Title>
-      {isPasswordIncorrect ? (
+      {isInputValid && (
         <Content>
           <Column>
             <ErrorText>
@@ -62,7 +62,7 @@ export function SignInForm() {
             </ErrorText>
           </Column>
         </Content>
-      ) : null}
+      )}
       <Content>
         <Column>
           <Text>Email</Text>

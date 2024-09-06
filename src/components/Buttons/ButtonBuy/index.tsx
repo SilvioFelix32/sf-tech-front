@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { useCart } from "../../../context";
 import { CartItemType } from "../../../context/Cart/types";
 //styles
@@ -25,14 +25,26 @@ export function BuyButton({ product, styles }: ButtonProps) {
     handleUpdateAmountProduct,
   } = useCart();
 
+  useEffect(() => {
+    const isInCart = cartItems.some(
+      (cartItem: CartItemType) => cartItem.product_id === product.product_id
+    );
+    if (isInCart) {
+      setButtonType("howMany");
+    } else {
+      setButtonType("buy");
+    }
+  }, [cartItems, product.product_id]);
+
   function handleReset() {
     if (
       cartItems.length === 0 ||
       !cartItems.some(
         (cartItem: CartItemType) => cartItem.product_id === product.product_id
       )
-    )
+    ) {
       setButtonType("buy");
+    }
   }
 
   return (
@@ -62,7 +74,7 @@ export function BuyButton({ product, styles }: ButtonProps) {
             {cartItems.find(
               (cartItem: CartItemType) =>
                 cartItem.product_id === product.product_id
-            )?.amount || setButtonType("buy")}
+            )?.amount || 0}
           </Text>
           <ButtonAdd onClick={() => handleUpdateAmountProduct(product)}>
             +
