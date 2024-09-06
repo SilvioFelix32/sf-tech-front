@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import reducer from "../../helpers/filterReducer";
+import reducer from "../../utils/filterReducer";
 import { IProduct } from "../../types";
 import { ProductContext } from "../Products/ProductsContext";
 

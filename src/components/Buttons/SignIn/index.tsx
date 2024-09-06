@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useRouter } from "next/router";
 import { BiUser } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
 import { AuthContext } from "../../../context";
@@ -12,7 +13,6 @@ import {
 //styles
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { Button, Svg, Text, Wrapper } from "./styles";
-import { useRouter } from "next/router";
 
 export const SignInButton = () => {
   const router = useRouter();

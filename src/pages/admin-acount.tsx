@@ -23,6 +23,7 @@ export default function Administration() {
   const { collapseSidebar } = useProSidebar();
   const [actualPage, setActualPage] = useState("myaccount");
 
+  // TODO: SideBar deve ocupar todo height e deve ser trocado pois ele será depreciado
   return (
     <Theme>
       <NavHeader />

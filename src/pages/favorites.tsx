@@ -25,6 +25,7 @@ export default function Favorites() {
     (favorite: IFavoriteItem) => favorite
   );
 
+  // TODO: Centralizar o texto "Nenhum favorito encontrado"
   return favoriteProduct.length >= 1 ? (
     <Wrapper>
       {favoriteItems?.map((favorite: IFavoriteItem) => (
@@ -80,7 +81,12 @@ export default function Favorites() {
   ) : (
     <Wrapper>
       <Title
-        style={{ fontSize: "1.5rem", textAlign: "center", marginTop: "3rem" }}
+        style={{
+          fontSize: "1.5rem",
+          textAlign: "center",
+          marginTop: "3rem",
+          width: "100%",
+        }}
       >
         Nenhum favorito ainda
       </Title>

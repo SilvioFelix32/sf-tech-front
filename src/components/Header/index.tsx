@@ -11,7 +11,7 @@ import {
   ThemeToggle,
 } from "../Buttons";
 //styles
-import { Select, Wrapper, LogoL, LogoS, Button, Content } from "./styles";
+import { Select, Wrapper, Button, Content, Logo } from "./styles";
 
 interface HeaderProps {
   showSignInButton?: boolean;
@@ -35,7 +35,7 @@ export function Header({
   return (
     <Wrapper>
       <Content style={styles}>
-        <LogoL onClick={() => router.push("/")}>
+        <Logo onClick={() => router.push("/")}>
           <Image
             src="/images/logo_sftech.png"
             alt="sftech"
@@ -43,15 +43,7 @@ export function Header({
             height={60}
             priority={true}
           ></Image>
-        </LogoL>
-        <LogoS onClick={() => router.push("/")}>
-          <Image
-            src="/images/logo_60x60.png"
-            alt="sftech"
-            width={60}
-            height={60}
-          ></Image>
-        </LogoS>
+        </Logo>
         <SearchBar />
         <ThemeToggle />
         <Select>

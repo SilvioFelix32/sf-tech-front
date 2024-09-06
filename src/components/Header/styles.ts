@@ -35,7 +35,7 @@ export const Content = styled.div`
   }
 `;
 
-export const LogoL = styled.button`
+export const Logo = styled.button`
   display: flex;
   border: none;
   outline: none;
@@ -43,25 +43,6 @@ export const LogoL = styled.button`
   > image {
     width: 100%;
     height: 100%;
-  }
-
-  @media (max-width: 764px) {
-    display: none;
-  }
-`;
-
-export const LogoS = styled.button`
-  display: none;
-  border: none;
-  outline: none;
-
-  > image {
-    width: 100%;
-    height: 100%;
-  }
-
-  @media (max-width: 720px) {
-    display: flex;
   }
 `;
 

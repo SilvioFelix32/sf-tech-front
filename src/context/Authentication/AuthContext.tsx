@@ -1,4 +1,4 @@
-import { createContext, ReactNode, Suspense, useState } from "react";
+import { createContext, ReactNode, Suspense, useEffect, useState } from "react";
 import Router from "next/router";
 import api from "../../services/api";
 import { Role } from "../../types/IUser";
@@ -9,7 +9,8 @@ import {
   signIn,
   signOut,
   SignInInput,
-  AuthError,
+  AuthSession,
+  AuthTokens,
 } from "aws-amplify/auth";
 
 export type User = {
@@ -36,11 +37,45 @@ type AuthProviderProps = {
 const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
+  let loggedUser: User;
+  const [session, setSession] = useState<AuthTokens | null | undefined>();
+  //   () => {
+  //   const session = getCookie("session");
+  //   return session ? JSON.parse(session) : null;
+  // });
   const [user, setUser] = useState<User | null>(() => {
     const loggedUser = getCookie("user");
     return loggedUser ? JSON.parse(loggedUser) : null;
   });
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    const fetchAndSetUser = async () => {
+      if (user?.isSignedIn == true && session?.accessToken == undefined) {
+        const {
+          email,
+          name,
+          family_name,
+          "custom:role": role,
+          sub: userId,
+        } = await fetchUserAttributes();
+
+        loggedUser = {
+          name: name,
+          lastName: family_name,
+          email: email,
+          role: (role as Role) ?? Role.USER,
+          user_id: userId,
+          isSignedIn: true,
+        };
+
+        setUser(loggedUser);
+        setCookie("user", JSON.stringify(loggedUser));
+      }
+    };
+
+    fetchAndSetUser();
+  }, [loggedUser]);
 
   async function login({ username, password }: SignInInput) {
     try {
@@ -52,6 +87,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         },
       });
 
+      // TODO: Criar validação para o proximo passo
       if (nextStep.signInStep === "CONFIRM_SIGN_UP") {
         setUser({
           userStatus: `Status: ${nextStep.signInStep}, "Você precisa confirmar a sua senha"`,
@@ -65,10 +101,12 @@ function AuthProvider({ children }: AuthProviderProps) {
       }
 
       if (isSignedIn) {
-        const [userAttributes, session] = await Promise.all([
+        const [userAttributes, userSession] = await Promise.all([
           fetchUserAttributes(),
           fetchAuthSession({ forceRefresh: true }),
         ]);
+        setSession(userSession.tokens);
+        setCookie("session", JSON.stringify(userSession.tokens));
 
         const {
           email,
@@ -77,15 +115,12 @@ function AuthProvider({ children }: AuthProviderProps) {
           "custom:role": role,
           sub: userId,
         } = userAttributes;
-        const { accessToken } = session.tokens;
 
-        setCookie("nextauth.token", accessToken);
-
-        const loggedUser: User = {
-          name: name || "",
-          lastName: family_name || "",
-          email: email || "",
-          role: (role as Role) || Role.USER,
+        loggedUser = {
+          name: name,
+          lastName: family_name,
+          email: email,
+          role: (role as Role) ?? Role.USER,
           user_id: userId,
           isSignedIn: isSignedIn,
         };
@@ -93,23 +128,20 @@ function AuthProvider({ children }: AuthProviderProps) {
         setUser(loggedUser);
         setCookie("user", JSON.stringify(loggedUser));
 
-        api.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
+        api.defaults.headers[
+          "Authorization"
+        ] = `Bearer ${session?.accessToken}`;
       }
     } catch (e) {
       console.error("Erro ao fazer login:", e);
       const error = e as Error;
-      if (error instanceof AuthError) {
-        await signOut();
-        setUser(null);
-        setUser({
-          userStatus: "AuthError",
-        });
-        removeCookie("user");
-        removeCookie("nextauth.token");
+      await signOut();
+      setUser(null);
+      removeCookie("user");
+      removeCookie("session");
 
-        Router.push("/signIn");
-      }
-      throw new Error(error.message);
+      window.location.reload();
+      //throw new Error(error.message);
     }
   }
 
@@ -117,7 +149,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     await signOut();
     setUser(null);
     removeCookie("user");
-    removeCookie("nextauth.token");
+    removeCookie("session");
 
     Router.push("/");
   }

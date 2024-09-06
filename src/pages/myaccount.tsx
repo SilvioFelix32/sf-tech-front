@@ -8,7 +8,7 @@ export default function MyAccount() {
 
   return user ? (
     <Wrapper>
-      <Title style={{ fontSize: "22px", color: "#333" }}>Meus dados:</Title>
+      <Title style={{ fontSize: "1.5rem" }}>Meus dados:</Title>
 
       <Content>
         <Title>Nome:</Title>
@@ -25,9 +25,7 @@ export default function MyAccount() {
     </Wrapper>
   ) : (
     <Wrapper>
-      <Title style={{ fontSize: "20px", color: "#333" }}>
-        Nenhum dado disponível
-      </Title>
+      <Title style={{ fontSize: "20px" }}>Nenhum dado disponível</Title>
     </Wrapper>
   );
 }
