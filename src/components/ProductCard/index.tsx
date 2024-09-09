@@ -26,6 +26,7 @@ import {
   ProductValue,
   CardWrapper,
   Description,
+  Pagination,
 } from "./styles";
 
 interface CategorySelector {
@@ -144,11 +145,13 @@ export const ProductCard = memo(({ isSelected }: CategorySelector) => {
         ))}
       </CardWrapper>
 
-      <PaginationButton
-        productsPerPage={productsPerPage}
-        totalProducts={categoryOfProducts.length}
-        paginate={paginate}
-      />
+      <Pagination>
+        <PaginationButton
+          productsPerPage={productsPerPage}
+          totalProducts={categoryOfProducts.length}
+          paginate={paginate}
+        />
+      </Pagination>
     </Wrapper>
   ) : (
     <Wrapper>

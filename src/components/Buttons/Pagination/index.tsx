@@ -5,16 +5,18 @@ interface PaginationProps {
   totalProducts: number;
   paginate: (pageNumber: number) => void;
 }
-
 export const PaginationButton: React.FC<PaginationProps> = ({
   productsPerPage,
   totalProducts,
   paginate,
 }) => {
   const pageNumbers = [];
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
 
-  for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
-    pageNumbers.push(i);
+  if (totalPages > 1) {
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
   }
 
   return (

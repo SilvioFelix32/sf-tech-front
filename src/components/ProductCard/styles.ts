@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 export const CardWrapper = styled.div`
@@ -14,13 +15,21 @@ export const CardWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
+export const Pagination = styled.div`
+  display: flex;
+  height: 40px;
+  width: 100%;
+  justify-content: flex-end;
+  margin-right: 30px;
+`;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   position: relative;
   flex-shrink: 0;
-  height: 32rem;
+  height: 30rem;
   width: 20rem;
   margin: 10px;
   padding: 10px;
