@@ -25,7 +25,7 @@ export function useCan({ role }: UseCanParams) {
 
   if (role?.length > 0) {
     const hasAllRoles = role.some((role) => {
-      return user?.role.includes(role);
+      return user?.role?.includes(role);
     });
 
     if (!hasAllRoles) {

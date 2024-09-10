@@ -1,7 +1,10 @@
 import Image from "next/image";
+import { CSSProperties } from "react";
 import { useCart } from "../../context";
+import { MoonLoader } from "react-spinners";
 import { useRouter } from "next/router";
-import { NavHeader, BuyButton, Header } from "../../components";
+import { NavHeader, Header } from "../../components";
+import { BuyButton } from "../../components/Buttons";
 import { useQuery } from "react-query";
 import { categoryService, productsService } from "../../services";
 import { formatNumber } from "../../utils/functions";
@@ -22,8 +25,6 @@ import {
   SectionProduct,
   Button,
 } from "../../styles/pages/product";
-import { CSSProperties } from "react";
-import { MoonLoader } from "react-spinners";
 
 const override: CSSProperties = {
   display: "block",
