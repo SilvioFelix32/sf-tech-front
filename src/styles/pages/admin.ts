@@ -10,14 +10,12 @@ export const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-
-  @media screen and (max-width: 1200px) {
-    width: 100%;
-  }
 `;
 
 export const Content = styled.div`
   width: 100%;
+  height: 100%;
+  overflow: auto;
 `;
 
 export const Picture = styled.div`
@@ -35,11 +33,6 @@ export const Text = styled.p`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.title};
   text-align: center;
-
-  /* Media query for smaller screens */
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
-  }
 `;
 
 export const Button = styled.button`
@@ -55,13 +48,5 @@ export const Button = styled.button`
 
   &:hover {
     filter: brightness(0.9);
-  }
-
-  /* Media query for smaller screens */
-  @media screen and (max-width: 768px) {
-    height: 32px;
-    margin: 10px auto;
-    padding: 8px;
-    border-radius: 6px;
   }
 `;

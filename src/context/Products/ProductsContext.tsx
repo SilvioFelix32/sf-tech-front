@@ -10,7 +10,7 @@ import { MoonLoader } from "react-spinners";
 import { useQuery } from "react-query";
 import { IProduct, IProductCategory } from "../../types";
 import { categoryService } from "../../services";
-import reducer from "../../helpers/filterReducer";
+import reducer from "../../utils/filterReducer";
 import { environment } from "../../utils/environment";
 
 interface ProductFilterContextData {

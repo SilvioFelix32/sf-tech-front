@@ -1,20 +1,11 @@
 import { useState } from "react";
 //components
 import { NavHeader, Footer, Header } from "../components";
-import { useProSidebar } from "react-pro-sidebar";
 import { useCan } from "../context/Authentication/hooks/useCan";
 import AdminProducts from "./admin-products";
-import AdminUsers from "./admin-users";
 import AdminCompany from "./admin-company";
 import AdminCategories from "./admin-product-category";
-import {
-  BiMenu,
-  BiNews,
-  BiPackage,
-  BiStore,
-  BiUser,
-  BiWallet,
-} from "react-icons/bi";
+import { BiMenu, BiNews, BiPackage, BiStore, BiWallet } from "react-icons/bi";
 //styles
 import {
   Wrapper,
@@ -29,8 +20,12 @@ import {
 } from "../styles/customSideBar";
 
 export default function Administration() {
-  const { collapseSidebar } = useProSidebar();
   const [actualPage, setActualPage] = useState("AdminCompany");
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setCollapsed((prevState) => !prevState);
+  };
 
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
 
@@ -47,16 +42,13 @@ export default function Administration() {
         <Content>
           {userHasAdminPermissions && (
             <>
-              <CustomSidebar>
+              <CustomSidebar collapsed={collapsed} transitionDuration={500}>
                 <CustomMenu>
-                  <CustomMenuItem onClick={() => collapseSidebar()}>
+                  <CustomMenuItem onClick={toggleSidebar}>
                     <BiMenu />
                   </CustomMenuItem>
                   <CustomMenuItem onClick={() => setActualPage("AdminCompany")}>
                     <BiStore /> Empresa
-                  </CustomMenuItem>
-                  <CustomMenuItem onClick={() => setActualPage("AdminUsers")}>
-                    <BiUser /> Usuários
                   </CustomMenuItem>
                   <CustomMenuItem
                     onClick={() => setActualPage("AdminCategories")}
@@ -76,7 +68,6 @@ export default function Administration() {
               <Section>
                 {actualPage === "AdminProducts" && <AdminProducts />}
                 {actualPage === "AdminCategories" && <AdminCategories />}
-                {actualPage === "AdminUsers" && <AdminUsers />}
                 {actualPage === "AdminCompany" && <AdminCompany />}
               </Section>
             </>

@@ -15,7 +15,6 @@ import {
   AuthProvider,
 } from "../context";
 import ThemePreferenceProvider from "../context/Theme/ThemeContext";
-import { ProSidebarProvider } from "react-pro-sidebar";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { GlobalStyles } from "../styles/global";
 import "@aws-amplify/ui-react/styles.css";
@@ -55,20 +54,18 @@ export default function App({
               <FavoriteProvider>
                 <FilterContextProvider>
                   <ProductFilterProvider initialProducts={initialProducts}>
-                    <ProSidebarProvider>
-                      <Head>
-                        <title>Sf-tech</title>
-                        <link rel="shortcut icon" href="/favicon.jpg" />
-                        <meta
-                          name="viewport"
-                          content="initial-scale=1.0, width=device-width"
-                        />
-                      </Head>
-                      <MainApp>
-                        <Component {...pageProps} />
-                        <GlobalStyles />
-                      </MainApp>
-                    </ProSidebarProvider>
+                    <Head>
+                      <title>Sf-tech</title>
+                      <link rel="shortcut icon" href="/favicon.jpg" />
+                      <meta
+                        name="viewport"
+                        content="initial-scale=1.0, width=device-width"
+                      />
+                    </Head>
+                    <MainApp>
+                      <Component {...pageProps} />
+                      <GlobalStyles />
+                    </MainApp>
                   </ProductFilterProvider>
                 </FilterContextProvider>
               </FavoriteProvider>

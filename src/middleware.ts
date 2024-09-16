@@ -7,9 +7,13 @@ export function middleware(req: NextRequest) {
   const isMobile =
     /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(userAgent);
 
-  if (isMobile) {
-    return NextResponse.redirect("/mobile");
+  if (isMobile && !req.nextUrl.pathname.startsWith("/mobile")) {
+    return NextResponse.redirect(new URL("/mobile", req.url));
   }
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};

@@ -1,7 +1,5 @@
 import { useState } from "react";
-//components
 import { Footer, Header, NavHeader } from "../components";
-import { useProSidebar } from "react-pro-sidebar";
 import MyAccount from "./myaccount";
 import Favorites from "./favorites";
 import MyShopping from "./shopping";
@@ -20,8 +18,12 @@ import {
 } from "../styles/customSideBar";
 
 export default function Administration() {
-  const { collapseSidebar } = useProSidebar();
   const [actualPage, setActualPage] = useState("myaccount");
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setCollapsed((prevState) => !prevState);
+  };
 
   return (
     <Theme>
@@ -35,9 +37,9 @@ export default function Administration() {
       <Wrapper>
         <Content>
           <>
-            <CustomSidebar>
+            <CustomSidebar collapsed={collapsed} transitionDuration={500}>
               <CustomMenu>
-                <CustomMenuItem onClick={() => collapseSidebar()}>
+                <CustomMenuItem onClick={toggleSidebar}>
                   <BiMenu />
                 </CustomMenuItem>
                 <CustomMenuItem onClick={() => setActualPage("myaccount")}>

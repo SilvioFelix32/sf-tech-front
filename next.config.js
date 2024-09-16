@@ -22,9 +22,6 @@ module.exports = {
       },
     ],
   },
-  experimental: {
-    middleware: true,
-  },
 
   async headers() {
     return [

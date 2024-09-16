@@ -99,7 +99,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       console.error("Erro ao fazer login:", e);
       const error = e as Error;
       if (error instanceof AuthError) {
-        await signOut();
+        await signOut({ global: true });
         setUser(null);
         setUser({
           userStatus: "AuthError",
