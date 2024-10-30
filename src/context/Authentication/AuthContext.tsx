@@ -1,4 +1,4 @@
-import { createContext, ReactNode, Suspense, useState } from "react";
+import { createContext, ReactNode, Suspense, useEffect, useState } from "react";
 import Router from "next/router";
 import api from "../../services/api";
 import { Role } from "../../types/IUser";
@@ -41,6 +41,43 @@ function AuthProvider({ children }: AuthProviderProps) {
     return loggedUser ? JSON.parse(loggedUser) : null;
   });
   const isAuthenticated = !!user;
+
+  useEffect(() => {
+    async function restoreSession() {
+      try {
+        const session = await fetchAuthSession();
+        if (session.tokens) {
+          const userAttributes = await fetchUserAttributes();
+          const {
+            email,
+            name,
+            family_name,
+            "custom:role": role,
+            sub: userId,
+          } = userAttributes;
+
+          const loggedUser: User = {
+            name: name || "",
+            lastName: family_name || "",
+            email: email || "",
+            role: (role as Role) || Role.USER,
+            user_id: userId,
+            isSignedIn: true,
+          };
+
+          setUser(loggedUser);
+          setCookie("user", JSON.stringify(loggedUser));
+          api.defaults.headers[
+            "Authorization"
+          ] = `Bearer ${session.tokens.accessToken}`;
+        }
+      } catch (error) {
+        console.error("Erro ao restaurar sessão:", error);
+      }
+    }
+
+    restoreSession();
+  }, []);
 
   async function login({ username, password }: SignInInput) {
     try {
@@ -107,7 +144,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         removeCookie("user");
         removeCookie("nextauth.token");
 
-        Router.push("/signIn");
+        window.location.reload();
       }
       throw new Error(error.message);
     }
