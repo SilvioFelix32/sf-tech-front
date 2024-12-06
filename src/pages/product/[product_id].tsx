@@ -124,7 +124,7 @@ export default function Product() {
                 <BuyButton product={product} />
                 <Button
                   onClick={() =>
-                    totalItemsCount > 0 && router.push("/shop-cart")
+                    totalItemsCount > 0 && router.push("/checkout")
                   }
                   disabled={totalItemsCount <= 0}
                 >

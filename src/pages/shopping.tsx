@@ -9,7 +9,7 @@ export default function MyShopping() {
 
   return user ? (
     <Wrapper>
-      <Title style={{ fontSize: "22px" }}>MInhas compras:</Title>
+      <Title style={{ fontSize: "22px" }}>Minhas compras:</Title>
 
       <Content>
         <Title>Nome:</Title>

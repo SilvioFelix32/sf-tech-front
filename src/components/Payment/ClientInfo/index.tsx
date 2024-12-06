@@ -1,10 +1,10 @@
 import { HiOutlineMail, HiOutlineUser, HiOutlineUsers } from "react-icons/hi";
-import { userService } from "../../../../services";
-import { IUser } from "../../../../types";
 import { Card, Divisory, MainData, Wrapper } from "./styles";
 
 import { Column, Content, Input, Title, Text } from "./styles";
 import { useForm } from "react-hook-form";
+import { userService } from "../../../services";
+import { IUser } from "../../../types";
 
 interface ComponentProps {
   company_id: string;

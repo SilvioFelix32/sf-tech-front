@@ -1,8 +1,8 @@
+import { AuthContext, useCart } from "../../context";
+import { IProduct } from "../../types";
+import { calculateCartTotals, formatNumber } from "../../utils/functions";
 import { useContext } from "react";
-import { AuthContext, useCart } from "../../../context";
 import { DeliveryMethod } from "./ClientDelivery";
-import { environment } from "../../../utils/environment";
-import { PaymentInformation } from "./ClientInfo";
 import { CardForm } from "./Card";
 import { PixForm } from "./Pix";
 import {
@@ -11,13 +11,6 @@ import {
   CAccordionHeader,
   CAccordionBody,
 } from "@coreui/react";
-import {
-  useUser,
-  calculateCartTotals,
-  formatNumber,
-} from "../../../utils/functions";
-import { IProduct } from "../../../types";
-
 import {
   Wrapper,
   Title,
@@ -31,18 +24,15 @@ import {
 export function Payment() {
   const { user } = useContext(AuthContext);
   const { cartItems } = useCart();
-  const company_id = environment.companyId;
-  const user_id = user?.user_id;
-  const myUser = useUser(company_id, user_id);
 
   const { cartSubtotal, cartDiscount, cartTotal } =
     calculateCartTotals(cartItems);
 
-  return myUser ? (
+  return user ? (
     <Wrapper>
       <Content>
         <Title>Pagamento</Title>
-        <PaymentInformation myUser={myUser} company_id={company_id} />
+        {/* <PaymentInformation myUser={myUser} company_id={company_id} /> */}
         <DeliveryMethod />
         <PaymentOptions>
           <Title>3.Forma de Pagamento:</Title>
