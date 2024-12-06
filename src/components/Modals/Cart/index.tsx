@@ -80,7 +80,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
         </ProductCard>
         <BtnGroup>
           <ConfirmButton
-            onClick={() => totalItemsCount > 0 && router.push("/shop-cart")}
+            onClick={() => totalItemsCount > 0 && router.push("/checkout")}
             disabled={totalItemsCount <= 0}
           >
             Confirmar Compra

@@ -44,6 +44,15 @@ export function CartProvider({ children }: ProviderProps) {
       .toFixed(2);
   }, [cartItems]);
 
+  const cartTotalPriceWithoutDiscount = useMemo(() => {
+    return cartItems
+      .reduce((acumulator, item) => {
+        const totalPrice = item.amount * item.price;
+        return acumulator + totalPrice;
+      }, 0)
+      .toFixed(2);
+  }, [cartItems]);
+
   const getTotalItems = (items: CartItemType[]) => {
     return items.reduce(
       (acumulator: number, item) => acumulator + item.amount,
@@ -120,6 +129,7 @@ export function CartProvider({ children }: ProviderProps) {
         deleteItemFromCart,
         totalItemsCount,
         cartTotalPrice,
+        cartTotalPriceWithoutDiscount,
       }}
     >
       {children}

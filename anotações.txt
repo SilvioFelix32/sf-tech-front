@@ -14,6 +14,6 @@ Em produção, alguns get and updates, estão recebendo o codigo 401, conferir o
 
 
 REFATORAÇÕES.
-- Refatorar modals e componentes que usam estilos similares para simplficar.
+- Refatorar modals e componentes que usam estilos similares para simplficar. Abstrair para um componente global.
 - Refatorar as paginas para fazer a busca apenas quando entrar nela. 
 Exemplo (produtos, ao entrar na home ele faz uma busca na API products, sendo que não tem código fazendo isso)
