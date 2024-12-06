@@ -2,11 +2,12 @@
 
 ###
 
-<p align="left">Esse é um projeto pessoal de um e-commerce usando a melhor parte de minhas habilidades no frontend até o momento...</p>
+<p align="left">Esse é um projeto pessoal de um e-commerce usando a melhor parte de minhas habilidades fullstack até o momento...</p>
 
 ## Demonstração:
 
-  <img src="public/images/sf-tech-front.vercel.app_.png"  alt="demonstration"  />
+  <img src="public/images/front_light.png"  alt="demonstration"  />
+  <img src="public/images/front_dark.png"  alt="demonstration"  />
   
 ###
 
