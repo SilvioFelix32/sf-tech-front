@@ -37,6 +37,7 @@ export default function Administration() {
         showCartButton={false}
         showFavoritesButton={false}
         showAdminButton={true}
+        showSearchBar={false}
       />
       <Wrapper>
         <Content>

@@ -9,8 +9,8 @@ import {
   signIn,
   signOut,
   SignInInput,
-  AuthError,
 } from "aws-amplify/auth";
+import { CustomError, handleApiError } from "../../utils/errorHandler";
 
 export type User = {
   name?: string;
@@ -40,6 +40,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     const loggedUser = getCookie("user");
     return loggedUser ? JSON.parse(loggedUser) : null;
   });
+  const defaultCookieTimeout = 60 * 60 * 24 * 7; // 7 days
   const isAuthenticated = !!user;
 
   async function login({ username, password }: SignInInput) {
@@ -79,7 +80,9 @@ function AuthProvider({ children }: AuthProviderProps) {
         } = userAttributes;
         const { accessToken } = session.tokens;
 
-        setCookie("nextauth.token", accessToken);
+        setCookie("nextauth.token", accessToken, {
+          expires: defaultCookieTimeout,
+        });
 
         const loggedUser: User = {
           name: name || "",
@@ -91,25 +94,24 @@ function AuthProvider({ children }: AuthProviderProps) {
         };
 
         setUser(loggedUser);
-        setCookie("user", JSON.stringify(loggedUser));
+        setCookie("user", JSON.stringify(loggedUser), {
+          expires: defaultCookieTimeout,
+        });
 
         api.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
       }
     } catch (e) {
-      console.error("Erro ao fazer login:", e);
       const error = e as Error;
-      if (error instanceof AuthError) {
-        await signOut({ global: true });
-        setUser(null);
-        setUser({
-          userStatus: "AuthError",
-        });
-        removeCookie("user");
-        removeCookie("nextauth.token");
-
-        Router.push("/signIn");
+      const handledError: CustomError = handleApiError(error);
+      setUser({
+        userStatus: handledError.name,
+      });
+      if (handledError.name === "UserAlreadyAuthenticatedException") {
+        await logOut();
+        window.location.reload();
       }
-      throw new Error(error.message);
+      console.error("AuthContext Error: ", handledError);
+      throw handledError;
     }
   }
 

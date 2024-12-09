@@ -18,6 +18,7 @@ interface HeaderProps {
   showCartButton?: boolean;
   showFavoritesButton?: boolean;
   showAdminButton?: boolean;
+  showSearchBar?: boolean;
   styles?: CSSProperties;
 }
 
@@ -26,6 +27,7 @@ export function Header({
   showCartButton = true,
   showFavoritesButton = true,
   showAdminButton = false,
+  showSearchBar = true,
   styles,
 }: HeaderProps) {
   const router = useRouter();
@@ -52,8 +54,8 @@ export function Header({
             height={60}
           ></Image>
         </LogoS>
-        <SearchBar />
-        <ThemeToggle />
+        {showSearchBar && <SearchBar />}
+        <ThemeToggle styles={{ marginLeft: "auto" }} />
         <Select>
           {showSignInButton && <SignInButton />}
           {userIsAuthenticated && showFavoritesButton && <FavoritesButton />}

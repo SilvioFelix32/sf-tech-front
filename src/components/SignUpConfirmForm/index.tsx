@@ -95,8 +95,8 @@ export function SignUpConfirmForm() {
             {...register("confirmationCode", {
               required: "Campo 'Código' não pode estar vazio",
               pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: "Insira um token válido",
+                value: /^[0-9]{6}$/,
+                message: "Insira um código válido",
               },
             })}
             placeholder="Digite o código de confirmação"

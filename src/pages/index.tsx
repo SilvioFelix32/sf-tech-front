@@ -14,9 +14,11 @@ import {
   Theme,
 } from "../styles/pages/home";
 import { useState } from "react";
+import { InitialModal } from "../components";
 
 export default function Home() {
   const [filter, setFilter] = useState("");
+  const [isOpen, setOpen] = useState(false);
   const [isSelected, setIsSelected] = useState("");
 
   return (
@@ -43,6 +45,7 @@ export default function Home() {
             <ProductCard filter={filter} isSelected={isSelected} />
           </MainSection>
         </Content>
+        <InitialModal isOpen={isOpen} setOpen={setOpen} />
         <Footer />
       </Wrapper>
     </Theme>

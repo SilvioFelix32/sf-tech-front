@@ -82,6 +82,7 @@ export default function Product() {
         showCartButton={true}
         showFavoritesButton={true}
         showAdminButton={true}
+        showSearchBar={false}
         styles={{ width: "70%" }}
       />
       <Wrapper>

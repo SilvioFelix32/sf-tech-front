@@ -60,12 +60,8 @@ export function SignUpForm() {
         });
       });
     } catch (error) {
-      GetSwallAlert(
-        "top-end",
-        "error",
-        `Erro: ${error.message as Error}`,
-        1500
-      );
+      const err = error as Error;
+      GetSwallAlert("center", "error", `Erro: ${err.message}`, 2000);
       console.error("Erro ao criar usuário", error);
     }
   }

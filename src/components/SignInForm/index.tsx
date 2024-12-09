@@ -17,6 +17,11 @@ import {
   Text,
   RouterButton,
 } from "./styles";
+import {
+  CustomError,
+  ErrorTypes,
+  handleApiError,
+} from "../../utils/errorHandler";
 
 interface ILoginBody {
   email: string;
@@ -42,12 +47,23 @@ export function SignInForm() {
       }).then(() => {
         router.push("/");
       });
-    } catch (e) {
-      const error = e as Error;
-      console.error("Erro ao realizar login", error);
+    } catch (error) {
+      const handledError: CustomError = handleApiError(error);
+      console.error("Error: ", handledError);
       setIsPasswordIncorrect(true);
     }
   }
+
+  const handleUserError = (error: string) => {
+    switch (error) {
+      case ErrorTypes.UserNotFoundException:
+        return "Usuário não encontrado";
+      case ErrorTypes.UserAlreadyAuthenticatedException:
+        return "Usuário já autenticado";
+      default:
+        return "Erro de autenticação.";
+    }
+  };
 
   return (
     <Wrapper onSubmit={handleSubmit(handleSignIn)}>
@@ -55,11 +71,7 @@ export function SignInForm() {
       {isPasswordIncorrect ? (
         <Content>
           <Column>
-            <ErrorText>
-              {user?.userStatus === "AuthError"
-                ? "Erro de autenticação."
-                : "Email ou senha incorretos."}
-            </ErrorText>
+            <ErrorText>{handleUserError(user.userStatus)}</ErrorText>
           </Column>
         </Content>
       ) : null}

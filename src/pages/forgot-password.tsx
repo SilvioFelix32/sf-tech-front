@@ -11,6 +11,7 @@ export default function ForgotPassword() {
         showCartButton={false}
         showFavoritesButton={false}
         showAdminButton={false}
+        showSearchBar={false}
       />
       <Wrapper>
         <Content>

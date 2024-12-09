@@ -10,6 +10,7 @@ export default function ShopCart() {
         showCartButton={false}
         showFavoritesButton={true}
         showAdminButton={false}
+        showSearchBar={false}
       />
       <Wrapper>
         <Content

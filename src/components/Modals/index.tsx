@@ -9,3 +9,4 @@ export * from "./User/EditUser";
 export * from "./User/EditSuperUser";
 export * from "./Cart";
 export * from "./Favorite";
+export * from "./Initial";
