@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-// import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { MainApp } from "../components/MainApp";
 import { IProduct } from "../types";
@@ -46,15 +45,6 @@ export default function App({
   pageProps,
   initialProducts,
 }: AppProps) {
-  // const router = useRouter();
-  // const requiresProductContext = [
-  //   "/",
-  //   "/admin-products",
-  //   "/admin-product-categories",
-  //   "/checkout",
-  //   "/shopping",
-  // ].includes(router.pathname);
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemePreferenceProvider>
@@ -71,19 +61,6 @@ export default function App({
                       content="initial-scale=1.0, width=device-width"
                     />
                   </Head>
-                  {/* {requiresProductContext ? (
-                    <ProductFilterProvider initialProducts={initialProducts}>
-                      <MainApp>
-                        <Component {...pageProps} />
-                        <GlobalStyles />
-                      </MainApp>
-                    </ProductFilterProvider>
-                  ) : (
-                    <MainApp>
-                      <Component {...pageProps} />
-                      <GlobalStyles />
-                    </MainApp>
-                  )} */}
                   <ProductFilterProvider initialProducts={initialProducts}>
                     <MainApp>
                       <Component {...pageProps} />
