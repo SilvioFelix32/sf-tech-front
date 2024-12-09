@@ -1,32 +1,21 @@
-import { HiOutlineHome } from "react-icons/hi";
-import { Card, Divisory, MainData, Wrapper } from "./styles";
+import { Text, Wrapper } from "./styles";
+import { Content, Title } from "./styles";
+import { User } from "../../../context";
 
-import { Column, Content, Title, Text } from "./styles";
-
-export function DeliveryMethod() {
+interface DeliveryMethodProps {
+  user: User;
+}
+export function DeliveryMethod({ user }: DeliveryMethodProps) {
   return (
     <Wrapper>
       <Content>
-        <Title>2.Local de Entrega:</Title>
-        <Column>
-          <Card>
-            <Divisory>
-              <HiOutlineHome />
-              <MainData>
-                <Text>Bairro:</Text>
-              </MainData>
-            </Divisory>
-          </Card>
-
-          <Card>
-            <Divisory>
-              <HiOutlineHome />
-              <MainData>
-                <Text>Numero:</Text>
-              </MainData>
-            </Divisory>
-          </Card>
-        </Column>
+        <Title>
+          Destinatário: {user?.name} {user?.lastName} (Padrão)
+        </Title>
+        <Text>
+          Rua Qualquer nº 1234, Lugar Nenhum, UF, CEP 12345678 <br />
+          Telefone de contato: 1234567890
+        </Text>
       </Content>
     </Wrapper>
   );

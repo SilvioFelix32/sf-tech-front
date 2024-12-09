@@ -75,6 +75,7 @@ export const Input = styled.input`
 export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.title};
   font-size: 1.5rem;
+  font-weight: 500;
   margin: 5px;
 `;
 
@@ -84,46 +85,29 @@ export const Text = styled.p`
   font-weight: 300;
 `;
 
-export const CardSelect = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 10px;
+export const Button = styled.button`
   display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  height: 3rem;
+  width: 100%;
+  color: ${({ theme }) => theme.colors.text};
+  background: ${({ theme }) => theme.colors.tertiary};
+  font-size: 1.3rem;
+  transition-duration: 0.3s;
+  border-bottom-left-radius: 6px;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
-export const Card = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
-  height: 100%;
-  width: 50%;
-  padding: 10px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
-
-export const ShopTotals = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  padding: 10px;
-
-  .totals {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 5px;
-    padding: 10px 0;
-    border-top: solid 1px ${({ theme }) => theme.colors.tertiary};
-  }
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 `;

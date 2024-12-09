@@ -44,9 +44,13 @@ export function SignInForm() {
       await login({
         username: data.email,
         password,
-      }).then(() => {
-        router.push("/");
       });
+
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       const handledError: CustomError = handleApiError(error);
       console.error("Error: ", handledError);

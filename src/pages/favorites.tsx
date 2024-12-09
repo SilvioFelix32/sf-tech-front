@@ -18,7 +18,7 @@ import {
   Description,
 } from "../styles/pages/favorites";
 
-export default function Favorites() {
+export default function MyFavorites() {
   const router = useRouter();
   const { removeItemFromFavorites, favoriteItems } = useFavorite();
   const favoriteProduct = favoriteItems?.map(

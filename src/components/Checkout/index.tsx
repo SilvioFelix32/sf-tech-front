@@ -1,6 +1,10 @@
-import { useCart } from "../../context";
 import { formatNumber } from "../../utils/functions";
 import { HighlightedProduct } from "../HighlightedProduct";
+import { ProductCard } from "./ProductCard";
+import { PriceDetail } from "./PriceDetail";
+import { CartItemType } from "../../context/Cart/types";
+import { useRouter } from "next/router";
+import { useCart } from "../../context";
 import {
   SectionTitle,
   Wrapper,
@@ -15,10 +19,6 @@ import {
   Section,
   AddGiftButton,
 } from "./styles";
-import { ProductCard } from "./ProductCard";
-import { PriceDetail } from "./PriceDetail";
-import { CartItemType } from "../../context/Cart/types";
-import { useRouter } from "next/router";
 
 export function Checkout() {
   const {
@@ -84,7 +84,9 @@ export function Checkout() {
             <PriceDetail
               label="Desconto:"
               value={`R$ ${formatNumber(
-                cartTotalPriceWithoutDiscount - cartTotalPrice
+                String(
+                  Number(cartTotalPriceWithoutDiscount) - Number(cartTotalPrice)
+                )
               )}`}
             />
           </SubTotalWrapper>

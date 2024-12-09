@@ -14,10 +14,19 @@ import { formatNumber } from "../../utils/functions";
 
 interface ProductCardProps {
   item: CartItemType;
-  onRemove: (id: string) => void;
+  onRemove?: (id: string) => void;
+  addButton?: boolean;
+  removeButton?: boolean;
+  style?: React.CSSProperties;
 }
 
-export const ProductCard = ({ item, onRemove }: ProductCardProps) => (
+export const ProductCard = ({
+  style,
+  item,
+  onRemove,
+  addButton = true,
+  removeButton = true,
+}: ProductCardProps) => (
   <Product>
     <Image
       src={item.urlBanner}
@@ -26,20 +35,24 @@ export const ProductCard = ({ item, onRemove }: ProductCardProps) => (
       height={100}
       className="image"
     />
-    <ProductContent>
+    <ProductContent style={style}>
       <InfoText>{item.title}</InfoText>
       <InfoText size="0.6rem">{item.subtitle}</InfoText>
     </ProductContent>
-    <ProductQuantity>
-      <BtnAddOrRemove product={item} />
-    </ProductQuantity>
+    {addButton && (
+      <ProductQuantity>
+        <BtnAddOrRemove product={item} />
+      </ProductQuantity>
+    )}
     <ProductValue>
       <InfoText>
         R$ {formatNumber(item.amount * item.price - item.discount)}
       </InfoText>
+      {removeButton && (
+        <Button onClick={() => onRemove(item.product_id)}>
+          <BsXLg />
+        </Button>
+      )}
     </ProductValue>
-    <Button onClick={() => onRemove(item.product_id)}>
-      <BsXLg />
-    </Button>
   </Product>
 );

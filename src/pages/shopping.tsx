@@ -11,13 +11,15 @@ export default function MyShopping() {
     <Wrapper>
       <Title style={{ fontSize: "22px" }}>Minhas compras:</Title>
 
-      <Content>
-        <Title>Nome:</Title>
+      <Content
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Text>Página em desenvolvimento</Text>
-      </Content>
-      <Content>
-        <Title>Email:</Title>
-        <Text>{user?.email ?? ""}</Text>
       </Content>
     </Wrapper>
   ) : (

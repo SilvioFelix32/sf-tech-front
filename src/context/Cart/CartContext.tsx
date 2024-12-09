@@ -1,4 +1,5 @@
 import React, {
+  createContext,
   ReactNode,
   useContext,
   useEffect,
@@ -8,13 +9,25 @@ import React, {
 import { CartItemType } from "./types";
 import { getCookie, setCookie } from "../../services";
 
-const CartContext = React.createContext(null);
-
-interface ProviderProps {
+type ProviderProps = {
   children: ReactNode;
+};
+
+interface ICartContext {
+  cartItems: CartItemType[];
+  totalItemsCount: number;
+  cartTotalPrice: string;
+  cartTotalPriceWithoutDiscount: string;
+  getTotalItems: (items: CartItemType[]) => number;
+  handleAddToCart: (clickedItem: CartItemType) => void;
+  handleUpdateAmountProduct: (clickedItem: CartItemType) => void;
+  handleRemoveFromCart: (product_id: string) => void;
+  deleteItemFromCart: (product_id: string) => void;
 }
 
-export function CartProvider({ children }: ProviderProps) {
+const CartContext = createContext({} as ICartContext);
+
+function CartProvider({ children }: ProviderProps) {
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
 
   useEffect(() => {
@@ -137,4 +150,5 @@ export function CartProvider({ children }: ProviderProps) {
   );
 }
 
-export const useCart = () => useContext(CartContext);
+const useCart = () => useContext(CartContext);
+export { useCart, CartProvider };

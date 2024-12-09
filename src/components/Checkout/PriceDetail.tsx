@@ -4,14 +4,16 @@ interface PriceDetailProps {
   label: string;
   value: string;
   strikeThrough?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const PriceDetail = ({
   label,
   value,
   strikeThrough,
+  style,
 }: PriceDetailProps) => (
-  <PriceDetailWrapper>
+  <PriceDetailWrapper style={style}>
     <InfoText weight={600}>{label}</InfoText>
     <InfoText
       weight={600}

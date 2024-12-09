@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import Cards, { Focused } from "react-credit-cards-2";
+import { User } from "../../../context";
 
 import { CVC, Content, Div, Expiry, Input, Wrapper } from "./styles";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 
-export const CardForm = () => {
+interface CardFormProps {
+  user: User;
+}
+
+export const CardForm = ({ user }: CardFormProps) => {
   const [state, setState] = useState({
-    number: "",
-    expiry: "",
-    cvc: "",
-    name: "",
+    cardNumber: "1234 5678 9012 3456",
+    expiry: "01/30",
+    cvc: "123",
+    name: `${user.name} ${user.lastName}`,
     focus: "",
   });
 
@@ -26,7 +31,7 @@ export const CardForm = () => {
   return (
     <Wrapper>
       <Cards
-        number={state.number}
+        number={state.cardNumber}
         expiry={state.expiry}
         cvc={state.cvc}
         name={state.name}
@@ -34,10 +39,10 @@ export const CardForm = () => {
       />
       <Content>
         <Input
-          type="number"
-          name="number"
+          type="string"
+          name="cardNumber"
           placeholder="Numero do Cartão"
-          value={state.number}
+          value={state.cardNumber}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
         />
@@ -51,7 +56,7 @@ export const CardForm = () => {
         />
         <Div>
           <Expiry
-            type="number"
+            type="string"
             name="expiry"
             placeholder="Validade"
             value={state.expiry}
@@ -59,7 +64,7 @@ export const CardForm = () => {
             onFocus={handleInputFocus}
           />
           <CVC
-            type="number"
+            type="cardNumber"
             name="cvc"
             placeholder="CVC"
             value={state.cvc}

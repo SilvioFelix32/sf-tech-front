@@ -1,8 +1,8 @@
 import { Footer, Header, NavHeader } from "../components";
-import { PaymentForm } from "../components/Payment";
+import { ConfirmationForm } from "../components/ConfirmationForm";
 import { Wrapper, Theme, Content } from "../styles/pages/checkout";
 
-export default function Payment() {
+export default function Confirmation() {
   return (
     <Theme>
       <NavHeader />
@@ -15,7 +15,7 @@ export default function Payment() {
       />
       <Wrapper>
         <Content>
-          <PaymentForm />
+          <ConfirmationForm />
         </Content>
         <Footer />
       </Wrapper>

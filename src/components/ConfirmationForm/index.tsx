@@ -1,0 +1,90 @@
+import { useRouter } from "next/router";
+import { AuthContext, useCart } from "../../context";
+import { PriceDetail } from "../Checkout/PriceDetail";
+import { IProduct } from "../../types";
+import { formatNumber } from "../../utils/functions";
+import { DeliveryMethod } from "../Payment/ClientDelivery";
+import { useContext } from "react";
+
+import { Button, Wrapper, Title, Text, Content, ShoppingCart } from "./styles";
+import { SubTotalWrapper, InfoText } from "../Checkout/styles";
+import { ProductCard } from "../Checkout/ProductCard";
+
+export function ConfirmationForm() {
+  const { user } = useContext(AuthContext);
+  const { cartItems, cartTotalPrice, cartTotalPriceWithoutDiscount } =
+    useCart();
+  const router = useRouter();
+
+  return (
+    <Wrapper>
+      <Title>Seu pedido foi realizado com sucesso!</Title>
+      <Title style={{ fontSize: "1.3rem" }}>Obrigado pela compra</Title>
+
+      <Content
+        style={{
+          width: "50%",
+        }}
+      >
+        <DeliveryMethod user={user} />
+      </Content>
+
+      <Content style={{ marginTop: "20px" }}>
+        <ShoppingCart>
+          <Text style={{ fontSize: "1.3rem", fontWeight: 500 }}>
+            Itens da compra:
+          </Text>
+          {cartItems.map((item: IProduct) => (
+            <ProductCard
+              key={item.product_id}
+              item={item}
+              addButton={false}
+              removeButton={false}
+              style={{ width: "60%" }}
+            />
+          ))}
+        </ShoppingCart>
+        <SubTotalWrapper
+          style={{
+            width: "40%",
+            padding: "20px",
+            outline: "1px solid #33C1B3",
+            borderRadius: "6px",
+            borderTop: "none",
+            marginTop: "30px",
+          }}
+        >
+          <InfoText
+            weight={600}
+            size="1.2rem"
+            style={{ alignSelf: "flex-start" }}
+          >
+            Detalhes da sua compra:
+          </InfoText>
+          <PriceDetail
+            style={{ borderTop: "1px solid #33C1B3", marginTop: "10px" }}
+            label="Valor total do carrinho:"
+            value={`R$ ${formatNumber(Number(cartTotalPriceWithoutDiscount))}`}
+          />
+          <PriceDetail
+            label="Taxa de entrega:"
+            value={`R$ ${formatNumber(10)}`}
+            strikeThrough
+          />
+          <PriceDetail
+            label="Desconto:"
+            value={`R$ ${formatNumber(
+              Number(cartTotalPriceWithoutDiscount) - Number(cartTotalPrice)
+            )}`}
+          />
+          <PriceDetail
+            style={{ borderTop: "1px solid #33C1B3", marginTop: "10px" }}
+            label="Total:"
+            value={`R$ ${formatNumber(Number(cartTotalPrice))}`}
+          />
+        </SubTotalWrapper>
+      </Content>
+      <Button onClick={() => router.push("/")}>Voltar para o incio</Button>
+    </Wrapper>
+  );
+}

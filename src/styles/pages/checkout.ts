@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  min-height: 76.7vh;
+  min-height: 75vh;
   padding: 20px;
   display: flex;
   flex-direction: column;

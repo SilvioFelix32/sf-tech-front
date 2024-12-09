@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Footer, Header, NavHeader } from "../components";
 import MyAccount from "./myaccount";
-import Favorites from "./favorites";
+import MyFavorites from "./favorites";
 import MyShopping from "./shopping";
 import { BiMenu, BiStore, BiHeart, BiUser } from "react-icons/bi";
 //styles
@@ -56,7 +56,7 @@ export default function Administration() {
             </CustomSidebar>
             <Section>
               {actualPage === "myaccount" && <MyAccount />}
-              {actualPage === "favorites" && <Favorites />}
+              {actualPage === "favorites" && <MyFavorites />}
               {actualPage === "shopping" && <MyShopping />}
             </Section>
           </>

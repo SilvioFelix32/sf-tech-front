@@ -147,6 +147,8 @@ export const ButtonPay = styled(Button)`
   font-size: 1.3rem;
   border-top: 1px solid ${({ theme }) => theme.colors.tertiary};
   transition-duration: 0.3s;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
 
   &:hover {
     filter: brightness(0.9);
@@ -168,7 +170,7 @@ export const PaymentWrapper = styled.div`
   justify-content: center;
   width: 50rem;
   height: 100%;
-  min-height: 40rem;
+  /* min-height: 40rem; */
   outline: solid 1px ${({ theme }) => theme.colors.tertiary};
   border-radius: 6px;
 `;
