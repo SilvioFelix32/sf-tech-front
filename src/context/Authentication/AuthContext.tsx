@@ -103,13 +103,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     } catch (e) {
       const error = e as Error;
       const handledError: CustomError = handleApiError(error);
-      setUser({
-        userStatus: handledError.name,
-      });
-      if (handledError.name === "UserAlreadyAuthenticatedException") {
-        await logOut();
-        window.location.reload();
-      }
+      setUser(null);
       console.error("AuthContext Error: ", handledError);
       throw handledError;
     }

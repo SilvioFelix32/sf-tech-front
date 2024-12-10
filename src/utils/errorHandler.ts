@@ -1,4 +1,5 @@
 export enum ErrorTypes {
+  NotAuthorizedException = "NotAuthorizedException",
   UserNotFoundException = "UserNotFoundException",
   UserAlreadyExists = "UserAlreadyExists",
   UserAlreadyAuthenticatedException = "UserAlreadyAuthenticatedException",
@@ -64,9 +65,15 @@ export const handleApiError = (error: Error): CustomError => {
         ErrorTypes.UserNotFoundException,
         "UserNotFoundException"
       );
+    case "NotAuthorizedException":
+      return new CustomError(
+        message || "Incorrect credentials.",
+        ErrorTypes.NotAuthorizedException,
+        "NotAuthorizedException"
+      );
     case "UserAlreadyAuthenticatedException":
       return new CustomError(
-        message || "User not found.",
+        message || "User already authenticated.",
         ErrorTypes.UserNotFoundException,
         "UserNotFoundException"
       );

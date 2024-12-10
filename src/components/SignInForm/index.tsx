@@ -30,8 +30,9 @@ interface ILoginBody {
 
 export function SignInForm() {
   const router = useRouter();
-  const { login, user } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);
   const {
     register,
@@ -53,6 +54,7 @@ export function SignInForm() {
       }
     } catch (error) {
       const handledError: CustomError = handleApiError(error);
+      setError(handledError.name);
       console.error("Error: ", handledError);
       setIsPasswordIncorrect(true);
     }
@@ -64,6 +66,8 @@ export function SignInForm() {
         return "Usuário não encontrado";
       case ErrorTypes.UserAlreadyAuthenticatedException:
         return "Usuário já autenticado";
+      case ErrorTypes.NotAuthorizedException:
+        return "Usuário ou senha incorretos";
       default:
         return "Erro de autenticação.";
     }
@@ -75,7 +79,7 @@ export function SignInForm() {
       {isPasswordIncorrect ? (
         <Content>
           <Column>
-            <ErrorText>{handleUserError(user.userStatus)}</ErrorText>
+            <ErrorText>{handleUserError(error)}</ErrorText>
           </Column>
         </Content>
       ) : null}

@@ -57,6 +57,7 @@ export function ConfirmPassword({
     <Wrapper>
       <InputContainer>
         <Input
+          required={true}
           type={show ? "text" : "password"}
           placeholder="Senha"
           defaultValue={passwordConfirm}
