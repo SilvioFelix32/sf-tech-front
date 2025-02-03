@@ -73,6 +73,9 @@ function AuthProvider({ children }: AuthProviderProps) {
 
         const loggedUser = buildUserAttributes(userAttributes, isSignedIn);
         setUser(loggedUser);
+        setCookie("nextauth.token", session.accessToken, {
+          expires: defaultCookieTimeout,
+        });
         setCookie("user", JSON.stringify(loggedUser), {
           expires: defaultCookieTimeout,
         });
