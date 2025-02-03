@@ -1,16 +1,23 @@
-import { createContext, ReactNode, Suspense, useState } from "react";
+import { createContext, ReactNode, Suspense, useEffect, useState } from "react";
 import Router from "next/router";
 import api from "../../services/api";
 import { Role } from "../../types/IUser";
-import { getCookie, removeCookie, setCookie } from "../../services";
-import {
-  fetchUserAttributes,
-  fetchAuthSession,
-  signIn,
-  signOut,
-  SignInInput,
-} from "aws-amplify/auth";
+import { getCookie, setCookie } from "../../services";
 import { CustomError, handleApiError } from "../../utils/errorHandler";
+import {
+  fetchUserSession,
+  getUserAttributes,
+  signInUser,
+  signOutUser,
+} from "../../services/auth-service";
+import { SignInInput } from "aws-amplify/auth";
+import {
+  clearAuthData,
+  getToken,
+  isTokenExpired,
+  refreshAuthToken,
+} from "./tokenHelper";
+import { buildUserAttributes } from "./buildUserAttributes";
 
 export type User = {
   name?: string;
@@ -43,79 +50,66 @@ function AuthProvider({ children }: AuthProviderProps) {
   const defaultCookieTimeout = 60 * 60 * 24 * 7; // 7 days
   const isAuthenticated = !!user;
 
+  useEffect(() => {
+    const token = getToken();
+    if (token && isTokenExpired(token)) {
+      console.info("Token expirado, tentando atualizar...");
+      refreshAuthToken().then((newToken) => {
+        if (!newToken) logOut();
+      });
+    }
+  }, []);
+
   async function login({ username, password }: SignInInput) {
     try {
-      const { isSignedIn, nextStep } = await signIn({
-        username,
-        password,
-        options: {
-          authFlowType: "USER_SRP_AUTH",
-        },
-      });
-
-      if (nextStep.signInStep === "CONFIRM_SIGN_UP") {
-        setUser({
-          userStatus: `Status: ${nextStep.signInStep}, "Você precisa confirmar a sua senha"`,
-        });
-      } else if (
-        nextStep.signInStep === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED"
-      ) {
-        setUser({
-          userStatus: `Status: ${nextStep.signInStep}, "Você precisa trocar a sua senha"`,
-        });
-      }
+      const { isSignedIn, nextStep } = await signInUser({ username, password });
+      validateStep(nextStep.signInStep);
 
       if (isSignedIn) {
         const [userAttributes, session] = await Promise.all([
-          fetchUserAttributes(),
-          fetchAuthSession({ forceRefresh: true }),
+          getUserAttributes(),
+          fetchUserSession(),
         ]);
 
-        const {
-          email,
-          name,
-          family_name,
-          "custom:role": role,
-          sub: userId,
-        } = userAttributes;
-        const { accessToken } = session.tokens;
-
-        setCookie("nextauth.token", accessToken, {
-          expires: defaultCookieTimeout,
-        });
-
-        const loggedUser: User = {
-          name: name || "",
-          lastName: family_name || "",
-          email: email || "",
-          role: (role as Role) || Role.USER,
-          user_id: userId,
-          isSignedIn: isSignedIn,
-        };
-
+        const loggedUser = buildUserAttributes(userAttributes, isSignedIn);
         setUser(loggedUser);
         setCookie("user", JSON.stringify(loggedUser), {
           expires: defaultCookieTimeout,
         });
 
-        api.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
+        api.defaults.headers["Authorization"] = `Bearer ${session.accessToken}`;
       }
-    } catch (e) {
-      const error = e as Error;
-      const handledError: CustomError = handleApiError(error);
+    } catch (error) {
       setUser(null);
+      const handledError: CustomError = handleApiError(error);
       console.error("AuthContext Error: ", handledError);
       throw handledError;
     }
   }
 
   async function logOut() {
-    await signOut();
+    await signOutUser();
     setUser(null);
-    removeCookie("user");
-    removeCookie("nextauth.token");
+    clearAuthData();
 
     Router.push("/");
+  }
+
+  function validateStep(signInStep: string): void {
+    switch (signInStep) {
+      case "CONFIRM_SIGN_UP":
+        setUser({
+          userStatus: `Status: ${signInStep}, " Vocé precisa confirmar a sua senha"`,
+        });
+        break;
+      case "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED":
+        setUser({
+          userStatus: `Status: ${signInStep}, " Vocé precisa trocar a sua senha"`,
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   return (
