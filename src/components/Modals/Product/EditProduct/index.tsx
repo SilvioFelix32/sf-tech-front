@@ -16,7 +16,7 @@ import "react-responsive-modal/styles.css";
 import { categoryService, productsService } from "../../../../services";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { environment } from "../../../../utils/environment";
-import { IProductCategories } from "../../../../services/interfaces/ICategoryResponse";
+import { ICategoryResponse } from "../../../../services/interfaces/ICategoryResponse";
 
 interface ModalProps {
   onOpen: boolean;
@@ -50,7 +50,7 @@ export function ModalEditProduct({
     data: categories,
     isLoading: isCategoriesLoading,
     isError: isCategoriesError,
-  } = useQuery<IProductCategories, Error>(
+  } = useQuery<ICategoryResponse, Error>(
     ["categories", company_id],
     () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
     {

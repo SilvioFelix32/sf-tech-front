@@ -21,12 +21,12 @@ export const productsService: ProductsService = {
 
 const baseUrl = "/products";
 
-async function getAll(params: any): Promise<IProductInterface> {
+async function getAll(params: any): Promise<IProductResponse> {
   try {
     const response = await api.get<IProductResponse>(`${baseUrl}`, {
       params,
     });
-    return response.data.data;
+    return response.data;
   } catch (error) {
     handleAxiosError(error);
     throw error;
@@ -35,10 +35,10 @@ async function getAll(params: any): Promise<IProductInterface> {
 
 async function search(searchTerm: string): Promise<IProductInterface> {
   try {
-    const response = await api.get<IProductResponse>(
+    const response = await api.get<IProductInterface>(
       `${baseUrl}?=${searchTerm}`
     );
-    return response.data.data;
+    return response.data;
   } catch (error) {
     handleAxiosError(error);
     throw error;

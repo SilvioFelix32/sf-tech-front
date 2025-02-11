@@ -4,7 +4,6 @@ import { IProductCategory } from "../types";
 import { IParamsRequest } from "./interfaces/IParamsRequest";
 import {
   ICategoryResponse,
-  IProductCategories,
   CategoryService,
 } from "./interfaces/ICategoryResponse";
 import { getCookie } from "./cookie-service";
@@ -23,13 +22,13 @@ const nextauth = getCookie("nextauth.token");
 async function getAll(
   company_id: string,
   params: IParamsRequest
-): Promise<IProductCategories> {
+): Promise<ICategoryResponse> {
   try {
     const response = await api.get<ICategoryResponse>(`${baseUrl}`, {
       headers: { company_id },
       params,
     });
-    return response.data.data;
+    return response.data;
   } catch (error) {
     handleAxiosError(error);
     throw error;

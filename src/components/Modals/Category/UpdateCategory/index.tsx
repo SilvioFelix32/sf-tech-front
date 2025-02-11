@@ -8,6 +8,7 @@ import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
 import { Button, Content, Context, Text, Input, Wrapper } from "./styles";
 import "react-responsive-modal/styles.css";
+import { GetSwallAlert } from "../../../../utils/sweet-alert";
 
 interface modalProps {
   onOpen: boolean;
@@ -44,7 +45,8 @@ export function ModalEditCategory({
       .update(company_id as string, category_id as string, {
         ...data,
       })
-      .then(() => setReloadData(Math.random()));
+      .then(() => setReloadData(Math.random()))
+      .catch((error) => GetSwallAlert("center", "error", error.message, 2000));
     setOnOpen(false);
   }
 

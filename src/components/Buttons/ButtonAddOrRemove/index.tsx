@@ -15,6 +15,7 @@ export const BtnAddOrRemove = ({ product }: ButtonProps) => {
       <Text>{product.amount}</Text>
       <Content>
         <Button
+          type="button"
           className="Remove"
           onClick={() => {
             handleRemoveFromCart(product.product_id);
@@ -23,6 +24,7 @@ export const BtnAddOrRemove = ({ product }: ButtonProps) => {
           -
         </Button>
         <Button
+          type="button"
           className="Add"
           onClick={() => handleUpdateAmountProduct(product)}
         >

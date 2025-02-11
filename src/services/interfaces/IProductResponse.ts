@@ -3,7 +3,15 @@ import { IParamsRequest } from "./IParamsRequest";
 
 export interface IProductResponse {
   message: string;
-  data: IProductInterface;
+  data: IProduct[];
+  meta: {
+    total: number;
+    lastPage?: number;
+    currentPage: number;
+    perPage: number;
+    prev?: number | null;
+    next: number;
+  };
 }
 
 export interface IProductInterface {
@@ -19,7 +27,7 @@ export interface IProductInterface {
 }
 
 export interface ProductsService {
-  getAll: (params: IParamsRequest) => Promise<IProductInterface>;
+  getAll: (params: IParamsRequest) => Promise<IProductResponse>;
   search: (params: string) => Promise<IProductInterface>;
   getById: (product_id: string) => Promise<IProduct>;
   create: (category_id: string, params: IProduct) => Promise<IProduct>;

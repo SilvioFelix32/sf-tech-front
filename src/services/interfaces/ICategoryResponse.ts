@@ -3,10 +3,6 @@ import { IParamsRequest } from "./IParamsRequest";
 
 export interface ICategoryResponse {
   message: string;
-  data: IProductCategories;
-}
-
-export interface IProductCategories {
   data: IProductCategory[];
   meta: {
     total: number;
@@ -22,7 +18,7 @@ export interface CategoryService {
   getAll: (
     company_id: string,
     params: IParamsRequest
-  ) => Promise<IProductCategories>;
+  ) => Promise<ICategoryResponse>;
   getById: (category_id: string) => Promise<IProductCategory>;
   create: (
     company_id: string,

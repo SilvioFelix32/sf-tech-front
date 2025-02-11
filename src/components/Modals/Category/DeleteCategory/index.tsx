@@ -3,6 +3,7 @@ import { Modal as ModalDelete } from "react-responsive-modal";
 import { categoryService } from "../../../../services";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
+import { GetSwallAlert } from "../../../../utils/sweet-alert";
 
 interface modalProps {
   category_id: string;
@@ -22,7 +23,10 @@ export function ModalDeleteCategory({
 
     await categoryService
       .delete(category_id as string)
-      .then(() => setReloadData(Math.random()));
+      .then(() => setReloadData(Math.random()))
+      .catch((error) => {
+        GetSwallAlert("center", "error", error.message, 2000);
+      });
   }
 
   return (

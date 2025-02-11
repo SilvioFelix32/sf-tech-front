@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import Image from "next/image";
 import { IProduct } from "../types";
 import { productsService } from "../services";
@@ -13,7 +13,7 @@ import { EditButton, ExcludeButton } from "../components/Buttons";
 import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
-export default function AdminProducts() {
+function AdminProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [product_id, setProduct_id] = useState("");
   const [loading, setLoading] = useState(false);
@@ -71,7 +71,6 @@ export default function AdminProducts() {
     fetchProducts(page, perPage);
   }, [perPage, page, reloadData]);
 
-  //Dados da tabela
   const columns = [
     {
       name: "sku",
@@ -186,3 +185,5 @@ export default function AdminProducts() {
     </>
   );
 }
+
+export default memo(AdminProducts);

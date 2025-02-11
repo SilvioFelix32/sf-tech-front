@@ -13,7 +13,7 @@ import DataTable from "react-data-table-component";
 import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 import "react-responsive-modal/styles.css";
-import { IProductCategories } from "../services/interfaces/ICategoryResponse";
+import { ICategoryResponse } from "../services/interfaces/ICategoryResponse";
 
 function AdminCategories() {
   const company_id = environment.companyId;
@@ -32,18 +32,17 @@ function AdminCategories() {
     isLoading,
     isFetching,
     refetch,
-  } = useQuery<IProductCategories>(
+  } = useQuery<ICategoryResponse>(
     ["productCategories", company_id, perPage],
     () => categoryService.getAll(company_id, { page: 1, limit: perPage }),
     {
-      keepPreviousData: true,
       enabled: !!company_id,
-      select: (data) => ({
-        data: data.data,
-        meta: data.meta,
-      }),
-      staleTime: 60000,
-      cacheTime: 300000,
+      select: ({ data, meta, message }) => ({ data, meta, message }),
+      keepPreviousData: true,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000, // 5 minutos
+      cacheTime: 30 * 60 * 1000, // 30 minutos
     }
   );
 

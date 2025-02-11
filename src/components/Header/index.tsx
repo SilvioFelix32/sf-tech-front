@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import Image from "next/image";
 import { CSSProperties } from "react";
 import { useCan } from "../../context/Authentication/hooks/useCan";
@@ -22,7 +23,7 @@ interface HeaderProps {
   styles?: CSSProperties;
 }
 
-export function Header({
+export const Header = memo(function Header({
   showSignInButton = true,
   showCartButton = true,
   showFavoritesButton = true,
@@ -69,4 +70,4 @@ export function Header({
       </Content>
     </Wrapper>
   );
-}
+});

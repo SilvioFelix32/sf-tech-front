@@ -69,6 +69,9 @@ function ProductProvider({ children }: ProductProviderProps) {
     () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
     {
       select: (res) => res.data,
+      staleTime: 1000 * 60 * 5, // 5 minutos
+      keepPreviousData: true,
+      refetchOnMount: false,
       onSuccess: (data) => {
         const allProducts = data.flatMap(
           (category: IProductCategory) => category.products

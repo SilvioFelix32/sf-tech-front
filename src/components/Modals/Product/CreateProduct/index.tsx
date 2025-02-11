@@ -17,7 +17,7 @@ import {
   Context,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { IProductCategories } from "../../../../services/interfaces/ICategoryResponse";
+import { ICategoryResponse } from "../../../../services/interfaces/ICategoryResponse";
 
 interface modalProps {
   isOpen: boolean;
@@ -37,7 +37,7 @@ export function ModalCreateProduct({
     data: categories,
     isLoading,
     isError,
-  } = useQuery<IProductCategories, Error>(
+  } = useQuery<ICategoryResponse, Error>(
     ["categories", company_id],
     () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
     {
