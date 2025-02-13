@@ -1,10 +1,10 @@
-import { NavHeader, Header } from "../components";
-import { SignUpConfirmForm } from "../components/SignUpConfirmForm";
-import { Content, Theme, Wrapper } from "../styles/pages/login";
+import { NavHeader, Header, SignUpConfirmForm } from "../components";
+import { Theme } from "../styles/components";
+import { Content, Wrapper } from "../styles/pages/login";
 
 export default function ConfirmSignUp() {
   return (
-    <Theme>
+    <Theme height="84vh">
       <NavHeader />
       <Header
         showSignInButton={false}

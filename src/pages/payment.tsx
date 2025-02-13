@@ -1,6 +1,7 @@
 import { Footer, Header, NavHeader } from "../components";
 import { PaymentForm } from "../components/Payment";
-import { Wrapper, Theme, Content } from "../styles/pages/checkout";
+import { Wrapper, Content } from "../styles/pages/checkout";
+import { Theme } from "../styles/components";
 
 export default function Payment() {
   return (

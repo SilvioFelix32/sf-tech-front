@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-export const Theme = styled.div`
-  height: 84.5vh;
-  background: ${({ theme }) => theme.colors.background};
-`;
-
 export const Wrapper = styled.div`
   height: 100%;
   width: 80%;

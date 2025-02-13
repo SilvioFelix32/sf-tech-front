@@ -15,7 +15,6 @@ import {
   Picture,
   ProductInfo,
   ProductValue,
-  Theme,
   Title,
   Text,
   Wrapper,
@@ -25,6 +24,7 @@ import {
   SectionProduct,
   Button,
 } from "../../styles/pages/product";
+import { Theme } from "../../styles/components";
 
 const override: CSSProperties = {
   display: "block",

@@ -7,7 +7,9 @@ export const setCookie = <T>(
 ): void => {
   if (typeof window !== "undefined") {
     try {
-      Cookies.set(key, JSON.stringify(value), options);
+      const cookieValue =
+        typeof value === "string" ? value : JSON.stringify(value);
+      Cookies.set(key, cookieValue, options);
     } catch (error) {
       console.error(`Failed to set cookie ${key}:`, error);
     }

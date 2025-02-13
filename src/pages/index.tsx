@@ -1,20 +1,22 @@
+import { useState } from "react";
 //components
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { NavHeader } from "../components/NavHeader";
-import { ProductCard } from "../components/ProductCard";
-import { CategoriesFilterCard } from "../components/Filters/CategoriesFilterCard";
-import { PriceFilterCard } from "../components/Filters/PriceFilterCard";
+import {
+  CategoriesFilterCard,
+  Footer,
+  Header,
+  InitialModal,
+  NavHeader,
+  PriceFilterCard,
+  ProductCard,
+} from "../components";
 //styles
 import {
   Wrapper,
   Content,
   MainSection,
   LeftContent,
-  Theme,
 } from "../styles/pages/home";
-import { useState } from "react";
-import { InitialModal } from "../components";
+import { Theme } from "../styles/components";
 
 export default function Home() {
   const [filter, setFilter] = useState("");

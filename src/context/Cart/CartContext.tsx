@@ -1,34 +1,33 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 import { CartItemType, ICartContext, CartProviderProps } from "./types";
 import { getCookie, setCookie } from "../../services";
 
 const CartContext = createContext({} as ICartContext);
 
 function CartProvider({ children }: CartProviderProps) {
-  const [cartItems, setCartItems] = useState([] as CartItemType[]);
-
-  useEffect(() => {
+  const [cartItems, setCartItems] = useState<CartItemType[]>(() => {
     const savedCart = getCookie("shop-cart");
 
-    const savedProducts = savedCart
-      ? (JSON.parse(savedCart) as CartItemType[])
-      : [];
-
-    if (savedProducts) {
-      setCartItems(savedProducts);
+    try {
+      const parsedCart = savedCart ? JSON.parse(savedCart) : [];
+      return Array.isArray(parsedCart) ? parsedCart : [];
+    } catch (error) {
+      console.error("CartProvider.Parse Cart:", error);
+      return [];
     }
-  }, []);
+  });
+
+  const updateCartCookie = (newCart: CartItemType[]) => {
+    setCookie("shop-cart", JSON.stringify(newCart), {
+      expires: 7,
+      path: "/",
+    });
+  };
 
   const totalItemsCount = useMemo(() => {
-    return cartItems.reduce((acumulator, item) => {
-      return acumulator + item.amount;
-    }, 0);
+    if (!Array.isArray(cartItems)) return 0;
+
+    return cartItems.reduce((acumulator, item) => acumulator + item.amount, 0);
   }, [cartItems]);
 
   const cartTotalPrice = useMemo(() => {
@@ -59,16 +58,13 @@ function CartProvider({ children }: CartProviderProps) {
   function handleAddToCart(clickedItem: CartItemType) {
     return setCartItems((previousState) => {
       const newCart = [...previousState, { ...clickedItem, amount: 1 }];
-      setCookie("shop-cart", JSON.stringify(newCart), {
-        expires: 7,
-        path: "/",
-      });
+      updateCartCookie(newCart);
       return newCart;
     });
   }
 
   function handleUpdateAmountProduct(clickedItem: CartItemType) {
-    return setCartItems((previousState) => {
+    setCartItems((previousState) => {
       const isItemInCart = previousState.find(
         (item) => item.product_id === clickedItem.product_id
       );
@@ -79,26 +75,30 @@ function CartProvider({ children }: CartProviderProps) {
             ? { ...item, amount: item.amount + 1 }
             : item
         );
-        setCookie("shop-cart", JSON.stringify(newCart), {
-          expires: 7,
-          path: "/",
-        });
+
+        updateCartCookie(newCart);
+
         return newCart;
       }
+      return previousState;
     });
   }
 
   function handleRemoveFromCart(product_id: string) {
-    return setCartItems((previousState) =>
-      previousState.reduce((acumulator, item) => {
+    setCartItems((previousState) => {
+      const newCart = previousState.reduce((acumulator, item) => {
         if (item.product_id === product_id) {
           if (item.amount === 1) return acumulator;
           return [...acumulator, { ...item, amount: item.amount - 1 }];
         } else {
           return [...acumulator, item];
         }
-      }, [] as CartItemType[])
-    );
+      }, [] as CartItemType[]);
+
+      updateCartCookie(newCart);
+
+      return newCart;
+    });
   }
 
   function deleteItemFromCart(product_id: string) {

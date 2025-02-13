@@ -1,5 +1,3 @@
-PRIORIDADE > Entender o motivo da demora pra fazer buscas no banco e renderizar.
-
 Revisar o ProductContext.Provider. Ele deveria paginar, pois ele está trazendo 20 produtos e deveria trazer os que tem na pagina.
 - Opções. Mudar o valor da paginação. Ou mudar a pagina pra renderizar 20 produtos por pagina.
 
@@ -8,9 +6,6 @@ finalizar pagina minha conta
 Pagina de compras >(Conferir se o usuario esta logado antes) Pagina de pagamento > pagina de sucesso.
 
 Finalizar seção de pagamento
-
-Em produção, alguns get and updates, estão recebendo o codigo 401, conferir os modais de editar, e a pagina de pagamento
-
 
 
 REFATORAÇÕES.

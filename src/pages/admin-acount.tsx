@@ -5,12 +5,8 @@ import MyFavorites from "./favorites";
 import MyShopping from "./shopping";
 import { BiMenu, BiStore, BiHeart, BiUser } from "react-icons/bi";
 //styles
-import {
-  Wrapper,
-  Theme,
-  Content,
-  Section,
-} from "../styles/pages/administration";
+import { Wrapper, Content, Section } from "../styles/pages/administration";
+import { Theme } from "../styles/components";
 import {
   CustomSidebar,
   CustomMenuItem,

@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 import { signUp } from "aws-amplify/auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { GetSwallAlert } from "../../utils/sweet-alert";
-import { IUser } from "../../types/IUser";
-import { environment } from "../../config/environment";
+import { environment } from "../../../config/environment";
+import { IUser } from "../../../types";
+import { GetSwallAlert } from "../../../utils";
+
 import { ConfirmPassword, CreatePassword } from "./Passwords";
 //styles
 import {

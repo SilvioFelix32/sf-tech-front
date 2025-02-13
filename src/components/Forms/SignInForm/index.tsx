@@ -1,9 +1,15 @@
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { IUser } from "../../types/IUser";
 import { PasswordInput } from "./Password";
-import { AuthContext } from "../../context";
+import { AuthContext } from "../../../context";
+import {
+  CustomError,
+  handleApiError,
+  ErrorTypes,
+} from "../../../errors/errorHandler";
+import { IUser } from "../../../types";
+
 //styles
 import {
   Wrapper,
@@ -17,11 +23,6 @@ import {
   Text,
   RouterButton,
 } from "./styles";
-import {
-  CustomError,
-  ErrorTypes,
-  handleApiError,
-} from "../../errors/errorHandler";
 
 interface ILoginBody {
   email: string;

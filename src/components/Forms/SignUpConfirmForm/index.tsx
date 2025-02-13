@@ -1,7 +1,7 @@
 import { confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-
+import { GetSwallAlert } from "../../../utils";
 //styles
 import {
   Wrapper,
@@ -15,7 +15,6 @@ import {
   RouterButton,
 } from "./styles";
 import { useState } from "react";
-import { GetSwallAlert } from "../../utils/sweet-alert";
 
 interface IConfirmSignUpBody {
   username: string;

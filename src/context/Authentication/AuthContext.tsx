@@ -33,9 +33,14 @@ function AuthProvider({ children }: AuthProviderProps) {
     const token = getToken();
     if (token && isTokenExpired(token)) {
       console.info("Token expirado, tentando atualizar...");
-      refreshAuthToken().then((newToken) => {
-        if (!newToken) logOut();
-      });
+      refreshAuthToken()
+        .then((newToken) => {
+          console.info("Token atualizado com sucesso!");
+          if (!newToken) logOut();
+        })
+        .catch((error) => {
+          console.error("Erro ao tentar atualizar o token", error);
+        });
     }
   }, []);
 

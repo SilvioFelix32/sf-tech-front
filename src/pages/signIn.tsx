@@ -1,9 +1,10 @@
 import { NavHeader, Header, SignInForm } from "../components";
-import { Content, Theme, Wrapper } from "../styles/pages/login";
+import { Content, Wrapper } from "../styles/pages/login";
+import { Theme } from "../styles/components";
 
 export default function Login() {
   return (
-    <Theme>
+    <Theme height="84vh">
       <NavHeader />
       <Header
         showSignInButton={false}

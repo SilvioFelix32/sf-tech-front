@@ -1,10 +1,10 @@
-import { NavHeader, Header } from "../components";
-import { Content, Theme, Wrapper } from "../styles/pages/login";
-import { ConfirmForgotPasswordForm } from "../components/ConfirmForgotPasswordForm";
+import { NavHeader, Header, ConfirmForgotPasswordForm } from "../components";
+import { Theme } from "../styles/components";
+import { Content, Wrapper } from "../styles/pages/login";
 
 export default function ConfirmForgotPassword() {
   return (
-    <Theme>
+    <Theme height="84vh">
       <NavHeader />
       <Header
         showSignInButton={false}

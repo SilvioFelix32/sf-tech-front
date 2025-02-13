@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { GetSwallAlert } from "../../utils/sweet-alert";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { validatePassword } from "../../utils/password-verification";
+import { GetSwallAlert, validatePassword } from "../../../utils";
 import { confirmResetPassword } from "aws-amplify/auth";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";

@@ -7,12 +7,8 @@ import AdminCompany from "./admin-company";
 import AdminCategories from "./admin-product-category";
 import { BiMenu, BiNews, BiPackage, BiStore, BiWallet } from "react-icons/bi";
 //styles
-import {
-  Wrapper,
-  Theme,
-  Content,
-  Section,
-} from "../styles/pages/administration";
+import { Wrapper, Content, Section } from "../styles/pages/administration";
+import { Theme } from "../styles/components";
 import {
   CustomSidebar,
   CustomMenuItem,

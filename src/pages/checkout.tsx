@@ -1,6 +1,7 @@
 import { Footer, Header, NavHeader } from "../components";
 import { Checkout } from "../components/Checkout";
-import { Wrapper, Content, Theme } from "../styles/pages/checkout";
+import { Theme } from "../styles/components";
+import { Wrapper, Content } from "../styles/pages/checkout";
 
 export default function ShopCart() {
   return (

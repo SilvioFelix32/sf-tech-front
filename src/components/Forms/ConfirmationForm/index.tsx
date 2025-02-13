@@ -1,14 +1,13 @@
 import { useRouter } from "next/router";
-import { AuthContext, useCart } from "../../context";
-import { PriceDetail } from "../Checkout/PriceDetail";
-import { IProduct } from "../../types";
-import { formatPrice } from "../../utils/formatPrice";
-import { DeliveryMethod } from "../Payment/ClientDelivery";
 import { useContext } from "react";
-
+import { AuthContext, useCart } from "../../../context";
+import { IProduct } from "../../../types";
+import { formatPrice } from "../../../utils";
+import { PriceDetail } from "../../Checkout/PriceDetail";
+import { SubTotalWrapper, InfoText } from "../../Checkout/styles";
+import { DeliveryMethod } from "../../Payment/ClientDelivery";
+import { ProductCard } from "../../Checkout/ProductCard";
 import { Button, Wrapper, Title, Text, Content, ShoppingCart } from "./styles";
-import { SubTotalWrapper, InfoText } from "../Checkout/styles";
-import { ProductCard } from "../Checkout/ProductCard";
 
 export function ConfirmationForm() {
   const { user } = useContext(AuthContext);

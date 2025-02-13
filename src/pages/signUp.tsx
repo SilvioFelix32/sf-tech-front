@@ -1,10 +1,11 @@
 import { Header, NavHeader, SignUpForm } from "../components";
 //styles
-import { Theme, Wrapper, Content } from "../styles/pages/create-acount";
+import { Wrapper, Content } from "../styles/pages/create-acount";
+import { Theme } from "../styles/components";
 
 export default function CreateAcount() {
   return (
-    <Theme>
+    <Theme height="84vh">
       <NavHeader />
       <Header
         showSignInButton={true}
