@@ -1,4 +1,4 @@
-import { environment } from "../../../../utils/environment";
+import { environment } from "../../../../config/environment";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { userService } from "../../../../services";

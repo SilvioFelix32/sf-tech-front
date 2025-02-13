@@ -17,6 +17,7 @@ import {
 import ThemePreferenceProvider from "../context/Theme/ThemeContext";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { GlobalStyles } from "../styles/global";
+import { AppProps as NextAppProps } from "next/app";
 import "@aws-amplify/ui-react/styles.css";
 
 const queryClient = new QueryClient();
@@ -34,9 +35,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return { props: {} };
 };
 
-interface AppProps {
-  Component: React.ComponentType<any>;
-  pageProps: any;
+interface AppProps extends NextAppProps {
   initialProducts: IProduct[];
 }
 

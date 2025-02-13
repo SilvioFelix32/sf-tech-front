@@ -7,7 +7,7 @@ import { NavHeader, Header } from "../../components";
 import { BuyButton } from "../../components/Buttons";
 import { useQuery } from "react-query";
 import { categoryService, productsService } from "../../services";
-import { formatNumber } from "../../utils/functions";
+import { formatPrice } from "../../utils/formatPrice";
 import { IProductCategory } from "../../types";
 import {
   Content,
@@ -114,11 +114,11 @@ export default function Product() {
                   }}
                 >
                   De R$
-                  {formatNumber(product?.price)}
+                  {formatPrice(product?.price)}
                 </Text>
                 <Text style={{ fontSize: "1.8rem" }}>
                   Por R$
-                  {formatNumber(product?.price - product?.discount)}
+                  {formatPrice(product?.price - product?.discount)}
                 </Text>
               </ProductPrices>
               <ProductPrices>
@@ -168,7 +168,7 @@ export default function Product() {
                   {product.title}
                 </Title>
                 <Text style={{ fontSize: "1.2rem" }}>
-                  {formatNumber(product?.price - product?.discount)}
+                  {formatPrice(product?.price - product?.discount)}
                 </Text>
               </SectionProduct>
             ))}

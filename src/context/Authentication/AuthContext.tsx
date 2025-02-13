@@ -1,9 +1,8 @@
-import { createContext, ReactNode, Suspense, useEffect, useState } from "react";
+import { createContext, Suspense, useEffect, useState } from "react";
 import Router from "next/router";
 import api from "../../services/api";
-import { Role } from "../../types/IUser";
 import { getCookie, setCookie } from "../../services";
-import { CustomError, handleApiError } from "../../utils/errorHandler";
+import { CustomError, handleApiError } from "../../errors/errorHandler";
 import {
   fetchUserSession,
   getUserAttributes,
@@ -16,29 +15,9 @@ import {
   getToken,
   isTokenExpired,
   refreshAuthToken,
-} from "./tokenHelper";
-import { buildUserAttributes } from "./buildUserAttributes";
-
-export type User = {
-  name?: string;
-  lastName?: string;
-  email?: string;
-  role?: Role;
-  user_id?: string;
-  isSignedIn?: boolean;
-  userStatus?: string;
-};
-
-type AuthContextData = {
-  login(credentials: SignInInput): Promise<void>;
-  logOut(): Promise<void>;
-  user: User;
-  isAuthenticated: boolean;
-};
-
-type AuthProviderProps = {
-  children: ReactNode;
-};
+} from "./helpers/tokenHelper";
+import { buildUserAttributes } from "./helpers/buildUserAttributes";
+import { AuthContextData, AuthProviderProps, User } from "./types";
 
 const AuthContext = createContext({} as AuthContextData);
 

@@ -1,4 +1,4 @@
-import { environment } from "../../../../utils/environment";
+import { environment } from "../../../../config/environment";
 import { FormEvent, useState } from "react";
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { AuthContext, useCart } from "../../context";
 import { PriceDetail } from "../Checkout/PriceDetail";
 import { IProduct } from "../../types";
-import { formatNumber } from "../../utils/functions";
+import { formatPrice } from "../../utils/formatPrice";
 import { DeliveryMethod } from "../Payment/ClientDelivery";
 import { useContext } from "react";
 
@@ -64,23 +64,23 @@ export function ConfirmationForm() {
           <PriceDetail
             style={{ borderTop: "1px solid #33C1B3", marginTop: "10px" }}
             label="Valor total do carrinho:"
-            value={`R$ ${formatNumber(Number(cartTotalPriceWithoutDiscount))}`}
+            value={`R$ ${formatPrice(Number(cartTotalPriceWithoutDiscount))}`}
           />
           <PriceDetail
             label="Taxa de entrega:"
-            value={`R$ ${formatNumber(10)}`}
+            value={`R$ ${formatPrice(10)}`}
             strikeThrough
           />
           <PriceDetail
             label="Desconto:"
-            value={`R$ ${formatNumber(
+            value={`R$ ${formatPrice(
               Number(cartTotalPriceWithoutDiscount) - Number(cartTotalPrice)
             )}`}
           />
           <PriceDetail
             style={{ borderTop: "1px solid #33C1B3", marginTop: "10px" }}
             label="Total:"
-            value={`R$ ${formatNumber(Number(cartTotalPrice))}`}
+            value={`R$ ${formatPrice(Number(cartTotalPrice))}`}
           />
         </SubTotalWrapper>
       </Content>

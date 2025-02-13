@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Cards, { Focused } from "react-credit-cards-2";
-import { User } from "../../../context";
-
+import { User } from "../../../context/Authentication/types";
 import { CVC, Content, Div, Expiry, Input, Wrapper } from "./styles";
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 

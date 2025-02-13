@@ -1,20 +1,11 @@
-import { createContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useState, useEffect } from "react";
 import { getCookie, setCookie } from "../../services/cookie-service";
-
-interface IThemeContext {
-  theme: string;
-
-  setTheme: (theme: string) => void;
-}
+import { IThemeContext, ThemePreferenceProviderProps } from "./types";
 
 export const ThemeContext = createContext<IThemeContext>({
   theme: "light",
   setTheme: () => {},
 });
-
-interface ThemePreferenceProviderProps {
-  children: ReactNode;
-}
 
 const ThemePreferenceProvider: React.FC<ThemePreferenceProviderProps> = ({
   children,

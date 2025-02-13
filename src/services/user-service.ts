@@ -2,13 +2,13 @@ import { deleteUser } from "aws-amplify/auth";
 import api from "./api";
 import { IUser } from "../types/IUser";
 import { getCookie } from "./cookie-service";
-import {
-  IUserLoginParams,
-  IUsersResponse,
-  UserService,
-} from "./interfaces/IUserResponse";
-import { IParamsRequest } from "./interfaces/IParamsRequest";
 import { AxiosError } from "axios";
+import {
+  UserService,
+  IUserLoginParams,
+  IParamsRequest,
+  IUsersResponse,
+} from "./interfaces";
 
 export const userService: UserService = {
   login,

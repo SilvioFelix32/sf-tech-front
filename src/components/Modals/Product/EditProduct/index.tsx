@@ -15,7 +15,7 @@ import {
 import "react-responsive-modal/styles.css";
 import { categoryService, productsService } from "../../../../services";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { environment } from "../../../../utils/environment";
+import { environment } from "../../../../config/environment";
 import { ICategoryResponse } from "../../../../services/interfaces/ICategoryResponse";
 
 interface ModalProps {

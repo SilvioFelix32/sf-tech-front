@@ -1,6 +1,6 @@
+import { User } from "../../../context/Authentication/types";
 import { Text, Wrapper } from "./styles";
 import { Content, Title } from "./styles";
-import { User } from "../../../context";
 
 interface DeliveryMethodProps {
   user: User;

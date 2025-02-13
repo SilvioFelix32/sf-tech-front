@@ -1,13 +1,13 @@
 import Cookies, { CookieAttributes } from "js-cookie";
 
-export const setCookie = (
+export const setCookie = <T>(
   key: string,
-  value: any,
+  value: T,
   options?: CookieAttributes
 ): void => {
   if (typeof window !== "undefined") {
     try {
-      Cookies.set(key, value, options);
+      Cookies.set(key, JSON.stringify(value), options);
     } catch (error) {
       console.error(`Failed to set cookie ${key}:`, error);
     }

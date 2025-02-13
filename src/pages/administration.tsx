@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
+import { useCan } from "../hooks/useCan";
 //components
 import { NavHeader, Footer, Header } from "../components";
-import { useCan } from "../context/Authentication/hooks/useCan";
 import AdminProducts from "./admin-products";
 import AdminCompany from "./admin-company";
 import AdminCategories from "./admin-product-category";

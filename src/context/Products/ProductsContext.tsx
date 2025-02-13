@@ -1,28 +1,17 @@
 import React, {
   createContext,
   useState,
-  ReactNode,
   useReducer,
   useMemo,
   CSSProperties,
 } from "react";
 import { MoonLoader } from "react-spinners";
 import { useQuery } from "react-query";
-import { IProduct, IProductCategory } from "../../types";
+import { IProductCategory } from "../../types";
 import { categoryService } from "../../services";
-import reducer from "../../utils/filterReducer";
-import { environment } from "../../utils/environment";
-
-interface ProductFilterContextData {
-  productCategories: IProductCategory[];
-  filteredProducts: IProduct[];
-  filter: string;
-  setFilter: (filter: string) => void;
-  isSelected: string;
-  setIsSelected: (iSelected: string) => void;
-  updateFilterValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  clearFilters: () => void;
-}
+import reducer from "../reducers/filterReducer";
+import { environment } from "../../config/environment";
+import { ProductFilterContextData, ProductProviderProps } from "./types";
 
 const initialState = {
   filter_products: [],
@@ -39,10 +28,6 @@ const override: CSSProperties = {
   display: "block",
   margin: "0 auto",
 };
-
-interface ProductProviderProps {
-  children: ReactNode;
-}
 
 const ProductContext = createContext<ProductFilterContextData>({
   productCategories: [],

@@ -1,5 +1,5 @@
 import router from "next/router";
-import { formatNumber } from "../../utils/functions";
+import { formatPrice } from "../../utils/formatPrice";
 import Image from "next/image";
 import {
   Categories,
@@ -53,7 +53,7 @@ export function HighlightedProduct() {
               {product.title}
             </Title>
             <Text style={{ fontSize: "1.2rem" }}>
-              {formatNumber(product?.price - product?.discount)}
+              {formatPrice(product?.price - product?.discount)}
             </Text>
           </SectionProduct>
         ))}

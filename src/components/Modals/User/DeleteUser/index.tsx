@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { environment } from "../../../../utils/environment";
+import { environment } from "../../../../config/environment";
 import { userService } from "../../../../services";
 
 import { Button, Content, Text, Wrapper } from "./styles";

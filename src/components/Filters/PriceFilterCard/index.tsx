@@ -1,5 +1,5 @@
 import { useFilterContext } from "../../../context";
-import { formatNumber } from "../../../utils/functions";
+import { formatPrice } from "../../../utils/formatPrice";
 //styles
 import {
   Wrapper,
@@ -21,7 +21,7 @@ export function PriceFilterCard() {
         <Text>
           Preço: {""}
           R$ {""}
-          {formatNumber(price)}
+          {formatPrice(price)}
         </Text>
       </ProductInfo>
 
@@ -41,10 +41,10 @@ export function PriceFilterCard() {
 
 {
   /* <Button onClick={() => updateFilterValue("maxPrice", 1000)}>
-        Até {formatNumber(1000)}
+        Até {formatPrice(1000)}
       </Button>
       <Button onClick={() => updateFilterValue("maxPrice", 5000)}>
-        Até {formatNumber(5000)}
+        Até {formatPrice(5000)}
       </Button> */
 }
 

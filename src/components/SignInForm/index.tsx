@@ -21,7 +21,7 @@ import {
   CustomError,
   ErrorTypes,
   handleApiError,
-} from "../../utils/errorHandler";
+} from "../../errors/errorHandler";
 
 interface ILoginBody {
   email: string;

@@ -1,6 +1,6 @@
 import { FetchUserAttributesOutput } from "aws-amplify/auth";
-import { Role } from "../../types";
-import { User } from "./AuthContext";
+import { Role } from "../../../types";
+import { User } from "../types";
 
 export const buildUserAttributes = (
   userAttributes: FetchUserAttributesOutput,

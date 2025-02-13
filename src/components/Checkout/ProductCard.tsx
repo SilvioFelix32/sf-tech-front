@@ -10,7 +10,7 @@ import {
 } from "./styles";
 import { BtnAddOrRemove } from "../Buttons";
 import { CartItemType } from "../../context/Cart/types";
-import { formatNumber } from "../../utils/functions";
+import { formatPrice } from "../../utils/formatPrice";
 
 interface ProductCardProps {
   item: CartItemType;
@@ -46,7 +46,7 @@ export const ProductCard = ({
     )}
     <ProductValue>
       <InfoText>
-        R$ {formatNumber(item.amount * item.price - item.discount)}
+        R$ {formatPrice(item.amount * item.price - item.discount)}
       </InfoText>
       {removeButton && (
         <Button onClick={() => onRemove(item.product_id)}>

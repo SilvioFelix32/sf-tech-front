@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { IProduct } from "../types";
+import { IProduct } from "../../types";
 
 const filterReducer = (state, action) => {
   switch (action.type) {

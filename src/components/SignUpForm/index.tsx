@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GetSwallAlert } from "../../utils/sweet-alert";
 import { IUser } from "../../types/IUser";
-import { environment } from "../../utils/environment";
+import { environment } from "../../config/environment";
 import { ConfirmPassword, CreatePassword } from "./Passwords";
 //styles
 import {

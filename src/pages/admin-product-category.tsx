@@ -2,7 +2,7 @@ import { memo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { IProductCategory } from "../types";
 import { categoryService } from "../services";
-import { environment } from "../utils/environment";
+import { environment } from "../config/environment";
 import {
   ModalCreateCategory,
   ModalEditCategory,

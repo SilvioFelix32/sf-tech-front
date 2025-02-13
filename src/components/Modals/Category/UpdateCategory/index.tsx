@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { categoryService } from "../../../../services";
-import { environment } from "../../../../utils/environment";
+import { environment } from "../../../../config/environment";
 import { IProductCategory } from "../../../../types";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";

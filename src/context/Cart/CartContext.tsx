@@ -1,33 +1,16 @@
 import React, {
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { CartItemType } from "./types";
+import { CartItemType, ICartContext, CartProviderProps } from "./types";
 import { getCookie, setCookie } from "../../services";
-
-type ProviderProps = {
-  children: ReactNode;
-};
-
-interface ICartContext {
-  cartItems: CartItemType[];
-  totalItemsCount: number;
-  cartTotalPrice: string;
-  cartTotalPriceWithoutDiscount: string;
-  getTotalItems: (items: CartItemType[]) => number;
-  handleAddToCart: (clickedItem: CartItemType) => void;
-  handleUpdateAmountProduct: (clickedItem: CartItemType) => void;
-  handleRemoveFromCart: (product_id: string) => void;
-  deleteItemFromCart: (product_id: string) => void;
-}
 
 const CartContext = createContext({} as ICartContext);
 
-function CartProvider({ children }: ProviderProps) {
+function CartProvider({ children }: CartProviderProps) {
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
 
   useEffect(() => {

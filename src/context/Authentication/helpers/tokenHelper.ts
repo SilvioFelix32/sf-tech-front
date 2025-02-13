@@ -1,7 +1,7 @@
 import { JWT } from "aws-amplify/auth";
-import { getCookie, setCookie, removeCookie } from "../../services";
-import api from "../../services/api";
-import { refreshSession } from "../../services/auth-service";
+import { getCookie, setCookie, removeCookie } from "../../../services";
+import api from "../../../services/api";
+import { refreshSession } from "../../../services/auth-service";
 
 const defaultCookieTimeout = 60 * 60 * 24 * 7; // 7 dias
 

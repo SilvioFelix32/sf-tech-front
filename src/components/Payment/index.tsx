@@ -1,7 +1,7 @@
 import { AuthContext, useCart } from "../../context";
 import Image from "next/image";
 import { IProduct } from "../../types";
-import { formatNumber } from "../../utils/functions";
+import { formatPrice } from "../../utils/formatPrice";
 import { useContext } from "react";
 import { DeliveryMethod } from "./ClientDelivery";
 import { CardForm } from "./Card";
@@ -85,7 +85,7 @@ export function PaymentForm() {
               />
               <PriceDetail
                 label={item.title}
-                value={`R$ ${formatNumber(item.price)}`}
+                value={`R$ ${formatPrice(item.price)}`}
               />
             </div>
           ))}
@@ -100,16 +100,16 @@ export function PaymentForm() {
           </InfoText>
           <PriceDetail
             label="Valor total do carrinho:"
-            value={`R$ ${formatNumber(Number(cartTotalPriceWithoutDiscount))}`}
+            value={`R$ ${formatPrice(Number(cartTotalPriceWithoutDiscount))}`}
           />
           <PriceDetail
             label="Taxa de entrega:"
-            value={`R$ ${formatNumber(10)}`}
+            value={`R$ ${formatPrice(10)}`}
             strikeThrough
           />
           <PriceDetail
             label="Desconto:"
-            value={`R$ ${formatNumber(
+            value={`R$ ${formatPrice(
               Number(cartTotalPriceWithoutDiscount) - Number(cartTotalPrice)
             )}`}
           />
@@ -117,7 +117,7 @@ export function PaymentForm() {
         <Totals>
           <InfoText weight={600}>Total:</InfoText>
           <InfoText weight={600}>
-            R$ {formatNumber(Number(cartTotalPrice))}
+            R$ {formatPrice(Number(cartTotalPrice))}
           </InfoText>
         </Totals>
         <ButtonWrapper>

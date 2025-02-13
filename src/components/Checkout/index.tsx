@@ -1,4 +1,4 @@
-import { formatNumber } from "../../utils/functions";
+import { formatPrice } from "../../utils/formatPrice";
 import { HighlightedProduct } from "../HighlightedProduct";
 import { ProductCard } from "./ProductCard";
 import { PriceDetail } from "./PriceDetail";
@@ -74,16 +74,16 @@ export function Checkout() {
             </InfoText>
             <PriceDetail
               label="Valor total do carrinho:"
-              value={`R$ ${formatNumber(cartTotalPriceWithoutDiscount)}`}
+              value={`R$ ${formatPrice(cartTotalPriceWithoutDiscount)}`}
             />
             <PriceDetail
               label="Taxa de entrega:"
-              value={`R$ ${formatNumber(10)}`}
+              value={`R$ ${formatPrice(10)}`}
               strikeThrough
             />
             <PriceDetail
               label="Desconto:"
-              value={`R$ ${formatNumber(
+              value={`R$ ${formatPrice(
                 String(
                   Number(cartTotalPriceWithoutDiscount) - Number(cartTotalPrice)
                 )
@@ -92,7 +92,7 @@ export function Checkout() {
           </SubTotalWrapper>
           <Totals>
             <InfoText weight={600}>Total:</InfoText>
-            <InfoText weight={600}>R$ {formatNumber(cartTotalPrice)}</InfoText>
+            <InfoText weight={600}>R$ {formatPrice(cartTotalPrice)}</InfoText>
           </Totals>
           <ButtonPay
             onClick={() => router.push("/payment")}

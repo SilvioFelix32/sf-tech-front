@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import InputMask from "react-input-mask";
 //styles
 import { Wrapper } from "./styles";
@@ -6,7 +6,7 @@ import { Wrapper } from "./styles";
 const onlyNumbers = (str: string) => str.replace(/[^0-9]/g, "");
 
 const MaskedInput = ({ defaultValue, onChange, name, mask, register }) => {
-  function handleChange(event: any) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     onChange({
       ...event,
       target: {

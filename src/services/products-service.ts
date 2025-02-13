@@ -3,10 +3,11 @@ import { AxiosError } from "axios";
 import { getCookie } from "./cookie-service";
 import { IProduct } from "../types";
 import {
+  ProductsService,
+  IParamsRequest,
   IProductResponse,
   IProductInterface,
-  ProductsService,
-} from "./interfaces/IProductResponse";
+} from "./interfaces";
 
 const nextauth = getCookie("nextauth.token");
 
@@ -21,7 +22,7 @@ export const productsService: ProductsService = {
 
 const baseUrl = "/products";
 
-async function getAll(params: any): Promise<IProductResponse> {
+async function getAll(params: IParamsRequest): Promise<IProductResponse> {
   try {
     const response = await api.get<IProductResponse>(`${baseUrl}`, {
       params,

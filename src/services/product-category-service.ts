@@ -1,12 +1,12 @@
 import api from "./api";
 import { AxiosError } from "axios";
 import { IProductCategory } from "../types";
-import { IParamsRequest } from "./interfaces/IParamsRequest";
-import {
-  ICategoryResponse,
-  CategoryService,
-} from "./interfaces/ICategoryResponse";
 import { getCookie } from "./cookie-service";
+import {
+  CategoryService,
+  IParamsRequest,
+  ICategoryResponse,
+} from "./interfaces";
 
 export const categoryService: CategoryService = {
   getAll,

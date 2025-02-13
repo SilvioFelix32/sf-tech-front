@@ -17,7 +17,7 @@ export function CreatePassword({ password, setPassword }: formProps) {
   const [haveMoreThen8Characters, setHaveMoreThen8Characters] = useState(false);
 
   //handle input
-  function handleInputChange(text: any) {
+  function handleInputChange(text: string) {
     const regexCapitalLetters = new RegExp(/[A-z]/);
     const regexNumbers = new RegExp(/[0-9]/);
     const regexChacters = new RegExp(/[!@#$%^&*]/);

@@ -1,4 +1,5 @@
 import api from "./api";
+import { ICompanyParams } from "./interfaces";
 
 export const companiesService = {
   getAll,
@@ -20,12 +21,12 @@ async function getById(company_id: string) {
   return response.data;
 }
 
-async function create(params: any) {
-  const response = await api.post(baseUrl, params);
+async function create(body: ICompanyParams) {
+  const response = await api.post(baseUrl, body);
   return response.data;
 }
 
-async function update(id: string, params: any) {
+async function update(id: string, params: ICompanyParams) {
   const response = await api.patch(`${baseUrl}/${id}`, params);
   return response.data;
 }

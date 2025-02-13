@@ -6,11 +6,11 @@ import {
   useFavorite,
   useFilterContext,
 } from "../../context";
-import { useCan } from "../../context/Authentication/hooks/useCan";
+import { useCan } from "../../hooks/useCan";
 import { IProduct } from "../../types";
 import { BuyButton } from "../Buttons";
 import { PaginationButton } from "../Buttons/Pagination";
-import { formatNumber } from "../../utils/functions";
+import { formatPrice } from "../../utils/formatPrice";
 import { useRouter } from "next/router";
 import { ProductContext } from "../../context/Products/ProductsContext";
 //styles
@@ -109,11 +109,11 @@ export const ProductCard = memo(({ isSelected }: CategorySelector) => {
                   }}
                 >
                   De R$
-                  {formatNumber(product?.price)}
+                  {formatPrice(product?.price)}
                 </Text>
                 <Text style={{ fontSize: "1.5rem" }}>
                   Por R$
-                  {formatNumber(product?.price - product?.discount)}
+                  {formatPrice(product?.price - product?.discount)}
                 </Text>
               </ProductValue>
             </ProductInfo>

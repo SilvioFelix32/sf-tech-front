@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import Image from "next/image";
 import { CSSProperties } from "react";
-import { useCan } from "../../context/Authentication/hooks/useCan";
+import { useCan } from "../../hooks/useCan";
 import { BiStore } from "react-icons/bi";
 import { SearchBar } from "../SearchBar";
 import { useRouter } from "next/router";

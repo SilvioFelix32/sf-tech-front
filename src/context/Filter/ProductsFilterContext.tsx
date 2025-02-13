@@ -1,29 +1,7 @@
-import {
-  createContext,
-  useState,
-  ReactNode,
-  useEffect,
-  useContext,
-} from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { IProduct } from "../../types";
 import { ProductContext } from "../Products/ProductsContext";
-
-interface ProductFilterState {
-  searchTerm: string;
-  products: IProduct[];
-}
-
-interface ProductFilterContextData {
-  state: ProductFilterState;
-
-  setSearchTerm: (searchTerm: string) => void;
-  filteredProduct: string[];
-}
-
-interface ProductFilterProviderProps {
-  children: ReactNode;
-  initialProducts: IProduct[];
-}
+import { ProductFilterContextData, ProductFilterProviderProps } from "./types";
 
 const ProductFilterContext = createContext<ProductFilterContextData>(
   {} as ProductFilterContextData

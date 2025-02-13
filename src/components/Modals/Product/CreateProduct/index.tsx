@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { environment } from "../../../../utils/environment";
+import { environment } from "../../../../config/environment";
 import { v4 as uuidv4 } from "uuid";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 //components

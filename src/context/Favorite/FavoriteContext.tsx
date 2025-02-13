@@ -1,23 +1,7 @@
-import React, {
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { IFavoriteItem } from "../../types/IFavorite";
 import { getCookie, setCookie } from "../../services";
-interface IFavoriteContext {
-  favoriteItems: IFavoriteItem[];
-  handleAddToFavorites: (clickedItem: IFavoriteItem) => void;
-  getTotalItems: (items: IFavoriteItem[]) => number;
-  removeItemFromFavorites: (product_id: string) => void;
-  totalItemsCount: number;
-}
-
-interface FavoriteProviderProviderProps {
-  children: ReactNode;
-}
+import { IFavoriteContext, FavoriteProviderProviderProps } from "./types";
 
 const FavoriteContext = React.createContext<IFavoriteContext | null>(null);
 

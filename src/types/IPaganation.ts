@@ -1,4 +1,4 @@
-export interface IPagination {
+export interface IPagination<T> {
   total_count: number;
   total_page: number;
   current_page: number;
@@ -27,5 +27,5 @@ export interface IPagination {
   current_count_per_page: number;
   range: number;
 
-  paginated_data: any;
+  paginated_data: T[];
 }

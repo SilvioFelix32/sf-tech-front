@@ -6,7 +6,7 @@ import { Modal as ModalComponent } from "react-responsive-modal";
 import { CartItemType } from "../../../context/Cart/types";
 import { BtnAddOrRemove } from "../../Buttons";
 import { BsXLg } from "react-icons/bs";
-import { formatNumber } from "../../../utils/functions";
+import { formatPrice } from "../../../utils/formatPrice";
 //styles
 import "react-responsive-modal/styles.css";
 import {
@@ -67,7 +67,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
                 <BtnAddOrRemove product={item} />
               </ProductQuantity>
               <ProductValue>
-                <Text>R$ {formatNumber(item.amount * item.price)}</Text>
+                <Text>R$ {formatPrice(item.amount * item.price)}</Text>
               </ProductValue>
               <Button onClick={() => deleteItemFromCart(item.product_id)}>
                 <BsXLg />
@@ -75,7 +75,7 @@ export function CartModal({ openModal, setOpenModal }: ModalProps) {
             </Product>
           ))}
           <Totals>
-            <Text>Total: R$ {formatNumber(cartTotalPrice)} </Text>
+            <Text>Total: R$ {formatPrice(cartTotalPrice)} </Text>
           </Totals>
         </ProductCard>
         <BtnGroup>

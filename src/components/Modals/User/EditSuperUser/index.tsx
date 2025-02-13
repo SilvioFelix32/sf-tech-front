@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { userService } from "../../../../services";
 import { IUser } from "../../../../types/IUser";
 import { Modal as ModalEdit } from "react-responsive-modal";
-import { environment } from "../../../../utils/environment";
+import { environment } from "../../../../config/environment";
 import { GetSwallAlert } from "../../../../utils/sweet-alert";
 import { useQuery } from "react-query";
 import {
