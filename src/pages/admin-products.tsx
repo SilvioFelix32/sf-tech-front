@@ -35,9 +35,9 @@ function AdminProducts() {
         limit: perPage,
       });
       setProducts(res.data);
-      setTotalRows(res.meta.total);
-      setPage(res.meta.currentPage);
-      setLastPage(res.meta.lastPage || 1);
+      setTotalRows(Number(res.meta.total));
+      setLastPage(Math.ceil(Number(res.meta.total) / perPage));
+      setPage(Number(res.meta.currentPage));
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {
@@ -54,22 +54,14 @@ function AdminProducts() {
 
   async function handlePerRowsChange(newPerPage: number, page: number) {
     setLoading(true);
-    await productsService
-      .getAll({
-        page: page,
-        limit: newPerPage,
-      })
-      .then((res) => {
-        setProducts(res.data);
-        setPerPage(newPerPage);
-      })
-      .catch((err) => console.error("error msg", err));
+    setPerPage(newPerPage);
+    await fetchProducts(page, newPerPage);
     setLoading(false);
   }
 
   useEffect(() => {
     fetchProducts(page, perPage);
-  }, [perPage, page, reloadData]);
+  }, [reloadData]);
 
   const columns = [
     {

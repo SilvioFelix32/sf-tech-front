@@ -22,6 +22,7 @@ function AdminCategories() {
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
+  const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
 
   const {
@@ -33,8 +34,8 @@ function AdminCategories() {
     isFetching,
     refetch,
   } = useQuery<ICategoryResponse>(
-    ["productCategories", company_id, perPage],
-    () => categoryService.getAll(company_id, { page: 1, limit: perPage }),
+    ["productCategories", company_id, page, perPage],
+    () => categoryService.getAll(company_id, { page, limit: perPage }),
     {
       enabled: !!company_id,
       select: ({ data, meta, message }) => ({ data, meta, message }),
@@ -58,11 +59,13 @@ function AdminCategories() {
   );
 
   const handlePageChange = (page: number) => {
+    setPage(page);
     mutation.mutate({ page, limit: perPage });
   };
 
-  const handlePerRowsChange = (newPerPage: number, page: number) => {
+  const handlePerRowsChange = (newPerPage: number, newPage: number) => {
     setPerPage(newPerPage);
+    setPage(newPage);
     mutation.mutate({ page, limit: newPerPage });
   };
 
@@ -128,12 +131,15 @@ function AdminCategories() {
           data={data}
           pagination
           progressPending={isLoading || isFetching}
-          onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-          paginationComponentOptions={paginationComponentOptions}
-          paginationRowsPerPageOptions={[5, 10, 20]}
           paginationTotalRows={categories.meta.total}
+          paginationPerPage={perPage}
+          paginationServer
+          paginationComponentOptions={paginationComponentOptions}
+          paginationDefaultPage={page}
           customStyles={customStyles}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          onChangeRowsPerPage={handlePerRowsChange}
         />
       </Content>
       <ModalCreateCategory

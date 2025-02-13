@@ -75,7 +75,7 @@ export default function Product() {
     );
 
   return (
-    <Theme>
+    <Theme height="84vh">
       <NavHeader />
       <Header
         showSignInButton={true}

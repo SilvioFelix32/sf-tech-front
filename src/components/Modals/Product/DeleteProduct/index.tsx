@@ -1,8 +1,9 @@
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
+import { productsService } from "../../../../services";
+import { GetSwallAlert } from "../../../../utils";
 //styles
 import { Wrapper, Button, Content, Text } from "./styles";
-import { productsService } from "../../../../services";
 
 interface modalProps {
   product_id: string;
@@ -22,7 +23,10 @@ export function ModalDeleteProduct({
 
     await productsService
       .delete(product_id)
-      .then(() => setReloadData(Math.random()));
+      .then(() => setReloadData(Math.random()))
+      .catch((error) => {
+        GetSwallAlert("center", "error", error.message, 2000);
+      });
   }
 
   return (

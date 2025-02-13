@@ -1,11 +1,12 @@
 import { environment } from "../../../../config/environment";
 import { FormEvent, useState } from "react";
 import { Modal as ModalCreate } from "react-responsive-modal";
+import { IProductCategory } from "../../../../types";
+import { categoryService } from "../../../../services";
+import { GetSwallAlert } from "../../../../utils";
 //styles
 import { Button, Text, Content, Wrapper, Input } from "./styles";
 import "react-responsive-modal/styles.css";
-import { IProductCategory } from "../../../../types";
-import { categoryService } from "../../../../services";
 
 interface modalProps {
   isOpen: boolean;
@@ -33,7 +34,10 @@ export function ModalCreateCategory({
 
     await categoryService
       .create(company_id, data as IProductCategory)
-      .then(() => setReloadData(Math.random()));
+      .then(() => setReloadData(Math.random()))
+      .catch((error) => {
+        GetSwallAlert("center", "error", error.message, 2000);
+      });
   }
 
   return (
