@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { IProduct } from "../../types";
-import { ProductContext } from "../Products/ProductsContext";
+import { CategoriesContext } from "../Categories/CategoriesContext";
 import { ProductFilterContextData, ProductFilterProviderProps } from "./types";
 
 const ProductFilterContext = createContext<ProductFilterContextData>(
@@ -11,7 +11,7 @@ function ProductFilterProvider({
   children,
   initialProducts,
 }: ProductFilterProviderProps) {
-  const { filteredProducts } = useContext(ProductContext);
+  const { filteredProducts } = useContext(CategoriesContext);
   const [products, setProducts] = useState<IProduct[]>(initialProducts);
   const [searchTerm, setSearchTerm] = useState("");
 

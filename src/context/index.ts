@@ -4,4 +4,4 @@ export * from "./Filter/FilterContext";
 export * from "./Filter/ProductsFilterContext";
 export * from "./Favorite/FavoriteContext";
 export * from "./Theme/ThemeContext";
-export * from "./Products/ProductsContext";
+export * from "./Categories/CategoriesContext";

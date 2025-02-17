@@ -25,7 +25,7 @@ export function ModalDeleteUser({
     event.preventDefault();
 
     await userService
-      .delete(user_id as string, company_id)
+      .delete(user_id, company_id)
       .then(() => setReloadData(Math.random()));
   }
 

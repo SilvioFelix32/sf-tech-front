@@ -11,10 +11,10 @@ import {
 } from "./styles";
 import { IProduct } from "../../types";
 import { useContext } from "react";
-import { ProductContext } from "../../context";
+import { CategoriesContext } from "../../context";
 
 export function HighlightedProduct() {
-  const { filteredProducts } = useContext(ProductContext);
+  const { filteredProducts } = useContext(CategoriesContext);
   const filteredArray = filteredProducts.filter(
     (item) => item.highlighted === true
   );

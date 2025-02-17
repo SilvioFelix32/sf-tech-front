@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { categoryService } from "../../../../services";
 import { environment } from "../../../../config/environment";
+import { GetSwallAlert } from "../../../../utils/sweet-alert";
 import { IProductCategory } from "../../../../types";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
 import { Button, Content, Context, Text, Input, Wrapper } from "./styles";
 import "react-responsive-modal/styles.css";
-import { GetSwallAlert } from "../../../../utils/sweet-alert";
 
 interface modalProps {
   onOpen: boolean;
@@ -42,11 +42,14 @@ export function ModalEditCategory({
 
   async function handleUpdate(data: IProductCategory) {
     await categoryService
-      .update(company_id as string, category_id as string, {
+      .update(company_id, category_id, {
         ...data,
       })
       .then(() => setReloadData(Math.random()))
-      .catch((error) => GetSwallAlert("center", "error", error.message, 2000));
+      .catch((error) => {
+        console.error(error.name, error.message);
+        GetSwallAlert("center", "error", "Erro ao atualizar categoria", 2000);
+      });
     setOnOpen(false);
   }
 

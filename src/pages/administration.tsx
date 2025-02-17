@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useCan } from "../hooks/useCan";
 //components
 import { NavHeader, Footer, Header } from "../components";
@@ -24,10 +24,6 @@ export default function Administration() {
   };
 
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
-
-  const memoizedAdminProducts = useMemo(() => <AdminProducts />, []);
-  const memoizedAdminCategories = useMemo(() => <AdminCategories />, []);
-  const memoizedAdminCompany = useMemo(() => <AdminCompany />, []);
 
   return (
     <Theme>
@@ -67,9 +63,9 @@ export default function Administration() {
                 </CustomMenu>
               </CustomSidebar>
               <Section>
-                {actualPage === "AdminCompany" && memoizedAdminCompany}
-                {actualPage === "AdminCategories" && memoizedAdminCategories}
-                {actualPage === "AdminProducts" && memoizedAdminProducts}
+                {actualPage === "AdminCompany" && <AdminCompany />}
+                {actualPage === "AdminCategories" && <AdminCategories />}
+                {actualPage === "AdminProducts" && <AdminProducts />}
               </Section>
             </>
           )}

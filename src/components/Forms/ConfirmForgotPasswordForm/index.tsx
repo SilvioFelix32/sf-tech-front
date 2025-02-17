@@ -48,7 +48,7 @@ export function ConfirmForgotPasswordForm() {
       await confirmResetPassword({
         confirmationCode: code,
         newPassword: password,
-        username: email as string,
+        username: String(email),
       });
 
       GetSwallAlert("center", "success", "Senha alterada com sucesso", 2000);
@@ -94,8 +94,8 @@ export function ConfirmForgotPasswordForm() {
         <Column>
           <Text>
             Enviamos um código de verificação para o email{" "}
-            {censorEmail(email as string)}. Digite-o abaixo para realizar a
-            troca de senha
+            {censorEmail(String(email))}. Digite-o abaixo para realizar a troca
+            de senha
           </Text>
         </Column>
       </Content>

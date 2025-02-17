@@ -1,7 +1,7 @@
 import { useContext } from "react";
 //styles
 import { Wrapper, Text, Button, ProductInfo, ProductFilter } from "./styles";
-import { ProductContext } from "../../../context/Products/ProductsContext";
+import { CategoriesContext } from "../../../context/Categories/CategoriesContext";
 interface CategorySelector {
   filter: string;
   setFilter: (value: string) => void;
@@ -14,7 +14,7 @@ export function CategoriesFilterCard({
   isSelected,
   setIsSelected,
 }: CategorySelector) {
-  const { productCategories } = useContext(ProductContext);
+  const { productCategories } = useContext(CategoriesContext);
 
   const handleButtonClick = (id: string) => {
     if (isSelected === id) {

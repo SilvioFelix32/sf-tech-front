@@ -14,4 +14,6 @@ export interface ProductFilterContextData {
 
 export interface ProductProviderProps {
   children: ReactNode;
+  page?: number;
+  perPage?: number;
 }

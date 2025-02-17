@@ -22,10 +22,11 @@ export function ModalDeleteCategory({
     event.preventDefault();
 
     await categoryService
-      .delete(category_id as string)
+      .delete(category_id)
       .then(() => setReloadData(Math.random()))
       .catch((error) => {
-        GetSwallAlert("center", "error", error.message, 2000);
+        console.error(error);
+        GetSwallAlert("center", "error", "Erro ao deletar categoria", 2000);
       });
   }
 

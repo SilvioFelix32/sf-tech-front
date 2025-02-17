@@ -12,7 +12,7 @@ import { BuyButton } from "../Buttons";
 import { PaginationButton } from "../Buttons/Pagination";
 import { formatPrice } from "../../utils/formatPrice";
 import { useRouter } from "next/router";
-import { ProductContext } from "../../context/Products/ProductsContext";
+import { CategoriesContext } from "../../context";
 //styles
 import {
   Wrapper,
@@ -39,7 +39,7 @@ export const ProductCard = memo(({ isSelected }: CategorySelector) => {
     filters: { price },
   } = useFilterContext();
   const router = useRouter();
-  const { productCategories } = useContext(ProductContext);
+  const { productCategories } = useContext(CategoriesContext);
   const { filteredProduct } = useContext(ProductFilterContext);
   const { favoriteItems, removeItemFromFavorites, handleAddToFavorites } =
     useFavorite();
@@ -49,7 +49,7 @@ export const ProductCard = memo(({ isSelected }: CategorySelector) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(12);
 
-  const categoryOfProducts = productCategories?.reduce((acc, cur) => {
+  const products = productCategories?.reduce((acc, cur) => {
     if (isSelected && cur.category_id !== isSelected) {
       return acc;
     }
@@ -59,7 +59,7 @@ export const ProductCard = memo(({ isSelected }: CategorySelector) => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
-  const filteredProducts = categoryOfProducts
+  const filteredProducts = products
     ?.filter((product: IProduct) => product.price <= price)
     .filter((product: IProduct) => {
       if (filteredProduct?.length === 0) {
@@ -76,7 +76,7 @@ export const ProductCard = memo(({ isSelected }: CategorySelector) => {
   return filteredProducts && filteredProducts.length > 0 ? (
     <Wrapper>
       <CardWrapper>
-        {filteredProducts?.map((product: IProduct) => (
+        {filteredProducts.map((product: IProduct) => (
           <Content key={product.product_id}>
             <Picture
               onClick={() => router.push(`/product/${product.product_id}`)}
@@ -148,7 +148,7 @@ export const ProductCard = memo(({ isSelected }: CategorySelector) => {
       <Pagination>
         <PaginationButton
           productsPerPage={productsPerPage}
-          totalProducts={categoryOfProducts.length}
+          totalProducts={products.length}
           paginate={paginate}
         />
       </Pagination>

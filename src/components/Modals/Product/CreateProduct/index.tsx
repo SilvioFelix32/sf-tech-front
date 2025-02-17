@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
 import { environment } from "../../../../config/environment";
 import { v4 as uuidv4 } from "uuid";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import { useCategoryFilter } from "../../../../hooks/useCategoryFilter";
 //components
-import { categoryService, productsService } from "../../../../services";
+import { productsService } from "../../../../services";
 import { IProduct, IProductCategory } from "../../../../types";
 import { Modal as ModalCreate } from "react-responsive-modal";
 //styles
@@ -17,7 +18,6 @@ import {
   Context,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { ICategoryResponse } from "../../../../services/interfaces/ICategoryResponse";
 
 interface modalProps {
   isOpen: boolean;
@@ -34,16 +34,10 @@ export function ModalCreateProduct({
   const queryClient = useQueryClient();
 
   const {
-    data: categories,
+    value: { productCategories },
     isLoading,
     isError,
-  } = useQuery<ICategoryResponse, Error>(
-    ["categories", company_id],
-    () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
-    {
-      enabled: !!company_id,
-    }
-  );
+  } = useCategoryFilter({ page: 1, perPage: 20 });
 
   const mutation = useMutation(
     (newProduct: Partial<IProduct>) =>
@@ -151,7 +145,7 @@ export function ModalCreateProduct({
                 defaultValue=""
               >
                 <option value=""></option>
-                {categories?.data.map((category: IProductCategory) => (
+                {productCategories.map((category: IProductCategory) => (
                   <option
                     key={category.category_id}
                     value={category.category_id}

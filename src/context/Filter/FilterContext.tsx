@@ -7,7 +7,7 @@ import {
 } from "react";
 import reducer from "../reducers/filterReducer";
 import { IProduct } from "../../types";
-import { ProductContext } from "../Products/ProductsContext";
+import { CategoriesContext } from "../Categories/CategoriesContext";
 
 const FilterContext = createContext(null);
 
@@ -23,7 +23,7 @@ const initialState = {
 };
 
 export const FilterContextProvider = ({ children }) => {
-  const { filteredProducts } = useContext(ProductContext);
+  const { filteredProducts } = useContext(CategoriesContext);
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {

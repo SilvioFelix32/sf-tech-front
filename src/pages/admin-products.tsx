@@ -1,12 +1,12 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useState, memo } from "react";
 import Image from "next/image";
-import { IProduct } from "../types";
-import { productsService } from "../services";
+import { useProductFilter } from "../hooks/useProductFiltes";
 import {
   ModalCreateProduct,
   ModalDeleteProduct,
   ModalEditProduct,
 } from "../components";
+import { useQueryClient } from "react-query";
 import DataTable from "react-data-table-component";
 import { EditButton, ExcludeButton } from "../components/Buttons";
 //styles
@@ -14,54 +14,29 @@ import { Button, Text, Content, Picture } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 
 function AdminProducts() {
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const queryClient = useQueryClient();
   const [product_id, setProduct_id] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [perPage, setPerPage] = useState(10);
   const [page, setPage] = useState(1);
-  const [lastPage, setLastPage] = useState(1);
-  const [totalRows, setTotalRows] = useState(0);
-  //Modals
-  const [reloadData, setReloadData] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [onOpen, setOnOpen] = useState(false);
 
-  async function fetchProducts(page: number, perPage: number) {
-    try {
-      setLoading(true);
-      const res = await productsService.getAll({
-        page: page,
-        limit: perPage,
-      });
-      setProducts(res.data);
-      setTotalRows(Number(res.meta.total));
-      setLastPage(Math.ceil(Number(res.meta.total) / perPage));
-      setPage(Number(res.meta.currentPage));
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const {
+    value: { products, meta },
+    isLoading,
+  } = useProductFilter({ page, perPage });
 
-  function handlePageChange(newPage: number) {
-    if (newPage <= lastPage) {
-      setPage(newPage);
-      fetchProducts(newPage, perPage);
-    }
-  }
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
-  async function handlePerRowsChange(newPerPage: number, page: number) {
-    setLoading(true);
+  const handlePerRowsChange = (newPerPage: number) => {
     setPerPage(newPerPage);
-    await fetchProducts(page, newPerPage);
-    setLoading(false);
-  }
+    setPage(1);
+  };
 
-  useEffect(() => {
-    fetchProducts(page, perPage);
-  }, [reloadData]);
+  const reloadData = () => queryClient.invalidateQueries(["products"]);
 
   const columns = [
     {
@@ -89,46 +64,49 @@ function AdminProducts() {
     },
   ];
 
-  const data = products?.map((product) => ({
-    id: product.product_id,
-    sku: product.sku,
-    title: product.title,
-    urlBanner: (
-      <Picture>
-        <Image
-          src={product?.urlBanner}
-          alt={product?.title}
-          width="200"
-          height="200"
-          style={{ objectFit: "contain" }}
-          priority
-        ></Image>
-      </Picture>
-    ),
-    highlighted: product.highlighted ? "Sim" : "Não",
-    exclude_alter: (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <EditButton
-          onClick={() => {
-            setOnOpen(true);
-            setProduct_id(product?.product_id);
-          }}
-        ></EditButton>
-        <ExcludeButton
-          onClick={() => {
-            setProduct_id(product?.product_id);
-            setOpen(true);
-          }}
-        ></ExcludeButton>
-      </div>
-    ),
-  }));
+  const data =
+    products && products.length > 0
+      ? products.map((product) => ({
+          id: product.product_id,
+          sku: product.sku,
+          title: product.title,
+          urlBanner: (
+            <Picture>
+              <Image
+                src={product.urlBanner}
+                alt={product.title}
+                width="200"
+                height="200"
+                style={{ objectFit: "contain" }}
+                priority
+              ></Image>
+            </Picture>
+          ),
+          highlighted: product.highlighted ? "Sim" : "Não",
+          exclude_alter: (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <EditButton
+                onClick={() => {
+                  setOnOpen(true);
+                  setProduct_id(product.product_id);
+                }}
+              ></EditButton>
+              <ExcludeButton
+                onClick={() => {
+                  setProduct_id(product.product_id);
+                  setOpen(true);
+                }}
+              ></ExcludeButton>
+            </div>
+          ),
+        }))
+      : [];
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
@@ -145,9 +123,9 @@ function AdminProducts() {
           columns={columns}
           data={data}
           pagination
-          progressPending={loading}
+          progressPending={isLoading}
           onChangePage={handlePageChange}
-          paginationTotalRows={totalRows}
+          paginationTotalRows={meta.total}
           paginationPerPage={perPage}
           paginationServer
           paginationComponentOptions={paginationComponentOptions}
@@ -160,19 +138,19 @@ function AdminProducts() {
       <ModalCreateProduct
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        setReloadData={setReloadData}
+        setReloadData={reloadData}
       />
       <ModalEditProduct
         product_id={product_id}
         onOpen={onOpen}
         setOnOpen={setOnOpen}
-        setReloadData={setReloadData}
+        setReloadData={reloadData}
       />
       <ModalDeleteProduct
         product_id={product_id}
         open={open}
         setOpen={setOpen}
-        setReloadData={setReloadData}
+        setReloadData={reloadData}
       />
     </>
   );

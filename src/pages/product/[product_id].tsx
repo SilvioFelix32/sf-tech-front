@@ -37,7 +37,7 @@ export default function Product() {
   const { totalItemsCount } = useCart();
   const { data: product, isLoading: isProductLoading } = useQuery(
     ["product", product_id],
-    () => productsService.getById(product_id as string),
+    () => productsService.getById(String(product_id)),
     {
       enabled: !!product_id,
     }

@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { useForm } from "react-hook-form";
 import { IProduct, IProductCategory, IUpdateProduct } from "../../../../types";
+import { productsService } from "../../../../services";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useCategoryFilter } from "../../../../hooks/useCategoryFilter";
 import { Modal as ModalEdit } from "react-responsive-modal";
+import { GetSwallAlert } from "../../../../utils";
 import {
   Button,
   Content,
@@ -13,10 +15,6 @@ import {
   Wrapper,
 } from "./styles";
 import "react-responsive-modal/styles.css";
-import { categoryService, productsService } from "../../../../services";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { environment } from "../../../../config/environment";
-import { ICategoryResponse } from "../../../../services/interfaces/ICategoryResponse";
 
 interface ModalProps {
   onOpen: boolean;
@@ -33,9 +31,8 @@ export function ModalEditProduct({
 }: ModalProps) {
   const queryClient = useQueryClient();
   const { register, handleSubmit, reset } = useForm<IProduct>();
-  const company_id = environment.companyId;
 
-  const { data: selectedProduct, isLoading: isProductLoading } = useQuery(
+  const { isLoading: isProductLoading } = useQuery(
     ["product", product_id],
     () => productsService.getById(product_id),
     {
@@ -47,24 +44,23 @@ export function ModalEditProduct({
   );
 
   const {
-    data: categories,
-    isLoading: isCategoriesLoading,
-    isError: isCategoriesError,
-  } = useQuery<ICategoryResponse, Error>(
-    ["categories", company_id],
-    () => categoryService.getAll(company_id, { page: 1, limit: 20 }),
-    {
-      enabled: !!company_id,
-    }
-  );
+    value: { productCategories },
+    isLoading,
+    isError,
+  } = useCategoryFilter({ page: 1, perPage: 20 });
 
   const mutation = useMutation(
-    (data: IUpdateProduct) => {
-      const { product_id, updatedAt, createdAt, ...rest } = data;
-      return productsService.update(product_id, {
-        ...rest,
-        highlighted: Boolean(data.highlighted),
-      });
+    async (data: IUpdateProduct) => {
+      const { product_id, ...rest } = data;
+      try {
+        return await productsService.update(product_id, {
+          ...rest,
+          highlighted: Boolean(data.highlighted),
+        });
+      } catch (error) {
+        console.error(error);
+        GetSwallAlert("center", "error", "Erro ao atualizar produto", 2000);
+      }
     },
     {
       onSuccess: () => {
@@ -125,14 +121,14 @@ export function ModalEditProduct({
             </Select>
 
             <Text>Categoria de produto:</Text>
-            {isCategoriesLoading ? (
+            {isLoading ? (
               <Text>Carregando categorias...</Text>
-            ) : isCategoriesError ? (
+            ) : isError ? (
               <Text>Erro ao carregar categorias</Text>
             ) : (
               <Select {...register("category_id")} defaultValue="">
                 <option value=""></option>
-                {categories.data?.map((category: IProductCategory) => (
+                {productCategories.map((category: IProductCategory) => (
                   <option
                     key={category.category_id}
                     value={category.category_id}

@@ -1,14 +1,9 @@
-Revisar o ProductContext.Provider. Ele deveria paginar, pois ele está trazendo 20 produtos e deveria trazer os que tem na pagina.
-- Opções. Mudar o valor da paginação. Ou mudar a pagina pra renderizar 20 produtos por pagina.
-
 finalizar pagina minha conta
 
 Pagina de compras >(Conferir se o usuario esta logado antes) Pagina de pagamento > pagina de sucesso.
 
 Finalizar seção de pagamento
 
-
 REFATORAÇÕES.
-- Refatorar modals e componentes que usam estilos similares para simplficar. Abstrair para um componente global.
-- Refatorar as paginas para fazer a busca apenas quando entrar nela. 
-Exemplo (produtos, ao entrar na home ele faz uma busca na API products, sendo que não tem código fazendo isso)
+// TODO
+- Usar o construtor de erros globais nas buscas da api (services).

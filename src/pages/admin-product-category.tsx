@@ -1,8 +1,7 @@
 import { memo, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { IProductCategory } from "../types";
-import { categoryService } from "../services";
-import { environment } from "../config/environment";
+import { useCategoryFilter } from "../hooks/useCategoryFilter";
 import {
   ModalCreateCategory,
   ModalEditCategory,
@@ -13,10 +12,8 @@ import DataTable from "react-data-table-component";
 import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";
 import "react-responsive-modal/styles.css";
-import { ICategoryResponse } from "../services/interfaces/ICategoryResponse";
 
 function AdminCategories() {
-  const company_id = environment.companyId;
   const queryClient = useQueryClient();
   const [category_id, setCategory_id] = useState("");
   const [open, setOpen] = useState(false);
@@ -26,48 +23,22 @@ function AdminCategories() {
   const [perPage, setPerPage] = useState(10);
 
   const {
-    data: categories = {
-      data: [],
-      meta: { total: 0, currentPage: 1, perPage: 10, next: 1 },
-    },
+    value: { productCategories, meta },
     isLoading,
-    isFetching,
-    refetch,
-  } = useQuery<ICategoryResponse>(
-    ["productCategories", company_id, page, perPage],
-    () => categoryService.getAll(company_id, { page, limit: perPage }),
-    {
-      enabled: !!company_id,
-      select: ({ data, meta, message }) => ({ data, meta, message }),
-      keepPreviousData: true,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000, // 5 minutos
-      cacheTime: 30 * 60 * 1000, // 30 minutos
-    }
-  );
+  } = useCategoryFilter({ page, perPage });
 
-  const mutation = useMutation(
-    async ({ page, limit }: { page: number; limit: number }) => {
-      return categoryService.getAll(company_id, { page, limit });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["productCategories"]);
-      },
-    }
-  );
-
-  const handlePageChange = (page: number) => {
-    setPage(page);
-    mutation.mutate({ page, limit: perPage });
-  };
-
-  const handlePerRowsChange = (newPerPage: number, newPage: number) => {
-    setPerPage(newPerPage);
+  const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    mutation.mutate({ page, limit: newPerPage });
   };
+
+  const handlePerRowsChange = (newPerPage: number) => {
+    setPerPage(newPerPage);
+    setPage(1);
+  };
+
+  function invalidateQuery() {
+    queryClient.invalidateQueries(["productCategories"]);
+  }
 
   const columns = [
     {
@@ -86,32 +57,35 @@ function AdminCategories() {
     },
   ];
 
-  const data = categories.data.map((category: IProductCategory) => ({
-    title: category.title,
-    description: category.description,
-    exclude_alter: (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <EditButton
-          onClick={() => {
-            setOnOpen(true);
-            setCategory_id(category.category_id);
-          }}
-        ></EditButton>
-        <ExcludeButton
-          onClick={() => {
-            setCategory_id(category.category_id);
-            setOpen(true);
-          }}
-        ></ExcludeButton>
-      </div>
-    ),
-  }));
+  const data =
+    productCategories && productCategories.length > 0
+      ? productCategories.map((category: IProductCategory) => ({
+          title: category.title,
+          description: category.description,
+          exclude_alter: (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <EditButton
+                onClick={() => {
+                  setOnOpen(true);
+                  setCategory_id(category.category_id);
+                }}
+              ></EditButton>
+              <ExcludeButton
+                onClick={() => {
+                  setCategory_id(category.category_id);
+                  setOpen(true);
+                }}
+              ></ExcludeButton>
+            </div>
+          ),
+        }))
+      : [];
 
   const paginationComponentOptions = {
     rowsPerPageText: "Linhas por página",
@@ -130,9 +104,9 @@ function AdminCategories() {
           columns={columns}
           data={data}
           pagination
-          progressPending={isLoading || isFetching}
+          progressPending={isLoading}
           onChangePage={handlePageChange}
-          paginationTotalRows={categories.meta.total}
+          paginationTotalRows={meta.total}
           paginationPerPage={perPage}
           paginationServer
           paginationComponentOptions={paginationComponentOptions}
@@ -145,19 +119,19 @@ function AdminCategories() {
       <ModalCreateCategory
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        setReloadData={() => refetch()}
+        setReloadData={() => invalidateQuery()}
       />
       <ModalEditCategory
         category_id={category_id}
         onOpen={onOpen}
         setOnOpen={setOnOpen}
-        setReloadData={() => refetch()}
+        setReloadData={() => invalidateQuery()}
       />
       <ModalDeleteCategory
         category_id={category_id}
         open={open}
         setOpen={setOpen}
-        setReloadData={() => refetch()}
+        setReloadData={() => invalidateQuery()}
       />
     </Wrapper>
   );

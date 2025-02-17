@@ -34,7 +34,7 @@ export function SignUpConfirmForm() {
   async function handleSignUp(data: IConfirmSignUpBody) {
     try {
       const { isSignUpComplete } = await confirmSignUp({
-        username: email as string,
+        username: String(email),
         confirmationCode: data.confirmationCode,
       });
 
@@ -55,7 +55,7 @@ export function SignUpConfirmForm() {
 
   async function resendToken() {
     await resendSignUpCode({
-      username: email as string,
+      username: String(email),
     });
   }
 
@@ -82,8 +82,8 @@ export function SignUpConfirmForm() {
         <Column>
           <Text>
             Um email de confirmação foi enviado para{" "}
-            {censorEmail(email as string)}. Digite ele abaixo para confirmar a
-            sua conta
+            {censorEmail(String(email))}. Digite ele abaixo para confirmar a sua
+            conta
           </Text>
         </Column>
       </Content>

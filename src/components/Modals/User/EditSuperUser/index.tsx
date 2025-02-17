@@ -34,7 +34,7 @@ export function ModalEditSuperUser({
 
   const { data: selectedUser } = useQuery<IUser>(
     ["user", user_id],
-    () => userService.getById(company_id as string, user_id as string),
+    () => userService.getById(company_id, user_id),
     {
       enabled: !!user_id,
     }
@@ -49,12 +49,10 @@ export function ModalEditSuperUser({
   }, [selectedUser, reset]);
 
   async function handleUpdate(data: IUser) {
-    await userService
-      .update(company_id as string, user_id as string, data)
-      .then(() => {
-        setReloadData(Math.random());
-        GetSwallAlert("center", "info", "Dados atualizados com sucesso", 1500);
-      });
+    await userService.update(company_id, user_id, data).then(() => {
+      setReloadData(Math.random());
+      GetSwallAlert("center", "info", "Dados atualizados com sucesso", 1500);
+    });
   }
 
   return (

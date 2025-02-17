@@ -29,6 +29,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   const defaultCookieTimeout = 60 * 60 * 24 * 7; // 7 days
   const isAuthenticated = !!user;
 
+  // TODO: Revisar esse useEffect, talvez haja uma melhor maneira de fazer isso
   useEffect(() => {
     const token = getToken();
     if (token && isTokenExpired(token)) {
