@@ -12,8 +12,6 @@ export const useProductFilter = ({
   page,
   perPage,
 }: useCategoryFilterOptions) => {
-  console.log("useProductFilter.filtros", page, perPage);
-
   const {
     data: response = {
       data: [],
@@ -35,10 +33,6 @@ export const useProductFilter = ({
       cacheTime: 30 * 60 * 1000, // 30 minutos
     }
   );
-
-  console.log("pagina atual", response.meta.currentPage);
-  console.log("produtos por página", response.meta.perPage);
-  console.log("total de produtos", response.meta.total);
 
   const value = useMemo(
     () => ({
