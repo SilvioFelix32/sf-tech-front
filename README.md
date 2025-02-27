@@ -2,65 +2,34 @@
 
 ###
 
-<p align="left">Esse é um projeto pessoal de um e-commerce usando a melhor parte de minhas habilidades fullstack até o momento...</p>
+<p align="left">Esse é um projeto pessoal de e-commerce onde utilizei Clean Architecture, Clean Code e as melhores práticas de desenvolvimento frontend. O projeto foi desenvolvido com React.js, Next.js, TypeScript e AWS Cognito para autenticação.</p>
 
 ## Demonstração:
 
+  <p align="left">Este fronted faz parte do projeto portifólio Sf-tech, veja mais em https://sf-tech-front.vercel.app/</p>
+  
   <img src="public/images/front_light.png"  alt="demonstration"  />
   <img src="public/images/front_dark.png"  alt="demonstration"  />
-  
-###
 
-<h2 align="left">Esse site foi feito usando:</h2>
+## 🛠 Tecnologias utilizadas
 
-###
+<h2 align="left">O frontend foi desenvolvido com as seguintes tecnologias principais:</h2>
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="40" alt="nextjs logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="40" alt="nodejs logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo"  />
-</div>
+<p align="left">React.js – Biblioteca JavaScript para construção de interfaces de usuário.</p>
+<p align="left">Next.js – Framework React para desenvolvimento de aplicações web escaláveis e otimizadas.</p>
+<p align="left">TypeScript – Tipagem estática para um código mais seguro e robusto.</p>
+<p align="left">AWS Cognito – Serviço de autenticação e gerenciamento de usuários na AWS.</p>
+<p align="left">Styled-components – Utilizado para estilizar os componentes de maneira modular e reutilizável.</p>
+<p align="left">Redux – Gerenciamento de estado previsível e eficiente para a aplicação.</p>
+<p align="left">React Query – Gerenciamento de dados de forma simples e eficaz, com caching e sincronização de estado.</p>
+<p align="left">React Hook Form – Biblioteca para formulários performáticos em React.</p>
+<p align="left">Axios – Cliente HTTP para requisições assíncronas ao backend.</p>
+<p align="left">Next Images – Gerenciamento e otimização de imagens para o Next.js.</p>
+<p align="left">Outras bibliotecas importantes incluem: react-icons (ícones para a interface), react-redux (bindings do Redux para React), react-responsive-modal (modais responsivos), e mais.</p>
 
-## Dependencies
+## 📜 Licença
 
-- [axios](https://ghub.io/axios): Promise based HTTP client for the browser and node.js
-- [bootstrap](https://getbootstrap.com/): The most popular front-end framework for developing responsive, mobile first projects on the web.
-- [cookies-next](https://github.com/andreizanik/cookies-next#readme): Getting, setting and removing cookies on both client and server with next.js.
-- [date-fns](https://github.com/date-fns/date-fns#readme): Modern JavaScript date utility library.
-- [js-cookie](https://github.com/js-cookie/js-cookie#readme): A simple, lightweight JavaScript API for handling cookies.
-- [next](https://nextjs.org): The React Framework.
-- [next-images](https://github.com/arefaslani/next-images#readme): Images.
-- [nextjs-cors](https://github.com/yonycalsin/nextjs-cors#readme): Nextjs-Cors is a node.js package to provide a middleware that can be used to enable CORS with various options in nextjs applications.
-- [polished](https://polished.js.org/): A lightweight toolset for writing styles in Javascript..
-- [react](https://ghub.io/react): React is a JavaScript library for building user interfaces.
-- [react-data-table-component](https://github.com/jbetancur/react-data-table-component#readme): A simple to use declarative react based data table.
-- [react-dom](https://ghub.io/react-dom): React package for working with the DOM.
-- [react-hook-form](https://www.react-hook-form.com): Performant, flexible and extensible forms library for React Hooks.
-- [react-icons](https://ghub.io/react-icons): SVG React icons of popular icon packs using ES6 imports.
-- [react-input-mask](https://github.com/sanniassin/react-input-mask): Masked input component for React.
-- [react-pro-sidebar]: high level and customizable side navigation.
-- [react-redux](https://github.com/reduxjs/react-redux): Official React bindings for Redux.
-- [react-responsive-modal](https://react-responsive-modal.leopradel.com/): A simple responsive and accessible react modal.
-- [react-switch](https://github.com/markusenglund/react-switch#readme): Draggable toggle-switch component for react.
-- [redux](http://redux.js.org): Predictable state container for JavaScript apps.
-- [styled-components](https://ghub.io/styled-components): Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress.
-- [uuid](https://ghub.io/uuid): RFC4122 (v1, v4, and v5) UUIDs.
-
-# :page_facing_up: License
-
-This project is under the [MIT license](./LICENSE).
+This project is under the MIT license.
 Made with 💖 by [Silvio Félix](https://www.linkedin.com/in/silviofelix32/).
 
 Thank you! 🌠
-
-###
