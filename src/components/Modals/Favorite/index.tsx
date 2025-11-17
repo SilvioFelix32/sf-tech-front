@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useFavorite } from "../../../context";
-import { IFavoriteItem } from "../../../types/IFavorite";
+import { IFavoriteItem } from "../../../interfaces/IFavorite";
 import { Modal as ModalComponent } from "react-responsive-modal";
 import { formatPrice } from "../../../utils/formatPrice";
 import { BsXLg } from "react-icons/bs";

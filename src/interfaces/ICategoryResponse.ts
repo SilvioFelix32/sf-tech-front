@@ -1,4 +1,4 @@
-import { IProductCategory } from "../../types";
+import { IProductCategory } from ".";
 import { IParamsRequest } from "./IParamsRequest";
 
 export interface ICategoryResponse {

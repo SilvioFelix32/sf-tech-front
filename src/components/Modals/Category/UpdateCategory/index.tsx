@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 import { categoryService } from "../../../../services";
 import { environment } from "../../../../config/environment";
 import { GetSwallAlert } from "../../../../utils/sweet-alert";
-import { IProductCategory } from "../../../../types";
+import { IProductCategory } from "../../../../interfaces";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
 import { Button, Content, Context, Text, Input, Wrapper } from "./styles";
 import "react-responsive-modal/styles.css";
+import { sanitazePayload } from "../../../../utils";
 
 interface modalProps {
   onOpen: boolean;
@@ -41,9 +42,10 @@ export function ModalEditCategory({
   }, [category_id, setValue]);
 
   async function handleUpdate(data: IProductCategory) {
+    const sanitizedData = sanitazePayload(data);
     await categoryService
       .update(company_id, category_id, {
-        ...data,
+        ...sanitizedData,
       })
       .then(() => setReloadData(Math.random()))
       .catch((error) => {

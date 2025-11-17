@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { userService } from "../services";
-import { IUser } from "../types";
+import { IUser } from "../interfaces";
 
 export function useUser(company_id: string, user_id: string) {
   const [myUser, setMyUser] = useState<IUser | null>(null);

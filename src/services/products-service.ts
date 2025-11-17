@@ -1,13 +1,13 @@
 import api from "./api";
 import { AxiosError } from "axios";
 import { getCookie } from "./cookie-service";
-import { IProduct } from "../types";
+import { IProduct } from "../interfaces";
 import {
   ProductsService,
   IParamsRequest,
   IProductResponse,
   IProductInterface,
-} from "./interfaces";
+} from "@/interfaces";
 
 const nextauth = getCookie("nextauth.token");
 
@@ -30,7 +30,6 @@ async function getAll(params: IParamsRequest): Promise<IProductResponse> {
     return response.data;
   } catch (error) {
     handleAxiosError(error);
-    throw error;
   }
 }
 
@@ -42,7 +41,6 @@ async function search(searchTerm: string): Promise<IProductInterface> {
     return response.data;
   } catch (error) {
     handleAxiosError(error);
-    throw error;
   }
 }
 
@@ -52,7 +50,6 @@ async function getById(product_id: string): Promise<IProduct> {
     return response.data;
   } catch (error) {
     handleAxiosError(error);
-    throw error;
   }
 }
 
@@ -61,13 +58,17 @@ async function create(
   params: IProduct
 ): Promise<IProduct> {
   try {
+    console.log("TOKEN", nextauth);
+    
     const response = await api.post<IProduct>(`${baseUrl}`, params, {
-      headers: { category_id },
+      headers: {
+        category_id,
+        authorization: `Bearer ${nextauth}`,
+      },
     });
     return response.data;
   } catch (error) {
     handleAxiosError(error);
-    throw error;
   }
 }
 
@@ -86,7 +87,6 @@ async function update(product_id: string, params: IProduct): Promise<IProduct> {
     return response.data;
   } catch (error) {
     handleAxiosError(error);
-    throw error;
   }
 }
 
@@ -97,16 +97,10 @@ async function _delete(product_id: string): Promise<void> {
     });
   } catch (error) {
     handleAxiosError(error);
-    throw error;
   }
 }
 
 function handleAxiosError(error: AxiosError) {
-  if (error.response) {
-    console.error("Response error:", error.response.data);
-  } else if (error.request) {
-    console.error("Request error:", error.request);
-  } else {
-    console.error("Error:", error.message);
-  }
+  console.error("ProductsService, Error:", error);
+  throw new Error("ProductsService, Error:", error);
 }

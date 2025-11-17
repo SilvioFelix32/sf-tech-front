@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { userService } from "../../../../services";
-import { IUser } from "../../../../types/IUser";
+import { IUser } from "../../../../interfaces/IUser";
 import { Modal as ModalEdit } from "react-responsive-modal";
 import { environment } from "../../../../config/environment";
 import { GetSwallAlert } from "../../../../utils/sweet-alert";

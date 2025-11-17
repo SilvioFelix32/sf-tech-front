@@ -1,12 +1,12 @@
 import { FormEvent, useState } from "react";
-import { environment } from "../../../../config/environment";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation, useQueryClient } from "react-query";
 import { useCategoryFilter } from "../../../../hooks/useCategoryFilter";
 //components
 import { productsService } from "../../../../services";
-import { IProduct, IProductCategory } from "../../../../types";
+import { IProduct, IProductCategory } from "../../../../interfaces";
 import { Modal as ModalCreate } from "react-responsive-modal";
+import { ValidationMessage } from "../../../ValidationMessage";
 //styles
 import {
   Button,
@@ -18,6 +18,7 @@ import {
   Context,
 } from "./styles";
 import "react-responsive-modal/styles.css";
+import { GetSwallAlert, validateForm, validators } from "../../../../utils";
 
 interface modalProps {
   isOpen: boolean;
@@ -30,25 +31,7 @@ export function ModalCreateProduct({
   setIsOpen,
   setReloadData,
 }: modalProps) {
-  const company_id = environment.companyId;
   const queryClient = useQueryClient();
-
-  const {
-    value: { productCategories },
-    isLoading,
-    isError,
-  } = useCategoryFilter({ page: 1, perPage: 20 });
-
-  const mutation = useMutation(
-    (newProduct: Partial<IProduct>) =>
-      productsService.create(company_id, newProduct as IProduct),
-    {
-      onSuccess: () => {
-        setReloadData(Math.random());
-        queryClient.invalidateQueries("products");
-      },
-    }
-  );
 
   const [category, setCategory] = useState<string>();
   const [sku, setSku] = useState<string>();
@@ -59,9 +42,54 @@ export function ModalCreateProduct({
   const [price, setPrice] = useState<number>();
   const [discount, setDiscount] = useState<number>();
   const [highlighted, setHighlighted] = useState(true);
+  const [validationError, setValidationError] = useState<string>("");
+
+  const {
+    value: { productCategories },
+    isLoading,
+    isError,
+  } = useCategoryFilter({ page: 1, perPage: 20 });
+
+  const mutation = useMutation(
+    (newProduct: Partial<IProduct>) =>
+      productsService.create(category, newProduct as IProduct),
+    {
+      onSuccess: () => {
+        setReloadData(Math.random());
+        queryClient.invalidateQueries("products");
+      },
+      onError: (error: Error) => {
+        GetSwallAlert(
+          "center",
+          "error",
+          `Erro ao cadastrar produto: ${error.message}`,
+          2000
+        );
+      },
+    }
+  );
+
+  const categories = productCategories.map((category: IProductCategory) => ({
+    label: category.title,
+    value: category.category_id,
+  }));
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    setValidationError("");
+
+    const validation = validateForm([
+      { field: "title", value: title, message: "O campo Título é obrigatório", validator: validators.requiredString },
+      { field: "subtitle", value: subtitle, message: "O campo Subtítulo é obrigatório", validator: validators.requiredString },
+      { field: "description", value: description, message: "O campo Descrição é obrigatório", validator: validators.requiredString },
+      { field: "category", value: category, message: "O campo Categoria é obrigatório", validator: validators.selectedOption },
+      { field: "price", value: price, message: "O campo Valor deve ser maior que zero", validator: validators.positiveNumber }
+    ]);
+
+    if (!validation.isValid) {
+      setValidationError(validation.errorMessage);
+      return;
+    }
 
     const data: Partial<IProduct> = {
       sku: sku || uuidv4(),
@@ -115,11 +143,13 @@ export function ModalCreateProduct({
             <Text>Valor:</Text>
             <Input
               type="number"
+              min={0}
               onChange={(e) => setPrice(Number(e.target.value))}
             />
             <Text>Valor Desconto:</Text>
             <Input
               type="number"
+              min={0}
               onChange={(e) => setDiscount(Number(e.target.value))}
             />
           </Content>
@@ -145,14 +175,13 @@ export function ModalCreateProduct({
                 defaultValue=""
               >
                 <option value=""></option>
-                {productCategories.map((category: IProductCategory) => (
-                  <option
-                    key={category.category_id}
-                    value={category.category_id}
-                  >
-                    {category.title}
-                  </option>
-                ))}
+                {categories.map(
+                  (category: { label: string; value: string }) => (
+                    <option key={category.value} value={category.value}>
+                      {category.label}
+                    </option>
+                  )
+                )}
               </Select>
             )}
             <Text>Sku:</Text>
@@ -163,6 +192,10 @@ export function ModalCreateProduct({
             />
           </Content>
         </Context>
+        <ValidationMessage 
+          message={validationError} 
+          show={!!validationError} 
+        />
         <Button type="submit">Cadastrar</Button>
       </Wrapper>
     </ModalCreate>

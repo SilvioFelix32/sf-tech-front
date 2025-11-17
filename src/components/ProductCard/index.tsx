@@ -7,7 +7,7 @@ import {
   useFilterContext,
 } from "../../context";
 import { useCan } from "../../hooks/useCan";
-import { IProduct } from "../../types";
+import { IProduct } from "../../interfaces";
 import { BuyButton } from "../Buttons";
 import { PaginationButton } from "../Buttons/Pagination";
 import { formatPrice } from "../../utils/formatPrice";

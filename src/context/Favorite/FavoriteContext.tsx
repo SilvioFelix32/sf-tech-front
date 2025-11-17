@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { IFavoriteItem } from "../../types/IFavorite";
+import { IFavoriteItem } from "../../interfaces/IFavorite";
 import { getCookie, setCookie } from "../../services";
 import { IFavoriteContext, FavoriteProviderProviderProps } from "./types";
 

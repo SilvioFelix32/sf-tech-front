@@ -1,5 +1,5 @@
 import api from "./api";
-import { ICompanyParams } from "./interfaces";
+import { ICompanyParams } from "@/interfaces";
 
 export const companiesService = {
   getAll,

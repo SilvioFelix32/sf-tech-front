@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IProduct } from "../../types";
+import { IProduct } from "../../interfaces";
 
 export interface ProductFilterState {
   searchTerm: string;

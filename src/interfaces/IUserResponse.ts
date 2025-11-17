@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { IUser } from "../../types/IUser";
+import { IUser } from "./IUser";
 import { IParamsRequest } from "./IParamsRequest";
 
 export interface IUsersResponse {

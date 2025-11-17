@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import { useQueryClient } from "react-query";
-import { IProductCategory } from "../types";
+import { IProductCategory } from "../interfaces";
 import { useCategoryFilter } from "../hooks/useCategoryFilter";
 import {
   ModalCreateCategory,

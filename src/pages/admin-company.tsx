@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useQuery } from "react-query";
 import { companiesService } from "../services/companies-service";
-import { ICompany } from "../types/ICompany";
+import { ICompany } from "../interfaces/ICompany";
 import DataTable from "react-data-table-component";
 import { Wrapper, Content, Text } from "../styles/pages/admin";
 import { customStyles } from "../styles/customDataTable";

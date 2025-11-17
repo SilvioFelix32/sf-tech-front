@@ -1,6 +1,6 @@
 import { AuthContext, useCart } from "../../context";
 import Image from "next/image";
-import { IProduct } from "../../types";
+import { IProduct } from "../../interfaces";
 import { formatPrice } from "../../utils/formatPrice";
 import { useContext } from "react";
 import { DeliveryMethod } from "./ClientDelivery";

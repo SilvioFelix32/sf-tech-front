@@ -1,0 +1,174 @@
+---
+description: Technology stack and versions for SF Tech Front project
+globs: **/*
+alwaysApply: true
+---
+# Technology Stack - SF Tech Front
+
+## Core Framework
+- **Next.js**: 15.5.3 (App Router, SSR/SSG)
+- **React**: 19.1.1 (Server Components, Concurrent Features)
+- **TypeScript**: 5.9.2 (Type Safety, Strict Mode)
+
+## State Management
+- **Redux Toolkit**: 2.9.0 (State Management)
+- **React Redux**: 9.2.0 (React Integration)
+- **React Query**: 3.39.3 (Server State, Caching)
+
+## Styling & UI
+- **Styled Components**: 6.1.19 (CSS-in-JS)
+- **Polished**: 4.3.1 (Color Manipulation)
+- **CoreUI React**: 5.9.0 (Component Library)
+- **React Icons**: 5.5.0 (Icon Library)
+
+## Cloud & Authentication
+- **AWS Amplify**: 6.15.6 (Backend Services)
+- **@aws-amplify/core**: 6.13.2
+- **@aws-amplify/ui-react**: 6.12.0
+
+## Forms & Validation
+- **React Hook Form**: 7.62.0 (Form Management)
+- **React Input Mask**: 2.0.4 (Input Formatting)
+
+## Utilities
+- **Axios**: 1.12.2 (HTTP Client)
+- **UUID**: 13.0.0 (Unique Identifiers)
+- **JS Cookie**: 3.0.5 (Cookie Management)
+- **SweetAlert2**: 11.23.0 (Notifications)
+
+## Specific Components
+- **React Credit Cards 2**: 1.0.3 (Payment Forms)
+- **React Data Table Component**: 7.7.0 (Data Tables)
+- **React Responsive Modal**: 7.0.0 (Modals)
+- **React Spinners**: 0.17.0 (Loading States)
+- **React Switch**: 7.1.0 (Toggle Components)
+- **React Pro Sidebar**: 1.1.0 (Navigation)
+
+## Analytics & Monitoring
+- **Vercel Analytics**: 1.5.0 (Performance Monitoring)
+
+## Best Practices by Version
+
+### Next.js 15.5.3 or --latest
+- ✅ Use App Router (not Pages Router)
+- ✅ Leverage Server Components when possible
+- ✅ Implement Streaming for better UX
+- ⚠️ Be careful with unnecessary Client Components
+
+### React 19.1.1 or --latest
+- ✅ Use React Compiler when available
+- ✅ Leverage use() hook for promises
+- ✅ Implement Suspense boundaries
+- ⚠️ Avoid useEffect for data fetching (use React Query)
+
+### TypeScript 5.9.2 or --latest
+- ✅ Enable strict mode in tsconfig.json
+- ✅ Use satisfies operator for type inference
+- ✅ Implement branded types for IDs
+- ⚠️ Avoid any, use unknown when necessary
+
+### Redux Toolkit 2.9.0 or --latest
+- ✅ Use createSlice for reducers
+- ✅ Implement RTK Query for API calls
+- ✅ Use createAsyncThunk for async actions
+- ⚠️ Avoid direct state mutations
+
+### React Query 3.39.3 or --latest
+- ✅ Configure QueryClient with appropriate defaults
+- ✅ Use useQuery for GET requests
+- ✅ Use useMutation for POST/PUT/DELETE
+- ⚠️ Implement error boundaries for queries
+
+### Styled Components 6.1.19 or --latest
+- ✅ Use ThemeProvider for design system
+- ✅ Implement styled-components babel plugin
+- ✅ Use CSS prop for dynamic styles
+- ⚠️ Avoid unnecessary styled components
+
+## Code Patterns
+
+### Component Structure
+```typescript
+// ✅ Good example
+interface ComponentProps {
+  title: string;
+  onAction: () => void;
+}
+
+export const Component: React.FC<ComponentProps> = ({ title, onAction }) => {
+  return <div onClick={onAction}>{title}</div>;
+};
+```
+
+### Custom Hooks
+```typescript
+// ✅ Good example
+export const useProduct = (id: string) => {
+  return useQuery({
+    queryKey: ['product', id],
+    queryFn: () => fetchProduct(id),
+    enabled: !!id
+  });
+};
+```
+
+### Error Handling
+```typescript
+// ✅ Good example
+try {
+  const result = await apiCall();
+  return result;
+} catch (error) {
+  console.error('API Error:', error);
+  throw new Error(`(Name of the class or function, ex UserService), Error: ${error}`);
+}
+```
+
+## Important Configurations
+
+### Next.js Config
+- Configure image domains in next.config.js
+- Implement rewrites for API routes
+- Configure security headers
+
+### TypeScript Config
+- Enable strict mode
+- Configure path mapping
+- Use baseUrl for absolute imports
+
+### ESLint Config
+- Use @typescript-eslint/recommended
+- Configure React Hooks rules
+- Implement unused imports detection
+
+## Performance
+
+### Bundle Size
+- Use dynamic imports for code splitting
+- Implement lazy loading for heavy components
+- Monitor bundle size with @next/bundle-analyzer
+
+### Runtime Performance
+- Use React.memo for pure components
+- Implement useMemo for heavy calculations
+- Use useCallback for functions passed as props
+
+## Security
+
+### Sensitive Data
+- Never expose API keys on client-side
+- Use environment variables for configurations
+- Implement input sanitization
+
+### Authentication
+- Use AuthContext on src/context/Authentication/AuthContext.tsx for user management
+- Implement refresh tokens
+- Configure CORS properly
+
+### Analytics
+- Configure Vercel Analytics for performance
+
+### Logging
+- Use console.error for errors
+- Implement structured logging
+- Configure appropriate log levels

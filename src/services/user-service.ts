@@ -1,6 +1,6 @@
 import { deleteUser } from "aws-amplify/auth";
 import api from "./api";
-import { IUser } from "../types/IUser";
+import { IUser } from "../interfaces/IUser";
 import { getCookie } from "./cookie-service";
 import { AxiosError } from "axios";
 import {
@@ -8,7 +8,7 @@ import {
   IUserLoginParams,
   IParamsRequest,
   IUsersResponse,
-} from "./interfaces";
+} from "@/interfaces";
 
 export const userService: UserService = {
   login,

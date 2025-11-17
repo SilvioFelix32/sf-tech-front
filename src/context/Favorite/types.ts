@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IFavoriteItem } from "../../types";
+import { IFavoriteItem } from "../../interfaces";
 
 export interface IFavoriteContext {
   favoriteItems: IFavoriteItem[];

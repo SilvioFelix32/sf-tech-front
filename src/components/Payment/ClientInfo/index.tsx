@@ -4,7 +4,7 @@ import { Card, Divisory, MainData, Wrapper } from "./styles";
 import { Column, Content, Input, Title, Text } from "./styles";
 import { useForm } from "react-hook-form";
 import { userService } from "../../../services";
-import { IUser } from "../../../types";
+import { IUser } from "../../../interfaces";
 
 interface ComponentProps {
   company_id: string;

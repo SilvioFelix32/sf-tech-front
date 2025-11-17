@@ -8,7 +8,7 @@ import {
   handleApiError,
   ErrorTypes,
 } from "../../../errors/errorHandler";
-import { IUser } from "../../../types";
+import { IUser } from "../../../interfaces";
 
 //styles
 import {

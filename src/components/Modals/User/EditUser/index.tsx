@@ -2,7 +2,7 @@ import { environment } from "../../../../config/environment";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { userService } from "../../../../services";
-import { IUser } from "../../../../types/IUser";
+import { IUser } from "../../../../interfaces/IUser";
 import { Modal as ModalEdit } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { GetSwallAlert } from "../../../../utils/sweet-alert";

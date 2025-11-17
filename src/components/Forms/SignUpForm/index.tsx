@@ -3,7 +3,7 @@ import { signUp } from "aws-amplify/auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { environment } from "../../../config/environment";
-import { IUser } from "../../../types";
+import { IUser } from "../../../interfaces";
 import { GetSwallAlert } from "../../../utils";
 
 import { ConfirmPassword, CreatePassword } from "./Passwords";
