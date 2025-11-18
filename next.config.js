@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const withImages = require('next-images')
-module.exports = withImages()
-
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ['image/webp'],
@@ -36,5 +33,13 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+
+  transpilePackages: [
+    'react-responsive-modal',
+    '@bedrock-layout/use-forwarded-ref',
+    '@bedrock-layout/use-stateful-ref',
+  ],
 }
+
+module.exports = nextConfig

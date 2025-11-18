@@ -1,11 +1,11 @@
 import api from "./api";
-import { IProductCategory } from "../types";
+import { IProductCategory } from "../interfaces";
 import { getCookie } from "./cookie-service";
 import {
   CategoryService,
   IParamsRequest,
   ICategoryResponse,
-} from "./interfaces";
+} from "@/interfaces";
 import { handleApiError } from "../errors/errorHandler";
 
 export const categoryService: CategoryService = {

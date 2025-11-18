@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { AuthContext, useCart } from "../../../context";
-import { IProduct } from "../../../types";
+import { IProduct } from "../../../interfaces";
 import { formatPrice } from "../../../utils";
 import { PriceDetail } from "../../Checkout/PriceDetail";
 import { SubTotalWrapper, InfoText } from "../../Checkout/styles";

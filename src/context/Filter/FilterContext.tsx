@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import reducer from "../reducers/filterReducer";
-import { IProduct } from "../../types";
+import { IProduct } from "../../interfaces";
 import { CategoriesContext } from "../Categories/CategoriesContext";
 
 const FilterContext = createContext(null);

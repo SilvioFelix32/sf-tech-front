@@ -1,4 +1,4 @@
-import { IProduct } from "../types";
+import { IProduct } from "../interfaces";
 
 export function calculateCartTotals(cartItems: IProduct[]) {
   const cartSubtotal = cartItems.reduce((acc, item: IProduct) => {

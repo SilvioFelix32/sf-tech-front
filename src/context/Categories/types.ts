@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IProductCategory, IProduct } from "../../types";
+import { IProductCategory, IProduct } from "../../interfaces";
 
 export interface ProductFilterContextData {
   productCategories: IProductCategory[];

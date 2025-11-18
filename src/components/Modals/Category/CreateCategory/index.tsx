@@ -1,7 +1,7 @@
 import { environment } from "../../../../config/environment";
 import { FormEvent, useState } from "react";
 import { Modal as ModalCreate } from "react-responsive-modal";
-import { IProductCategory } from "../../../../types";
+import { IProductCategory } from "../../../../interfaces";
 import { categoryService } from "../../../../services";
 import { GetSwallAlert } from "../../../../utils";
 //styles

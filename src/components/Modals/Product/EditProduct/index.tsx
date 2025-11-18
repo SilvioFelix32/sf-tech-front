@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { IProduct, IProductCategory, IUpdateProduct } from "../../../../types";
+import { IProduct, IProductCategory, IUpdateProduct } from "../../../../interfaces";
 import { productsService } from "../../../../services";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useCategoryFilter } from "../../../../hooks/useCategoryFilter";
 import { Modal as ModalEdit } from "react-responsive-modal";
-import { GetSwallAlert } from "../../../../utils";
+import { GetSwallAlert, sanitazePayload } from "../../../../utils";
 import {
   Button,
   Content,
@@ -51,7 +51,8 @@ export function ModalEditProduct({
 
   const mutation = useMutation(
     async (data: IUpdateProduct) => {
-      const { product_id, ...rest } = data;
+      const sanitizedData = sanitazePayload(data);
+      const { product_id, ...rest } = sanitizedData;
       try {
         return await productsService.update(product_id, {
           ...rest,

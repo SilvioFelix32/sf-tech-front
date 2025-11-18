@@ -1,6 +1,6 @@
 import { SignInInput } from "aws-amplify/auth";
 import { ReactNode } from "react";
-import { Role } from "../../types";
+import { Role } from "../../interfaces";
 
 export type User = {
   name?: string;

@@ -1,5 +1,6 @@
+import dynamic from "next/dynamic";
+const MoonLoader = dynamic(() => import("react-spinners").then(m => m.MoonLoader), { ssr: false });
 import React, { createContext, CSSProperties } from "react";
-import { MoonLoader } from "react-spinners";
 import { ProductFilterContextData, ProductProviderProps } from "./types";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 

@@ -1,4 +1,4 @@
-import { IProduct, IUpdateProduct } from "../../types/IProducts";
+import { IProduct, IUpdateProduct } from "./IProducts";
 import { IParamsRequest } from "./IParamsRequest";
 
 export interface IProductResponse {

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import { productsService } from "../services";
-import { IProductResponse } from "../services/interfaces";
+import { IProductResponse } from "@/interfaces";
 
 interface useCategoryFilterOptions {
   page: number;

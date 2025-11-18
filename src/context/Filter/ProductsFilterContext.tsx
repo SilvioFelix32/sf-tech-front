@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { IProduct } from "../../types";
+import { IProduct } from "../../interfaces";
 import { CategoriesContext } from "../Categories/CategoriesContext";
 import { ProductFilterContextData, ProductFilterProviderProps } from "./types";
 

@@ -2,9 +2,8 @@ import { useReducer, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { environment } from "../config/environment";
 import { categoryService } from "../services";
-import { ICategoryResponse } from "../services/interfaces";
+import { ICategoryResponse, IProductCategory } from "@/interfaces";
 import reducer from "../context/reducers/filterReducer";
-import { IProductCategory } from "../types";
 
 const initialState = {
   filter_products: [],

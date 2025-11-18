@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useFavorite } from "../context";
 import { BuyButton } from "../components";
-import { IFavoriteItem } from "../types/IFavorite";
+import { IFavoriteItem } from "../interfaces/IFavorite";
 import { MdFavorite } from "react-icons/md";
 //styles
 import {

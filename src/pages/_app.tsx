@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { MainApp } from "../components/MainApp";
-import { IProduct } from "../types";
+import { IProduct } from "../interfaces";
 import { getCookie, setCookie } from "../services";
 import { Amplify } from "aws-amplify";
 import config from "../aws/aws-config";

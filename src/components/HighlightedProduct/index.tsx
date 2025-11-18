@@ -9,7 +9,7 @@ import {
   Title,
   Text,
 } from "./styles";
-import { IProduct } from "../../types";
+import { IProduct } from "../../interfaces";
 import { useContext } from "react";
 import { CategoriesContext } from "../../context";
 

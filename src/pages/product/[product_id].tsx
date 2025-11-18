@@ -1,14 +1,15 @@
 import Image from "next/image";
 import { CSSProperties } from "react";
 import { useCart } from "../../context";
-import { MoonLoader } from "react-spinners";
+import dynamic from "next/dynamic";
+const MoonLoader = dynamic(() => import("react-spinners").then(m => m.MoonLoader), { ssr: false });
 import { useRouter } from "next/router";
 import { NavHeader, Header } from "../../components";
 import { BuyButton } from "../../components/Buttons";
 import { useQuery } from "react-query";
 import { categoryService, productsService } from "../../services";
 import { formatPrice } from "../../utils/formatPrice";
-import { IProductCategory } from "../../types";
+import { IProductCategory } from "../../interfaces";
 import {
   Content,
   Description,
