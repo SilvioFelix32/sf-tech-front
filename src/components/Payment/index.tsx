@@ -1,8 +1,9 @@
 import { AuthContext, useCart } from "../../context";
 import Image from "next/image";
-import { IProduct } from "../../interfaces";
+import { IProduct, ISaleItem, ICreateSaleRequest } from "../../interfaces";
+import { CartItemType } from "../../context/Cart/types";
 import { formatPrice } from "../../utils/formatPrice";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DeliveryMethod } from "./ClientDelivery";
 import { CardForm } from "./Card";
 import router from "next/router";
@@ -28,11 +29,96 @@ import {
   SubTotalWrapper,
   Totals,
 } from "../Checkout/styles";
+import { saleService } from "../../services";
+import { environment } from "../../config/environment";
+import { GetSwallAlert } from "../../utils";
 
 export function PaymentForm() {
   const { user } = useContext(AuthContext);
-  const { cartItems, cartTotalPriceWithoutDiscount, cartTotalPrice } =
+  const { cartItems, cartTotalPriceWithoutDiscount, cartTotalPrice, clearCart } =
     useCart();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const mapCartItemsToSaleItems = (items: CartItemType[]): ISaleItem[] => {
+    return items.map((item) => {
+      const quantity = item.amount || 1;
+      const itemPrice = item.price || 0;
+      const itemDiscount = item.discount || 0;
+      const totalValue = quantity * (itemPrice - itemDiscount);
+
+      return {
+        category_id: item.category_id || "",
+        product_id: item.product_id,
+        sku: item.sku || "",
+        title: item.title || "",
+        subtitle: item.subtitle || "",
+        description: item.description || "",
+        url_banner: item.urlBanner || "",
+        quantity,
+        total_value: Math.round(totalValue * 100) / 100,
+      };
+    });
+  };
+
+  const handleConfirmPayment = async () => {
+    if (!user?.user_id) {
+      GetSwallAlert("center", "error", "Usuário não autenticado", 3000);
+      return;
+    }
+
+    if (cartItems.length === 0) {
+      GetSwallAlert("center", "error", "Carrinho vazio", 3000);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const saleItems = mapCartItemsToSaleItems(cartItems);
+      
+      const missingCategoryId = saleItems.some(item => !item.category_id);
+      if (missingCategoryId) {
+        GetSwallAlert(
+          "center",
+          "error",
+          "Alguns produtos não possuem categoria. Por favor, recarregue a página e tente novamente.",
+          4000
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      const total = Math.round(Number(cartTotalPrice) * 100) / 100;
+
+      const saleData: ICreateSaleRequest = {
+        items: saleItems,
+        total,
+      };
+
+      const createdSale = await saleService.create(
+        environment.companyId,
+        user.user_id,
+        saleData
+      );
+
+      clearCart();
+      GetSwallAlert("center", "success", "Compra realizada com sucesso!", 2000);
+      
+      setTimeout(() => {
+        router.push(`/confirmation?sale_id=${createdSale.sale_id}`);
+      }, 2000);
+    } catch (error) {
+      console.error("Erro ao criar venda:", error);
+      GetSwallAlert(
+        "center",
+        "error",
+        "Erro ao processar pagamento. Tente novamente.",
+        3000
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return user ? (
     <Wrapper>
@@ -126,10 +212,10 @@ export function PaymentForm() {
           </Button>
           <ButtonPay
             style={{ borderBottomLeftRadius: "0" }}
-            onClick={() => router.push("/confirmation")}
-            disabled={Number(cartTotalPrice) <= 0}
+            onClick={handleConfirmPayment}
+            disabled={Number(cartTotalPrice) <= 0 || isLoading}
           >
-            Confirmar Pagamento
+            {isLoading ? "Processando..." : "Confirmar Pagamento"}
           </ButtonPay>
         </ButtonWrapper>
       </PaymentWrapper>

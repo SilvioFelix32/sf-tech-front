@@ -17,8 +17,6 @@ export const Content = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   color: ${({ theme }) => theme.colors.tertiary};
-  outline: solid 1px ${({ theme }) => theme.colors.tertiary};
-  border-radius: 6px;
   padding: 10px;
 `;
 

@@ -13,6 +13,9 @@ export * from "./User/DeleteUser";
 export * from "./User/EditUser";
 export * from "./User/EditSuperUser";
 
+// Sale Modals
+export * from "./Sale/SaleDetails";
+
 // Feature Modals
 export * from "./Cart";
 export * from "./Favorite";
