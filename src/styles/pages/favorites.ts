@@ -112,6 +112,7 @@ export const ProductValue = styled.div`
 `;
 
 export const Title = styled.p`
+  width: 100%;
   color: ${({ theme }) => theme.colors.text};
   text-transform: capitalize;
   font-weight: 600;

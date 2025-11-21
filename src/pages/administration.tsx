@@ -5,6 +5,7 @@ import { NavHeader, Footer, Header } from "../components";
 import AdminProducts from "./admin-products";
 import AdminCompany from "./admin-company";
 import AdminCategories from "./admin-product-category";
+import AdminSales from "./admin-sales";
 import { BiMenu, BiNews, BiPackage, BiStore, BiWallet } from "react-icons/bi";
 //styles
 import { Wrapper, Content, Section } from "../styles/pages/administration";
@@ -57,7 +58,9 @@ export default function Administration() {
                   >
                     <BiPackage /> Produtos
                   </CustomMenuItem>
-                  <CustomMenuItem>
+                  <CustomMenuItem
+                    onClick={() => setActualPage("AdminSales")}
+                  >
                     <BiWallet /> Vendas
                   </CustomMenuItem>
                 </CustomMenu>
@@ -66,6 +69,7 @@ export default function Administration() {
                 {actualPage === "AdminCompany" && <AdminCompany />}
                 {actualPage === "AdminCategories" && <AdminCategories />}
                 {actualPage === "AdminProducts" && <AdminProducts />}
+                {actualPage === "AdminSales" && <AdminSales />}
               </Section>
             </>
           )}

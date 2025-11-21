@@ -176,6 +176,7 @@ export const PaymentWrapper = styled.div`
 `;
 
 export const SubTotalWrapper = styled.div`
+  margin 0 10px;
   width: 100%;
   display: flex;
   flex-direction: column;

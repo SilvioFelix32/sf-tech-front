@@ -123,6 +123,7 @@ Define strict types for props, state, and API responses.
 Follow SOLID principles where applicable.
 Use meaningful variable names and avoid magic numbers.
 Prefer functional components and hooks over class components.
+Never write unnecessary comments. Code should be self-explanatory through clear naming and structure.
 
 # Avoid Anti-Patterns:
 

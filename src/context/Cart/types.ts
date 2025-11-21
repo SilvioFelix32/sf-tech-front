@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 export type CartItemType = {
   product_id: string;
+  category_id?: string;
   sku?: string;
   title?: string;
   subtitle?: string;
@@ -27,4 +28,5 @@ export interface ICartContext {
   handleUpdateAmountProduct: (clickedItem: CartItemType) => void;
   handleRemoveFromCart: (product_id: string) => void;
   deleteItemFromCart: (product_id: string) => void;
+  clearCart: () => void;
 }

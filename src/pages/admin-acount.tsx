@@ -27,7 +27,7 @@ export default function Administration() {
       <Header
         showSignInButton={true}
         showCartButton={true}
-        showFavoritesButton={true}
+        showFavoritesButton={false}
         showAdminButton={true}
         showSearchBar={false}
       />

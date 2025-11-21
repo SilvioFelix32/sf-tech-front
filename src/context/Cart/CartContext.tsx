@@ -114,6 +114,14 @@ function CartProvider({ children }: CartProviderProps) {
     });
   }
 
+  function clearCart() {
+    setCartItems([]);
+    setCookie("shop-cart", JSON.stringify([]), {
+      expires: 7,
+      path: "/",
+    });
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -123,6 +131,7 @@ function CartProvider({ children }: CartProviderProps) {
         handleRemoveFromCart,
         handleUpdateAmountProduct,
         deleteItemFromCart,
+        clearCart,
         totalItemsCount,
         cartTotalPrice,
         cartTotalPriceWithoutDiscount,
