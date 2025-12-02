@@ -1,6 +1,6 @@
 import React, { useState, memo } from "react";
 import Image from "next/image";
-import { useProductFilter } from "../../hooks/useProductFiltes";
+import { useProductFilter } from "../../hooks/useProductFilter";
 import {
   ModalCreateProduct,
   ModalDeleteProduct,

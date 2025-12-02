@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { useFavorite } from "../../../context";
+import { useFavorite } from "../../../hooks/useFavorite";
 import { IFavoriteItem } from "../../../interfaces/IFavorite";
 import { Modal as ModalComponent } from "react-responsive-modal";
 import { formatPrice } from "../../../utils/formatPrice";

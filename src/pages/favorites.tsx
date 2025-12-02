@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useFavorite } from "../context";
+import { useFavorite } from "../hooks/useFavorite";
 import { BuyButton } from "../components";
 import { IFavoriteItem } from "../interfaces/IFavorite";
 import { formatPrice } from "../utils/formatPrice";

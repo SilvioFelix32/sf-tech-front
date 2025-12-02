@@ -39,7 +39,8 @@
     "styled-components": "^6.1.19",
     "sweetalert2": "^11.26.3",
     "sweetalert2-react-content": "^5.1.0",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",

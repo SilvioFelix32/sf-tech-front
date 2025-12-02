@@ -1,5 +1,4 @@
-import { ReactNode } from "react";
-import { IFavoriteItem } from "../../interfaces";
+import { IFavoriteItem } from "../../interfaces/IFavorite";
 
 export interface IFavoriteContext {
   favoriteItems: IFavoriteItem[];
@@ -9,6 +8,3 @@ export interface IFavoriteContext {
   totalItemsCount: number;
 }
 
-export interface FavoriteProviderProviderProps {
-  children: ReactNode;
-}

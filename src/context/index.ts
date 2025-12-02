@@ -1,8 +1,4 @@
-// Core Contexts
-export * from "./Theme/ThemeContext";
-
 // Feature Contexts
-export * from "./Favorite/FavoriteContext";
 export * from "./Categories/CategoriesContext";
 
 // Filter Contexts

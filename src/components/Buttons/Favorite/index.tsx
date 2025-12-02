@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useFavorite } from "../../../context";
+import { useFavorite } from "../../../hooks/useFavorite";
 //components
 import { FavoriteModal } from "../..";
 import { BsHeart } from "react-icons/bs";

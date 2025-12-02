@@ -4,12 +4,10 @@ import { MainApp } from "../components/MainApp";
 import { IProduct } from "../interfaces";
 import { getCookie, setCookie } from "../services";
 import {
-  FavoriteProvider,
   FilterContextProvider,
   ProductFilterProvider,
   ProductProvider,
 } from "../context";
-import ThemePreferenceProvider from "../context/Theme/ThemeContext";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { GlobalStyles } from "../styles/global";
 import { AppProps as NextAppProps } from "next/app";
@@ -40,10 +38,8 @@ export default function App({
 }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemePreferenceProvider>
-        <ProductProvider>
-          <FavoriteProvider>
-            <FilterContextProvider>
+      <ProductProvider>
+          <FilterContextProvider>
                   <Head>
                     <title>Sf-tech</title>
                     <link rel="shortcut icon" href="/favicon.jpg" />
@@ -59,9 +55,7 @@ export default function App({
                     </MainApp>
                   </ProductFilterProvider>
               </FilterContextProvider>
-            </FavoriteProvider>
           </ProductProvider>
-      </ThemePreferenceProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
   );
 }
