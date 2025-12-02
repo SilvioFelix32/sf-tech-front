@@ -7,10 +7,7 @@ import { IFavoriteItem } from "../interfaces/IFavorite";
 import { formatPrice } from "../utils/formatPrice";
 import { BsXLg } from "react-icons/bs";
 //styles
-import {
-  Wrapper,
-  Title,
-} from "../styles/pages/favorites";
+import { PageWrapper, PageTitle } from "../styles/pages/shared";
 import {
   Product,
   ProductContent,
@@ -27,21 +24,19 @@ export default function MyFavorites() {
 
   if (favoriteItems.length === 0) {
     return (
-      <Wrapper>
-        <Title
-          style={{ fontSize: "1.5rem", textAlign: "center", marginTop: "3rem" }}
-        >
+      <PageWrapper width="100%" padding="20px">
+        <PageTitle fontSize="1.5rem" textAlign="center" margin="3rem 0 0 0">
           Nenhum favorito ainda
-        </Title>
-      </Wrapper>
+        </PageTitle>
+      </PageWrapper>
     );
   }
 
   return (
-    <Wrapper style={{ flexDirection: "column", padding: "20px" }}>
-      <Title style={{ fontSize: "22px", marginBottom: "2rem" }}>
+    <PageWrapper width="100%" padding="20px">
+      <PageTitle fontSize="22px" margin="0 0 2rem 0">
         Meus Itens Favoritos:
-      </Title>
+      </PageTitle>
       {favoriteItems.map((item: IFavoriteItem) => (
         <div
           key={item.product_id}
@@ -108,6 +103,6 @@ export default function MyFavorites() {
           </div>
         </div>
       ))}
-    </Wrapper>
+    </PageWrapper>
   );
 }

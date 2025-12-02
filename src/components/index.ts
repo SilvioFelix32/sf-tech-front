@@ -3,6 +3,7 @@ export * from "./Header";
 export * from "./Footer";
 export * from "./NavHeader";
 export * from "./MainApp";
+export * from "./Layouts/PageLayout";
 
 // Product Components
 export * from "./ProductCard";

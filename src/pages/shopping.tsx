@@ -11,13 +11,12 @@ import { PriceDetail } from "../components/Checkout/PriceDetail";
 import { SubTotalWrapper, InfoText } from "../components/Checkout/styles";
 //styles
 import {
-  Wrapper,
   SaleContainer,
   SaleHeader,
   SaleDate,
   SaleTotal,
-  Title,
 } from "../styles/pages/shopping";
+import { PageWrapper, PageTitle } from "../styles/pages/shared";
 
 export default function MyShopping() {
   const router = useRouter();
@@ -43,17 +42,17 @@ export default function MyShopping() {
 
   if (!user) {
     return (
-      <Wrapper>
-        <Title style={{ fontSize: "20px" }}>Nenhum dado disponível</Title>
-      </Wrapper>
+      <PageWrapper width="100%" padding="20px">
+        <PageTitle fontSize="20px">Nenhum dado disponível</PageTitle>
+      </PageWrapper>
     );
   }
 
   if (isLoading) {
     return (
-      <Wrapper>
-        <Title style={{ fontSize: "22px" }}>Carregando suas compras...</Title>
-      </Wrapper>
+      <PageWrapper width="100%" padding="20px">
+        <PageTitle fontSize="22px">Carregando suas compras...</PageTitle>
+      </PageWrapper>
     );
   }
 
@@ -65,13 +64,11 @@ export default function MyShopping() {
 
   if (sortedSales.length === 0) {
     return (
-      <Wrapper>
-        <Title
-          style={{ fontSize: "1.5rem", textAlign: "center", marginTop: "3rem" }}
-        >
+      <PageWrapper width="100%" padding="20px">
+        <PageTitle fontSize="1.5rem" textAlign="center" margin="3rem 0 0 0">
           Nenhuma compra realizada ainda
-        </Title>
-      </Wrapper>
+        </PageTitle>
+      </PageWrapper>
     );
   }
 
@@ -86,10 +83,10 @@ export default function MyShopping() {
   };
 
   return (
-    <Wrapper>
-      <Title style={{ fontSize: "22px", marginBottom: "2rem" }}>
+    <PageWrapper width="100%" padding="20px">
+      <PageTitle fontSize="22px" margin="0 0 2rem 0">
         Minhas compras:
-      </Title>
+      </PageTitle>
 
       {sortedSales.map((sale: ISale) => (
         <SaleContainer key={sale.sale_id}>
@@ -132,6 +129,6 @@ export default function MyShopping() {
           </SubTotalWrapper>
         </SaleContainer>
       ))}
-    </Wrapper>
+    </PageWrapper>
   );
 }

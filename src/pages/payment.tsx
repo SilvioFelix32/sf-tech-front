@@ -1,25 +1,24 @@
-import { Footer, Header, NavHeader } from "../components";
+import { PageLayout } from "../components";
 import { PaymentForm } from "../components/Payment";
-import { Wrapper, Content } from "../styles/pages/checkout";
-import { Theme } from "../styles/components";
 
 export default function Payment() {
   return (
-    <Theme>
-      <NavHeader />
-      <Header
-        showSignInButton={true}
-        showCartButton={false}
-        showFavoritesButton={true}
-        showAdminButton={false}
-        showSearchBar={false}
-      />
-      <Wrapper>
-        <Content>
-          <PaymentForm />
-        </Content>
-        <Footer />
-      </Wrapper>
-    </Theme>
+    <PageLayout
+      showSignInButton={true}
+      showCartButton={false}
+      showFavoritesButton={true}
+      showAdminButton={false}
+      showSearchBar={false}
+      wrapperWidth="75%"
+      contentProps={{
+        direction: "column",
+        align: "flex-start",
+        justify: "flex-start",
+        minHeight: "75vh",
+        padding: "20px",
+      }}
+    >
+      <PaymentForm />
+    </PageLayout>
   );
 }

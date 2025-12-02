@@ -225,7 +225,7 @@ export function PaymentForm() {
       <Title>Faça login primeiro para poder continuar com a compra:</Title>
       <Button
         style={{ width: "30%", marginTop: "15px", borderRadius: "6px" }}
-        onClick={() => router.push("/signIn")}
+        onClick={() => router.push("/auth/signIn")}
       >
         Login
       </Button>
