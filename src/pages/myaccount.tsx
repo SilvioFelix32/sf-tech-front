@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { AuthContext } from "../context";
+import { useAuth } from "../hooks/useAuth";
 import { PageWrapper, PageTitle, PageText } from "../styles/pages/shared";
 import { AccountContent } from "../styles/pages/myaccount";
 
 export default function MyAccount() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return user ? (
     <PageWrapper width="80%" padding="20px">

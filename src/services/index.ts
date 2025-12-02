@@ -1,7 +1,8 @@
 // Core Services
 export * from "./api";
-export * from "./auth-service";
+export * from "./auth.service";
 export * from "./cookie-service";
+export * from "./auth";
 
 // Business Services
 export * from "./companies-service";

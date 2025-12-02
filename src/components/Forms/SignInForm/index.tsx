@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "./Password";
-import { AuthContext } from "../../../context";
+import { useAuth } from "../../../hooks/useAuth";
 import {
   CustomError,
   handleApiError,
@@ -31,7 +31,7 @@ interface ILoginBody {
 
 export function SignInForm() {
   const router = useRouter();
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);

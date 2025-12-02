@@ -23,3 +23,4 @@ export const buildUserAttributes = (
     isSignedIn: isSignedIn,
   };
 };
+

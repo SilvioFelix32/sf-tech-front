@@ -1,5 +1,4 @@
 // Core Contexts
-export * from "./Authentication/AuthContext";
 export * from "./Theme/ThemeContext";
 
 // Feature Contexts

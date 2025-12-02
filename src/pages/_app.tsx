@@ -1,18 +1,14 @@
-import React from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { MainApp } from "../components/MainApp";
 import { IProduct } from "../interfaces";
 import { getCookie, setCookie } from "../services";
-import { Amplify } from "aws-amplify";
-import { awsConfig } from "../aws/aws-config";
 import {
   CartProvider,
   FavoriteProvider,
   FilterContextProvider,
   ProductFilterProvider,
   ProductProvider,
-  AuthProvider,
 } from "../context";
 import ThemePreferenceProvider from "../context/Theme/ThemeContext";
 import { QueryClientProvider, QueryClient } from "react-query";
@@ -21,7 +17,6 @@ import { AppProps as NextAppProps } from "next/app";
 import "@aws-amplify/ui-react/styles.css";
 
 const queryClient = new QueryClient();
-Amplify.configure(awsConfig);
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const favoriteTheme = getCookie("color-theme");
@@ -47,7 +42,6 @@ export default function App({
   return (
     <QueryClientProvider client={queryClient}>
       <ThemePreferenceProvider>
-        <AuthProvider>
           <ProductProvider>
             <CartProvider>
               <FavoriteProvider>
@@ -70,7 +64,6 @@ export default function App({
               </FavoriteProvider>
             </CartProvider>
           </ProductProvider>
-        </AuthProvider>
       </ThemePreferenceProvider>
     </QueryClientProvider>
   );

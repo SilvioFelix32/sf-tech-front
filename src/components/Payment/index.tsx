@@ -1,9 +1,10 @@
-import { AuthContext, useCart } from "../../context";
+import { useCart } from "../../context";
+import { useAuth } from "../../hooks/useAuth";
 import Image from "next/image";
 import { IProduct, ISaleItem, ICreateSaleRequest } from "../../interfaces";
 import { CartItemType } from "../../context/Cart/types";
 import { formatPrice } from "../../utils/formatPrice";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { DeliveryMethod } from "./ClientDelivery";
 import { CardForm } from "./Card";
 import router from "next/router";
@@ -34,7 +35,7 @@ import { environment } from "../../config/environment";
 import { GetSwallAlert } from "../../utils";
 
 export function PaymentForm() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const { cartItems, cartTotalPriceWithoutDiscount, cartTotalPrice, clearCart } =
     useCart();
   const [isLoading, setIsLoading] = useState(false);

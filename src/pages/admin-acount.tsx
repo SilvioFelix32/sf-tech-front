@@ -5,7 +5,27 @@ import MyFavorites from "./favorites";
 import MyShopping from "./shopping";
 import { BiMenu, BiStore, BiHeart, BiUser } from "react-icons/bi";
 //styles
-import { Wrapper, Content, Section } from "../styles/pages/administration";
+import { PageWrapper, PageContent } from "../styles/pages/shared";
+import styled from "styled-components";
+
+const Wrapper = styled(PageWrapper)`
+  width: 100%;
+  padding: 0;
+`;
+
+const Content = styled(PageContent)`
+  width: 100%;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+`;
+
+const Section = styled.div`
+  width: 100%;
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+`;
 import { Theme } from "../styles/components";
 import {
   CustomSidebar,
