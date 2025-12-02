@@ -1,13 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useFavorite } from "../hooks/useFavorite";
-import { BuyButton } from "../components";
-import { IFavoriteItem } from "../interfaces/IFavorite";
-import { formatPrice } from "../utils/formatPrice";
+import { useFavorite } from "../../hooks/useFavorite";
+import { BuyButton } from "../Buttons";
+import { IFavoriteItem } from "../../interfaces/IFavorite";
+import { formatPrice } from "../../utils/formatPrice";
 import { BsXLg } from "react-icons/bs";
-//styles
-import { PageWrapper, PageTitle } from "../styles/pages/shared";
+import { PageWrapper, PageTitle } from "../../styles/pages/shared";
 import {
   Product,
   ProductContent,
@@ -16,7 +15,7 @@ import {
   Text,
   Description,
   Button,
-} from "../components/Modals/Favorite/styles";
+} from "../Modals/Favorite/styles";
 
 export default function MyFavorites() {
   const router = useRouter();
@@ -106,3 +105,4 @@ export default function MyFavorites() {
     </PageWrapper>
   );
 }
+

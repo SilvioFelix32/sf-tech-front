@@ -16,6 +16,7 @@ export * from "./InputMask";
 export * from "./ValidationMessage";
 
 // Sub-components
+export * from "./Account";
 export * from "./Buttons";
 export * from "./Forms";
 export * from "./Filters";

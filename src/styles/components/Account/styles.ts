@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PageContent } from "./shared";
+import { PageContent } from "../../pages/shared";
 
 export const AccountContent = styled(PageContent)`
   margin: 10px;
@@ -9,3 +9,4 @@ export const AccountContent = styled(PageContent)`
   background-color: ${({ theme }) => theme.colors.tertiary};
   border-bottom: solid 1px white;
 `;
+

@@ -1,21 +1,20 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { useAuth } from "../hooks/useAuth";
-import { saleService } from "../services/sale-service";
-import { environment } from "../config/environment";
-import { ISale } from "../interfaces";
-import { formatPrice } from "../utils/formatPrice";
-import { PriceDetail } from "../components/Checkout/PriceDetail";
-import { SubTotalWrapper, InfoText } from "../components/Checkout/styles";
-//styles
+import { useAuth } from "../../hooks/useAuth";
+import { saleService } from "../../services/sale-service";
+import { environment } from "../../config/environment";
+import { ISale } from "../../interfaces";
+import { formatPrice } from "../../utils/formatPrice";
+import { PriceDetail } from "../Checkout/PriceDetail";
+import { SubTotalWrapper, InfoText } from "../Checkout/styles";
 import {
   SaleContainer,
   SaleHeader,
   SaleDate,
   SaleTotal,
-} from "../styles/pages/shopping";
-import { PageWrapper, PageTitle } from "../styles/pages/shared";
+} from "../../styles/pages/shopping";
+import { PageWrapper, PageTitle } from "../../styles/pages/shared";
 
 export default function MyShopping() {
   const router = useRouter();
@@ -131,3 +130,4 @@ export default function MyShopping() {
     </PageWrapper>
   );
 }
+
