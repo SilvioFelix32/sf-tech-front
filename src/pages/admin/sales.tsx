@@ -1,12 +1,12 @@
 import { memo, useState } from "react";
 import { useQuery } from "react-query";
-import { saleService } from "../services/sale-service";
-import { ISale } from "../interfaces";
-import { environment } from "../config/environment";
+import { saleService } from "../../services/sale-service";
+import { ISale } from "../../interfaces";
+import { environment } from "../../config/environment";
 import DataTable from "react-data-table-component";
-import { Wrapper, Content, Text } from "../styles/pages/admin";
-import { customStyles } from "../styles/customDataTable";
-import { ModalSaleDetails } from "../components/Modals/Sale/SaleDetails";
+import { AdminWrapper, AdminContent, AdminTitle, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
+import { customStyles } from "../../styles/customDataTable";
+import { ModalSaleDetails } from "../../components/Modals/Sale/SaleDetails";
 
 function AdminSales() {
   const [selectedSaleId, setSelectedSaleId] = useState<string | null>(null);
@@ -21,8 +21,8 @@ function AdminSales() {
       keepPreviousData: true,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000, // 5 minutos
-      cacheTime: 30 * 60 * 1000, // 30 minutos
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 30 * 60 * 1000,
       enabled: !!company_id,
     }
   );
@@ -73,20 +73,25 @@ function AdminSales() {
 
   return (
     <>
-      <Wrapper>
-        <Text>Administrar Vendas</Text>
-        <Content>
-          <DataTable
-            columns={columns}
-            data={data}
-            customStyles={customStyles}
-            progressPending={isLoading}
-            onRowClicked={handleRowClick}
-            pointerOnHover
-            highlightOnHover
-          />
-        </Content>
-      </Wrapper>
+      <AdminWrapper>
+        <AdminTitle>Administrar Vendas</AdminTitle>
+        <AdminContent fullWidth>
+          <AdminCard>
+            <AdminCardHeader>
+              <AdminCardTitle>Lista de Vendas</AdminCardTitle>
+            </AdminCardHeader>
+            <DataTable
+              columns={columns}
+              data={data}
+              customStyles={customStyles}
+              progressPending={isLoading}
+              onRowClicked={handleRowClick}
+              pointerOnHover
+              highlightOnHover
+            />
+          </AdminCard>
+        </AdminContent>
+      </AdminWrapper>
       {selectedSaleId && (
         <ModalSaleDetails
           saleId={selectedSaleId}

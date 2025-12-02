@@ -1,16 +1,16 @@
 import { memo, useState } from "react";
 import { useQueryClient } from "react-query";
-import { IProductCategory } from "../interfaces";
-import { useCategoryFilter } from "../hooks/useCategoryFilter";
+import { IProductCategory } from "../../interfaces";
+import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import {
   ModalCreateCategory,
   ModalEditCategory,
   ModalDeleteCategory,
-} from "../components";
-import { EditButton, ExcludeButton } from "../components/Buttons";
+} from "../../components";
+import { EditButton, ExcludeButton } from "../../components/Buttons";
 import DataTable from "react-data-table-component";
-import { Wrapper, Button, Text, Content } from "../styles/pages/admin";
-import { customStyles } from "../styles/customDataTable";
+import { AdminWrapper, AdminContent, AdminTitle, AdminButton, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
+import { customStyles } from "../../styles/customDataTable";
 import "react-responsive-modal/styles.css";
 
 function AdminCategories() {
@@ -94,28 +94,33 @@ function AdminCategories() {
   };
 
   return (
-    <Wrapper>
-      <Content>
-        <Text>Administração de Categorias de Produtos</Text>
-        <Button onClick={() => setIsOpen(true)}>
-          Cadastrar nova Categoria
-        </Button>
-        <DataTable
-          columns={columns}
-          data={data}
-          pagination
-          progressPending={isLoading}
-          onChangePage={handlePageChange}
-          paginationTotalRows={meta.total}
-          paginationPerPage={perPage}
-          paginationServer
-          paginationComponentOptions={paginationComponentOptions}
-          paginationDefaultPage={page}
-          customStyles={customStyles}
-          paginationRowsPerPageOptions={[5, 10, 20]}
-          onChangeRowsPerPage={handlePerRowsChange}
-        />
-      </Content>
+    <AdminWrapper>
+      <AdminTitle>Administração de Categorias de Produtos</AdminTitle>
+      <AdminContent fullWidth>
+        <AdminCard>
+          <AdminCardHeader>
+            <AdminCardTitle>Lista de Categorias</AdminCardTitle>
+            <AdminButton onClick={() => setIsOpen(true)}>
+              Cadastrar nova Categoria
+            </AdminButton>
+          </AdminCardHeader>
+          <DataTable
+            columns={columns}
+            data={data}
+            pagination
+            progressPending={isLoading}
+            onChangePage={handlePageChange}
+            paginationTotalRows={meta.total}
+            paginationPerPage={perPage}
+            paginationServer
+            paginationComponentOptions={paginationComponentOptions}
+            paginationDefaultPage={page}
+            customStyles={customStyles}
+            paginationRowsPerPageOptions={[5, 10, 20]}
+            onChangeRowsPerPage={handlePerRowsChange}
+          />
+        </AdminCard>
+      </AdminContent>
       <ModalCreateCategory
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -133,8 +138,9 @@ function AdminCategories() {
         setOpen={setOpen}
         setReloadData={() => invalidateQuery()}
       />
-    </Wrapper>
+    </AdminWrapper>
   );
 }
 
 export default memo(AdminCategories);
+
