@@ -1,6 +1,6 @@
-import { NavHeader, Header, SignUpConfirmForm } from "../components";
-import { Theme } from "../styles/components";
-import { Content, Wrapper } from "../styles/pages/login";
+import { NavHeader, Header, SignUpConfirmForm } from "../../components";
+import { Theme } from "../../styles/components";
+import { AuthContent, AuthWrapper } from "../../styles/pages/auth";
 
 export default function ConfirmSignUp() {
   return (
@@ -13,11 +13,12 @@ export default function ConfirmSignUp() {
         showAdminButton={false}
         showSearchBar={false}
       />
-      <Wrapper>
-        <Content>
+      <AuthWrapper>
+        <AuthContent>
           <SignUpConfirmForm />
-        </Content>
-      </Wrapper>
+        </AuthContent>
+      </AuthWrapper>
     </Theme>
   );
 }
+

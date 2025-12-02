@@ -45,7 +45,7 @@ export function SignUpConfirmForm() {
           "Conta criada com você será redicionado para a página de login",
           3000
         );
-        router.push("/signIn");
+        router.push("/auth/signIn");
       }
     } catch (error) {
       setIsCodeIncorrect(true);

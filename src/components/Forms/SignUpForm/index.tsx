@@ -56,7 +56,7 @@ export function SignUpForm() {
         },
       }).then(() => {
         router.push({
-          pathname: "/confirm-signup",
+          pathname: "/auth/confirm-signup",
           query: { email: data.email },
         });
       });
@@ -125,7 +125,7 @@ export function SignUpForm() {
         }}
       >
         <Text>Já tem uma conta?</Text>
-        <RouterButton type="button" onClick={() => router.push("signIn")}>
+        <RouterButton type="button" onClick={() => router.push("/auth/signIn")}>
           Faça login.
         </RouterButton>
       </Content>

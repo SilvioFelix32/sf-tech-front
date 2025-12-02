@@ -51,7 +51,7 @@ export const SignInButton = () => {
     </Wrapper>
   ) : (
     <>
-      <Button onClick={() => router.push("/signIn")}>
+      <Button onClick={() => router.push("/auth/signIn")}>
         <Svg>
           <BiUser />
         </Svg>

@@ -112,7 +112,7 @@ export function SignInForm() {
         </Column>
         <RouterButton
           type="button"
-          onClick={() => router.push("/forgot-password")}
+          onClick={() => router.push("/auth/forgot-password")}
         >
           Esqueceu sua senha?
         </RouterButton>
@@ -124,7 +124,7 @@ export function SignInForm() {
       </Content>
       <Registration>
         Não tem uma conta?
-        <RouterButton type="button" onClick={() => router.push("signUp")}>
+        <RouterButton type="button" onClick={() => router.push("/auth/signUp")}>
           Cadastrar.
         </RouterButton>
       </Registration>

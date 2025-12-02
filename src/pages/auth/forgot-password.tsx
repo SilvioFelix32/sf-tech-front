@@ -1,6 +1,6 @@
-import { NavHeader, Header, ForgotPasswordForm } from "../components";
-import { Content, Wrapper } from "../styles/pages/login";
-import { Theme } from "../styles/components";
+import { NavHeader, Header, ForgotPasswordForm } from "../../components";
+import { AuthContent, AuthWrapper } from "../../styles/pages/auth";
+import { Theme } from "../../styles/components";
 
 export default function ForgotPassword() {
   return (
@@ -13,11 +13,12 @@ export default function ForgotPassword() {
         showAdminButton={false}
         showSearchBar={false}
       />
-      <Wrapper>
-        <Content>
+      <AuthWrapper>
+        <AuthContent>
           <ForgotPasswordForm />
-        </Content>
-      </Wrapper>
+        </AuthContent>
+      </AuthWrapper>
     </Theme>
   );
 }
+

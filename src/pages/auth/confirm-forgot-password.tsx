@@ -1,6 +1,6 @@
-import { NavHeader, Header, ConfirmForgotPasswordForm } from "../components";
-import { Theme } from "../styles/components";
-import { Content, Wrapper } from "../styles/pages/login";
+import { NavHeader, Header, ConfirmForgotPasswordForm } from "../../components";
+import { Theme } from "../../styles/components";
+import { AuthContent, AuthWrapper } from "../../styles/pages/auth";
 
 export default function ConfirmForgotPassword() {
   return (
@@ -13,11 +13,12 @@ export default function ConfirmForgotPassword() {
         showAdminButton={false}
         showSearchBar={false}
       />
-      <Wrapper>
-        <Content>
+      <AuthWrapper>
+        <AuthContent>
           <ConfirmForgotPasswordForm />
-        </Content>
-      </Wrapper>
+        </AuthContent>
+      </AuthWrapper>
     </Theme>
   );
 }
+

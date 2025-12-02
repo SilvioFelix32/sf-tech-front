@@ -34,7 +34,7 @@ export function ForgotPasswordForm() {
       });
 
       router.push({
-        pathname: "/confirm-forgot-password",
+        pathname: "/auth/confirm-forgot-password",
         query: { email: data.email },
       });
     } catch (error) {
