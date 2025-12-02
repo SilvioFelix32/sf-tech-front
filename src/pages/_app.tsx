@@ -5,7 +5,7 @@ import { MainApp } from "../components/MainApp";
 import { IProduct } from "../interfaces";
 import { getCookie, setCookie } from "../services";
 import { Amplify } from "aws-amplify";
-import config from "../aws/aws-config";
+import { awsConfig } from "../aws/aws-config";
 import {
   CartProvider,
   FavoriteProvider,
@@ -21,7 +21,7 @@ import { AppProps as NextAppProps } from "next/app";
 import "@aws-amplify/ui-react/styles.css";
 
 const queryClient = new QueryClient();
-Amplify.configure(config);
+Amplify.configure(awsConfig);
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const favoriteTheme = getCookie("color-theme");
