@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
   justify-content: flex-start;
   position: relative;
   padding: 0;
-  margin-bottom: 20px;
 `;
 
 export const TopBar = styled.div`
