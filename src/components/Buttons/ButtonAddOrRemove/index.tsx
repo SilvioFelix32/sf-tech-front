@@ -1,6 +1,6 @@
 import React from "react";
-import { useCart } from "../../../context";
-import { CartItemType } from "../../../context/Cart/types";
+import { useCart } from "../../../hooks/useCart";
+import { CartItemType } from "../../../services/cart";
 import { Wrapper, Content, Text, Button } from "./styles";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

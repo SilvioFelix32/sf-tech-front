@@ -1,8 +1,8 @@
-import { useCart } from "../../context";
+import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import Image from "next/image";
 import { IProduct, ISaleItem, ICreateSaleRequest } from "../../interfaces";
-import { CartItemType } from "../../context/Cart/types";
+import { CartItemType } from "../../services/cart";
 import { formatPrice } from "../../utils/formatPrice";
 import { useState } from "react";
 import { DeliveryMethod } from "./ClientDelivery";

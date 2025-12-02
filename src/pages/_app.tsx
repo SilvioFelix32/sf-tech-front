@@ -4,7 +4,6 @@ import { MainApp } from "../components/MainApp";
 import { IProduct } from "../interfaces";
 import { getCookie, setCookie } from "../services";
 import {
-  CartProvider,
   FavoriteProvider,
   FilterContextProvider,
   ProductFilterProvider,
@@ -42,10 +41,9 @@ export default function App({
   return (
     <QueryClientProvider client={queryClient}>
       <ThemePreferenceProvider>
-          <ProductProvider>
-            <CartProvider>
-              <FavoriteProvider>
-                <FilterContextProvider>
+        <ProductProvider>
+          <FavoriteProvider>
+            <FilterContextProvider>
                   <Head>
                     <title>Sf-tech</title>
                     <link rel="shortcut icon" href="/favicon.jpg" />
@@ -60,9 +58,8 @@ export default function App({
                       <GlobalStyles />
                     </MainApp>
                   </ProductFilterProvider>
-                </FilterContextProvider>
-              </FavoriteProvider>
-            </CartProvider>
+              </FilterContextProvider>
+            </FavoriteProvider>
           </ProductProvider>
       </ThemePreferenceProvider>
     </QueryClientProvider>

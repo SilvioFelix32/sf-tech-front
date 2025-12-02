@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useCart } from "../../../context";
+import { useCart } from "../../../hooks/useCart";
 import { Modal as ModalComponent } from "react-responsive-modal";
-import { CartItemType } from "../../../context/Cart/types";
+import { CartItemType } from "../../../services/cart";
 import { BtnAddOrRemove } from "../../Buttons";
 import { BsXLg } from "react-icons/bs";
 import { formatPrice } from "../../../utils/formatPrice";

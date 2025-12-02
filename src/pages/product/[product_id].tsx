@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CSSProperties } from "react";
-import { useCart } from "../../context";
+import { useCart } from "../../hooks/useCart";
 import dynamic from "next/dynamic";
 const MoonLoader = dynamic(() => import("react-spinners").then(m => m.MoonLoader), { ssr: false });
 import { useRouter } from "next/router";

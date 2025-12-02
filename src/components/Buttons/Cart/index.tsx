@@ -4,7 +4,7 @@ import { CartModal } from "../..";
 import { BiCart } from "react-icons/bi";
 //styles
 import { CartValue, Content, Wrapper } from "./styles";
-import { useCart } from "../../../context";
+import { useCart } from "../../../hooks/useCart";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
