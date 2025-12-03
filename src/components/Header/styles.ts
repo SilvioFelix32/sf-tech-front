@@ -40,8 +40,24 @@ export const HeaderContent = styled.div`
 
 export const DesktopLogoButton = styled.button`
   display: flex;
+  align-items: center;
+  gap: 8px;
   border: none;
   outline: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  padding: 4px;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 
   > image {
     width: 100%;
@@ -55,8 +71,23 @@ export const DesktopLogoButton = styled.button`
 
 export const MobileLogoButton = styled.button`
   display: none;
+  align-items: center;
   border: none;
   outline: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  padding: 4px;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 
   > image {
     width: 100%;
@@ -65,6 +96,19 @@ export const MobileLogoButton = styled.button`
 
   @media (max-width: 720px) {
     display: flex;
+  }
+`;
+
+export const LogoText = styled.span`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+
+  ${DesktopLogoButton}:hover & {
+    opacity: 1;
   }
 `;
 

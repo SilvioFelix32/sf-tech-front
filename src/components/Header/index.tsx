@@ -19,6 +19,7 @@ import {
   MobileLogoButton,
   HeaderActions,
   AdminButton,
+  LogoText,
 } from "./styles";
 
 interface HeaderProps {
@@ -45,7 +46,11 @@ export const Header = memo(function Header({
   return (
     <HeaderWrapper>
       <HeaderContent style={styles}>
-        <DesktopLogoButton onClick={() => router.push("/")}>
+        <DesktopLogoButton 
+          onClick={() => router.push("/")}
+          aria-label="Voltar para a página inicial"
+          title="Voltar para a página inicial"
+        >
           <Image
             src="/images/logo_sftech.png"
             alt="sftech"
@@ -53,8 +58,13 @@ export const Header = memo(function Header({
             height={60}
             priority={true}
           />
+          <LogoText>Home</LogoText>
         </DesktopLogoButton>
-        <MobileLogoButton onClick={() => router.push("/")}>
+        <MobileLogoButton 
+          onClick={() => router.push("/")}
+          aria-label="Voltar para a página inicial"
+          title="Voltar para a página inicial"
+        >
           <Image
             src="/images/logo_60x60.png"
             alt="sftech"
