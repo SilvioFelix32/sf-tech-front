@@ -25,6 +25,7 @@ export default function Account() {
       showAdminButton={true}
       showSearchBar={false}
       wrapperWidth="80%"
+      wrapperShadow="vertical"
       contentProps={{
         direction: "row",
         align: "stretch",

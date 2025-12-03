@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.footer`
-  width: 100vw;
+  width: 100%;
   margin-top: auto;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.tertiary};
   color: ${({ theme }) => theme.colors.text};
 `;
 

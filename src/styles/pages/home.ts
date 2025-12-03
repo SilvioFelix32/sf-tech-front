@@ -5,7 +5,8 @@ export const HomePageWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: 4px 0 8px -4px rgba(0, 0, 0, 0.24),
+    -4px 0 8px -4px rgba(0, 0, 0, 0.24);
   background-color: ${({ theme }) => theme.colors.background};
 
   @media (min-width: 768px) and (max-width: 1280px) {

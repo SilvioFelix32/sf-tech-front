@@ -48,8 +48,8 @@ export default function Home() {
           isOpen={isInitialModalOpen}
           setOpen={setInitialModalOpen}
         />
-        <Footer />
       </HomePageWrapper>
+      <Footer />
     </Theme>
   );
 }
