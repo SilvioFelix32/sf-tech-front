@@ -10,19 +10,18 @@ import {
   Checkbox,
 } from "./styles";
 import { CategoriesContext } from "../../../context/Categories/CategoriesContext";
+
 interface CategorySelector {
-  filter: string;
-  setFilter: (value: string) => void;
+  filter?: string;
   isSelected: string;
   setIsSelected: (value: string) => void;
 }
 
 export function CategoriesFilterCard({
-  setFilter,
   isSelected,
   setIsSelected,
 }: CategorySelector) {
-  const { productCategories } = useContext(CategoriesContext);
+  const { productCategories, setFilter } = useContext(CategoriesContext);
 
   const handleCheckboxChange = (id: string, title: string) => {
     if (isSelected === id) {

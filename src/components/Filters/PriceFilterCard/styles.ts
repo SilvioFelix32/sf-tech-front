@@ -31,7 +31,7 @@ export const ProductFilter = styled.div`
 
 export const SliderWrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: 80%;
   height: 18px;
   display: flex;
   align-items: center;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const ProductListContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -8,14 +8,14 @@ export const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const CardWrapper = styled.div`
+export const ProductGrid = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
 `;
 
-export const Pagination = styled.div`
+export const ProductListPagination = styled.div`
   display: flex;
   height: 40px;
   width: 100%;
@@ -23,55 +23,67 @@ export const Pagination = styled.div`
   margin-right: 30px;
 `;
 
-export const Content = styled.div`
+export const ProductCardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   position: relative;
   flex-shrink: 0;
-  height: 30rem;
   width: 20rem;
+  height: 30rem;
   margin: 10px;
-  padding: 10px;
-  border-radius: 6px;
-  outline: solid 1px ${({ theme }) => theme.colors.tertiary};
-  transition-duration: 0.3s;
-  transition: box-shadow 0.3s ease-in-out;
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  background-color: ${({ theme }) => theme.colors.background};
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 
   &:hover {
-    box-shadow: 0 8px 12px rgba(255, 255, 255, 0.2),
-      0 8px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
     cursor: pointer;
 
     .favorite {
       display: block;
     }
+
+    img {
+      transform: scale(1.05);
+    }
   }
 
   @media (min-width: 768px) and (max-width: 1280px) {
-    height: 28rem;
     width: 18rem;
+    height: 28rem;
     margin: 8px;
-    padding: 8px;
   }
 `;
 
-export const Picture = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100%;
+export const ProductImageWrapper = styled.div`
+  position: relative;
   width: 100%;
-  overflow: visible;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.background};
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
 `;
 
-export const ProductInfo = styled.div`
+export const ProductInfoContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
   width: 100%;
-  height: 100%;
 `;
 
 export const ProductPrices = styled.div`
@@ -83,9 +95,9 @@ export const ProductPrices = styled.div`
   height: 100%;
 `;
 
-export const FavoritedButton = styled.button`
+export const FavoriteButton = styled.button`
   position: absolute;
-  right: 8px;
+  left: 8px;
   top: 8px;
   padding: 0;
   z-index: 2;
@@ -102,10 +114,10 @@ export const FavoritedButton = styled.button`
   }
 `;
 
-export const NotFavoriteButton = styled.button`
+export const NotFavoriteIconButton = styled.button`
   display: none;
   position: absolute;
-  right: 8px;
+  left: 8px;
   top: 8px;
   padding: 0;
   z-index: 2;
@@ -122,22 +134,20 @@ export const NotFavoriteButton = styled.button`
   }
 `;
 
-export const ProductValue = styled.div`
+export const ProductPriceContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  margin: auto 0 0;
-  text-align: center;
+  justify-content: flex-start;
+  text-align: left;
 `;
 
 export const ProductDescription = styled.div``;
 
-export const Title = styled.p`
+export const ProductTitle = styled.p`
   color: ${({ theme }) => theme.colors.text};
-  text-transform: capitalize;
   font-weight: 600;
   font-size: 1rem;
-  text-align: center;
+  text-align: left;
   margin: 0;
 
   @media (min-width: 768px) and (max-width: 1280px) {
@@ -145,14 +155,13 @@ export const Title = styled.p`
   }
 `;
 
-export const Description = styled.p`
+export const ProductDescriptionText = styled.p`
   color: ${({ theme }) => theme.colors.text};
-  text-transform: capitalize;
   margin: 0;
-  text-align: center;
+  text-align: left;
   font-size: 1rem;
-  font-weight: 600;
-  height: 60px;
+  font-weight: 400;
+  min-height: 2.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -165,7 +174,7 @@ export const Description = styled.p`
   }
 `;
 
-export const Text = styled.p`
+export const ProductPriceText = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 600;
   font-size: 0.8rem;
@@ -175,6 +184,28 @@ export const Text = styled.p`
   @media (min-width: 768px) and (max-width: 1280px) {
     font-size: 0.7rem;
   }
+`;
+
+export const ProductCardFooter = styled.div`
+  width: 100%;
+  padding: 0 16px 16px;
+
+  button {
+    width: 100%;
+    font-weight: 600;
+  }
+`;
+
+export const DiscountBadge = styled.span`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.background};
+  font-size: 0.75rem;
+  font-weight: 600;
 `;
 
 export const Button = styled.button`

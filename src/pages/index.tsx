@@ -11,17 +11,16 @@ import {
 } from "../components";
 //styles
 import {
-  Wrapper,
-  Content,
-  MainSection,
-  LeftContent,
+  HomePageWrapper,
+  HomeContent,
+  ProductListSection,
+  FilterSidebar,
 } from "../styles/pages/home";
 import { Theme } from "../styles/components";
 
 export default function Home() {
-  const [filter, setFilter] = useState("");
-  const [isOpen, setOpen] = useState(false);
-  const [isSelected, setIsSelected] = useState("");
+  const [isInitialModalOpen, setInitialModalOpen] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
   return (
     <Theme>
@@ -32,24 +31,25 @@ export default function Home() {
         showFavoritesButton={true}
         showAdminButton={true}
       />
-      <Wrapper>
-        <Content>
-          <LeftContent>
+      <HomePageWrapper>
+        <HomeContent>
+          <FilterSidebar>
             <CategoriesFilterCard
-              filter={filter}
-              setFilter={setFilter}
-              isSelected={isSelected}
-              setIsSelected={setIsSelected}
+              isSelected={selectedCategoryId}
+              setIsSelected={setSelectedCategoryId}
             />
             <PriceFilterCard />
-          </LeftContent>
-          <MainSection>
-            <ProductCard filter={filter} isSelected={isSelected} />
-          </MainSection>
-        </Content>
-        <InitialModal isOpen={isOpen} setOpen={setOpen} />
+          </FilterSidebar>
+          <ProductListSection>
+            <ProductCard isSelected={selectedCategoryId} />
+          </ProductListSection>
+        </HomeContent>
+        <InitialModal
+          isOpen={isInitialModalOpen}
+          setOpen={setInitialModalOpen}
+        />
         <Footer />
-      </Wrapper>
+      </HomePageWrapper>
     </Theme>
   );
 }
