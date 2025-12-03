@@ -10,10 +10,6 @@ export const PageWrapper = styled.div<PageWrapperProps>`
   width: ${({ width }) => width || "80%"};
   margin: 0 auto;
   position: relative;
-  box-shadow: ${({ shadow }) =>
-    shadow === "vertical"
-      ? "4px 0 8px -4px rgba(0, 0, 0, 0.24), -4px 0 8px -4px rgba(0, 0, 0, 0.24)"
-      : "rgba(0, 0, 0, 0.24) 0px 3px 8px"};
   background-color: ${({ theme }) => theme.colors.background};
   padding: ${({ padding }) => padding || "0"};
   min-height: calc(100vh - 140px);

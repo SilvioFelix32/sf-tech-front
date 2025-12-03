@@ -1,30 +1,81 @@
-import { AccountContent } from "@/styles/components/Account/styles";
+import { useState } from "react";
+import {
+  AccountTabsContainer,
+  AccountTabsList,
+  AccountTabButton,
+} from "@/styles/components/Account/styles";
 import { useAuth } from "../../hooks/useAuth";
 import { PageWrapper, PageTitle, PageText } from "../../styles/pages/shared";
+import { PersonalData } from "./PersonalData";
+import { Addresses } from "./Addresses";
+import { Preferences } from "./Preferences";
+import { Security } from "./Security";
 
 export default function MyAccount() {
   const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState<"dados" | "seguranca" | "enderecos" | "preferencias">("dados");
 
-  return user ? (
-    <PageWrapper width="100%" padding="20px">
-      <PageTitle fontSize="22px" margin="0 0 1rem 0">Meus dados:</PageTitle>
+  const displayUser = {
+    name: user?.name ?? "Sftech",
+    lastName: user?.lastName ?? "Corp",
+    email: user?.email ?? "sftech@mailinator.com",
+  };
 
-      <AccountContent direction="row" align="center" justify="flex-start" padding="5px">
-        <PageTitle fontSize="1rem" margin="0" padding="0 5px">Nome:</PageTitle>
-        <PageText fontSize="1rem" capitalize>{user?.name ?? ""}</PageText>
-      </AccountContent>
-      <AccountContent direction="row" align="center" justify="flex-start" padding="5px">
-        <PageTitle fontSize="1rem" margin="0" padding="0 5px">Sobrenome:</PageTitle>
-        <PageText fontSize="1rem" capitalize>{user?.lastName ?? ""}</PageText>
-      </AccountContent>
-      <AccountContent direction="row" align="center" justify="flex-start" padding="5px">
-        <PageTitle fontSize="1rem" margin="0" padding="0 5px">Email:</PageTitle>
-        <PageText fontSize="1rem">{user?.email ?? ""}</PageText>
-      </AccountContent>
-    </PageWrapper>
-  ) : (
-    <PageWrapper width="100%" padding="20px">
-      <PageTitle fontSize="20px">Nenhum dado disponível</PageTitle>
+  return (
+    <PageWrapper width="100%" padding="24px">
+      <PageTitle fontSize="28px" margin="0 0 0.25rem 0">
+        Minha Conta
+      </PageTitle>
+      <PageText fontSize="0.95rem" margin="0 0 1.5rem 0" color="text">
+        Gerencie suas informações pessoais e preferências
+      </PageText>
+
+      <AccountTabsContainer>
+        <AccountTabsList>
+          <AccountTabButton
+            type="button"
+            $active={activeTab === "dados"}
+            onClick={() => setActiveTab("dados")}
+          >
+            Dados Pessoais
+          </AccountTabButton>
+          <AccountTabButton
+            type="button"
+            $active={activeTab === "seguranca"}
+            onClick={() => setActiveTab("seguranca")}
+          >
+            Segurança
+          </AccountTabButton>
+          <AccountTabButton
+            type="button"
+            $active={activeTab === "enderecos"}
+            onClick={() => setActiveTab("enderecos")}
+          >
+            Endereços
+          </AccountTabButton>
+          <AccountTabButton
+            type="button"
+            $active={activeTab === "preferencias"}
+            onClick={() => setActiveTab("preferencias")}
+          >
+            Preferências
+          </AccountTabButton>
+        </AccountTabsList>
+      </AccountTabsContainer>
+
+      {activeTab === "dados" && (
+        <PersonalData
+          name={displayUser.name}
+          lastName={displayUser.lastName}
+          email={displayUser.email}
+        />
+      )}
+
+      {activeTab === "seguranca" && <Security />}
+
+      {activeTab === "enderecos" && <Addresses />}
+
+      {activeTab === "preferencias" && <Preferences />}
     </PageWrapper>
   );
 }
