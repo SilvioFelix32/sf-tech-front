@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const HeaderWrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.tertiary};
+  position: sticky;
+  top: 0;
+  z-index: 100;
 `;
 
-export const Content = styled.div`
+export const HeaderContent = styled.div`
   width: 82%;
   height: 80px;
   padding: 10px 20px;
@@ -35,7 +38,7 @@ export const Content = styled.div`
   }
 `;
 
-export const LogoL = styled.button`
+export const DesktopLogoButton = styled.button`
   display: flex;
   border: none;
   outline: none;
@@ -50,7 +53,7 @@ export const LogoL = styled.button`
   }
 `;
 
-export const LogoS = styled.button`
+export const MobileLogoButton = styled.button`
   display: none;
   border: none;
   outline: none;
@@ -71,11 +74,11 @@ export const Text = styled.p`
   font-size: 0.8rem;
 `;
 
-export const Select = styled.div`
+export const HeaderActions = styled.div`
   display: flex;
 `;
 
-export const Button = styled.button`
+export const AdminButton = styled.button`
   display: flex;
   height: 50px;
   padding: 10px;

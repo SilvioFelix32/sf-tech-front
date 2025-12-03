@@ -12,7 +12,14 @@ import {
   ThemeToggle,
 } from "../Buttons";
 //styles
-import { Select, Wrapper, LogoL, LogoS, Button, Content } from "./styles";
+import {
+  HeaderWrapper,
+  HeaderContent,
+  DesktopLogoButton,
+  MobileLogoButton,
+  HeaderActions,
+  AdminButton,
+} from "./styles";
 
 interface HeaderProps {
   showSignInButton?: boolean;
@@ -36,38 +43,38 @@ export const Header = memo(function Header({
   const userIsAuthenticated = useCan({ role: ["USER", "ADMIN", "MASTER"] });
 
   return (
-    <Wrapper>
-      <Content style={styles}>
-        <LogoL onClick={() => router.push("/")}>
+    <HeaderWrapper>
+      <HeaderContent style={styles}>
+        <DesktopLogoButton onClick={() => router.push("/")}>
           <Image
             src="/images/logo_sftech.png"
             alt="sftech"
             width={200}
             height={60}
             priority={true}
-          ></Image>
-        </LogoL>
-        <LogoS onClick={() => router.push("/")}>
+          />
+        </DesktopLogoButton>
+        <MobileLogoButton onClick={() => router.push("/")}>
           <Image
             src="/images/logo_60x60.png"
             alt="sftech"
             width={60}
             height={60}
-          ></Image>
-        </LogoS>
+          />
+        </MobileLogoButton>
         {showSearchBar && <SearchBar />}
         <ThemeToggle styles={{ marginLeft: "auto" }} />
-        <Select>
+        <HeaderActions>
           {showSignInButton && <SignInButton />}
           {userIsAuthenticated && showFavoritesButton && <FavoritesButton />}
           {showCartButton && <CartButton />}
           {userHasAdminPermissions && showAdminButton && (
-            <Button onClick={() => router.push("/admin")}>
+            <AdminButton onClick={() => router.push("/admin")}>
               <BiStore />
-            </Button>
+            </AdminButton>
           )}
-        </Select>
-      </Content>
-    </Wrapper>
+        </HeaderActions>
+      </HeaderContent>
+    </HeaderWrapper>
   );
 });
