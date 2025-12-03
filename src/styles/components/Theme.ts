@@ -6,12 +6,15 @@ interface ThemeProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
 }
 
 export const Theme = styled.div<ThemeProps>`
-  height: ${({ height }) => height};
-  width: ${({ width }) => width};
+  min-height: 100vh;
+  height: ${({ height }) => height || "auto"};
+  width: ${({ width }) => width || "100%"};
   background: ${({ theme }) => theme.colors.background};
+  display: flex;
+  flex-direction: column;
 `;
 
 Theme.defaultProps = {
   width: "100%",
-  height: "100%",
+  height: "auto",
 };

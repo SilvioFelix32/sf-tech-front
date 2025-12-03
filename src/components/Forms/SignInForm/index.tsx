@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "./Password";
-import { AuthContext } from "../../../context";
+import { useAuth } from "../../../hooks/useAuth";
 import {
   CustomError,
   handleApiError,
@@ -31,7 +31,7 @@ interface ILoginBody {
 
 export function SignInForm() {
   const router = useRouter();
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isPasswordIncorrect, setIsPasswordIncorrect] = useState(false);
@@ -112,7 +112,7 @@ export function SignInForm() {
         </Column>
         <RouterButton
           type="button"
-          onClick={() => router.push("/forgot-password")}
+          onClick={() => router.push("/auth/forgot-password")}
         >
           Esqueceu sua senha?
         </RouterButton>
@@ -124,7 +124,7 @@ export function SignInForm() {
       </Content>
       <Registration>
         Não tem uma conta?
-        <RouterButton type="button" onClick={() => router.push("signUp")}>
+        <RouterButton type="button" onClick={() => router.push("/auth/signUp")}>
           Cadastrar.
         </RouterButton>
       </Registration>

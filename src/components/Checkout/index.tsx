@@ -2,9 +2,9 @@ import { formatPrice } from "../../utils/formatPrice";
 import { HighlightedProduct } from "../HighlightedProduct";
 import { ProductCard } from "./ProductCard";
 import { PriceDetail } from "./PriceDetail";
-import { CartItemType } from "../../context/Cart/types";
+import { CartItemType } from "../../services/cart";
 import { useRouter } from "next/router";
-import { useCart } from "../../context";
+import { useCart } from "../../hooks/useCart";
 import {
   SectionTitle,
   Wrapper,

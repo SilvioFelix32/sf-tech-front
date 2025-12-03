@@ -1,9 +1,10 @@
-import { AuthContext, useCart } from "../../context";
+import { useCart } from "../../hooks/useCart";
+import { useAuth } from "../../hooks/useAuth";
 import Image from "next/image";
 import { IProduct, ISaleItem, ICreateSaleRequest } from "../../interfaces";
-import { CartItemType } from "../../context/Cart/types";
+import { CartItemType } from "../../services/cart";
 import { formatPrice } from "../../utils/formatPrice";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { DeliveryMethod } from "./ClientDelivery";
 import { CardForm } from "./Card";
 import router from "next/router";
@@ -34,7 +35,7 @@ import { environment } from "../../config/environment";
 import { GetSwallAlert } from "../../utils";
 
 export function PaymentForm() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const { cartItems, cartTotalPriceWithoutDiscount, cartTotalPrice, clearCart } =
     useCart();
   const [isLoading, setIsLoading] = useState(false);
@@ -225,7 +226,7 @@ export function PaymentForm() {
       <Title>Faça login primeiro para poder continuar com a compra:</Title>
       <Button
         style={{ width: "30%", marginTop: "15px", borderRadius: "6px" }}
-        onClick={() => router.push("/signIn")}
+        onClick={() => router.push("/auth/signIn")}
       >
         Login
       </Button>

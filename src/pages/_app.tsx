@@ -1,27 +1,19 @@
-import React from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { MainApp } from "../components/MainApp";
 import { IProduct } from "../interfaces";
 import { getCookie, setCookie } from "../services";
-import { Amplify } from "aws-amplify";
-import config from "../aws/aws-config";
 import {
-  CartProvider,
-  FavoriteProvider,
   FilterContextProvider,
   ProductFilterProvider,
   ProductProvider,
-  AuthProvider,
 } from "../context";
-import ThemePreferenceProvider from "../context/Theme/ThemeContext";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { GlobalStyles } from "../styles/global";
 import { AppProps as NextAppProps } from "next/app";
 import "@aws-amplify/ui-react/styles.css";
 
 const queryClient = new QueryClient();
-Amplify.configure(config);
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const favoriteTheme = getCookie("color-theme");
@@ -46,12 +38,8 @@ export default function App({
 }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemePreferenceProvider>
-        <AuthProvider>
-          <ProductProvider>
-            <CartProvider>
-              <FavoriteProvider>
-                <FilterContextProvider>
+      <ProductProvider>
+          <FilterContextProvider>
                   <Head>
                     <title>Sf-tech</title>
                     <link rel="shortcut icon" href="/favicon.jpg" />
@@ -66,12 +54,8 @@ export default function App({
                       <GlobalStyles />
                     </MainApp>
                   </ProductFilterProvider>
-                </FilterContextProvider>
-              </FavoriteProvider>
-            </CartProvider>
+              </FilterContextProvider>
           </ProductProvider>
-        </AuthProvider>
-      </ThemePreferenceProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
   );
 }

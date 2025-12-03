@@ -1,4 +1,4 @@
-import { User } from "../../../context/Authentication/types";
+import { User } from "../../../services/auth";
 import { Text, Wrapper } from "./styles";
 import { Content, Title } from "./styles";
 

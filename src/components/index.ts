@@ -3,6 +3,7 @@ export * from "./Header";
 export * from "./Footer";
 export * from "./NavHeader";
 export * from "./MainApp";
+export * from "./Layouts/PageLayout";
 
 // Product Components
 export * from "./ProductCard";
@@ -15,6 +16,7 @@ export * from "./InputMask";
 export * from "./ValidationMessage";
 
 // Sub-components
+export * from "./Account";
 export * from "./Buttons";
 export * from "./Forms";
 export * from "./Filters";

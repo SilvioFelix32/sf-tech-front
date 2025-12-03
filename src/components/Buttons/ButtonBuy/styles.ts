@@ -15,9 +15,9 @@ export const Button = styled.button`
   width: 100%;
   border-radius: 6px;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.tertiary};
-  background: ${({ theme }) => theme.colors.background};
-  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  color: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.tertiary};
+  border: 1px solid ${({ theme }) => theme.colors.background};
   transition: all 0.1s linear;
   transition-duration: 0.3s;
 

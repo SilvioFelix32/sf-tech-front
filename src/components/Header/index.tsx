@@ -62,7 +62,7 @@ export const Header = memo(function Header({
           {userIsAuthenticated && showFavoritesButton && <FavoritesButton />}
           {showCartButton && <CartButton />}
           {userHasAdminPermissions && showAdminButton && (
-            <Button onClick={() => router.push("/administration")}>
+            <Button onClick={() => router.push("/admin")}>
               <BiStore />
             </Button>
           )}

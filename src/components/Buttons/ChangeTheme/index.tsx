@@ -1,6 +1,6 @@
-import React, { CSSProperties, useContext, useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
-import { ThemeContext } from "../../../context";
+import { useTheme } from "../../../hooks/useTheme";
 //styles
 import { Button, Wrapper } from "./styled";
 
@@ -10,7 +10,7 @@ interface ThemeToggleProps {
 
 export function ThemeToggle({ styles }: ThemeToggleProps) {
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
-  const { setTheme } = useContext(ThemeContext);
+  const { setTheme } = useTheme();
 
   function toggleTheme() {
     const newTheme = isDarkModeEnabled ? "light" : "dark";

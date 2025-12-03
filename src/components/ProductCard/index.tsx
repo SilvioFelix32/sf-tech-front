@@ -3,9 +3,9 @@ import { memo, useContext, useState } from "react";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import {
   ProductFilterContext,
-  useFavorite,
   useFilterContext,
 } from "../../context";
+import { useFavorite } from "../../hooks/useFavorite";
 import { useCan } from "../../hooks/useCan";
 import { IProduct } from "../../interfaces";
 import { BuyButton } from "../Buttons";

@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { ThemeProvider } from "styled-components";
-import { ThemeContext } from "../../context";
+import { useTheme } from "../../hooks/useTheme";
 import dark from "../../styles/themes/dark";
 import light from "../../styles/themes/light";
 
 export function MainApp({ children }) {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
 
   return (
     <ThemeProvider theme={theme === "light" ? light : dark}>

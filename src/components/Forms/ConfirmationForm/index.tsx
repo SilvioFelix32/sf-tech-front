@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
-import { useContext } from "react";
 import { useQuery } from "react-query";
 import Image from "next/image";
-import { AuthContext } from "../../../context";
+import { useAuth } from "../../../hooks/useAuth";
 import { ISale } from "../../../interfaces";
 import { formatPrice } from "../../../utils";
 import { saleService } from "../../../services";
@@ -13,7 +12,7 @@ import { DeliveryMethod } from "../../Payment/ClientDelivery";
 import { Button, Wrapper, Title, Text, Content } from "./styles";
 
 export function ConfirmationForm() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const router = useRouter();
   const { sale_id } = router.query;
   const company_id = environment.companyId;

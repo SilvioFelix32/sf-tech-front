@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useState } from "react";
-import { useCart } from "../../../context";
-import { CartItemType } from "../../../context/Cart/types";
+import { useCart } from "../../../hooks/useCart";
+import { CartItemType } from "../../../services/cart";
 //styles
 import {
   Button,

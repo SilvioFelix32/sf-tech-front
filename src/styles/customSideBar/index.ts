@@ -5,9 +5,18 @@ export const CustomSidebar = styled(Sidebar)`
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.tertiary};
   height: 100%;
+  min-height: 100%;
+  flex: 0 0 auto;
+  align-self: stretch;
 
   div {
     background-color: ${({ theme }) => theme.colors.tertiary};
+  }
+
+  .ps-sidebar-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 `;
 

@@ -52,7 +52,7 @@ export function ConfirmForgotPasswordForm() {
       });
 
       GetSwallAlert("center", "success", "Senha alterada com sucesso", 2000);
-      router.push("/signIn");
+      router.push("/auth/signIn");
     } catch (error) {
       console.error("Erro ao trocar a senha cadastro", error);
       setIsCodeIncorrect(true);

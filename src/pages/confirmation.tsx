@@ -1,24 +1,24 @@
-import { ConfirmationForm, Footer, Header, NavHeader } from "../components";
-import { Theme } from "../styles/components";
-import { Wrapper, Content } from "../styles/pages/checkout";
+import { PageLayout, ConfirmationForm } from "../components";
 
 export default function Confirmation() {
   return (
-    <Theme height="84vh">
-      <NavHeader />
-      <Header
-        showSignInButton={true}
-        showCartButton={false}
-        showFavoritesButton={true}
-        showAdminButton={false}
-        showSearchBar={false}
-      />
-      <Wrapper>
-        <Content>
-          <ConfirmationForm />
-        </Content>
-        <Footer />
-      </Wrapper>
-    </Theme>
+    <PageLayout
+      showSignInButton={true}
+      showCartButton={false}
+      showFavoritesButton={true}
+      showAdminButton={false}
+      showSearchBar={false}
+      wrapperWidth="75%"
+      contentProps={{
+        direction: "column",
+        align: "flex-start",
+        justify: "flex-start",
+        minHeight: "75vh",
+        padding: "20px",
+      }}
+      themeHeight="84vh"
+    >
+      <ConfirmationForm />
+    </PageLayout>
   );
 }

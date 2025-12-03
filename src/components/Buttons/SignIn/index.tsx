@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import { BiUser } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
-import { AuthContext } from "../../../context";
+import { useAuth } from "../../../hooks/useAuth";
 //components
 import {
   CDropdown,
@@ -16,7 +15,7 @@ import { useRouter } from "next/router";
 
 export const SignInButton = () => {
   const router = useRouter();
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
 
   async function handleSingOut() {
     await logOut();
@@ -38,7 +37,7 @@ export const SignInButton = () => {
         </CDropdownToggle>
         <CDropdownMenu className="DropMenu">
           <CDropdownItem
-            onClick={() => router.push("/admin-acount")}
+            onClick={() => router.push("/account")}
             className="OptionBtn"
           >
             Minha Conta
@@ -51,7 +50,7 @@ export const SignInButton = () => {
     </Wrapper>
   ) : (
     <>
-      <Button onClick={() => router.push("/signIn")}>
+      <Button onClick={() => router.push("/auth/signIn")}>
         <Svg>
           <BiUser />
         </Svg>
