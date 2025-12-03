@@ -6,13 +6,24 @@ import { saleService } from "../../services/sale-service";
 import { environment } from "../../config/environment";
 import { ISale } from "../../interfaces";
 import { formatPrice } from "../../utils/formatPrice";
-import { PriceDetail } from "../Checkout/PriceDetail";
-import { SubTotalWrapper, InfoText } from "../Checkout/styles";
+import { Button } from "../../styles/components";
 import {
+  SaleActions,
   SaleContainer,
   SaleHeader,
+  SaleHeaderLeft,
+  SaleHeaderRight,
   SaleDate,
+  SaleStatusBadge,
   SaleTotal,
+  SaleItemsTitle,
+  SaleItemsList,
+  SaleItem,
+  SaleItemImage,
+  SaleItemInfo,
+  SaleItemTitle,
+  SaleItemSubtitle,
+  SaleItemPrice,
 } from "../../styles/pages/shopping";
 import { PageWrapper, PageTitle } from "../../styles/pages/shared";
 
@@ -71,60 +82,83 @@ export default function MyShopping() {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${day}/${month}/${year}, ${hours}:${minutes}`;
+  };
+
+  const getSaleStatus = (sale: ISale): string => {
+    // TODO: Por enquanto, vamos considerar todas como "Entregue"
+    return "Entregue";
   };
 
   return (
-    <PageWrapper width="100%" padding="20px">
-      <PageTitle fontSize="22px" margin="0 0 2rem 0">
-        Minhas compras:
+    <PageWrapper width="100%" padding="24px">
+      <PageTitle fontSize="28px" margin="0 0 1.5rem 0">
+        Minhas Compras
       </PageTitle>
 
       {sortedSales.map((sale: ISale) => (
         <SaleContainer key={sale.sale_id}>
           <SaleHeader>
-            <SaleDate>Compra realizada em: {formatDate(sale.created_at)}</SaleDate>
-            <SaleTotal>Total: R$ {formatPrice(sale.total)}</SaleTotal>
+            <SaleHeaderLeft>
+              <SaleDate>Compra realizada em: {formatDate(sale.created_at)}</SaleDate>
+              <SaleStatusBadge>{getSaleStatus(sale)}</SaleStatusBadge>
+            </SaleHeaderLeft>
+            <SaleHeaderRight>
+              <SaleTotal>Total R$ {formatPrice(sale.total)}</SaleTotal>
+            </SaleHeaderRight>
           </SaleHeader>
 
-          <SubTotalWrapper
-            style={{
-              justifyContent: "space-around",
-              borderTop: "none",
-            }}
-          >
-            <InfoText
-              weight={600}
-              size="1.2rem"
-              style={{ alignSelf: "flex-start" }}
-            >
-              Itens da compra:
-            </InfoText>
+          <SaleItemsTitle>Itens da compra:</SaleItemsTitle>
+          <SaleItemsList>
             {sale.items.map((item, index) => (
-              <div
-                key={`${item.product_id}-${index}`}
-                style={{ display: "flex", width: "100%" }}
-              >
-                <Image
-                  key={item.product_id}
-                  alt="item"
-                  src={item.url_banner || "https://i.imgur.com/2HFGvvT.png"}
-                  width={60}
-                  height={60}
-                />
-                <PriceDetail
-                  label={`${item.title}${item.quantity > 1 ? ` (Qtd: ${item.quantity})` : ""}`}
-                  value={`R$ ${formatPrice(item.total_value)}`}
-                />
-              </div>
+              <SaleItem key={`${item.product_id}-${index}`}>
+                <SaleItemImage>
+                  <Image
+                    alt={item.title}
+                    src={item.url_banner || "https://i.imgur.com/2HFGvvT.png"}
+                    width={80}
+                    height={80}
+                    style={{ objectFit: "contain" }}
+                  />
+                </SaleItemImage>
+                <SaleItemInfo>
+                  <SaleItemTitle>{item.title}</SaleItemTitle>
+                  <SaleItemSubtitle>
+                    {item.subtitle || item.description}
+                  </SaleItemSubtitle>
+                </SaleItemInfo>
+                <SaleItemPrice>R$ {formatPrice(item.total_value)}</SaleItemPrice>
+              </SaleItem>
             ))}
-          </SubTotalWrapper>
+          </SaleItemsList>
+
+          <SaleActions>
+            <Button
+              width="100%"
+              height="40px"
+              backgroundColor="background"
+              textColor="text"
+            >
+              Ver Detalhes
+            </Button>
+            <Button
+              width="100%"
+              height="40px"
+              backgroundColor="background"
+              textColor="text"
+            >
+              Avaliar Produtos
+            </Button>
+            <Button width="100%" height="40px">
+              Comprar Novamente
+            </Button>
+          </SaleActions>
         </SaleContainer>
       ))}
     </PageWrapper>

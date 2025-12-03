@@ -12,6 +12,7 @@ interface PageLayoutProps {
   showSearchBar?: boolean;
   showFooter?: boolean;
   wrapperWidth?: string;
+  wrapperShadow?: "default" | "vertical";
   contentProps?: {
     direction?: "row" | "column";
     align?: "flex-start" | "center" | "flex-end" | "stretch";
@@ -33,6 +34,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   showSearchBar = true,
   showFooter = true,
   wrapperWidth,
+  wrapperShadow,
   contentProps,
   themeHeight,
 }) => {
@@ -46,7 +48,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
         showAdminButton={showAdminButton}
         showSearchBar={showSearchBar}
       />
-      <PageWrapper width={wrapperWidth}>
+      <PageWrapper width={wrapperWidth} shadow={wrapperShadow}>
         <PageContent {...contentProps}>{children}</PageContent>
       </PageWrapper>
       {showFooter && <Footer />}

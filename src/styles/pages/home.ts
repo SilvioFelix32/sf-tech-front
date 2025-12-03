@@ -1,16 +1,12 @@
 import styled from "styled-components";
 
-export const Theme = styled.div`
+export const HomePageWrapper = styled.div`
   height: 100%;
-  background: ${({ theme }) => theme.colors.background};
-`;
-
-export const Wrapper = styled.div`
-  height: 100%;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: 4px 0 8px -4px rgba(0, 0, 0, 0.24),
+    -4px 0 8px -4px rgba(0, 0, 0, 0.24);
   background-color: ${({ theme }) => theme.colors.background};
 
   @media (min-width: 768px) and (max-width: 1280px) {
@@ -21,7 +17,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Content = styled.div`
+export const HomeContent = styled.div`
   width: 100%;
   min-height: 76.7vh;
   padding: 10px;
@@ -36,10 +32,9 @@ export const Content = styled.div`
   }
 `;
 
-export const LeftContent = styled.div`
-  width: 25%;
-  height: 100%;
+export const FilterSidebar = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
 
   @media screen and (min-width: 1025px) {
@@ -47,9 +42,9 @@ export const LeftContent = styled.div`
   }
 `;
 
-export const MainSection = styled.div`
-  width: 100%;
+export const ProductListSection = styled.div`
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

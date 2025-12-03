@@ -10,19 +10,23 @@ import {
   Checkbox,
 } from "./styles";
 import { CategoriesContext } from "../../../context/Categories/CategoriesContext";
+
 interface CategorySelector {
-  filter: string;
-  setFilter: (value: string) => void;
+  filter?: string;
   isSelected: string;
   setIsSelected: (value: string) => void;
 }
 
+const formatCategoryTitle = (title: string) =>
+  title
+    ?.toLocaleLowerCase("pt-BR")
+    .replace(/\b\w/g, (char) => char.toLocaleUpperCase("pt-BR"));
+
 export function CategoriesFilterCard({
-  setFilter,
   isSelected,
   setIsSelected,
 }: CategorySelector) {
-  const { productCategories } = useContext(CategoriesContext);
+  const { productCategories, setFilter } = useContext(CategoriesContext);
 
   const handleCheckboxChange = (id: string, title: string) => {
     if (isSelected === id) {
@@ -49,7 +53,7 @@ export function CategoriesFilterCard({
                 handleCheckboxChange(category.category_id, category.title)
               }
             />
-            <span>{category.title}</span>
+            <span>{formatCategoryTitle(category.title)}</span>
           </CategoryItem>
         ))}
       </ProductFilter>

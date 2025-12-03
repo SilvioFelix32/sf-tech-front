@@ -1,20 +1,17 @@
 import { useState } from "react";
 import { PageLayout } from "../../components";
-import { MyAccount, MyFavorites, MyShopping } from "../../components/Account";
-import { BiMenu, BiStore, BiHeart, BiUser } from "react-icons/bi";
-import {
-  CustomSidebar,
-  CustomMenuItem,
-  CustomMenu,
-} from "../../styles/customSideBar";
+import { AccountSidebar, MyAccount, MyFavorites, MyShopping } from "../../components/Account";
 import { AccountContainer, AccountSection } from "../../styles/pages/account";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Account() {
   const [actualPage, setActualPage] = useState("myaccount");
-  const [collapsed, setCollapsed] = useState(false);
+  const { user } = useAuth();
 
-  const toggleSidebar = () => {
-    setCollapsed((prevState) => !prevState);
+  const displayUser = {
+    name: user?.name,
+    email: user?.email,
+    role: user?.role,
   };
 
   return (
@@ -25,6 +22,7 @@ export default function Account() {
       showAdminButton={true}
       showSearchBar={false}
       wrapperWidth="80%"
+      wrapperShadow="vertical"
       contentProps={{
         direction: "row",
         align: "stretch",
@@ -36,22 +34,13 @@ export default function Account() {
       }}
     >
       <AccountContainer>
-        <CustomSidebar collapsed={collapsed} transitionDuration={500}>
-          <CustomMenu>
-            <CustomMenuItem onClick={toggleSidebar}>
-              <BiMenu />
-            </CustomMenuItem>
-            <CustomMenuItem onClick={() => setActualPage("myaccount")}>
-              <BiUser /> Meu Perfil
-            </CustomMenuItem>
-            <CustomMenuItem onClick={() => setActualPage("favorites")}>
-              <BiHeart /> Favoritos
-            </CustomMenuItem>
-            <CustomMenuItem onClick={() => setActualPage("shopping")}>
-              <BiStore /> Compras
-            </CustomMenuItem>
-          </CustomMenu>
-        </CustomSidebar>
+        <AccountSidebar
+          actualPage={actualPage}
+          setActualPage={setActualPage}
+          name={displayUser.name}
+          email={displayUser.email}
+          role={displayUser.role}
+        />
         <AccountSection>
           {actualPage === "myaccount" && <MyAccount />}
           {actualPage === "favorites" && <MyFavorites />}

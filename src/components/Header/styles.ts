@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const HeaderWrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.tertiary};
+  position: sticky;
+  top: 0;
+  z-index: 100;
 `;
 
-export const Content = styled.div`
+export const HeaderContent = styled.div`
   width: 82%;
   height: 80px;
   padding: 10px 20px;
@@ -35,10 +38,26 @@ export const Content = styled.div`
   }
 `;
 
-export const LogoL = styled.button`
+export const DesktopLogoButton = styled.button`
   display: flex;
+  align-items: center;
+  gap: 8px;
   border: none;
   outline: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  padding: 4px;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 
   > image {
     width: 100%;
@@ -50,10 +69,25 @@ export const LogoL = styled.button`
   }
 `;
 
-export const LogoS = styled.button`
+export const MobileLogoButton = styled.button`
   display: none;
+  align-items: center;
   border: none;
   outline: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  padding: 4px;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 
   > image {
     width: 100%;
@@ -65,17 +99,30 @@ export const LogoS = styled.button`
   }
 `;
 
+export const LogoText = styled.span`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+
+  ${DesktopLogoButton}:hover & {
+    opacity: 1;
+  }
+`;
+
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
   font-weight: 500;
   font-size: 0.8rem;
 `;
 
-export const Select = styled.div`
+export const HeaderActions = styled.div`
   display: flex;
 `;
 
-export const Button = styled.button`
+export const AdminButton = styled.button`
   display: flex;
   height: 50px;
   padding: 10px;
