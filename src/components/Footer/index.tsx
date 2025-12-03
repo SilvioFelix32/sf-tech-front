@@ -37,8 +37,8 @@ export function Footer() {
           <div>
             <ColumnTitle>Contato</ColumnTitle>
             <List>
-              <ListItem>contato@sftech.com.br</ListItem>
-              <ListItem>(11) 9999-9999</ListItem>
+              <ListItem>silvio.felix32@hotmail.com</ListItem>
+              <ListItem>(28) 9990-02593</ListItem>
               <ListItem>Segunda à Sexta, 9h às 18h</ListItem>
             </List>
           </div>
