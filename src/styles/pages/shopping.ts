@@ -13,41 +13,151 @@ export const Wrapper = styled.div`
 
 export const SaleContainer = styled.div`
   width: 100%;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  border-radius: 8px;
+  margin-bottom: 24px;
+  padding: 24px;
+  border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.background};
-  border: 1px solid ${({ theme }) => theme.colors.tertiary};
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 `;
 
 export const SaleHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.tertiary};
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 12px;
   }
 `;
 
+export const SaleHeaderLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 export const SaleDate = styled.p`
-  color: ${({ theme }) => theme.colors.text};
-  font-weight: 600;
-  font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-weight: 500;
+  font-size: 1rem;
   margin: 0;
+`;
+
+export const SaleStatusBadge = styled.span`
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  color: white;
+  width: fit-content;
+`;
+
+export const SaleHeaderRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    width: 100%;
+  }
 `;
 
 export const SaleTotal = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   margin: 0;
+`;
+
+export const SaleItemsTitle = styled.h3`
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0 0 16px 0;
+`;
+
+export const SaleItemsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+`;
+
+export const SaleItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 12px 16px 12px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  background-color: ${({ theme }) => theme.colors.background};
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+export const SaleItemImage = styled.div`
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid rgba(15, 23, 42, 0.08);
+`;
+
+export const SaleItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+`;
+
+export const SaleItemTitle = styled.p`
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
+`;
+
+export const SaleItemSubtitle = styled.p`
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 400;
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0.8;
+`;
+
+export const SaleItemPrice = styled.p`
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+  margin-left: auto;
+`;
+
+export const SaleActions = styled.div`
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 16px;
+  width: 100%;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const ItemsContainer = styled.div`
