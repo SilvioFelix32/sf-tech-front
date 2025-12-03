@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { memo, useContext, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { ProductFilterContext, useFilterContext } from "../../context";
 import { useFavorite } from "../../hooks/useFavorite";
@@ -10,7 +10,6 @@ import {
   IProduct,
 } from "../../interfaces";
 import { BuyButton } from "../Buttons";
-import { PaginationButton } from "../Buttons/Pagination";
 import { formatPrice } from "../../utils/formatPrice";
 import { useRouter } from "next/router";
 import { CategoriesContext } from "../../context";
@@ -115,6 +114,8 @@ export const ProductList = memo(({ isSelected }: IProductListProps) => {
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(12);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const products = productCategories?.reduce((acc, cur) => {
     if (isSelected && cur.category_id !== isSelected) {
@@ -126,19 +127,57 @@ export const ProductList = memo(({ isSelected }: IProductListProps) => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
-  const filteredProducts = products
+  const baseFilteredProducts = products
     ?.filter((product: IProduct) => product.price <= price)
     .filter((product: IProduct) => {
       if (filteredProduct?.length === 0) {
         return true;
       }
       return filteredProduct?.includes(product.title);
-    })
-    .slice(indexOfFirstProduct, indexOfLastProduct);
+    });
 
-  const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  const filteredProducts = baseFilteredProducts?.slice(
+    0,
+    indexOfLastProduct
+  );
+
+  const hasMore =
+    !!baseFilteredProducts &&
+    !!filteredProducts &&
+    filteredProducts.length < baseFilteredProducts.length;
+
+  useEffect(() => {
+    if (!hasMore) {
+      return;
+    }
+
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+
+        if (entry.isIntersecting) {
+          setCurrentPage((prevPage) => prevPage + 1);
+        }
+      },
+      {
+        rootMargin: "200px",
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observerRef.current.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [hasMore]);
 
   return filteredProducts && filteredProducts.length > 0 ? (
     <ProductListContainer>
@@ -171,13 +210,17 @@ export const ProductList = memo(({ isSelected }: IProductListProps) => {
         })}
       </ProductGrid>
 
-      <ProductListPagination>
-        <PaginationButton
-          productsPerPage={productsPerPage}
-          totalProducts={products.length}
-          paginate={paginate}
-        />
-      </ProductListPagination>
+      {hasMore && (
+        <ProductListPagination>
+          <div
+            ref={loadMoreRef}
+            style={{
+              width: "100%",
+              height: "40px",
+            }}
+          />
+        </ProductListPagination>
+      )}
     </ProductListContainer>
   ) : (
     <ProductListContainer>
