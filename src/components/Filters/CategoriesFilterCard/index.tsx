@@ -17,6 +17,11 @@ interface CategorySelector {
   setIsSelected: (value: string) => void;
 }
 
+const formatCategoryTitle = (title: string) =>
+  title
+    ?.toLocaleLowerCase("pt-BR")
+    .replace(/\b\w/g, (char) => char.toLocaleUpperCase("pt-BR"));
+
 export function CategoriesFilterCard({
   isSelected,
   setIsSelected,
@@ -48,7 +53,7 @@ export function CategoriesFilterCard({
                 handleCheckboxChange(category.category_id, category.title)
               }
             />
-            <span>{category.title}</span>
+            <span>{formatCategoryTitle(category.title)}</span>
           </CategoryItem>
         ))}
       </ProductFilter>
