@@ -44,6 +44,11 @@ const ProductCardItem = ({
       ? Math.round((product.discount / product.price) * 100)
       : 0;
 
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onToggleFavorite();
+  };
+
   return (
     <ProductCardContainer>
       <ProductImageWrapper onClick={onNavigateToDetails}>
@@ -62,11 +67,11 @@ const ProductCardItem = ({
         )}
         {userIsAuthenticated &&
           (isFavorite ? (
-            <FavoriteButton className="favorite" onClick={onToggleFavorite}>
+            <FavoriteButton className="favorite" onClick={handleToggleFavorite}>
               <MdFavorite />
             </FavoriteButton>
           ) : (
-            <NotFavoriteIconButton className="favorite" onClick={onToggleFavorite}>
+            <NotFavoriteIconButton className="favorite" onClick={handleToggleFavorite}>
               <MdFavoriteBorder />
             </NotFavoriteIconButton>
           ))}
