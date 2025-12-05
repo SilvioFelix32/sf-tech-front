@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { PageLayout } from "../../components";
 import { AccountSidebar, MyAccount, MyFavorites, MyShopping } from "../../components/Account";
 import { AccountContainer, AccountSection } from "../../styles/pages/account";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function Account() {
+  const router = useRouter();
+  const { page } = router.query;
   const [actualPage, setActualPage] = useState("myaccount");
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (page === "shopping" || page === "favorites") {
+      setActualPage(String(page));
+    }
+  }, [page]);
 
   const displayUser = {
     name: user?.name,

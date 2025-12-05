@@ -1,4 +1,4 @@
-export * from "./ConfirmationForm";
+export * from "./Confirmation";
 export * from "./ConfirmForgotPasswordForm";
 export * from "./ForgotPasswordForm";
 export * from "./SignInForm";

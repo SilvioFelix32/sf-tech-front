@@ -220,7 +220,6 @@ export const SubTotalWrapper = styled.div`
   justify-content: start;
   align-items: center;
   padding: 2rem;
-  border-top: solid 1px ${({ theme }) => theme.colors.tertiary};
 `;
 
 export const Totals = styled.div`
