@@ -47,9 +47,10 @@ export const useCartStore = create<CartState>()(
         );
 
         if (isItemInCart) {
+          const newAmount = clickedItem.amount !== undefined ? clickedItem.amount : (isItemInCart.amount || 0) + 1;
           const newCart = cartItems.map((item) =>
             item.product_id === clickedItem.product_id
-              ? { ...item, amount: (item.amount || 0) + 1 }
+              ? { ...item, amount: newAmount }
               : item
           );
           updateCartCookie(newCart);

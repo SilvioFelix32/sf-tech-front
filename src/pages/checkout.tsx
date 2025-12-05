@@ -1,24 +1,20 @@
-import { PageLayout } from "../components";
+import { NavHeader, Header, Footer } from "../components";
 import { Checkout } from "../components/Checkout";
+import { Theme } from "../styles/components";
 
 export default function ShopCart() {
   return (
-    <PageLayout
-      showSignInButton={true}
-      showCartButton={false}
-      showFavoritesButton={true}
-      showAdminButton={false}
-      showSearchBar={false}
-      wrapperWidth="75%"
-      contentProps={{
-        direction: "column",
-        align: "flex-start",
-        justify: "flex-start",
-        minHeight: "75vh",
-        padding: "20px",
-      }}
-    >
+    <Theme height="auto">
+      <NavHeader />
+      <Header
+        showSignInButton={true}
+        showCartButton={false}
+        showFavoritesButton={true}
+        showAdminButton={false}
+        showSearchBar={true}
+      />
       <Checkout />
-    </PageLayout>
+      <Footer />
+    </Theme>
   );
 }

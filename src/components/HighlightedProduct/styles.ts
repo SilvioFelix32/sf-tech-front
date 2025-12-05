@@ -10,11 +10,26 @@ export const Section = styled.div`
 `;
 
 export const Categories = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 12rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1025px) and (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1201px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 export const SectionProduct = styled.div`
@@ -22,19 +37,18 @@ export const SectionProduct = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 20rem;
-  height: 100%;
-  margin: 0 10px;
-  border-radius: 6px;
-  outline: solid 1px ${({ theme }) => theme.colors.tertiary};
-  transition-duration: 0.3s;
-  transition: box-shadow 0.3s ease-in-out;
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  transition: all 0.3s;
+  background-color: ${({ theme }) => theme.colors.background};
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 
   &:hover {
-    box-shadow: 0 8px 12px rgba(255, 255, 255, 0.2),
-      0 8px 12px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
   }
 `;
 
@@ -44,33 +58,27 @@ export const Picture = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-
-  .image {
-    outline: solid 1px ${({ theme }) => theme.colors.tertiary};
-    border-radius: 6px;
-  }
+  aspect-ratio: 1;
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1rem;
 `;
 
 export const Text = styled.p`
   color: ${({ theme }) => theme.colors.tertiary};
-  font-weight: 600;
-  font-size: 0.8rem;
-  margin: 2px;
-  text-transform: capitalize;
-
-  @media (min-width: 768px) and (max-width: 1280px) {
-    font-size: 0.7rem;
-  }
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0;
+  text-align: center;
 `;
 
 export const Title = styled.p`
-  font-size: 2rem;
+  font-size: 1rem;
   text-align: center;
   font-weight: 600;
-  padding-top: 40px;
+  margin: 0 0 0.75rem 0;
+  padding: 0;
   color: ${({ theme }) => theme.colors.text};
-
-  @media (min-width: 768px) and (max-width: 1280px) {
-    font-size: 1.8rem;
-  }
+  line-height: 1.4;
 `;

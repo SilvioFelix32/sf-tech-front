@@ -18,12 +18,14 @@ export function HighlightedProduct() {
   const filteredArray = filteredProducts.filter(
     (item) => item.highlighted === true
   );
-  const firstThreeItems = filteredArray.slice(0, 3);
+  const firstFourItems = filteredArray.slice(0, 4);
+
+  console.log(firstFourItems);
 
   return (
     <Section>
       <Categories>
-        {firstThreeItems.map((product: IProduct) => (
+        {firstFourItems.map((product: IProduct) => (
           <SectionProduct
             key={product.product_id}
             onClick={() => router.push(`/product/${product.product_id}`)}
@@ -35,26 +37,14 @@ export function HighlightedProduct() {
                     ? product.urlBanner
                     : "https://i.imgur.com/2HFGvvT.png"
                 }
-                alt={product?.title}
-                width="100"
-                height="100"
+                alt={product?.title || "Produto"}
+                fill
                 priority
                 style={{ objectFit: "contain" }}
-              ></Image>
+              />
             </Picture>
-            <Title
-              style={{
-                fontSize: "1.2rem",
-                textAlign: "center",
-                margin: "0",
-                padding: "0",
-              }}
-            >
-              {product.title}
-            </Title>
-            <Text style={{ fontSize: "1.2rem" }}>
-              {formatPrice(product?.price - product?.discount)}
-            </Text>
+            <Title>{product.title}</Title>
+            <Text>R$ {formatPrice((product?.price || 0) - (product?.discount || 0))}</Text>
           </SectionProduct>
         ))}
       </Categories>
