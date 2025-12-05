@@ -17,10 +17,18 @@ interface CategorySelector {
   setIsSelected: (value: string) => void;
 }
 
-const formatCategoryTitle = (title: string) =>
-  title
-    ?.toLocaleLowerCase("pt-BR")
-    .replace(/\b\w/g, (char) => char.toLocaleUpperCase("pt-BR"));
+const formatCategoryTitle = (title: string) => {
+  if (!title) return "";
+  
+  return title
+    .toLocaleLowerCase("pt-BR")
+    .split(/(\s|-)/)
+    .map((word) => {
+      if (!word || word.match(/^[\s-]+$/)) return word;
+      return word.charAt(0).toLocaleUpperCase("pt-BR") + word.slice(1);
+    })
+    .join("");
+};
 
 export function CategoriesFilterCard({
   isSelected,
