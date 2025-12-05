@@ -7,3 +7,6 @@ export * from "./api";
 // UI / Component Props
 export * from "./IProductCardProps";
 
+// Product Review
+export * from "./IProductReview";
+

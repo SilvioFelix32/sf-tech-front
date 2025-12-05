@@ -1,31 +1,25 @@
-import Image from "next/image";
-import { CSSProperties } from "react";
-import { useCart } from "../../hooks/useCart";
+import { CSSProperties, useEffect, useState } from "react";
+import { useFavorite } from "../../hooks/useFavorite";
 import dynamic from "next/dynamic";
 const MoonLoader = dynamic(() => import("react-spinners").then(m => m.MoonLoader), { ssr: false });
 import { useRouter } from "next/router";
-import { NavHeader, Header } from "../../components";
-import { BuyButton } from "../../components/Buttons";
+import { NavHeader, Header, Footer } from "../../components";
+import {
+  ProductBreadcrumb,
+  ProductImageGallery,
+  ProductHeaderComponent,
+  ProductPriceSection,
+  ProductActionButtons,
+  ProductBenefits,
+  ProductTabs,
+  RelatedProducts,
+} from "../../components/Product";
 import { useQuery } from "react-query";
 import { categoryService, productsService } from "../../services";
-import { formatPrice } from "../../utils/formatPrice";
 import { IProductCategory } from "../../interfaces";
-import {
-  Content,
-  Description,
-  Picture,
-  ProductInfo,
-  ProductValue,
-  Title,
-  Text,
-  Wrapper,
-  ProductPrices,
-  Section,
-  Categories,
-  SectionProduct,
-  Button,
-} from "../../styles/pages/product";
+import { Container, ProductSection, ProductInfo, Description } from "../../styles/pages/product";
 import { Theme } from "../../styles/components";
+import { mockReviews, mockRating, mockReviewsCount } from "../../utils/mockData";
 
 const override: CSSProperties = {
   display: "block",
@@ -35,14 +29,23 @@ const override: CSSProperties = {
 export default function Product() {
   const router = useRouter();
   const { product_id } = router.query;
-  const { totalItemsCount } = useCart();
+  const { favoriteItems, handleAddToFavorites, removeItemFromFavorites } = useFavorite();
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const { data: product, isLoading: isProductLoading } = useQuery(
     ["product", product_id],
     () => productsService.getById(String(product_id)),
     {
       enabled: !!product_id,
+      onSuccess: (data) => {
+        const favorite = favoriteItems.find(
+          (item) => item.product_id === data.product_id
+        );
+        setIsFavorite(!!favorite);
+      },
     }
   );
+
   const category_id = product?.category_id;
 
   const { data: category } = useQuery<IProductCategory, Error>(
@@ -52,6 +55,38 @@ export default function Product() {
       enabled: !!category_id,
     }
   );
+
+  useEffect(() => {
+    if (product) {
+      const favorite = favoriteItems.find(
+        (item) => item.product_id === product.product_id
+      );
+      setIsFavorite(!!favorite);
+    }
+  }, [favoriteItems, product]);
+
+  const productImages = product?.urlBanner
+    ? [product.urlBanner, product.urlBanner, product.urlBanner]
+    : ["https://i.imgur.com/2HFGvvT.png"];
+
+  const discountPercentage =
+    product && product.price && product.discount
+      ? Math.round((product.discount / product.price) * 100)
+      : 0;
+
+  const finalPrice = product
+    ? (product.price || 0) - (product.discount || 0)
+    : 0;
+
+  const handleToggleFavorite = () => {
+    if (!product) return;
+    if (isFavorite) {
+      removeItemFromFavorites(product.product_id);
+    } else {
+      handleAddToFavorites(product);
+    }
+    setIsFavorite(!isFavorite);
+  };
 
   if (isProductLoading)
     return (
@@ -75,8 +110,10 @@ export default function Product() {
       </div>
     );
 
+  if (!product) return null;
+
   return (
-    <Theme height="84vh">
+    <Theme height="auto">
       <NavHeader />
       <Header
         showSignInButton={true}
@@ -84,98 +121,56 @@ export default function Product() {
         showFavoritesButton={true}
         showAdminButton={true}
         showSearchBar={false}
-        styles={{ width: "70%" }}
       />
-      <Wrapper>
-        <Title>{product.title}</Title>
-        <Content>
-          <Picture>
-            <Image
-              src={
-                product.urlBanner
-                  ? product.urlBanner
-                  : "https://i.imgur.com/2HFGvvT.png"
-              }
-              alt={product?.title}
-              priority
-              width="300"
-              height="300"
-              className="image"
-              style={{ objectFit: "contain" }}
-            ></Image>
-          </Picture>
+      <Container>
+        <ProductBreadcrumb
+          categoryName={category?.title}
+          productName={product.title || ""}
+        />
+
+        <ProductSection>
+          <ProductImageGallery
+            images={productImages}
+            productTitle={product.title || ""}
+            discountPercentage={discountPercentage}
+          />
+
           <ProductInfo>
+            <ProductHeaderComponent
+              title={product.title || ""}
+              rating={mockRating}
+              reviewsCount={mockReviewsCount}
+            />
+
+            <ProductPriceSection
+              originalPrice={product.price || 0}
+              finalPrice={finalPrice}
+              hasDiscount={discountPercentage > 0}
+            />
+
             <Description>{product.description}</Description>
-            <ProductValue>
-              <ProductPrices>
-                <Text
-                  style={{
-                    textDecoration: "line-through",
-                    fontSize: "1rem",
-                  }}
-                >
-                  De R$
-                  {formatPrice(product?.price)}
-                </Text>
-                <Text style={{ fontSize: "1.8rem" }}>
-                  Por R$
-                  {formatPrice(product?.price - product?.discount)}
-                </Text>
-              </ProductPrices>
-              <ProductPrices>
-                <BuyButton product={product} />
-                <Button
-                  onClick={() =>
-                    totalItemsCount > 0 && router.push("/checkout")
-                  }
-                  disabled={totalItemsCount <= 0}
-                >
-                  Confirmar Compra
-                </Button>
-              </ProductPrices>
-            </ProductValue>
+
+            <ProductActionButtons
+              product={product}
+              isFavorite={isFavorite}
+              onToggleFavorite={handleToggleFavorite}
+            />
+
+            <ProductBenefits />
           </ProductInfo>
-        </Content>
-        <Section>
-          <Title style={{ fontSize: "1.5rem" }}>Quem viu também comprou</Title>
-          <Categories>
-            {category?.products?.slice(0, 5).map((product) => (
-              <SectionProduct
-                key={product.product_id}
-                onClick={() => router.push(`/product/${product.product_id}`)}
-              >
-                <Picture>
-                  <Image
-                    src={
-                      product.urlBanner
-                        ? product.urlBanner
-                        : "https://i.imgur.com/2HFGvvT.png"
-                    }
-                    alt={product?.title}
-                    width="100"
-                    height="100"
-                    priority
-                    style={{ objectFit: "contain" }}
-                  ></Image>
-                </Picture>
-                <Title
-                  style={{
-                    fontSize: "1.2rem",
-                    textAlign: "center",
-                    margin: "0",
-                    padding: "0",
-                  }}
-                >
-                  {product.title}
-                </Title>
-                <Text style={{ fontSize: "1.2rem" }}>
-                  {formatPrice(product?.price - product?.discount)}
-                </Text>
-              </SectionProduct>
-            ))}
-          </Categories>
-        </Section>
-      </Wrapper>
+        </ProductSection>
+
+        <ProductTabs
+          product={product}
+          categoryName={category?.title}
+          reviews={mockReviews}
+        />
+
+        {category?.products && category.products.length > 0 && (
+          <RelatedProducts products={category.products} />
+        )}
+      </Container>
+      <Footer />
     </Theme>
   );
 }
