@@ -1,21 +1,37 @@
+import { useState, useEffect } from "react";
 import { MdPix } from "react-icons/md";
-import Image from "next/image";
-import { Wrapper, Content, Title } from "./styles";
+import { QRCodeSVG } from "qrcode.react";
+import { Wrapper, Content, Title, QRCodeContainer } from "./styles";
 
 export function PixForm() {
+  const [pixCode, setPixCode] = useState<string>("");
+
+  useEffect(() => {
+    // Gera um código PIX aleatório (apenas o código, sem endereço)
+    const generateRandomPixCode = () => {
+      const randomString = Math.random().toString(36).substring(2, 15);
+      const timestamp = Date.now().toString(36);
+      return `PIX-${randomString}-${timestamp}`.toUpperCase();
+    };
+
+    setPixCode(generateRandomPixCode());
+  }, []);
+
   return (
     <Wrapper>
       <Content>
         <Title>
           Pix <MdPix />
         </Title>
-        <Image
-          src="/images/pix_frame.png"
-          alt="qrcode"
-          width="300"
-          height="300"
-          priority
-        ></Image>
+        <QRCodeContainer>
+          {pixCode && (
+            <QRCodeSVG
+              value={pixCode}
+              size={250}
+              level="H"
+            />
+          )}
+        </QRCodeContainer>
       </Content>
     </Wrapper>
   );

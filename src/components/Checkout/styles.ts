@@ -186,32 +186,9 @@ export const Button = styled.button`
   justify-content: center;
   border: none;
   background: none;
-  transition: filter 0.2s;
 
   &:hover {
-    filter: brightness(0.9);
-  }
-
-  svg {
-    color: ${({ theme }) => theme.colors.tertiary};
-    height: 24px;
-    width: 24px;
-  }
-`;
-
-export const ButtonPay = styled(Button)`
-  height: 3rem;
-  width: 100%;
-  color: ${({ theme }) => theme.colors.text};
-  background: ${({ theme }) => theme.colors.tertiary};
-  font-size: 1.3rem;
-  border-top: 1px solid ${({ theme }) => theme.colors.tertiary};
-  transition-duration: 0.3s;
-  border-bottom-right-radius: 6px;
-  border-bottom-left-radius: 6px;
-
-  &:hover {
-    filter: brightness(0.9);
+    background-color: ${({ theme }) => theme.colors.tertiary};
   }
 `;
 

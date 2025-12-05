@@ -2,29 +2,55 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  padding: 10px;
+  min-height: 75vh;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.colors.background};
+
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+`;
+
+export const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 24px;
 `;
 
 export const Content = styled.div`
   display: flex;
-  width: 80%;
-  height: 100%;
-  padding: 10px;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  width: 100%;
+  gap: 24px;
+`;
+
+export const DeliveryCard = styled.div`
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+export const PaymentCard = styled.div`
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const PaymentOptions = styled.div`
   display: flex;
   flex-direction: column;
-  width: 83%;
-  padding: 10px;
-  height: 100%;
+  width: 100%;
+  gap: 16px;
 
   .accordion {
     background-color: ${({ theme }) => theme.colors.background};
@@ -33,13 +59,19 @@ export const PaymentOptions = styled.div`
     --cui-accordion-border-color: ${({ theme }) => theme.colors.background};
     padding: 0;
     margin: 0;
-    border: solid 1px ${({ theme }) => theme.colors.tertiary};
+    border: none;
     border-radius: 8px;
   }
 
   .accordion-item {
     background-color: ${({ theme }) => theme.colors.background};
-    border: solid 1px ${({ theme }) => theme.colors.tertiary};
+    border: 1px solid ${({ theme }) => theme.colors.tertiary};
+    border-radius: 8px;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   .header {
@@ -53,11 +85,19 @@ export const PaymentOptions = styled.div`
     margin: 0;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.background};
+    }
   }
 
   .accordion-flush .accordion-collapse {
     background-color: ${({ theme }) => theme.colors.background};
-    border: solid 1px ${({ theme }) => theme.colors.tertiary};
+    border: none;
   }
 `;
 
@@ -72,11 +112,11 @@ export const Input = styled.input`
   border-bottom: solid 0.5px lightgrey;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h2`
   color: ${({ theme }) => theme.colors.title};
   font-size: 1.5rem;
-  font-weight: 500;
-  margin: 5px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
 `;
 
 export const Text = styled.p`
@@ -89,25 +129,120 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
   height: 3rem;
   width: 100%;
-  color: ${({ theme }) => theme.colors.text};
-  background: ${({ theme }) => theme.colors.tertiary};
-  font-size: 1.3rem;
+  color: ${({ theme }) => theme.colors.tertiary};
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
   transition-duration: 0.3s;
-  border-bottom-left-radius: 6px;
+  border-radius: 6px;
+  cursor: pointer;
 
   &:hover {
-    filter: brightness(0.9);
+    background-color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.background};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `;
 
 export const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
   width: 100%;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
+  margin-top: 10px;
+`;
+
+export const Sidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 24px;
+
+  @media (min-width: 1024px) {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+`;
+
+export const SidebarCard = styled.div`
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+export const CartItemWrapper = styled.div`
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const CartItemImage = styled.div`
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  border-radius: 6px;
+  overflow: hidden;
+`;
+
+export const CartItemContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+`;
+
+export const CartItemName = styled.p`
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+`;
+
+export const CartItemPrice = styled.p`
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin: 0;
+`;
+
+export const DeliveryInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const DeliveryRecipient = styled.h3`
+  color: ${({ theme }) => theme.colors.title};
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+`;
+
+export const DeliveryText = styled.p`
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.5;
 `;

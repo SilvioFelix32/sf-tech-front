@@ -9,12 +9,11 @@ export default function Payment() {
       showFavoritesButton={true}
       showAdminButton={false}
       showSearchBar={false}
-      wrapperWidth="75%"
+      wrapperWidth="80%"
       contentProps={{
         direction: "column",
         align: "flex-start",
         justify: "flex-start",
-        minHeight: "75vh",
         padding: "20px",
       }}
     >
