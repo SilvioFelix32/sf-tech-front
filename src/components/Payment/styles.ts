@@ -246,3 +246,62 @@ export const DeliveryText = styled.p`
   margin: 0;
   line-height: 1.5;
 `;
+
+export const LoginWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-height: 500px;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
+export const LoginTitle = styled.h2`
+  color: ${({ theme }) => theme.colors.title};
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0 0 24px 0;
+  line-height: 1.4;
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+`;
+
+export const LoginButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 8px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  border: 2px solid ${({ theme }) => theme.colors.tertiary};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.background};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(51, 193, 179, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (min-width: 768px) {
+    max-width: 350px;
+    padding: 16px 32px;
+    font-size: 1.125rem;
+  }
+`;

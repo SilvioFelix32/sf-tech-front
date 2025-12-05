@@ -11,7 +11,7 @@ export default function ShopCart() {
         showCartButton={false}
         showFavoritesButton={true}
         showAdminButton={false}
-        showSearchBar={true}
+        showSearchBar={false}
       />
       <Checkout />
       <Footer />

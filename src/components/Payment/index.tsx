@@ -6,8 +6,11 @@ import { useState } from "react";
 import router from "next/router";
 import {
   Wrapper,
+  LoginWrapper,
   MainContent,
   Sidebar,
+  LoginTitle,
+  LoginButton,
 } from "./styles";
 import { DeliverySection } from "./DeliverySection";
 import { PaymentMethodSelector, PaymentMethodType } from "./PaymentMethodSelector";
@@ -144,31 +147,13 @@ export function PaymentForm() {
       </Sidebar>
     </Wrapper>
   ) : (
-    <Wrapper style={{ flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "50vh" }}>
-      <h2 style={{
-        color: "inherit",
-        fontSize: "1.5rem",
-        fontWeight: 700,
-        margin: "0 0 16px 0"
-      }}>
-        Faça login primeiro para poder continuar com a compra:
-      </h2>
-      <button
-        style={{
-          width: "30%",
-          marginTop: "15px",
-          borderRadius: "6px",
-          padding: "12px",
-          border: "1px solid #33C1B3",
-          backgroundColor: "transparent",
-          color: "#33C1B3",
-          cursor: "pointer",
-          fontWeight: 600
-        }}
-        onClick={() => router.push("/auth/signIn")}
-      >
-        Login
-      </button>
-    </Wrapper>
+    <LoginWrapper>
+      <LoginTitle>
+        Faça login primeiro para poder continuar com a compra
+      </LoginTitle>
+      <LoginButton onClick={() => router.push("/auth/signIn")}>
+        Fazer Login
+      </LoginButton>
+    </LoginWrapper>
   );
 }
