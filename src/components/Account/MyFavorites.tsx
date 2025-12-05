@@ -8,7 +8,6 @@ import { formatPrice } from "../../utils/formatPrice";
 import { BsXLg } from "react-icons/bs";
 import { PageWrapper, PageTitle } from "../../styles/pages/shared";
 import {
-  Product,
   ProductContent,
   ProductDescription,
   ProductValue,

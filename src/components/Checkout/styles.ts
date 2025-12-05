@@ -1,12 +1,72 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const CheckoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 75%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  gap: 3rem;
+`;
+
+export const CheckoutTitle = styled.h1`
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 700;
+  font-size: 2rem;
   width: 100%;
-  height: 100%;
-  padding: 10px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+`;
+
+export const MainContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 2fr 1fr;
+  }
+`;
+
+export const CartSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+`;
+
+export const SidebarSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+`;
+
+export const EmptyCartMessage = styled.p`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1.25rem;
+  padding: 3rem;
+  background-color: ${({ theme }) => theme.colors.background};
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  border-radius: 8px;
+`;
+
+export const RecommendedSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 1rem;
+`;
+
+export const RecommendedTitle = styled.h2`
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
 `;
 
 export const SectionTitle = styled.h1`
@@ -126,32 +186,9 @@ export const Button = styled.button`
   justify-content: center;
   border: none;
   background: none;
-  transition: filter 0.2s;
 
   &:hover {
-    filter: brightness(0.9);
-  }
-
-  svg {
-    color: ${({ theme }) => theme.colors.tertiary};
-    height: 24px;
-    width: 24px;
-  }
-`;
-
-export const ButtonPay = styled(Button)`
-  height: 3rem;
-  width: 100%;
-  color: ${({ theme }) => theme.colors.text};
-  background: ${({ theme }) => theme.colors.tertiary};
-  font-size: 1.3rem;
-  border-top: 1px solid ${({ theme }) => theme.colors.tertiary};
-  transition-duration: 0.3s;
-  border-bottom-right-radius: 6px;
-  border-bottom-left-radius: 6px;
-
-  &:hover {
-    filter: brightness(0.9);
+    background-color: ${({ theme }) => theme.colors.tertiary};
   }
 `;
 
@@ -183,7 +220,6 @@ export const SubTotalWrapper = styled.div`
   justify-content: start;
   align-items: center;
   padding: 2rem;
-  border-top: solid 1px ${({ theme }) => theme.colors.tertiary};
 `;
 
 export const Totals = styled.div`

@@ -13,6 +13,7 @@ export interface ISaleItem {
 export interface ICreateSaleRequest {
   total: number;
   items: ISaleItem[];
+  paymentMethod?: string;
 }
 
 export interface ISale {

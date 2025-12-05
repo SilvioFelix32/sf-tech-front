@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 40%;
-  height: 50px;
+  height: 40px;
   margin: 0 auto;
-  border-radius: 12px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -24,13 +24,9 @@ export const InputContainer = styled.div`
 
   > svg {
     color: ${({ theme }) => theme.colors.text};
-    width: 60px;
-    height: 30px;
-    margin-left: auto;
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.tertiary};
-    }
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
   }
 `;
 
@@ -38,7 +34,6 @@ export const SearchInput = styled.input`
   border: none;
   outline: none;
   text-align: start;
-  padding-left: 12px;
   height: 100%;
   width: 100%;
 

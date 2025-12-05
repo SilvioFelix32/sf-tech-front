@@ -1,111 +1,52 @@
-import { formatPrice } from "../../utils/formatPrice";
 import { HighlightedProduct } from "../HighlightedProduct";
-import { ProductCard } from "./ProductCard";
-import { PriceDetail } from "./PriceDetail";
+import { CartProductCardComponent } from "./CartProductCard";
+import { GiftCard } from "./GiftCard";
+import { OrderSummary } from "./OrderSummary";
 import { CartItemType } from "../../services/cart";
-import { useRouter } from "next/router";
 import { useCart } from "../../hooks/useCart";
 import {
-  SectionTitle,
-  Wrapper,
-  MainSection,
-  ProductsWrapper,
-  PaymentWrapper,
-  SubTotalWrapper,
-  Totals,
-  ButtonPay,
-  Card,
-  InfoText,
-  Section,
-  AddGiftButton,
+  CheckoutWrapper,
+  CheckoutTitle,
+  MainContent,
+  CartSection,
+  SidebarSection,
+  EmptyCartMessage,
+  RecommendedSection,
+  RecommendedTitle,
 } from "./styles";
 
 export function Checkout() {
-  const {
-    cartItems,
-    deleteItemFromCart,
-    cartTotalPrice,
-    cartTotalPriceWithoutDiscount,
-  } = useCart();
-  const router = useRouter();
+  const { cartItems, deleteItemFromCart } = useCart();
 
   return (
-    <Wrapper>
-      <MainSection>
-        <ProductsWrapper>
-          <SectionTitle>Seu carrinho de compras</SectionTitle>
-          {cartItems.length === 0 && <InfoText>Carrinho Vazio!</InfoText>}
-          {cartItems.map((item: CartItemType) => (
-            <ProductCard
-              key={item.product_id}
-              item={item}
-              onRemove={deleteItemFromCart}
-            />
-          ))}
-        </ProductsWrapper>
-        <PaymentWrapper>
-          <SubTotalWrapper
-            style={{
-              height: "15rem",
-              justifyContent: "space-around",
-              borderTop: "none",
-            }}
-          >
-            <InfoText
-              weight={600}
-              size="1.2rem"
-              style={{ alignSelf: "flex-start" }}
-            >
-              Está comprando de presente?
-            </InfoText>
-            <Card>
-              Adicione uma embalagem de presente e <br />
-              uma mensagem personalizada, por apenas R$ 5,00
-              <AddGiftButton>Adicionar uma embalagem</AddGiftButton>
-            </Card>
-          </SubTotalWrapper>
-          <SubTotalWrapper>
-            <InfoText
-              weight={600}
-              size="1.2rem"
-              style={{ alignSelf: "flex-start" }}
-            >
-              Detalhes da sua compra:
-            </InfoText>
-            <PriceDetail
-              label="Valor total do carrinho:"
-              value={`R$ ${formatPrice(cartTotalPriceWithoutDiscount)}`}
-            />
-            <PriceDetail
-              label="Taxa de entrega:"
-              value={`R$ ${formatPrice(10)}`}
-              strikeThrough
-            />
-            <PriceDetail
-              label="Desconto:"
-              value={`R$ ${formatPrice(
-                String(
-                  Number(cartTotalPriceWithoutDiscount) - Number(cartTotalPrice)
-                )
-              )}`}
-            />
-          </SubTotalWrapper>
-          <Totals>
-            <InfoText weight={600}>Total:</InfoText>
-            <InfoText weight={600}>R$ {formatPrice(cartTotalPrice)}</InfoText>
-          </Totals>
-          <ButtonPay
-            onClick={() => router.push("/payment")}
-            disabled={Number(cartTotalPrice) <= 0}
-          >
-            Confirmar Compra
-          </ButtonPay>
-        </PaymentWrapper>
-      </MainSection>
-      <Section>
-        <SectionTitle>Você talvez goste desses produtos!</SectionTitle>
+    <CheckoutWrapper>
+      <CheckoutTitle>Seu carrinho de compras</CheckoutTitle>
+
+      <MainContent>
+        <CartSection>
+          {cartItems.length === 0 ? (
+            <EmptyCartMessage>Carrinho Vazio!</EmptyCartMessage>
+          ) : (
+            cartItems.map((item: CartItemType) => (
+              <CartProductCardComponent
+                key={item.product_id}
+                item={item}
+                onRemove={deleteItemFromCart}
+              />
+            ))
+          )}
+        </CartSection>
+
+        <SidebarSection>
+          <GiftCard />
+          <OrderSummary />
+        </SidebarSection>
+      </MainContent>
+
+      <RecommendedSection>
+        <RecommendedTitle>Você talvez goste desses produtos!</RecommendedTitle>
         <HighlightedProduct />
-      </Section>
-    </Wrapper>
+      </RecommendedSection>
+    </CheckoutWrapper>
   );
 }

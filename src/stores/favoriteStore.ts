@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { IFavoriteItem } from "../interfaces/IFavorite";
-import { IFavoriteContext } from "../services/favorite";
 import { getCookie, setCookie } from "../services/cookie-service";
 
 interface FavoriteState {
@@ -65,7 +64,7 @@ export const useFavoriteStore = create<FavoriteState>()(
     {
       name: "favorite-storage",
       storage: {
-        getItem: (name) => {
+        getItem: (_name) => {
           if (typeof window === "undefined") return null;
           const value = getCookie("favorite-items");
           if (!value) return null;
@@ -78,11 +77,11 @@ export const useFavoriteStore = create<FavoriteState>()(
             return { state: { favoriteItems: [] } };
           }
         },
-        setItem: (name, value) => {
+        setItem: (_name, value) => {
           if (typeof window === "undefined") return;
           updateFavoriteCookie(value.state.favoriteItems);
         },
-        removeItem: (name) => {
+        removeItem: (_name) => {
           if (typeof window === "undefined") return;
           updateFavoriteCookie([]);
         },

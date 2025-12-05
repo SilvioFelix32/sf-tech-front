@@ -130,7 +130,6 @@ export const ProductList = memo(({ isSelected }: IProductListProps) => {
   }, []);
 
   const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
   const baseFilteredProducts = products
     ?.filter((product: IProduct) => product.price <= price)

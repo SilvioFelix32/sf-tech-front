@@ -28,6 +28,13 @@ export const SaleHeader = styled.div`
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: ${({ theme }) =>
+      theme.title === "light" ? "rgba(15, 23, 42, 0.02)" : "rgba(255, 255, 255, 0.02)"};
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -63,13 +70,14 @@ export const SaleStatusBadge = styled.span`
 
 export const SaleHeaderRight = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
 
   @media (max-width: 768px) {
     align-items: flex-start;
     width: 100%;
+    justify-content: space-between;
   }
 `;
 
@@ -78,6 +86,11 @@ export const SaleTotal = styled.p`
   font-weight: 700;
   font-size: 1.4rem;
   margin: 0;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const SaleItemsTitle = styled.h3`
@@ -284,4 +297,25 @@ export const Content = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.tertiary};
   border-bottom: solid 1px white;
+`;
+
+export const SaleExpandIcon = styled.div<{ $isExpanded: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.colors.tertiary};
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+  transform: rotate(${({ $isExpanded }) => ($isExpanded ? "180deg" : "0deg")});
+  cursor: pointer;
+  flex-shrink: 0;
+`;
+
+export const SaleContent = styled.div<{ $isExpanded: boolean }>`
+  max-height: ${({ $isExpanded }) => ($isExpanded ? "5000px" : "0")};
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: ${({ $isExpanded }) => ($isExpanded ? "1" : "0")};
+  padding-top: ${({ $isExpanded }) => ($isExpanded ? "20px" : "0")};
+  margin-top: ${({ $isExpanded }) => ($isExpanded ? "0" : "0")};
 `;

@@ -13,13 +13,13 @@ export function SearchBar() {
   return (
     <Wrapper>
       <InputContainer>
+        <BiSearch />
         <SearchInput
-          placeholder="Busca..."
+          placeholder="Buscar produtos..."
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <BiSearch />
       </InputContainer>
     </Wrapper>
   );

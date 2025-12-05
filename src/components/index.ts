@@ -9,6 +9,7 @@ export * from "./Layouts/PageLayout";
 export * from "./ProductCard";
 export * from "./HighlightedProduct";
 export * from "./SearchBar";
+export * from "./Product";
 
 // Feature Components
 export * from "./Checkout";

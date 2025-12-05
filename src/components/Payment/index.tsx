@@ -1,35 +1,20 @@
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
-import Image from "next/image";
-import { IProduct, ISaleItem, ICreateSaleRequest } from "../../interfaces";
+import { ISaleItem, ICreateSaleRequest } from "../../interfaces";
 import { CartItemType } from "../../services/cart";
-import { formatPrice } from "../../utils/formatPrice";
 import { useState } from "react";
-import { DeliveryMethod } from "./ClientDelivery";
-import { CardForm } from "./Card";
 import router from "next/router";
-import { PriceDetail } from "../Checkout/PriceDetail";
-import {
-  CAccordion,
-  CAccordionItem,
-  CAccordionHeader,
-  CAccordionBody,
-} from "@coreui/react";
 import {
   Wrapper,
-  Title,
-  Content,
-  PaymentOptions,
-  Button,
-  ButtonWrapper,
+  LoginWrapper,
+  MainContent,
+  Sidebar,
+  LoginTitle,
+  LoginButton,
 } from "./styles";
-import {
-  ButtonPay,
-  InfoText,
-  PaymentWrapper,
-  SubTotalWrapper,
-  Totals,
-} from "../Checkout/styles";
+import { DeliverySection } from "./DeliverySection";
+import { PaymentMethodSelector, PaymentMethodType } from "./PaymentMethodSelector";
+import { CartSummary } from "./CartSummary";
 import { saleService } from "../../services";
 import { environment } from "../../config/environment";
 import { GetSwallAlert } from "../../utils";
@@ -39,6 +24,7 @@ export function PaymentForm() {
   const { cartItems, cartTotalPriceWithoutDiscount, cartTotalPrice, clearCart } =
     useCart();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethodType>(null);
 
   const mapCartItemsToSaleItems = (items: CartItemType[]): ISaleItem[] => {
     return items.map((item) => {
@@ -76,7 +62,7 @@ export function PaymentForm() {
 
     try {
       const saleItems = mapCartItemsToSaleItems(cartItems);
-      
+
       const missingCategoryId = saleItems.some(item => !item.category_id);
       if (missingCategoryId) {
         GetSwallAlert(
@@ -89,11 +75,24 @@ export function PaymentForm() {
         return;
       }
 
+      if (!selectedPaymentMethod) {
+        GetSwallAlert(
+          "center",
+          "warning",
+          "Por favor, selecione uma forma de pagamento",
+          3000
+        );
+        setIsLoading(false);
+        return;
+      }
+
       const total = Math.round(Number(cartTotalPrice) * 100) / 100;
 
       const saleData: ICreateSaleRequest = {
         items: saleItems,
         total,
+        // TODO: Implementar o paymentMethod - após a implementação da api.
+        //paymentMethod: selectedPaymentMethod,
       };
 
       const createdSale = await saleService.create(
@@ -104,7 +103,7 @@ export function PaymentForm() {
 
       clearCart();
       GetSwallAlert("center", "success", "Compra realizada com sucesso!", 2000);
-      
+
       setTimeout(() => {
         router.push(`/confirmation?sale_id=${createdSale.sale_id}`);
       }, 2000);
@@ -121,115 +120,40 @@ export function PaymentForm() {
     }
   };
 
+  const handleBackToCart = () => {
+    router.push("/checkout");
+  };
+
   return user ? (
     <Wrapper>
-      <Content>
-        <Title>Endereço de entrega:</Title>
-        <DeliveryMethod user={user} />
-        <PaymentOptions>
-          <Title>Forma de pagamento:</Title>
-          <CAccordion>
-            <CAccordionItem itemKey={1} onClick={() => {}}>
-              <CAccordionHeader>Cartão de Crédito</CAccordionHeader>
-              <CAccordionBody>
-                <CardForm user={user} />
-              </CAccordionBody>
-            </CAccordionItem>
-            <CAccordionItem itemKey={2}>
-              <CAccordionHeader>Cartão de Débito</CAccordionHeader>
-              <CAccordionBody>
-                <CardForm user={user} />
-              </CAccordionBody>
-            </CAccordionItem>
-          </CAccordion>
-        </PaymentOptions>
-      </Content>
-      <PaymentWrapper>
-        <SubTotalWrapper
-          style={{
-            justifyContent: "space-around",
-            borderTop: "none",
-          }}
-        >
-          <InfoText
-            weight={600}
-            size="1.2rem"
-            style={{ alignSelf: "flex-start" }}
-          >
-            Itens do seu carrinho
-          </InfoText>
-          {cartItems.map((item: IProduct) => (
-            <div
-              key={item.product_id}
-              style={{ display: "flex", width: "100%" }}
-            >
-              <Image
-                key={item.product_id}
-                alt="item"
-                src={item.urlBanner}
-                width={60}
-                height={60}
-              />
-              <PriceDetail
-                label={item.title}
-                value={`R$ ${formatPrice(item.price)}`}
-              />
-            </div>
-          ))}
-        </SubTotalWrapper>
-        <SubTotalWrapper>
-          <InfoText
-            weight={600}
-            size="1.2rem"
-            style={{ alignSelf: "flex-start" }}
-          >
-            Detalhes da sua compra:
-          </InfoText>
-          <PriceDetail
-            label="Valor total do carrinho:"
-            value={`R$ ${formatPrice(Number(cartTotalPriceWithoutDiscount))}`}
-          />
-          <PriceDetail
-            label="Taxa de entrega:"
-            value={`R$ ${formatPrice(10)}`}
-            strikeThrough
-          />
-          <PriceDetail
-            label="Desconto:"
-            value={`R$ ${formatPrice(
-              Number(cartTotalPriceWithoutDiscount) - Number(cartTotalPrice)
-            )}`}
-          />
-        </SubTotalWrapper>
-        <Totals>
-          <InfoText weight={600}>Total:</InfoText>
-          <InfoText weight={600}>
-            R$ {formatPrice(Number(cartTotalPrice))}
-          </InfoText>
-        </Totals>
-        <ButtonWrapper>
-          <Button onClick={() => router.push("/checkout")}>
-            Voltar para o carrinho
-          </Button>
-          <ButtonPay
-            style={{ borderBottomLeftRadius: "0" }}
-            onClick={handleConfirmPayment}
-            disabled={Number(cartTotalPrice) <= 0 || isLoading}
-          >
-            {isLoading ? "Processando..." : "Confirmar Pagamento"}
-          </ButtonPay>
-        </ButtonWrapper>
-      </PaymentWrapper>
+      <MainContent>
+        <DeliverySection user={user} />
+        <PaymentMethodSelector
+          user={user}
+          selectedMethod={selectedPaymentMethod}
+          onMethodSelect={setSelectedPaymentMethod}
+        />
+      </MainContent>
+
+      <Sidebar>
+        <CartSummary
+          cartItems={cartItems}
+          cartTotalPriceWithoutDiscount={cartTotalPriceWithoutDiscount}
+          cartTotalPrice={cartTotalPrice}
+          isLoading={isLoading}
+          onBackToCart={handleBackToCart}
+          onConfirmPayment={handleConfirmPayment}
+        />
+      </Sidebar>
     </Wrapper>
   ) : (
-    <Wrapper style={{ flexDirection: "column", alignItems: "center" }}>
-      <Title>Faça login primeiro para poder continuar com a compra:</Title>
-      <Button
-        style={{ width: "30%", marginTop: "15px", borderRadius: "6px" }}
-        onClick={() => router.push("/auth/signIn")}
-      >
-        Login
-      </Button>
-    </Wrapper>
+    <LoginWrapper>
+      <LoginTitle>
+        Faça login primeiro para poder continuar com a compra
+      </LoginTitle>
+      <LoginButton onClick={() => router.push("/auth/signIn")}>
+        Fazer Login
+      </LoginButton>
+    </LoginWrapper>
   );
 }

@@ -5,18 +5,15 @@ export default function Confirmation() {
     <PageLayout
       showSignInButton={true}
       showCartButton={false}
-      showFavoritesButton={true}
+      showFavoritesButton={false}
       showAdminButton={false}
       showSearchBar={false}
-      wrapperWidth="75%"
+      wrapperWidth="80%"
       contentProps={{
         direction: "column",
         align: "flex-start",
         justify: "flex-start",
-        minHeight: "75vh",
-        padding: "20px",
       }}
-      themeHeight="84vh"
     >
       <ConfirmationForm />
     </PageLayout>
