@@ -1,5 +1,7 @@
 import Image from "next/image";
+import { useState } from "react";
 import { useQuery } from "react-query";
+import { BiChevronDown } from "react-icons/bi";
 import { useAuth } from "../../hooks/useAuth";
 import { saleService } from "../../services/sale-service";
 import { environment } from "../../config/environment";
@@ -15,6 +17,8 @@ import {
   SaleDate,
   SaleStatusBadge,
   SaleTotal,
+  SaleExpandIcon,
+  SaleContent,
   SaleItemsTitle,
   SaleItemsList,
   SaleItem,
@@ -30,6 +34,19 @@ export default function MyShopping() {
   const { user } = useAuth();
   const company_id = environment.companyId;
   const user_id = user?.user_id;
+  const [expandedSales, setExpandedSales] = useState<Set<string>>(new Set());
+
+  const toggleSale = (saleId: string) => {
+    setExpandedSales((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(saleId)) {
+        newSet.delete(saleId);
+      } else {
+        newSet.add(saleId);
+      }
+      return newSet;
+    });
+  };
 
   const { data: sales = [], isLoading } = useQuery<ISale[]>(
     ["sales", company_id, user_id],
@@ -100,65 +117,74 @@ export default function MyShopping() {
         Minhas Compras
       </PageTitle>
 
-      {sortedSales.map((sale: ISale) => (
-        <SaleContainer key={sale.sale_id}>
-          <SaleHeader>
-            <SaleHeaderLeft>
-              <SaleDate>Compra realizada em: {formatDate(sale.created_at)}</SaleDate>
-              <SaleStatusBadge>{getSaleStatus(sale)}</SaleStatusBadge>
-            </SaleHeaderLeft>
-            <SaleHeaderRight>
-              <SaleTotal>Total R$ {formatPrice(sale.total)}</SaleTotal>
-            </SaleHeaderRight>
-          </SaleHeader>
+      {sortedSales.map((sale: ISale) => {
+        const isExpanded = expandedSales.has(sale.sale_id || "");
 
-          <SaleItemsTitle>Itens da compra:</SaleItemsTitle>
-          <SaleItemsList>
-            {sale.items.map((item, index) => (
-              <SaleItem key={`${item.product_id}-${index}`}>
-                <SaleItemImage>
-                  <Image
-                    alt={item.title}
-                    src={item.url_banner || "https://i.imgur.com/2HFGvvT.png"}
-                    width={80}
-                    height={80}
-                    style={{ objectFit: "contain" }}
-                  />
-                </SaleItemImage>
-                <SaleItemInfo>
-                  <SaleItemTitle>{item.title}</SaleItemTitle>
-                  <SaleItemSubtitle>
-                    {item.subtitle || item.description}
-                  </SaleItemSubtitle>
-                </SaleItemInfo>
-                <SaleItemPrice>R$ {formatPrice(item.total_value)}</SaleItemPrice>
-              </SaleItem>
-            ))}
-          </SaleItemsList>
+        return (
+          <SaleContainer key={sale.sale_id}>
+            <SaleHeader onClick={() => toggleSale(sale.sale_id || "")}>
+              <SaleHeaderLeft>
+                <SaleDate>Compra realizada em: {formatDate(sale.created_at)}</SaleDate>
+                <SaleStatusBadge>{getSaleStatus(sale)}</SaleStatusBadge>
+              </SaleHeaderLeft>
+              <SaleHeaderRight>
+                <SaleTotal>Total R$ {formatPrice(sale.total)}</SaleTotal>
+                <SaleExpandIcon $isExpanded={isExpanded}>
+                  <BiChevronDown />
+                </SaleExpandIcon>
+              </SaleHeaderRight>
+            </SaleHeader>
 
-          <SaleActions>
-            <Button
-              width="100%"
-              height="40px"
-              backgroundColor="background"
-              textColor="text"
-            >
-              Ver Detalhes
-            </Button>
-            <Button
-              width="100%"
-              height="40px"
-              backgroundColor="background"
-              textColor="text"
-            >
-              Avaliar Produtos
-            </Button>
-            <Button width="100%" height="40px">
-              Comprar Novamente
-            </Button>
-          </SaleActions>
-        </SaleContainer>
-      ))}
+            <SaleContent $isExpanded={isExpanded}>
+              <SaleItemsTitle>Itens da compra:</SaleItemsTitle>
+              <SaleItemsList>
+                {sale.items.map((item, index) => (
+                  <SaleItem key={`${item.product_id}-${index}`}>
+                    <SaleItemImage>
+                      <Image
+                        alt={item.title}
+                        src={item.url_banner || "https://i.imgur.com/2HFGvvT.png"}
+                        width={80}
+                        height={80}
+                        style={{ objectFit: "contain" }}
+                      />
+                    </SaleItemImage>
+                    <SaleItemInfo>
+                      <SaleItemTitle>{item.title}</SaleItemTitle>
+                      <SaleItemSubtitle>
+                        {item.subtitle || item.description}
+                      </SaleItemSubtitle>
+                    </SaleItemInfo>
+                    <SaleItemPrice>R$ {formatPrice(item.total_value)}</SaleItemPrice>
+                  </SaleItem>
+                ))}
+              </SaleItemsList>
+
+              <SaleActions>
+                <Button
+                  width="100%"
+                  height="40px"
+                  backgroundColor="background"
+                  textColor="text"
+                >
+                  Ver Detalhes
+                </Button>
+                <Button
+                  width="100%"
+                  height="40px"
+                  backgroundColor="background"
+                  textColor="text"
+                >
+                  Avaliar Produtos
+                </Button>
+                <Button width="100%" height="40px">
+                  Comprar Novamente
+                </Button>
+              </SaleActions>
+            </SaleContent>
+          </SaleContainer>
+        );
+      })}
     </PageWrapper>
   );
 }
