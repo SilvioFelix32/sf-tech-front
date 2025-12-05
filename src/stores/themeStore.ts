@@ -22,17 +22,17 @@ export const useThemeStore = create<ThemeState>()(
     {
       name: "theme-storage",
       storage: {
-        getItem: (name) => {
+        getItem: (_name) => {
           if (typeof window === "undefined") return null;
           const value = getCookie("color-theme");
           if (!value) return { state: { theme: "light" } };
           return { state: { theme: value } };
         },
-        setItem: (name, value) => {
+        setItem: (_name, value) => {
           if (typeof window === "undefined") return;
           setCookie("color-theme", value.state.theme, { expires: 7, path: "/" });
         },
-        removeItem: (name) => {
+        removeItem: (_name) => {
           if (typeof window === "undefined") return;
           setCookie("color-theme", "light", { expires: 7, path: "/" });
         },

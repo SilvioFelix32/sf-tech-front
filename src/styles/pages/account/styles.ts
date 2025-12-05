@@ -102,7 +102,7 @@ export const SidebarNavItem = styled.button<SidebarNavItemProps>`
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  background-color: ${({ theme, $active }) =>
+  background-color: ${({ $active }) =>
     $active ? "rgba(2, 132, 199, 0.1)" : "transparent"};
   color: ${({ theme, $active }) =>
     $active ? theme.colors.tertiary : "rgba(15, 23, 42, 0.8)"};
@@ -111,7 +111,7 @@ export const SidebarNavItem = styled.button<SidebarNavItemProps>`
   transition: background-color 0.15s ease, color 0.15s ease;
 
   &:hover {
-    background-color: ${({ theme, $active }) =>
+    background-color: ${({ $active }) =>
       $active ? "rgba(2, 132, 199, 0.12)" : "rgba(15, 23, 42, 0.04)"};
   }
 `;

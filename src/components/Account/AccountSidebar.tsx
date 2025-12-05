@@ -51,13 +51,6 @@ export function AccountSidebar({
     email,
     role,
 }: AccountSidebarProps) {
-    const initials = name
-        .split(" ")
-        .map((part) => part[0])
-        .join("")
-        .slice(0, 2)
-        .toUpperCase();
-
     const badgeText = getBadgeText(role);
 
     return (

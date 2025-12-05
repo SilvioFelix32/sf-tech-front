@@ -18,7 +18,7 @@ interface ProductTabsProps {
   reviews: IProductReview[];
 }
 
-export function ProductTabs({ product, categoryName, reviews }: ProductTabsProps) {
+export function ProductTabs({ product: _product, categoryName, reviews }: ProductTabsProps) {
   const [activeTab, setActiveTab] = useState<"specs" | "description" | "reviews">("specs");
   
   const { specs, description } = getProductSpecsByCategory(categoryName);

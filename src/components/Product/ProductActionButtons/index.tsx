@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useCart } from "../../../hooks/useCart";
-import { useFavorite } from "../../../hooks/useFavorite";
 import { BuyButton } from "../../Buttons";
 import { IProduct } from "../../../interfaces/IProducts";
 import { BsHeart, BsHeartFill, BsShare } from "react-icons/bs";

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { useAuth } from "../../hooks/useAuth";
 import { saleService } from "../../services/sale-service";
@@ -28,7 +27,6 @@ import {
 import { PageWrapper, PageTitle } from "../../styles/pages/shared";
 
 export default function MyShopping() {
-  const router = useRouter();
   const { user } = useAuth();
   const company_id = environment.companyId;
   const user_id = user?.user_id;
@@ -91,7 +89,7 @@ export default function MyShopping() {
     return `${day}/${month}/${year}, ${hours}:${minutes}`;
   };
 
-  const getSaleStatus = (sale: ISale): string => {
+  const getSaleStatus = (_sale: ISale): string => {
     // TODO: Por enquanto, vamos considerar todas como "Entregue"
     return "Entregue";
   };

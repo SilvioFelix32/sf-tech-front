@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CartItemType, ICartContext } from "../services/cart";
+import { CartItemType } from "../services/cart";
 import { getCookie, setCookie } from "../services/cookie-service";
 
 interface CartState {
@@ -92,7 +92,7 @@ export const useCartStore = create<CartState>()(
     {
       name: "cart-storage",
       storage: {
-        getItem: (name) => {
+        getItem: (_name) => {
           if (typeof window === "undefined") return null;
           const value = getCookie("shop-cart");
           if (!value) return null;
@@ -103,11 +103,11 @@ export const useCartStore = create<CartState>()(
             return { state: { cartItems: [] } };
           }
         },
-        setItem: (name, value) => {
+        setItem: (_name, value) => {
           if (typeof window === "undefined") return;
           updateCartCookie(value.state.cartItems);
         },
-        removeItem: (name) => {
+        removeItem: (_name) => {
           if (typeof window === "undefined") return;
           updateCartCookie([]);
         },

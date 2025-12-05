@@ -1,5 +1,4 @@
 import { ISale, ICreateSaleRequest } from "./ISale";
-import { IParamsRequest } from "./IParamsRequest";
 
 export interface ISaleResponse {
   message: string;
