@@ -15,6 +15,7 @@ export * from "./User/EditSuperUser";
 
 // Sale Modals
 export * from "./Sale/SaleDetails";
+export * from "./Sale/UpdateSaleStatus";
 
 // Feature Modals
 export * from "./Cart";

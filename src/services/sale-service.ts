@@ -6,12 +6,14 @@ import {
   ISaleResponse,
   ISaleSingleResponse,
   ICreateSaleRequest,
+  IUpdateSaleStatusRequest,
 } from "@/interfaces";
 
 export const saleService: SaleService = {
   getAll,
   getById,
   create,
+  updateStatus,
   delete: _delete,
 };
 
@@ -79,6 +81,31 @@ async function create(
       },
     });
     return response.data;
+  } catch (error) {
+    handleAxiosError(error);
+    throw error;
+  }
+}
+
+async function updateStatus(
+  company_id: string,
+  saleId: string,
+  params: IUpdateSaleStatusRequest
+): Promise<ISale> {
+  try {
+    const response = await salesApi.patch<ISaleSingleResponse | ISale>(
+      `${baseUrl}/${saleId}/update`,
+      params,
+      {
+        headers: {
+          company_id,
+        },
+      }
+    );
+    if (response.data && "data" in response.data) {
+      return (response.data as ISaleSingleResponse).data;
+    }
+    return response.data as ISale;
   } catch (error) {
     handleAxiosError(error);
     throw error;

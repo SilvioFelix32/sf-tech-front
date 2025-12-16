@@ -26,6 +26,11 @@ export interface SaleService {
     user_id: string,
     params: ICreateSaleRequest
   ) => Promise<ISale>;
+  updateStatus: (
+    company_id: string,
+    saleId: string,
+    params: IUpdateSaleStatusRequest
+  ) => Promise<ISale>;
   delete: (company_id: string, saleId: string) => Promise<void>;
 }
 

@@ -1,6 +1,6 @@
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
-import { ISaleItem, ICreateSaleRequest } from "../../interfaces";
+import { ISaleItem, ICreateSaleRequest, PaymentMethod } from "../../interfaces";
 import { CartItemType } from "../../services/cart";
 import { useState } from "react";
 import router from "next/router";
@@ -88,11 +88,27 @@ export function PaymentForm() {
 
       const total = Math.round(Number(cartTotalPrice) * 100) / 100;
 
+      const formattedAddress = `Destinatário: ${user.name} ${user.lastName} (Padrão)\nRua Qualquer nº 1234, Lugar Nenhum, UF, CEP 12345678\nTelefone de contato: 1234567890`;
+
+      const convertPaymentMethodToEnum = (method: PaymentMethodType): PaymentMethod | undefined => {
+        if (!method) return undefined;
+        switch (method) {
+          case "credit":
+            return PaymentMethod.CREDIT_CARD;
+          case "debit":
+            return PaymentMethod.DEBIT_CARD;
+          case "pix":
+            return PaymentMethod.PIX;
+          default:
+            return undefined;
+        }
+      };
+
       const saleData: ICreateSaleRequest = {
         items: saleItems,
         total,
-        // TODO: Implementar o paymentMethod - após a implementação da api.
-        //paymentMethod: selectedPaymentMethod,
+        payment_method: convertPaymentMethodToEnum(selectedPaymentMethod),
+        deliver_address: formattedAddress,
       };
 
       const createdSale = await saleService.create(

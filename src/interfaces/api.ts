@@ -8,7 +8,7 @@ import { IProductResponse, ProductsService, IProductInterface } from "./IProduct
 import { IUsersResponse, UserService, IUserLoginParams } from "./IUserResponse"
 import { IUpdateProduct } from "./IProducts"
 import { ISaleResponse, SaleService, ISaleSingleResponse } from "./ISaleResponse"
-import { ISale, ISaleItem, ICreateSaleRequest } from "./ISale"
+import { ISale, ISaleItem, ICreateSaleRequest, IUpdateSaleStatusRequest, SaleStatus, PaymentMethod } from "./ISale"
 
 export type {
     ICategoryResponse, IParamsRequest, ICompanyParams,
@@ -16,5 +16,7 @@ export type {
     CategoryService, ProductsService, IProductInterface,
     UserService, IUserLoginParams,
     ISaleResponse, SaleService, ISaleSingleResponse,
-    ISale, ISaleItem, ICreateSaleRequest
+    ISale, ISaleItem, ICreateSaleRequest, IUpdateSaleStatusRequest
 }
+
+export { SaleStatus, PaymentMethod }
