@@ -11,7 +11,6 @@ import {
 import { QueryClientProvider, QueryClient } from "react-query";
 import { GlobalStyles } from "../styles/global";
 import { AppProps as NextAppProps } from "next/app";
-import "@aws-amplify/ui-react/styles.css";
 
 const queryClient = new QueryClient();
 

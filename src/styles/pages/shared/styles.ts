@@ -69,7 +69,7 @@ interface PageTitleProps {
 }
 
 export const PageTitle = styled.p<PageTitleProps>`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
   font-weight: ${({ fontWeight }) => fontWeight || 600};
   text-align: ${({ textAlign }) => textAlign || "left"};
@@ -92,7 +92,7 @@ export const PageText = styled.p<PageTextProps>`
       ? theme.colors.tertiary
       : color === "primary"
       ? theme.colors.primary
-      : theme.colors.text};
+      : theme.colors.title};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
   font-weight: ${({ fontWeight }) => fontWeight || 400};
   margin: ${({ margin }) => margin || "0"};

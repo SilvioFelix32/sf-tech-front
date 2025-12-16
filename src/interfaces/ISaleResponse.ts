@@ -1,4 +1,4 @@
-import { ISale, ICreateSaleRequest } from "./ISale";
+import { ISale, ICreateSaleRequest, IUpdateSaleStatusRequest } from "./ISale";
 
 export interface ISaleResponse {
   message: string;
@@ -25,6 +25,11 @@ export interface SaleService {
     company_id: string,
     user_id: string,
     params: ICreateSaleRequest
+  ) => Promise<ISale>;
+  updateStatus: (
+    company_id: string,
+    saleId: string,
+    params: IUpdateSaleStatusRequest
   ) => Promise<ISale>;
   delete: (company_id: string, saleId: string) => Promise<void>;
 }

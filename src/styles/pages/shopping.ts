@@ -56,16 +56,30 @@ export const SaleDate = styled.p`
   margin: 0;
 `;
 
-export const SaleStatusBadge = styled.span`
+export const SaleStatusBadge = styled.span<{ $status?: string }>`
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
   border-radius: 6px;
   font-size: 0.7rem;
   font-weight: 500;
-  background-color: ${({ theme }) => theme.colors.tertiary};
   color: white;
   width: fit-content;
+  background-color: ${({ $status }) => {
+    switch ($status) {
+      case "APPROVED":
+        return "#10B981";
+      case "DELIVERED":
+        return "#059669";
+      case "UNDER_REVIEW":
+        return "#F59E0B";
+      case "IN_TRANSIT":
+        return "#3B82F6";
+      default:
+        return "#6B7280";
+    }
+  }};
+  transition: background-color 0.2s ease;
 `;
 
 export const SaleHeaderRight = styled.div`
@@ -318,4 +332,5 @@ export const SaleContent = styled.div<{ $isExpanded: boolean }>`
   opacity: ${({ $isExpanded }) => ($isExpanded ? "1" : "0")};
   padding-top: ${({ $isExpanded }) => ($isExpanded ? "20px" : "0")};
   margin-top: ${({ $isExpanded }) => ($isExpanded ? "0" : "0")};
+  color: ${({ theme }) => theme.colors.title};
 `;

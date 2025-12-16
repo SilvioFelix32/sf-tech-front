@@ -41,7 +41,7 @@ export const AccountTabButton = styled.button<AccountTabButtonProps>`
   background-color: ${({ theme, $active }) =>
     $active ? theme.colors.tertiary : "transparent"};
   color: ${({ theme, $active }) =>
-    $active ? theme.colors.text : "rgba(15, 23, 42, 0.7)"};
+  $active ? theme.colors.title : theme.colors.tertiary};
   transition: background-color 0.2s ease, color 0.2s ease;
 
   &:hover {
@@ -75,7 +75,7 @@ export const AccountField = styled.div`
 export const AccountLabel = styled.label`
   font-size: 0.85rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const AccountInput = styled.input`
@@ -85,8 +85,9 @@ export const AccountInput = styled.input`
   border: 1px solid rgba(15, 23, 42, 0.12);
   padding: 0 14px;
   font-size: 0.92rem;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   background-color: ${({ theme }) => theme.colors.background};
+  outline: 1px solid ${({ theme }) => theme.colors.tertiary};
 
   &:focus {
     outline: none;
@@ -160,7 +161,7 @@ export const AccountAddressName = styled.p`
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const AccountAddressBadge = styled.span`
@@ -171,13 +172,13 @@ export const AccountAddressBadge = styled.span`
   font-size: 0.85rem;
   font-weight: 500;
   background-color: ${({ theme }) => theme.colors.tertiary};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const AccountAddressText = styled.p`
   font-size: 1rem;
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   opacity: 0.8;
 `;
 
@@ -218,13 +219,13 @@ export const AccountPreferencesItemTitle = styled.p`
   font-size: 1rem;
   font-weight: 500;
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const AccountPreferencesItemDescription = styled.p`
   font-size: 0.9rem;
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   opacity: 0.8;
 `;
 
@@ -238,7 +239,7 @@ export const AccountPreferencesToggle = styled.button<{ $active?: boolean }>`
   background-color: ${({ theme, $active }) =>
     $active ? theme.colors.tertiary : theme.colors.background};
   color: ${({ theme, $active }) =>
-    $active ? theme.colors.text : "rgba(15, 23, 42, 0.7)"};
+    $active ? theme.colors.title : theme.colors.primary};
   transition: all 0.2s ease;
 
   &:hover {
@@ -261,7 +262,7 @@ export const AccountPreferencesCategories = styled.div`
 export const AccountPreferencesCategoriesLabel = styled.label`
   font-size: 0.85rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   margin-bottom: 8px;
 `;
 
@@ -279,7 +280,7 @@ export const AccountPreferencesCategoryBadge = styled.span`
   font-size: 0.85rem;
   font-weight: 500;
   background-color: ${({ theme }) => theme.colors.tertiary};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const AccountSecurityCard = styled.div`
@@ -312,13 +313,13 @@ export const AccountSecurityCardStatus = styled.p`
   font-size: 1rem;
   font-weight: 500;
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const AccountSecurityCardDescription = styled.p`
   font-size: 0.9rem;
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
   opacity: 0.8;
 `;
 

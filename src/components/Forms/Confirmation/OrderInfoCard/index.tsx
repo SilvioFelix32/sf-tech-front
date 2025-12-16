@@ -1,4 +1,4 @@
-import { ISale } from "../../../../interfaces";
+import { ISale, PaymentMethod, SaleStatus } from "../../../../interfaces";
 import { CardContainer, CardTitle, InfoRow, InfoLabel, InfoValue } from "./styles";
 
 interface OrderInfoCardProps {
@@ -16,6 +16,38 @@ export function OrderInfoCard({ sale }: OrderInfoCardProps) {
     });
   };
 
+  const getPaymentMethodLabel = (method?: PaymentMethod): string => {
+    if (!method) return "-";
+    switch (method) {
+      case PaymentMethod.CREDIT_CARD:
+        return "Cartão de Crédito";
+      case PaymentMethod.DEBIT_CARD:
+        return "Cartão de Débito";
+      case PaymentMethod.PIX:
+        return "PIX";
+      case PaymentMethod.BANK_SLIP:
+        return "Boleto Bancário";
+      default:
+        return method;
+    }
+  };
+
+  const getSaleStatusLabel = (status?: SaleStatus): string => {
+    if (!status) return "Em Análise";
+    switch (status) {
+      case SaleStatus.APPROVED:
+        return "Aprovada";
+      case SaleStatus.DELIVERED:
+        return "Entregue";
+      case SaleStatus.UNDER_REVIEW:
+        return "Em Análise";
+      case SaleStatus.IN_TRANSIT:
+        return "Em Trânsito";
+      default:
+        return status;
+    }
+  };
+
   return (
     <CardContainer>
       <CardTitle>Informações da Compra:</CardTitle>
@@ -28,9 +60,15 @@ export function OrderInfoCard({ sale }: OrderInfoCardProps) {
         <InfoValue>{formatDate(sale.created_at)}</InfoValue>
       </InfoRow>
       <InfoRow>
-        <InfoLabel>Método de Pagamento:</InfoLabel>
-        <InfoValue>Cartão</InfoValue>
+        <InfoLabel>Status:</InfoLabel>
+        <InfoValue>{getSaleStatusLabel(sale.status)}</InfoValue>
       </InfoRow>
+      {sale.payment_method && (
+        <InfoRow>
+          <InfoLabel>Método de Pagamento:</InfoLabel>
+          <InfoValue>{getPaymentMethodLabel(sale.payment_method)}</InfoValue>
+        </InfoRow>
+      )}
     </CardContainer>
   );
 }

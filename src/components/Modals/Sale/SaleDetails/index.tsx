@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { Modal } from "react-responsive-modal";
 import { saleService } from "../../../../services/sale-service";
-import { ISale } from "../../../../interfaces";
+import { ISale, PaymentMethod, SaleStatus } from "../../../../interfaces";
 import { formatPrice } from "../../../../utils/formatPrice";
 import Image from "next/image";
 import {
@@ -75,6 +75,38 @@ export function ModalSaleDetails({
     );
   }
 
+  const getPaymentMethodLabel = (method?: PaymentMethod): string => {
+    if (!method) return "-";
+    switch (method) {
+      case PaymentMethod.CREDIT_CARD:
+        return "Cartão de Crédito";
+      case PaymentMethod.DEBIT_CARD:
+        return "Cartão de Débito";
+      case PaymentMethod.PIX:
+        return "PIX";
+      case PaymentMethod.BANK_SLIP:
+        return "Boleto Bancário";
+      default:
+        return method;
+    }
+  };
+
+  const getSaleStatusLabel = (status?: SaleStatus): string => {
+    if (!status) return "Em Análise";
+    switch (status) {
+      case SaleStatus.APPROVED:
+        return "Aprovada";
+      case SaleStatus.DELIVERED:
+        return "Entregue";
+      case SaleStatus.UNDER_REVIEW:
+        return "Em Análise";
+      case SaleStatus.IN_TRANSIT:
+        return "Em Trânsito";
+      default:
+        return status;
+    }
+  };
+
   return (
     <Modal
       classNames={{
@@ -95,6 +127,21 @@ export function ModalSaleDetails({
           <Text>
             <strong>ID do Usuário:</strong> {sale.user_id}
           </Text>
+          <Text>
+            <strong>Status:</strong> {getSaleStatusLabel(sale.status)}
+          </Text>
+          {sale.payment_method && (
+            <Text>
+              <strong>Forma de Pagamento:</strong> {getPaymentMethodLabel(sale.payment_method)}
+            </Text>
+          )}
+          {sale.deliver_address && (
+            <Text style={{ whiteSpace: "pre-line" }}>
+              <strong>Endereço de Entrega:</strong>
+              <br />
+              {sale.deliver_address}
+            </Text>
+          )}
           <Text>
             <strong>Data de Criação:</strong>{" "}
             {new Date(sale.created_at).toLocaleString("pt-BR", {

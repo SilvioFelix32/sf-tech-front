@@ -5,7 +5,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { useAuth } from "../../hooks/useAuth";
 import { saleService } from "../../services/sale-service";
 import { environment } from "../../config/environment";
-import { ISale } from "../../interfaces";
+import { ISale, PaymentMethod, SaleStatus } from "../../interfaces";
 import { formatPrice } from "../../utils/formatPrice";
 import { Button } from "../../styles/components";
 import {
@@ -106,9 +106,36 @@ export default function MyShopping() {
     return `${day}/${month}/${year}, ${hours}:${minutes}`;
   };
 
-  const getSaleStatus = (_sale: ISale): string => {
-    // TODO: Por enquanto, vamos considerar todas como "Entregue"
-    return "Entregue";
+  const getSaleStatusLabel = (status?: SaleStatus): string => {
+    if (!status) return "Em Análise";
+    switch (status) {
+      case SaleStatus.APPROVED:
+        return "Aprovada";
+      case SaleStatus.DELIVERED:
+        return "Entregue";
+      case SaleStatus.UNDER_REVIEW:
+        return "Em Análise";
+      case SaleStatus.IN_TRANSIT:
+        return "Em Trânsito";
+      default:
+        return "Em Análise";
+    }
+  };
+
+  const getPaymentMethodLabel = (method?: PaymentMethod): string => {
+    if (!method) return "-";
+    switch (method) {
+      case PaymentMethod.CREDIT_CARD:
+        return "Cartão de Crédito";
+      case PaymentMethod.DEBIT_CARD:
+        return "Cartão de Débito";
+      case PaymentMethod.PIX:
+        return "PIX";
+      case PaymentMethod.BANK_SLIP:
+        return "Boleto Bancário";
+      default:
+        return method;
+    }
   };
 
   return (
@@ -125,7 +152,9 @@ export default function MyShopping() {
             <SaleHeader onClick={() => toggleSale(sale.sale_id || "")}>
               <SaleHeaderLeft>
                 <SaleDate>Compra realizada em: {formatDate(sale.created_at)}</SaleDate>
-                <SaleStatusBadge>{getSaleStatus(sale)}</SaleStatusBadge>
+                <SaleStatusBadge $status={sale.status}>
+                  {getSaleStatusLabel(sale.status)}
+                </SaleStatusBadge>
               </SaleHeaderLeft>
               <SaleHeaderRight>
                 <SaleTotal>Total R$ {formatPrice(sale.total)}</SaleTotal>
@@ -136,6 +165,18 @@ export default function MyShopping() {
             </SaleHeader>
 
             <SaleContent $isExpanded={isExpanded}>
+              {sale.payment_method && (
+                <div style={{ marginBottom: "1rem" }}>
+                  <strong>Forma de pagamento:</strong> {getPaymentMethodLabel(sale.payment_method)}
+                </div>
+              )}
+              {sale.deliver_address && (
+                <div style={{ marginBottom: "1rem", whiteSpace: "pre-line" }}>
+                  <strong>Endereço de entrega:</strong>
+                  <br />
+                  {sale.deliver_address}
+                </div>
+              )}
               <SaleItemsTitle>Itens da compra:</SaleItemsTitle>
               <SaleItemsList>
                 {sale.items.map((item, index) => (

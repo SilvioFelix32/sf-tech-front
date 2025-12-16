@@ -105,5 +105,7 @@ export const customStyles: TableStyles = {
       justifyContent: "center",
       color: "#33C1B3",
     },
+
   },
 };
+

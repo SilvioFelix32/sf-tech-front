@@ -1,3 +1,17 @@
+export enum SaleStatus {
+  APPROVED = "APPROVED",
+  DELIVERED = "DELIVERED",
+  UNDER_REVIEW = "UNDER_REVIEW",
+  IN_TRANSIT = "IN_TRANSIT",
+}
+
+export enum PaymentMethod {
+  CREDIT_CARD = "CREDIT_CARD",
+  DEBIT_CARD = "DEBIT_CARD",
+  PIX = "PIX",
+  BANK_SLIP = "BANK_SLIP",
+}
+
 export interface ISaleItem {
   category_id: string;
   product_id: string;
@@ -13,7 +27,12 @@ export interface ISaleItem {
 export interface ICreateSaleRequest {
   total: number;
   items: ISaleItem[];
-  paymentMethod?: string;
+  payment_method?: PaymentMethod;
+  deliver_address?: string;
+}
+
+export interface IUpdateSaleStatusRequest {
+  status: SaleStatus;
 }
 
 export interface ISale {
@@ -22,6 +41,9 @@ export interface ISale {
   user_id: string;
   total: number;
   items: ISaleItem[];
+  payment_method?: PaymentMethod;
+  status?: SaleStatus;
+  deliver_address?: string;
   created_at: string;
   updated_at?: string;
 }
