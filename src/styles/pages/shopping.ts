@@ -332,4 +332,5 @@ export const SaleContent = styled.div<{ $isExpanded: boolean }>`
   opacity: ${({ $isExpanded }) => ($isExpanded ? "1" : "0")};
   padding-top: ${({ $isExpanded }) => ($isExpanded ? "20px" : "0")};
   margin-top: ${({ $isExpanded }) => ($isExpanded ? "0" : "0")};
+  color: ${({ theme }) => theme.colors.title};
 `;

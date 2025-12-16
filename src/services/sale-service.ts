@@ -94,7 +94,7 @@ async function updateStatus(
 ): Promise<ISale> {
   try {
     const response = await salesApi.patch<ISaleSingleResponse | ISale>(
-      `${baseUrl}/${saleId}/update`,
+      `${baseUrl}/update/${saleId}`,
       params,
       {
         headers: {

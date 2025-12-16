@@ -45,7 +45,7 @@ export const SidebarAvatar = styled.div`
   justify-content: center;
   font-size: 2rem;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 
   svg {
     font-size: 3rem;
@@ -56,12 +56,14 @@ export const SidebarUserName = styled.h3`
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const SidebarUserEmail = styled.p`
   font-size: 0.85rem;
   margin: 0;
   opacity: 0.8;
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const SidebarBadge = styled.span`
@@ -74,7 +76,7 @@ export const SidebarBadge = styled.span`
   font-size: 0.75rem;
   font-weight: 500;
   background-color: ${({ theme }) => theme.colors.tertiary};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const SidebarDivider = styled.hr`
@@ -105,14 +107,14 @@ export const SidebarNavItem = styled.button<SidebarNavItemProps>`
   background-color: ${({ $active }) =>
     $active ? "rgba(2, 132, 199, 0.1)" : "transparent"};
   color: ${({ theme, $active }) =>
-    $active ? theme.colors.tertiary : "rgba(15, 23, 42, 0.8)"};
+    $active ? theme.colors.title : theme.colors.tertiary};
   font-size: 0.9rem;
   font-weight: ${({ $active }) => ($active ? 600 : 500)};
   transition: background-color 0.15s ease, color 0.15s ease;
 
   &:hover {
     background-color: ${({ $active }) =>
-      $active ? "rgba(2, 132, 199, 0.12)" : "rgba(15, 23, 42, 0.04)"};
+    $active ? "rgba(2, 132, 199, 0.12)" : "rgba(15, 23, 42, 0.04)"};
   }
 `;
 
