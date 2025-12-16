@@ -31,7 +31,7 @@ export function ModalUpdateSaleStatus({
 }: ModalProps) {
   const company_id = environment.companyId;
 
-  const { register, handleSubmit, setValue } = useForm<IUpdateSaleStatusRequest>({
+  const { register, handleSubmit } = useForm<IUpdateSaleStatusRequest>({
     defaultValues: {
       status: currentStatus || SaleStatus.UNDER_REVIEW,
     },

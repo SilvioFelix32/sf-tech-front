@@ -1,4 +1,4 @@
-import { ISale, ICreateSaleRequest } from "./ISale";
+import { ISale, ICreateSaleRequest, IUpdateSaleStatusRequest } from "./ISale";
 
 export interface ISaleResponse {
   message: string;
