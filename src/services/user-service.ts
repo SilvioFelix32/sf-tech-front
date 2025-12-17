@@ -1,73 +1,38 @@
-import { deleteUser } from "aws-amplify/auth";
 import api from "./api";
-import { IUser } from "../interfaces/IUser";
-import { getCookie } from "./cookie-service";
-import { AxiosError } from "axios";
 import {
-  UserService,
-  IUserLoginParams,
-  IParamsRequest,
-  IUsersResponse,
-} from "@/interfaces";
+  IDbUser,
+  ICreateUserRequest,
+  IUpdateUserRequest,
+  DbUserService,
+} from "../interfaces/IDbUser";
 
-export const userService: UserService = {
-  login,
-  getAll,
-  getById,
+const baseUrl = "/sftech-users";
+
+export const userService: DbUserService = {
   create,
+  findById,
   update,
-  delete: _delete,
 };
 
-const nextauth = getCookie("nextauth.token");
-const baseUrl = "/users";
-
-async function login(params: IUserLoginParams) {
-  const response = await api.post("login", params);
-  return response;
-}
-
-async function getAll(
-  company_id: string,
-  params: IParamsRequest
-): Promise<IUsersResponse> {
-  try {
-    const response = await api.get<IUsersResponse>(`${baseUrl}`, {
-      headers: { company_id },
-      params,
-    });
-    return response.data;
-  } catch (error) {
-    handleAxiosError(error);
-    throw error;
-  }
-}
-
-async function getById(company_id: string, user_id: string): Promise<IUser> {
-  const response = await api.get<IUser>(`${baseUrl}/${user_id}`, {
-    headers: { company_id, authorization: `Bearer ${nextauth}` },
-  });
+async function create(data: ICreateUserRequest): Promise<IDbUser> {
+  const response = await api.post<IDbUser>(baseUrl, data);
   return response.data;
 }
 
-async function create(company_id: string, params: IUser) {
-  const response = await api.post(`${baseUrl}`, params, {
-    headers: { company_id },
-  });
+async function findById(user_id: string): Promise<IDbUser> {
+  const response = await api.get<IDbUser>(`${baseUrl}/${user_id}`);
   return response.data;
 }
 
-async function update(company_id: string, user_id: string, params: IUser) {
-  const response = await api.patch(`${baseUrl}/${user_id}`, params, {
-    headers: { company_id },
-  });
+async function update(
+  user_id: string,
+  data: IUpdateUserRequest
+): Promise<IDbUser> {
+  const response = await api.patch<IDbUser>(
+    `${baseUrl}/${user_id}`,
+    data
+  );
   return response.data;
 }
 
-async function _delete() {
-  await deleteUser();
-}
 
-function handleAxiosError(error: AxiosError) {
-  throw new Error("Function not implemented.", error);
-}

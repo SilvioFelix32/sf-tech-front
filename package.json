@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@coreui/react": "^5.9.2",
+    "@faker-js/faker": "^10.1.0",
     "@reduxjs/toolkit": "^2.11.2",
     "@vercel/analytics": "^1.6.1",
     "aws-amplify": "^6.15.9",

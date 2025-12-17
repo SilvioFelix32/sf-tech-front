@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { User } from "../services/auth";
 import { authService } from "../services/auth.service";
 import { SignInInput } from "aws-amplify/auth";
+import { syncUserWithDb } from "../services/user-sync.service";
 
 interface AuthState {
   user: User | null;
@@ -28,8 +29,8 @@ export const useAuthStore = create<AuthState>()(
       setChecked: (checked) => set({ checked }),
 
       checkAuth: async () => {
-        const { checked } = get();
-        if (checked) return;
+        const { checked, loading } = get();
+        if (checked || loading) return;
 
         set({ loading: true });
 
@@ -84,8 +85,11 @@ export const useAuthStore = create<AuthState>()(
         try {
           if (authService.isAuthenticated()) {
             const userData = await authService.getUserDataFromToken();
-            if (userData) {
+            if (userData && userData.user_id) {
               set({ user: userData, checked: true });
+              syncUserWithDb(userData.user_id).catch((error) => {
+                console.error("Erro ao sincronizar usuário:", error);
+              });
             }
             return;
           }
@@ -94,8 +98,11 @@ export const useAuthStore = create<AuthState>()(
 
           if (result.isSignedIn) {
             const userData = await authService.getUserDataFromToken();
-            if (userData) {
+            if (userData && userData.user_id) {
               set({ user: userData, checked: true });
+              syncUserWithDb(userData.user_id).catch((error) => {
+                console.error("Erro ao sincronizar usuário:", error);
+              });
             }
           } else {
             const userStatus = result.nextStep?.signInStep || "";

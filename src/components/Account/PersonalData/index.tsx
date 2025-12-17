@@ -15,9 +15,37 @@ interface PersonalDataProps {
   name: string;
   lastName: string;
   email: string;
+  cpf?: string;
+  cellphone?: string;
+  birthdate?: string;
+  gender?: string;
+  isLoading?: boolean;
 }
 
-export function PersonalData({ name, lastName, email }: PersonalDataProps) {
+export function PersonalData({
+  name,
+  lastName,
+  email,
+  cpf,
+  cellphone,
+  birthdate,
+  gender,
+  isLoading,
+}: PersonalDataProps) {
+  if (isLoading) {
+    return (
+      <AccountContent
+        direction="column"
+        align="flex-start"
+        justify="flex-start"
+        padding="0"
+      >
+        <PageText fontSize="0.95rem" margin="0" color="text">
+          Carregando dados...
+        </PageText>
+      </AccountContent>
+    );
+  }
   return (
     <AccountContent
       direction="column"
@@ -57,7 +85,8 @@ export function PersonalData({ name, lastName, email }: PersonalDataProps) {
           <AccountInput
             id="cpf"
             placeholder="000.000.000-00"
-            defaultValue="000.000.000-00"
+            defaultValue={cpf || ""}
+            readOnly
           />
         </AccountField>
 
@@ -66,7 +95,8 @@ export function PersonalData({ name, lastName, email }: PersonalDataProps) {
           <AccountInput
             id="telefone"
             placeholder="(11) 99999-9999"
-            defaultValue="(11) 99999-9999"
+            defaultValue={cellphone || ""}
+            readOnly
           />
         </AccountField>
       </AccountFormGrid>
@@ -77,7 +107,8 @@ export function PersonalData({ name, lastName, email }: PersonalDataProps) {
           <AccountInput
             id="dataNascimento"
             type="date"
-            defaultValue="1990-01-01"
+            defaultValue={birthdate || ""}
+            readOnly
           />
         </AccountField>
 
@@ -86,7 +117,8 @@ export function PersonalData({ name, lastName, email }: PersonalDataProps) {
           <AccountInput
             id="genero"
             placeholder="Selecione"
-            defaultValue="Masculino"
+            defaultValue={gender || ""}
+            readOnly
           />
         </AccountField>
       </AccountFormGrid>

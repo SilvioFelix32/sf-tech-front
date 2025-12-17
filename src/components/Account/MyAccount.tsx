@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
 import {
   AccountTabsContainer,
   AccountTabsList,
@@ -10,16 +11,51 @@ import { PersonalData } from "./PersonalData";
 import { Addresses } from "./Addresses";
 import { Preferences } from "./Preferences";
 import { Security } from "./Security";
+import { userService } from "../../services/user-service";
+import { IDbUser } from "../../interfaces/IDbUser";
+
+function formatCpf(cpf: string): string {
+  if (!cpf) return "";
+  const cleaned = cpf.replace(/\D/g, "");
+  if (cleaned.length === 11) {
+    return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  }
+  return cpf;
+}
+
+function formatCellphone(cellphone: string): string {
+  if (!cellphone) return "";
+  const cleaned = cellphone.replace(/\D/g, "");
+  if (cleaned.length === 11) {
+    return cleaned.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+  }
+  return cellphone;
+}
+
+function formatGender(gender: string): string {
+  const genderMap: Record<string, string> = {
+    Male: "Masculino",
+    Female: "Feminino",
+    Other: "Outro",
+  };
+  return genderMap[gender] || gender;
+}
 
 export default function MyAccount() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<"dados" | "seguranca" | "enderecos" | "preferencias">("dados");
 
-  const displayUser = {
-    name: user?.name ?? "Sftech",
-    lastName: user?.lastName ?? "Corp",
-    email: user?.email ?? "sftech@mailinator.com",
-  };
+  const { data: dbUser, isLoading } = useQuery<IDbUser>(
+    ["user", user?.user_id],
+    () => userService.findById(user!.user_id!),
+    {
+      enabled: !!user?.user_id,
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 30 * 60 * 1000,
+    }
+  );
 
   return (
     <PageWrapper width="100%" padding="24px">
@@ -65,9 +101,14 @@ export default function MyAccount() {
 
       {activeTab === "dados" && (
         <PersonalData
-          name={displayUser.name}
-          lastName={displayUser.lastName}
-          email={displayUser.email}
+          name={dbUser?.first_name ?? user?.name ?? ""}
+          lastName={dbUser?.last_name ?? user?.lastName ?? ""}
+          email={dbUser?.email ?? user?.email ?? ""}
+          cpf={formatCpf(dbUser?.cpf ?? "")}
+          cellphone={formatCellphone(dbUser?.cellphone ?? "")}
+          birthdate={dbUser?.birthdate ?? ""}
+          gender={formatGender(dbUser?.gender ?? "")}
+          isLoading={isLoading}
         />
       )}
 
