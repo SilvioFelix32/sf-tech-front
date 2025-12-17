@@ -8,11 +8,6 @@ export * from "./Category/CreateCategory";
 export * from "./Category/DeleteCategory";
 export * from "./Category/UpdateCategory";
 
-// User Modals
-export * from "./User/DeleteUser";
-export * from "./User/EditUser";
-export * from "./User/EditSuperUser";
-
 // Sale Modals
 export * from "./Sale/SaleDetails";
 export * from "./Sale/UpdateSaleStatus";
