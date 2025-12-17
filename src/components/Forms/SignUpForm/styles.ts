@@ -2,13 +2,11 @@ import styled from "styled-components";
 
 export const Wrapper = styled.form`
   width: 60%;
-  margin-top: 100px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 export const Title = styled.h1`
