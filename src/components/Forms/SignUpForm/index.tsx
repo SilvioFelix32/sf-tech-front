@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { signUp } from "aws-amplify/auth";
+import { signUp, fetchUserAttributes } from "aws-amplify/auth";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { faker } from "@faker-js/faker";
@@ -95,19 +95,30 @@ export function SignUpForm() {
         },
       });
 
-      const payload: ICreateUserRequest = {
-        first_name: data.name,
-        last_name: data.lastName,
-        email: data.email,
-        cpf: cpfOnlyNumbers,
-        cellphone: data.cellphone,
-        birthdate: data.birthdate,
-        gender: data.gender,
-      };
+      let user_id: string | undefined;
 
-      userService.create(payload).catch((error) => {
-        console.error("Erro ao criar usuário no backend:", error);
-      });
+      try {
+        const userAttributes = await fetchUserAttributes();
+        user_id = userAttributes.sub;
+      } catch {
+      }
+
+      if (user_id) {
+        const payload: ICreateUserRequest = {
+          user_id,
+          first_name: data.name,
+          last_name: data.lastName,
+          email: data.email,
+          cpf: cpfOnlyNumbers,
+          cellphone: data.cellphone,
+          birthdate: data.birthdate,
+          gender: data.gender,
+        };
+
+        userService.create(payload).catch((error) => {
+          console.error("Erro ao criar usuário no backend:", error);
+        });
+      }
 
       if (result) {
         router.push({

@@ -19,7 +19,7 @@ export interface IAddress {
 }
 
 export interface IDbUser {
-    user_id?: string;
+    user_id: string;
     first_name: string;
     last_name: string;
     email: string;
@@ -34,7 +34,7 @@ export interface IDbUser {
 
 export type ICreateUserRequest = Omit<
     IDbUser,
-    "user_id" | "createdAt" | "updatedAt"
+    "createdAt" | "updatedAt"
 >;
 
 export type IUpdateUserRequest = Partial<ICreateUserRequest>;

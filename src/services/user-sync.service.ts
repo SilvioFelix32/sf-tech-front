@@ -2,7 +2,7 @@ import { userService } from "./user-service";
 import { authService } from "./auth.service";
 import { User } from "./auth";
 import { ICreateUserRequest, IDbUser } from "../interfaces/IDbUser";
-import { getCookie, setCookie, removeCookie } from "./cookie-service";
+import { getCookie, setCookie } from "./cookie-service";
 import { faker } from "@faker-js/faker";
 
 const SYNC_CACHE_PREFIX = "user_synced_";
@@ -22,12 +22,6 @@ function setUserSynced(user_id: string): void {
   });
 }
 
-function clearUserSyncCache(user_id: string): void {
-  if (typeof window === "undefined") return;
-  const cacheKey = `${SYNC_CACHE_PREFIX}${user_id}`;
-  removeCookie(cacheKey);
-}
-
 function mapUserToDbUser(user: User): ICreateUserRequest {
   const cpf = faker.string.numeric(11);
   const ddd = faker.string.numeric(2);
@@ -36,6 +30,7 @@ function mapUserToDbUser(user: User): ICreateUserRequest {
   const birthdate = faker.date.birthdate({ min: 18, max: 80, mode: "age" }).toISOString().split("T")[0];
 
   return {
+    user_id: user.user_id,
     first_name: user.name || "",
     last_name: user.lastName || "",
     email: user.email || "",
@@ -46,61 +41,47 @@ function mapUserToDbUser(user: User): ICreateUserRequest {
   };
 }
 
-async function checkUserExists(user_id: string): Promise<boolean> {
-  try {
-    await userService.findById(user_id);
-    return true;
-  } catch (error: any) {
-    if (error?.response?.status === 404) {
-      return false;
-    }
-    throw error;
-  }
-}
-
 async function createUserInDb(user: User): Promise<IDbUser> {
   const userData = mapUserToDbUser(user);
   return await userService.create(userData);
 }
 
-export async function syncUserWithDb(): Promise<void> {
+export async function syncUserWithDb(user_id: string): Promise<void> {
   try {
-    const currentUser = await authService.getCurrentUser();
-    
-    if (!currentUser || !currentUser.user_id) {
+    if (!user_id) {
       return;
     }
-
-    const { user_id } = currentUser;
 
     if (isUserSynced(user_id)) {
       return;
     }
 
-    const userExists = await checkUserExists(user_id);
-
-    if (!userExists) {
-      await createUserInDb(currentUser);
+    try {
+      const userExists = await userService.findById(user_id);
+      if (userExists) {
+        setUserSynced(user_id);
+        return;
+      }
+    } catch (error: any) {
+      if (error?.response?.status === 404) {
+        try {
+          const currentUser = await authService.getCurrentUser();
+          if (currentUser && currentUser.user_id === user_id) {
+            await createUserInDb(currentUser);
+            setUserSynced(user_id);
+          }
+        } catch (createError: any) {
+          if (createError?.response?.status === 409) {
+            setUserSynced(user_id)
+          } else {
+            throw createError;
+          }
+        }
+      } else {
+        throw new Error(`Erro ao sincronizar usuário com o banco de dados: ${error}`);
+      }
     }
-
-    setUserSynced(user_id);
   } catch (error: any) {
     console.error("Erro ao sincronizar usuário com o banco de dados:", error);
   }
 }
-
-export function clearSyncCache(user_id: string): void {
-  clearUserSyncCache(user_id);
-}
-
-export async function clearCurrentUserSyncCache(): Promise<void> {
-  try {
-    const currentUser = await authService.getCurrentUser();
-    if (currentUser?.user_id) {
-      clearUserSyncCache(currentUser.user_id);
-    }
-  } catch (error) {
-    console.error("Erro ao limpar cache de sincronização:", error);
-  }
-}
-
