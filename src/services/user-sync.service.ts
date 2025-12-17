@@ -1,8 +1,9 @@
 import { userService } from "./user-service";
 import { authService } from "./auth.service";
 import { User } from "./auth";
-import { ICreateUserRequest, IDbUser } from "../interfaces/IDbUser";
+import { ICreateUserRequest, IDbUser, AddressType, AddressPreference } from "../interfaces/IDbUser";
 import { getCookie, setCookie } from "./cookie-service";
+import { addressService } from "./address-service";
 import { faker } from "@faker-js/faker";
 
 const SYNC_CACHE_PREFIX = "user_synced_";
@@ -41,9 +42,38 @@ function mapUserToDbUser(user: User): ICreateUserRequest {
   };
 }
 
+function createFakeAddress(user_id: string) {
+  const cepNumbers = faker.string.numeric(8);
+  const cep = `${cepNumbers.substring(0, 5)}-${cepNumbers.substring(5)}`;
+  
+  return {
+    user_id,
+    address_type: "House" as AddressType,
+    address_preference: "House" as AddressPreference,
+    street: faker.location.street(),
+    number: faker.location.buildingNumber(),
+    neighborhood: faker.location.county(),
+    city: faker.location.city(),
+    cep,
+  };
+}
+
 async function createUserInDb(user: User): Promise<IDbUser> {
+  if (!user.user_id) {
+    throw new Error("user_id é obrigatório para criar usuário no banco");
+  }
+
   const userData = mapUserToDbUser(user);
-  return await userService.create(userData);
+  const createdUser = await userService.create(userData);
+  
+  try {
+    const fakeAddress = createFakeAddress(user.user_id);
+    await addressService.create(fakeAddress);
+  } catch (error) {
+    console.error("Erro ao criar endereço fake:", error);
+  }
+  
+  return createdUser;
 }
 
 export async function syncUserWithDb(user_id: string): Promise<void> {

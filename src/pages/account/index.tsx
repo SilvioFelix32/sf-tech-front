@@ -26,7 +26,7 @@ export default function Account() {
   return (
     <PageLayout
       showSignInButton={true}
-      showCartButton={true}
+      showCartButton={false}
       showFavoritesButton={false}
       showAdminButton={true}
       showSearchBar={false}

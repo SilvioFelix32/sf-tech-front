@@ -3,6 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { ISaleItem, ICreateSaleRequest, PaymentMethod } from "../../interfaces";
 import { CartItemType } from "../../services/cart";
 import { useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import router from "next/router";
 import {
   Wrapper,
@@ -11,6 +12,9 @@ import {
   Sidebar,
   LoginTitle,
   LoginButton,
+  DeliveryCard,
+  Title,
+  Button,
 } from "./styles";
 import { DeliverySection } from "./DeliverySection";
 import { PaymentMethodSelector, PaymentMethodType } from "./PaymentMethodSelector";
@@ -18,13 +22,57 @@ import { CartSummary } from "./CartSummary";
 import { saleService } from "../../services";
 import { environment } from "../../config/environment";
 import { GetSwallAlert } from "../../utils";
+import { addressService } from "../../services/address-service";
+import { IAddress } from "../../interfaces/IDbUser";
+import { ModalCreateAddress } from "../Modals";
 
 export function PaymentForm() {
   const { user } = useAuth();
   const { cartItems, cartTotalPriceWithoutDiscount, cartTotalPrice, clearCart } =
     useCart();
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethodType>(null);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+
+  const { data: addresses = [], isLoading: isLoadingAddresses } = useQuery<IAddress[]>(
+    ["addresses", user?.user_id],
+    () => {
+      if (!user?.user_id) throw new Error("user_id não disponível");
+      return addressService.findAll(user.user_id);
+    },
+    {
+      enabled: !!user?.user_id,
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 30 * 60 * 1000,
+    }
+  );
+
+  function getPrimaryAddress(): IAddress | null {
+    if (addresses.length === 0) return null;
+    
+    const primaryAddress = addresses.find(
+      (addr) => addr.address_preference === addr.address_type
+    );
+    
+    return primaryAddress || addresses[0] || null;
+  }
+
+  function formatAddress(address: IAddress | null, user: any): string {
+    if (!address) {
+      return `Destinatário: ${user.name} ${user.lastName}\nEndereço não cadastrado`;
+    }
+
+    const addressTypeLabel = address.address_type === "House" 
+      ? "Residencial" 
+      : address.address_type === "Work" 
+      ? "Trabalho" 
+      : "Temporário";
+
+    return `Destinatário: ${user.name} ${user.lastName} (${addressTypeLabel})\n${address.street}, ${address.number}\n${address.neighborhood} - ${address.city}\nCEP: ${address.cep}`;
+  }
 
   const mapCartItemsToSaleItems = (items: CartItemType[]): ISaleItem[] => {
     return items.map((item) => {
@@ -88,7 +136,19 @@ export function PaymentForm() {
 
       const total = Math.round(Number(cartTotalPrice) * 100) / 100;
 
-      const formattedAddress = `Destinatário: ${user.name} ${user.lastName} (Padrão)\nRua Qualquer nº 1234, Lugar Nenhum, UF, CEP 12345678\nTelefone de contato: 1234567890`;
+      const primaryAddress = getPrimaryAddress();
+      const formattedAddress = formatAddress(primaryAddress, user);
+
+      if (!primaryAddress) {
+        GetSwallAlert(
+          "center",
+          "warning",
+          "Por favor, cadastre um endereço antes de finalizar a compra",
+          3000
+        );
+        setIsLoading(false);
+        return;
+      }
 
       const convertPaymentMethodToEnum = (method: PaymentMethodType): PaymentMethod | undefined => {
         if (!method) return undefined;
@@ -140,15 +200,42 @@ export function PaymentForm() {
     router.push("/checkout");
   };
 
+  const handleAddressModalSuccess = () => {
+    queryClient.invalidateQueries(["addresses", user?.user_id]);
+    setIsAddressModalOpen(false);
+  };
+
+  const hasAddress = addresses.length > 0;
+  const primaryAddress = getPrimaryAddress();
+
   return user ? (
     <Wrapper>
       <MainContent>
-        <DeliverySection user={user} />
-        <PaymentMethodSelector
-          user={user}
-          selectedMethod={selectedPaymentMethod}
-          onMethodSelect={setSelectedPaymentMethod}
-        />
+        <DeliveryCard>
+          <Title>Endereço de entrega:</Title>
+          {isLoadingAddresses ? (
+            <p style={{ color: "#666", fontSize: "0.9rem" }}>Carregando endereços...</p>
+          ) : !hasAddress ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <p style={{ color: "#d33", fontSize: "0.95rem", fontWeight: 500 }}>
+                Você precisa cadastrar um endereço para continuar com a compra.
+              </p>
+              <Button onClick={() => setIsAddressModalOpen(true)}>
+                Cadastrar Endereço
+              </Button>
+            </div>
+          ) : (
+            <DeliverySection user={user} />
+          )}
+        </DeliveryCard>
+
+        {hasAddress && (
+          <PaymentMethodSelector
+            user={user}
+            selectedMethod={selectedPaymentMethod}
+            onMethodSelect={setSelectedPaymentMethod}
+          />
+        )}
       </MainContent>
 
       <Sidebar>
@@ -159,8 +246,19 @@ export function PaymentForm() {
           isLoading={isLoading}
           onBackToCart={handleBackToCart}
           onConfirmPayment={handleConfirmPayment}
+          disabled={!hasAddress}
         />
       </Sidebar>
+
+      {user?.user_id && (
+        <ModalCreateAddress
+          isOpen={isAddressModalOpen}
+          setIsOpen={setIsAddressModalOpen}
+          user_id={user.user_id}
+          address={undefined}
+          onSuccess={handleAddressModalSuccess}
+        />
+      )}
     </Wrapper>
   ) : (
     <LoginWrapper>

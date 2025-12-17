@@ -28,6 +28,7 @@ interface CartSummaryProps {
   isLoading: boolean;
   onBackToCart: () => void;
   onConfirmPayment: () => void;
+  disabled?: boolean;
 }
 
 export function CartSummary({
@@ -37,6 +38,7 @@ export function CartSummary({
   isLoading,
   onBackToCart,
   onConfirmPayment,
+  disabled = false,
 }: CartSummaryProps) {
   return (
     <>
@@ -99,7 +101,7 @@ export function CartSummary({
           <Button onClick={onBackToCart}>Voltar para o carrinho</Button>
           <Button
             onClick={onConfirmPayment}
-            disabled={Number(cartTotalPrice) <= 0 || isLoading}
+            disabled={Number(cartTotalPrice) <= 0 || isLoading || disabled}
           >
             {isLoading ? "Processando..." : "Confirmar Pagamento"}
           </Button>
