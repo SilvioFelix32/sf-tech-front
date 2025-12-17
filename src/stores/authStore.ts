@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { User } from "../services/auth";
 import { authService } from "../services/auth.service";
 import { SignInInput } from "aws-amplify/auth";
+import { syncUserWithDb } from "../services/user-sync.service";
 
 interface AuthState {
   user: User | null;
@@ -60,6 +61,9 @@ export const useAuthStore = create<AuthState>()(
           const userData = await authService.getUserDataFromToken();
           if (userData) {
             set({ user: userData, loading: false, checked: true });
+            syncUserWithDb().catch((error) => {
+              console.error("Erro ao sincronizar usuário:", error);
+            });
             return;
           }
 
@@ -68,6 +72,9 @@ export const useAuthStore = create<AuthState>()(
             const currentUser = await authService.getCurrentUser();
             if (currentUser) {
               set({ user: currentUser, loading: false, checked: true });
+              syncUserWithDb().catch((error) => {
+                console.error("Erro ao sincronizar usuário:", error);
+              });
             } else {
               set({ user: null, loading: false, checked: true });
             }
@@ -86,6 +93,9 @@ export const useAuthStore = create<AuthState>()(
             const userData = await authService.getUserDataFromToken();
             if (userData) {
               set({ user: userData, checked: true });
+              syncUserWithDb().catch((error) => {
+                console.error("Erro ao sincronizar usuário:", error);
+              });
             }
             return;
           }
@@ -96,6 +106,9 @@ export const useAuthStore = create<AuthState>()(
             const userData = await authService.getUserDataFromToken();
             if (userData) {
               set({ user: userData, checked: true });
+              syncUserWithDb().catch((error) => {
+                console.error("Erro ao sincronizar usuário:", error);
+              });
             }
           } else {
             const userStatus = result.nextStep?.signInStep || "";
@@ -115,8 +128,13 @@ export const useAuthStore = create<AuthState>()(
 
       logOut: async () => {
         try {
+          const currentUser = get().user;
           await authService.signOut();
           set({ user: null, checked: false });
+          if (currentUser?.user_id) {
+            const { clearSyncCache } = await import("../services/user-sync.service");
+            clearSyncCache(currentUser.user_id);
+          }
         } catch (error) {
           console.error("Erro ao fazer logout:", error);
           throw error;
