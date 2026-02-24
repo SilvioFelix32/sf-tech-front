@@ -1,12 +1,30 @@
-import { environment } from "../../../../config/environment";
 import { FormEvent, useState } from "react";
+import { environment } from "../../../../config/environment";
 import { Modal as ModalCreate } from "react-responsive-modal";
 import { IProductCategory } from "../../../../interfaces";
 import { categoryService } from "../../../../services";
 import { GetSwallAlert } from "../../../../utils";
 //styles
-import { Button, Text, Content, Wrapper, Input } from "../styles";
+import {
+  Wrapper,
+  Header,
+  HeaderTitleRow,
+  HeaderTitle,
+  HeaderDescription,
+  FormGrid,
+  FieldGroup,
+  FieldLabelRow,
+  LabelIcon,
+  LabelRequired,
+  LabelOptional,
+  Input,
+  Textarea,
+  Footer,
+  SecondaryButton,
+  PrimaryButton,
+} from "../styles";
 import "react-responsive-modal/styles.css";
+import { LuLayers, LuFileText } from "react-icons/lu";
 
 interface modalProps {
   isOpen: boolean;
@@ -27,17 +45,15 @@ export function ModalCreateCategory({
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    const data: Partial<IProductCategory> = {
-      title,
-      description,
-    };
+    const data: Partial<IProductCategory> = { title, description };
 
-    await categoryService
-      .create(company_id, data as IProductCategory)
-      .then(() => setReloadData(Math.random()))
-      .catch((error) => {
-        GetSwallAlert("center", "error", error.message, 2000);
-      });
+    try {
+      await categoryService.create(company_id, data as IProductCategory);
+      setReloadData(Math.random());
+      setIsOpen(false);
+    } catch (error: any) {
+      GetSwallAlert("center", "error", error.message, 2000);
+    }
   }
 
   return (
@@ -50,21 +66,60 @@ export function ModalCreateCategory({
       onClose={() => {
         setIsOpen(false);
       }}
+      styles={{ modal: { width: "520px", maxHeight: "80vh", padding: 0 } }}
       center
     >
       <Wrapper onSubmit={handleSubmit}>
-        <Content>
-          <Text>Título:</Text>
-          <Input type="string" onChange={(e) => setTitle(e.target.value)} />
-          <Text>Descrição:</Text>
-          <Input
-            type="string"
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Content>
-        <Button type="submit" onClick={() => setIsOpen(false)}>
-          Cadastrar
-        </Button>
+        <Header>
+          <HeaderTitleRow>
+            <LuLayers size={20} />
+            <HeaderTitle>Cadastrar Categoria</HeaderTitle>
+          </HeaderTitleRow>
+          <HeaderDescription>
+            Defina um título e uma descrição para organizar seus produtos.
+          </HeaderDescription>
+        </Header>
+
+        <FormGrid>
+          <FieldGroup>
+            <FieldLabelRow htmlFor="category-title">
+              <LabelIcon>
+                <LuLayers size={14} />
+              </LabelIcon>
+              Título <LabelRequired>*</LabelRequired>
+            </FieldLabelRow>
+            <Input
+              id="category-title"
+              placeholder="Ex: Monitores, Periféricos..."
+              value={title || ""}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </FieldGroup>
+
+          <FieldGroup>
+            <FieldLabelRow htmlFor="category-description">
+              <LabelIcon>
+                <LuFileText size={14} />
+              </LabelIcon>
+              Descrição <LabelOptional>(Opcional)</LabelOptional>
+            </FieldLabelRow>
+            <Textarea
+              id="category-description"
+              placeholder="Descreva brevemente o tipo de produtos desta categoria..."
+              value={description || ""}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </FieldGroup>
+        </FormGrid>
+
+        <Footer>
+          <SecondaryButton type="button" onClick={() => setIsOpen(false)}>
+            Cancelar
+          </SecondaryButton>
+          <PrimaryButton type="submit" disabled={!title}>
+            Cadastrar Categoria
+          </PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalCreate>
   );

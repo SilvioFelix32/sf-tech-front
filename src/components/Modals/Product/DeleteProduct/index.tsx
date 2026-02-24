@@ -2,8 +2,18 @@ import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
 import { productsService } from "../../../../services";
 import { GetSwallAlert } from "../../../../utils";
-//styles
-import { Wrapper, Button, Content, Text } from "./styles";
+import {
+  Wrapper,
+  Header,
+  HeaderTitleRow,
+  HeaderTitle,
+  HeaderDescription,
+  Footer,
+  SecondaryButton,
+  PrimaryButton,
+} from "../styles";
+import "react-responsive-modal/styles.css";
+import { LuTrash2 } from "react-icons/lu";
 
 interface modalProps {
   product_id: string;
@@ -23,7 +33,10 @@ export function ModalDeleteProduct({
 
     await productsService
       .delete(product_id)
-      .then(() => setReloadData(Math.random()))
+      .then(() => {
+        setReloadData(Math.random());
+        setOpen(false);
+      })
       .catch((error) => {
         GetSwallAlert("center", "error", error.message, 2000);
       });
@@ -36,21 +49,30 @@ export function ModalDeleteProduct({
         modal: "customModal",
       }}
       open={open}
-      onClose={() => {
-        setOpen(false);
-      }}
+      onClose={() => setOpen(false)}
+      styles={{ modal: { width: "420px", maxHeight: "60vh", padding: 0 } }}
       center
     >
       <Wrapper onSubmit={handleDelete}>
-        <Text>Delete Product?</Text>
-        <Content>
-          <Button type="submit" onClick={() => setOpen(false)}>
-            Confirm
-          </Button>
-          <Button type="button" onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
-        </Content>
+        <Header>
+          <HeaderTitleRow>
+            <LuTrash2 size={20} />
+            <HeaderTitle>Excluir produto</HeaderTitle>
+          </HeaderTitleRow>
+          <HeaderDescription>
+            Tem certeza que deseja excluir este produto? Esta ação não pode ser
+            desfeita.
+          </HeaderDescription>
+        </Header>
+
+        <Footer>
+          <SecondaryButton type="button" onClick={() => setOpen(false)}>
+            Cancelar
+          </SecondaryButton>
+          <PrimaryButton $danger type="submit">
+            Confirmar exclusão
+          </PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalDelete>
   );

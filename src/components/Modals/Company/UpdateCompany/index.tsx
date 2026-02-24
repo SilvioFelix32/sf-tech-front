@@ -6,8 +6,27 @@ import { ICompanyParams } from "@/interfaces/ICompanyParams";
 import { ICompany } from "@/interfaces/ICompany";
 import { GetSwallAlert } from "@/utils/sweet-alert";
 import { sanitazePayload } from "@/utils";
-import { Button, Content, Text, Input, Wrapper, Select } from "./styles";
+import {
+  Wrapper,
+  Header,
+  HeaderTitleRow,
+  HeaderTitle,
+  HeaderDescription,
+  FormGrid,
+  Row,
+  FieldGroup,
+  FieldLabelRow,
+  LabelIcon,
+  LabelRequired,
+  LabelOptional,
+  Input,
+  Select,
+  Footer,
+  SecondaryButton,
+  PrimaryButton,
+} from "../styles";
 import "react-responsive-modal/styles.css";
+import { LuBuilding2, LuUser, LuMail, LuFileText, LuToggleLeft } from "react-icons/lu";
 
 interface FormData extends ICompanyParams {
   name: string;
@@ -75,25 +94,105 @@ export function ModalUpdateCompany({
       }}
       open={isOpen}
       onClose={() => setIsOpen(false)}
+      styles={{ modal: { width: "720px", maxHeight: "90vh", padding: 0 } }}
       center
     >
       <Wrapper onSubmit={handleSubmit(handleUpdate)}>
-        <Content>
-          <Text>Nome:</Text>
-          <Input type="text" {...register("name", { required: true })} />
-          <Text>Nome Fantasia:</Text>
-          <Input type="text" {...register("fantasyName")} />
-          <Text>CNPJ:</Text>
-          <Input type="text" {...register("cnpj")} placeholder="00.000.000/0001-00" />
-          <Text>Email:</Text>
-          <Input type="email" {...register("email", { required: true })} />
-          <Text>Status:</Text>
-          <Select {...register("status")}>
-            <option value="ACTIVE">Ativo</option>
-            <option value="INACTIVE">Inativo</option>
-          </Select>
-        </Content>
-        <Button type="submit">Confirmar</Button>
+        <Header>
+          <HeaderTitleRow>
+            <LuBuilding2 size={20} />
+            <HeaderTitle>Editar Empresa</HeaderTitle>
+          </HeaderTitleRow>
+          <HeaderDescription>
+            Atualize as informações da empresa selecionada.
+          </HeaderDescription>
+        </Header>
+
+        <FormGrid>
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="company-name-edit">
+                <LabelIcon>
+                  <LuBuilding2 size={14} />
+                </LabelIcon>
+                Nome <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="company-name-edit"
+                type="text"
+                placeholder="Ex: Empresa XYZ Ltda"
+                {...register("name", { required: true })}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <FieldLabelRow htmlFor="company-fantasyName-edit">
+                <LabelIcon>
+                  <LuUser size={14} />
+                </LabelIcon>
+                Nome Fantasia <LabelOptional>(Opcional)</LabelOptional>
+              </FieldLabelRow>
+              <Input
+                id="company-fantasyName-edit"
+                type="text"
+                placeholder="Ex: XYZ"
+                {...register("fantasyName")}
+              />
+            </FieldGroup>
+          </Row>
+
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="company-cnpj-edit">
+                <LabelIcon>
+                  <LuFileText size={14} />
+                </LabelIcon>
+                CNPJ <LabelOptional>(Opcional)</LabelOptional>
+              </FieldLabelRow>
+              <Input
+                id="company-cnpj-edit"
+                type="text"
+                placeholder="00.000.000/0001-00"
+                {...register("cnpj")}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <FieldLabelRow htmlFor="company-email-edit">
+                <LabelIcon>
+                  <LuMail size={14} />
+                </LabelIcon>
+                Email <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="company-email-edit"
+                type="email"
+                placeholder="contato@empresa.com"
+                {...register("email", { required: true })}
+              />
+            </FieldGroup>
+          </Row>
+
+          <FieldGroup>
+            <FieldLabelRow htmlFor="company-status-edit">
+              <LabelIcon>
+                <LuToggleLeft size={14} />
+              </LabelIcon>
+              Status
+            </FieldLabelRow>
+            <Select id="company-status-edit" {...register("status")}>
+              <option value="ACTIVE">Ativo</option>
+              <option value="INACTIVE">Inativo</option>
+            </Select>
+          </FieldGroup>
+        </FormGrid>
+
+        <Footer>
+          <SecondaryButton type="button" onClick={() => setIsOpen(false)}>
+            Cancelar
+          </SecondaryButton>
+          <PrimaryButton type="submit">Salvar alterações</PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalEdit>
   );

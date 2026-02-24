@@ -49,7 +49,7 @@ export const FormGrid = styled.div`
 
 export const Row = styled.div`
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
 
   @media (max-width: 640px) {
@@ -128,72 +128,14 @@ export const Select = styled.select`
     theme.title === "light" ? "#ffffff" : theme.colors.background};
 `;
 
-export const Textarea = styled.textarea`
-  min-height: 96px;
-  border-radius: 8px;
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  padding: 8px 10px;
+export const Text = styled.p`
+  width: 100%;
+  margin: 10px 0;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.text};
+  opacity: 0.9;
   font-size: 0.9rem;
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) =>
-    theme.title === "light" ? "#ffffff" : theme.colors.background};
-  resize: none;
-`;
-
-export const ImagePreview = styled.div`
-  margin-top: 8px;
-  width: 128px;
-  height: 128px;
-  border-radius: 12px;
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  overflow: hidden;
-  background-color: ${({ theme }) =>
-    theme.title === "light" ? "#f8fafc" : theme.colors.background};
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-export const PriceSummary = styled.div`
-  margin-top: 4px;
-  border-radius: 10px;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  background-color: rgba(16, 185, 129, 0.05);
-  padding: 10px 12px;
-  font-size: 0.85rem;
-  color: ${({ theme }) => theme.colors.text};
-
-  .line {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 4px;
-  }
-
-  .old {
-    text-decoration: line-through;
-    opacity: 0.7;
-  }
-
-  .new {
-    font-size: 1rem;
-    font-weight: 700;
-    color: ${({ theme }) => theme.colors.primary};
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background-color: rgba(16, 185, 129, 0.18);
-    color: #047857;
-    font-size: 0.7rem;
-    font-weight: 600;
-  }
+  text-align: center;
 `;
 
 export const Footer = styled.div`

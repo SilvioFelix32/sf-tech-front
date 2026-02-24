@@ -2,73 +2,162 @@ import styled from "styled-components";
 
 export const Wrapper = styled.form`
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
   flex-direction: column;
-  max-height: 600px;
-  min-width: 300px;
-  max-width: 400px;
   width: 100%;
-  height: 100%;
-  padding: 10px;
+  max-width: 520px;
+  max-height: 80vh;
+  padding: 20px 24px 18px;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const Content = styled.div`
-  padding: 0 10px;
-  height: 100%;
-  width: 100%;
+export const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
 `;
 
-export const Text = styled.p`
-  width: 90%;
-  margin: 10px 0;
+export const HeaderTitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  svg {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+export const HeaderTitle = styled.h2`
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.title};
+  margin: 0;
+`;
+
+export const HeaderDescription = styled.p`
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.text};
+  opacity: 0.9;
+  margin: 0;
+`;
+
+export const FormGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 0 12px;
+`;
+
+export const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const FieldLabelRow = styled.label`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.title};
 `;
 
+export const LabelIcon = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const LabelRequired = styled.span`
+  color: #f97373;
+  font-weight: 600;
+`;
+
+export const LabelOptional = styled.span`
+  font-size: 0.7rem;
+  color: ${({ theme }) => theme.colors.text};
+  opacity: 0.7;
+  margin-left: 4px;
+`;
+
 export const Input = styled.input`
-  height: 36px;
-  width: 95%;
-  outline: solid 0.1px ${({ theme }) => theme.colors.quaternary};
-  border: none;
+  height: 38px;
   border-radius: 8px;
-  font-weight: 400;
-  padding-left: 10px;
-  color: ${({ theme }) => theme.colors.secondary};
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 0 10px;
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.text};
+  background-color: ${({ theme }) =>
+    theme.title === "light" ? "#ffffff" : theme.colors.background};
 
   &::placeholder {
-    font-weight: 300;
+    font-weight: 400;
+    opacity: 0.6;
   }
 `;
 
-export const Select = styled.select`
-  height: 36px;
-  width: 95%;
-  border: none;
+export const Textarea = styled.textarea`
+  min-height: 96px;
   border-radius: 8px;
-  outline: solid 1px ${({ theme }) => theme.colors.quaternary};
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.secondary};
-  padding-left: 10px;
-  text-transform: uppercase;
-`;
-
-export const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  width: 120px;
-  margin: 15px auto;
-  padding: 10px;
-  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 8px 10px;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  border: none;
-  transition: filter(0.2s);
+  background-color: ${({ theme }) =>
+    theme.title === "light" ? "#ffffff" : theme.colors.background};
+  resize: none;
+`;
 
-  &:hover {
-    filter: brightness(0.9);
+export const Text = styled.p`
+  width: 100%;
+  margin: 10px 0;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.title};
+  text-align: center;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
   }
+`;
+
+export const SecondaryButton = styled.button`
+  flex: 1;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.9);
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+`;
+
+export const PrimaryButton = styled.button<{ $danger?: boolean }>`
+  flex: 1;
+  height: 38px;
+  border-radius: 8px;
+  border: none;
+  background-color: ${({ theme, $danger }) =>
+    $danger ? "#dc2626" : theme.colors.primary};
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
 `;

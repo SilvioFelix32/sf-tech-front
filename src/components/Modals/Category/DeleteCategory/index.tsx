@@ -1,9 +1,20 @@
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
 import { categoryService } from "../../../../services";
-//styles
-import { Wrapper, Button, Content, Text } from "../styles";
+import {
+  Wrapper,
+  Header,
+  HeaderTitleRow,
+  HeaderTitle,
+  HeaderDescription,
+  Text,
+  Content,
+  Footer,
+  SecondaryButton,
+  PrimaryButton,
+} from "../styles";
 import { GetSwallAlert } from "../../../../utils/sweet-alert";
+import { LuTrash2 } from "react-icons/lu";
 
 interface modalProps {
   category_id: string;
@@ -40,20 +51,31 @@ export function ModalDeleteCategory({
       onClose={() => {
         setOpen(false);
       }}
+      styles={{ modal: { width: "420px", maxHeight: "60vh", padding: 0 } }}
       center
     >
-      <Wrapper
-        onSubmit={handleDelete}>
-        <Text style={{ textAlign: "center" }}>Excluir categoria?</Text>
-        <Content
-          style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
-          <Button type="submit" onClick={() => setOpen(false)}>
-            Confirmar
-          </Button>
-          <Button type="button" onClick={() => setOpen(false)}>
+      <Wrapper onSubmit={handleDelete}>
+        <Header>
+          <HeaderTitleRow>
+            <LuTrash2 size={20} />
+            <HeaderTitle>Excluir categoria</HeaderTitle>
+          </HeaderTitleRow>
+          <HeaderDescription>
+            Tem certeza que deseja excluir esta categoria? Esta ação não pode ser
+            desfeita.
+          </HeaderDescription>
+        </Header>
+
+        <Text>Os produtos vinculados continuarão existindo, mas sem esta categoria.</Text>
+
+        <Footer>
+          <SecondaryButton type="button" onClick={() => setOpen(false)}>
             Cancelar
-          </Button>
-        </Content>
+          </SecondaryButton>
+          <PrimaryButton $danger type="submit" onClick={() => setOpen(false)}>
+            Confirmar exclusão
+          </PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalDelete>
   );
