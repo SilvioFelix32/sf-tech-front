@@ -11,11 +11,27 @@ import {
   Title,
   ItemsList,
   ItemCard,
-  ItemInfo,
-  ItemImage,
+  ItemTitle,
   Divider,
   TotalSection,
+  InfoGrid,
+  InfoCard,
+  InfoText,
+  InfoLabel,
+  InfoValue,
+  AddressCard,
+  AddressHeader,
+  AddressBadge,
 } from "./styles";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  AdminTableEmpty,
+} from "../../../AdminTable";
 import "react-responsive-modal/styles.css";
 
 interface ModalProps {
@@ -115,89 +131,134 @@ export function ModalSaleDetails({
       }}
       open={isOpen}
       onClose={() => setIsOpen(false)}
+      styles={{ modal: { width: "1800px" } }}
       center
     >
       <Wrapper>
         <Title>Detalhes da Venda</Title>
-        
+
         <Content>
-          <Text>
-            <strong>ID da Venda:</strong> {sale.sale_id}
-          </Text>
-          <Text>
-            <strong>ID do Usuário:</strong> {sale.user_id}
-          </Text>
-          <Text>
-            <strong>Status:</strong> {getSaleStatusLabel(sale.status)}
-          </Text>
-          {sale.payment_method && (
-            <Text>
-              <strong>Forma de Pagamento:</strong> {getPaymentMethodLabel(sale.payment_method)}
-            </Text>
-          )}
-          {sale.deliver_address && (
-            <Text style={{ whiteSpace: "pre-line" }}>
-              <strong>Endereço de Entrega:</strong>
-              <br />
-              {sale.deliver_address}
-            </Text>
-          )}
-          <Text>
-            <strong>Data de Criação:</strong>{" "}
-            {new Date(sale.created_at).toLocaleString("pt-BR", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </Text>
+          <InfoGrid>
+            <InfoCard>
+              <InfoText>
+                <InfoLabel>ID da Venda</InfoLabel>
+                <InfoValue>{sale.sale_id}</InfoValue>
+              </InfoText>
+            </InfoCard>
+            <InfoCard>
+              <InfoText>
+                <InfoLabel>ID do Usuário</InfoLabel>
+                <InfoValue>{sale.user_id}</InfoValue>
+              </InfoText>
+            </InfoCard>
+            <InfoCard>
+              <InfoText>
+                <InfoLabel>Status</InfoLabel>
+                <InfoValue>{getSaleStatusLabel(sale.status)}</InfoValue>
+              </InfoText>
+            </InfoCard>
+            {sale.payment_method && (
+              <InfoCard>
+                <InfoText>
+                  <InfoLabel>Forma de Pagamento</InfoLabel>
+                  <InfoValue>
+                    {getPaymentMethodLabel(sale.payment_method)}
+                  </InfoValue>
+                </InfoText>
+              </InfoCard>
+            )}
+            <InfoCard>
+              <InfoText>
+                <InfoLabel>Data da Venda</InfoLabel>
+                <InfoValue>
+                  {new Date(sale.created_at).toLocaleString("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </InfoValue>
+              </InfoText>
+            </InfoCard>
+          </InfoGrid>
+
+          <AddressCard>
+            <AddressHeader>
+              <Text>
+                <strong>Endereço de Entrega</strong>
+              </Text>
+              {sale.deliver_address && (
+                <AddressBadge>Entrega</AddressBadge>
+              )}
+            </AddressHeader>
+            {sale.deliver_address && (
+              <Text style={{ whiteSpace: "pre-line", marginTop: 0 }}>
+                {sale.deliver_address}
+              </Text>
+            )}
+          </AddressCard>
         </Content>
 
         <Divider />
 
         <Title>Itens da Venda</Title>
         <ItemsList>
-          {sale.items.map((item, index) => (
-            <ItemCard key={`${item.product_id}-${index}`}>
-              <ItemImage>
-                <Image
-                  src={item.url_banner || "https://i.imgur.com/2HFGvvT.png"}
-                  alt={item.title}
-                  width={100}
-                  height={100}
-                  style={{ objectFit: "contain" }}
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Produto</TableHead>
+                <TableHead alignCenter>Qtd.</TableHead>
+                <TableHead alignRight>Unitário</TableHead>
+                <TableHead alignRight>Total</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sale.items.length > 0 ? (
+                sale.items.map((item, index) => (
+                  <TableRow key={`${item.product_id}-${index}`}>
+                    <TableCell>
+                      <ItemCard>
+                        <Image
+                          src={item.url_banner || "https://i.imgur.com/2HFGvvT.png"}
+                          alt={item.title ?? "Produto"}
+                          width={48}
+                          height={48}
+                          style={{ objectFit: "cover" }}
+                        />
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          <ItemTitle>{item.title}</ItemTitle>
+                          <span
+                            style={{
+                              fontSize: "0.75rem",
+                              opacity: 0.7,
+                              fontFamily: "monospace",
+                            }}
+                          >
+                            {item.sku}
+                          </span>
+                        </div>
+                      </ItemCard>
+                    </TableCell>
+                    <TableCell alignCenter>
+                      {item.quantity}
+                    </TableCell>
+                    <TableCell alignRight>
+                      R$ {formatPrice(item.total_value / item.quantity)}
+                    </TableCell>
+                    <TableCell alignRight fontMedium>
+                      R$ {formatPrice(item.total_value)}
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <AdminTableEmpty
+                  colSpan={5}
+                  message="Nenhum item encontrado"
                 />
-              </ItemImage>
-              <ItemInfo>
-                <Text>
-                  <strong>Produto:</strong> {item.title}
-                </Text>
-                {item.subtitle && (
-                  <Text>
-                    <strong>Subtítulo:</strong> {item.subtitle}
-                  </Text>
-                )}
-                <Text>
-                  <strong>SKU:</strong> {item.sku}
-                </Text>
-                <Text>
-                  <strong>Quantidade:</strong> {item.quantity}
-                </Text>
-                <Text>
-                  <strong>Valor Unitário:</strong> R$ {formatPrice(item.total_value / item.quantity)}
-                </Text>
-                <Text>
-                  <strong>Valor Total do Item:</strong> R$ {formatPrice(item.total_value)}
-                </Text>
-                {item.description && (
-                  <Text>
-                    <strong>Descrição:</strong> {item.description}
-                  </Text>
-                )}
-              </ItemInfo>
-            </ItemCard>
-          ))}
+              )}
+            </TableBody>
+          </Table>
         </ItemsList>
 
         <Divider />

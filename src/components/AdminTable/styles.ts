@@ -53,6 +53,9 @@ export const TableCell = styled.td<{
   font-weight: ${({ $fontMedium }) => ($fontMedium ? 600 : 400)};
   font-family: ${({ $mono }) => ($mono ? "monospace" : "inherit")};
   font-size: ${({ $mono }) => ($mono ? "0.85em" : "inherit")};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const TableEmptyRow = styled.tr``;
