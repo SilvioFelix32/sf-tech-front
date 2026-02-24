@@ -18,11 +18,19 @@ export const StatCard = styled.div`
     theme.title === "light" ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)"};
 `;
 
+export const StatCardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 12px;
+`;
+
 export const StatLabel = styled.p`
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   color: ${({ theme }) => theme.colors.text};
   opacity: 0.85;
-  margin: 0 0 8px 0;
+  margin: 0;
 `;
 
 export const StatValue = styled.p`
@@ -47,7 +55,7 @@ export const StatIconWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
+  flex-shrink: 0;
 
   > svg {
     color: ${({ theme }) => theme.colors.tertiary};

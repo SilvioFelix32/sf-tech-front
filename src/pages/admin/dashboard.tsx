@@ -32,6 +32,7 @@ import { StatusPill } from "../../styles/pages/admin";
 import {
   StatsGrid,
   StatCard,
+  StatCardHeader,
   StatLabel,
   StatValue,
   StatChange,
@@ -158,10 +159,12 @@ function AdminDashboard() {
         <StatsGrid>
           {stats.map((stat) => (
             <StatCard key={stat.label}>
-              <StatIconWrap>
-                <stat.icon />
-              </StatIconWrap>
-              <StatLabel>{stat.label}</StatLabel>
+              <StatCardHeader>
+                <StatLabel>{stat.label}</StatLabel>
+                <StatIconWrap>
+                  <stat.icon />
+                </StatIconWrap>
+              </StatCardHeader>
               <StatValue>{stat.value}</StatValue>
               <StatChange>{stat.change}</StatChange>
             </StatCard>
