@@ -12,4 +12,5 @@ export interface INavigationSidebarProps {
   header?: ReactNode;
   items: SidebarItemConfig[];
   showDivider?: boolean;
+  footer?: ReactNode;
 }

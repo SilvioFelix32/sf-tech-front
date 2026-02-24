@@ -5,7 +5,6 @@ import { ISale, PaymentMethod, SaleStatus } from "../../interfaces";
 import { environment } from "../../config/environment";
 import DataTable from "react-data-table-component";
 import { AdminWrapper, AdminContent, AdminTitle, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
-import { customStyles } from "../../styles/customDataTable";
 import { ModalSaleDetails, ModalUpdateSaleStatus } from "../../components/Modals";
 import { EditButton } from "../../components/Buttons";
 
@@ -162,7 +161,6 @@ function AdminSales() {
             <DataTable
               columns={columns}
               data={data}
-              customStyles={customStyles}
               progressPending={isLoading}
               onRowClicked={handleRowClick}
               pointerOnHover

@@ -10,7 +10,6 @@ import {
 import { EditButton, ExcludeButton } from "../../components/Buttons";
 import DataTable from "react-data-table-component";
 import { AdminWrapper, AdminContent, AdminTitle, AdminButton, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
-import { customStyles } from "../../styles/customDataTable";
 import "react-responsive-modal/styles.css";
 
 function AdminCategories() {
@@ -115,7 +114,6 @@ function AdminCategories() {
             paginationServer
             paginationComponentOptions={paginationComponentOptions}
             paginationDefaultPage={page}
-            customStyles={customStyles}
             paginationRowsPerPageOptions={[5, 10, 20]}
             onChangeRowsPerPage={handlePerRowsChange}
           />

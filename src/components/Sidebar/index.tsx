@@ -14,6 +14,7 @@ export function NavigationSidebar({
   header,
   items,
   showDivider = true,
+  footer,
 }: INavigationSidebarProps) {
   return (
     <SidebarWrapper>
@@ -33,6 +34,12 @@ export function NavigationSidebar({
             </SidebarNavItem>
           ))}
         </SidebarNav>
+        {footer && (
+          <>
+            <SidebarDivider />
+            {footer}
+          </>
+        )}
       </SidebarCard>
     </SidebarWrapper>
   );

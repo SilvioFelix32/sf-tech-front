@@ -6,7 +6,7 @@ import { ICompanyParams } from "@/interfaces/ICompanyParams";
 import { ICompany } from "@/interfaces/ICompany";
 import { GetSwallAlert } from "@/utils/sweet-alert";
 import { sanitazePayload } from "@/utils";
-import { Button, Content, Context, Text, Input, Wrapper, Select } from "./styles";
+import { Button, Content, Text, Input, Wrapper, Select } from "./styles";
 import "react-responsive-modal/styles.css";
 
 interface FormData extends ICompanyParams {
@@ -78,23 +78,21 @@ export function ModalUpdateCompany({
       center
     >
       <Wrapper onSubmit={handleSubmit(handleUpdate)}>
-        <Context>
-          <Content>
-            <Text>Nome:</Text>
-            <Input type="text" {...register("name", { required: true })} />
-            <Text>Nome Fantasia:</Text>
-            <Input type="text" {...register("fantasyName")} />
-            <Text>CNPJ:</Text>
-            <Input type="text" {...register("cnpj")} placeholder="00.000.000/0001-00" />
-            <Text>Email:</Text>
-            <Input type="email" {...register("email", { required: true })} />
-            <Text>Status:</Text>
-            <Select {...register("status")}>
-              <option value="ACTIVE">Ativo</option>
-              <option value="INACTIVE">Inativo</option>
-            </Select>
-          </Content>
-        </Context>
+        <Content>
+          <Text>Nome:</Text>
+          <Input type="text" {...register("name", { required: true })} />
+          <Text>Nome Fantasia:</Text>
+          <Input type="text" {...register("fantasyName")} />
+          <Text>CNPJ:</Text>
+          <Input type="text" {...register("cnpj")} placeholder="00.000.000/0001-00" />
+          <Text>Email:</Text>
+          <Input type="email" {...register("email", { required: true })} />
+          <Text>Status:</Text>
+          <Select {...register("status")}>
+            <option value="ACTIVE">Ativo</option>
+            <option value="INACTIVE">Inativo</option>
+          </Select>
+        </Content>
         <Button type="submit">Confirmar</Button>
       </Wrapper>
     </ModalEdit>

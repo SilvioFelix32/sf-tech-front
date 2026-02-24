@@ -6,6 +6,7 @@ export const Wrapper = styled.form`
   align-items: flex-start;
   flex-direction: column;
   max-height: 600px;
+  min-width: 400px;
   max-width: 800px;
   width: 100%;
   height: 100%;
@@ -18,8 +19,6 @@ export const Content = styled.div`
   height: 100%;
   width: 100%;
 `;
-
-export const Context = styled.div``;
 
 export const Text = styled.p`
   width: 90%;
@@ -57,7 +56,10 @@ export const Select = styled.select`
 
 export const Button = styled.button`
   display: flex;
+  justify-content: center;
+  align-items: center;
   height: 40px;
+  width: 100px;
   margin: 15px auto;
   padding: 10px;
   border-radius: 8px;

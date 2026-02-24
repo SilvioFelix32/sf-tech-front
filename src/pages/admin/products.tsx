@@ -10,7 +10,6 @@ import { useQueryClient } from "react-query";
 import DataTable from "react-data-table-component";
 import { EditButton, ExcludeButton } from "../../components/Buttons";
 import { AdminContent, AdminTitle, AdminButton, AdminPicture, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
-import { customStyles } from "../../styles/customDataTable";
 
 function AdminProducts() {
   const queryClient = useQueryClient();
@@ -133,7 +132,6 @@ function AdminProducts() {
             paginationServer
             paginationComponentOptions={paginationComponentOptions}
             paginationDefaultPage={page}
-            customStyles={customStyles}
             paginationRowsPerPageOptions={[5, 10, 20]}
             onChangeRowsPerPage={handlePerRowsChange}
           />
