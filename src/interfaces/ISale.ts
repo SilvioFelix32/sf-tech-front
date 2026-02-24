@@ -63,3 +63,10 @@ export interface AdminSalesTableProps {
 }
 
 export type AdminSalesStatusFilter = "all" | SaleStatus;
+
+export interface ModalSaleDetailsProps {
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  saleId: string;
+  company_id: string;
+}
