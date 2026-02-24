@@ -6,7 +6,11 @@ export * from "./api";
 
 // UI / Component Props
 export * from "./IProductCardProps";
+export * from "./ISidebar";
+export * from "./IAdminTable";
 
 // Product Review
 export * from "./IProductReview";
 
+// Admin
+export * from "./ISale";

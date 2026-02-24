@@ -1,15 +1,31 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { categoryService } from "../../../../services";
-import { environment } from "../../../../config/environment";
-import { GetSwallAlert } from "../../../../utils/sweet-alert";
-import { IProductCategory } from "../../../../interfaces";
-//components
 import { Modal as ModalEdit } from "react-responsive-modal";
-//styles
-import { Button, Content, Context, Text, Input, Wrapper } from "./styles";
-import "react-responsive-modal/styles.css";
+import { environment } from "../../../../config/environment";
+import { categoryService } from "../../../../services";
+import { GetSwallAlert } from "../../../../utils/sweet-alert";
 import { sanitazePayload } from "../../../../utils";
+import { IProductCategory } from "../../../../interfaces";
+import {
+  Wrapper,
+  Header,
+  HeaderTitleRow,
+  HeaderTitle,
+  HeaderDescription,
+  FormGrid,
+  FieldGroup,
+  FieldLabelRow,
+  LabelIcon,
+  LabelRequired,
+  LabelOptional,
+  Input,
+  Textarea,
+  Footer,
+  SecondaryButton,
+  PrimaryButton,
+} from "../styles";
+import "react-responsive-modal/styles.css";
+import { LuLayers, LuFileText } from "react-icons/lu";
 
 interface modalProps {
   onOpen: boolean;
@@ -65,18 +81,56 @@ export function ModalEditCategory({
       onClose={() => {
         setOnOpen(false);
       }}
+      styles={{ modal: { width: "520px", maxHeight: "80vh", padding: 0 } }}
       center
     >
       <Wrapper onSubmit={handleSubmit(handleUpdate)}>
-        <Context>
-          <Content>
-            <Text>Title:</Text>
-            <Input type="string" {...register("title")} />
-            <Text>Description:</Text>
-            <Input type="string" {...register("description")} />
-          </Content>
-        </Context>
-        <Button type="submit">Confirmar</Button>
+        <Header>
+          <HeaderTitleRow>
+            <LuLayers size={20} />
+            <HeaderTitle>Editar Categoria</HeaderTitle>
+          </HeaderTitleRow>
+          <HeaderDescription>
+            Altere o título ou a descrição desta categoria de produtos.
+          </HeaderDescription>
+        </Header>
+
+        <FormGrid>
+          <FieldGroup>
+            <FieldLabelRow htmlFor="category-title-edit">
+              <LabelIcon>
+                <LuLayers size={14} />
+              </LabelIcon>
+              Título <LabelRequired>*</LabelRequired>
+            </FieldLabelRow>
+            <Input
+              id="category-title-edit"
+              placeholder="Ex: Monitores, Periféricos..."
+              {...register("title", { required: true })}
+            />
+          </FieldGroup>
+
+          <FieldGroup>
+            <FieldLabelRow htmlFor="category-description-edit">
+              <LabelIcon>
+                <LuFileText size={14} />
+              </LabelIcon>
+              Descrição <LabelOptional>(Opcional)</LabelOptional>
+            </FieldLabelRow>
+            <Textarea
+              id="category-description-edit"
+              placeholder="Descreva brevemente o tipo de produtos desta categoria..."
+              {...register("description")}
+            />
+          </FieldGroup>
+        </FormGrid>
+
+        <Footer>
+          <SecondaryButton type="button" onClick={() => setOnOpen(false)}>
+            Cancelar
+          </SecondaryButton>
+          <PrimaryButton type="submit">Salvar alterações</PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalEdit>
   );

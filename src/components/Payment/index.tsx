@@ -206,7 +206,6 @@ export function PaymentForm() {
   };
 
   const hasAddress = addresses.length > 0;
-  const primaryAddress = getPrimaryAddress();
 
   return user ? (
     <Wrapper>

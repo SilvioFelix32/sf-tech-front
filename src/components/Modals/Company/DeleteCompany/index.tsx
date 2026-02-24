@@ -1,13 +1,14 @@
 import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
-import { productsService } from "../../../../services";
-import { GetSwallAlert } from "../../../../utils";
+import { companiesService } from "@/services/companies-service";
+import { GetSwallAlert } from "@/utils/sweet-alert";
 import {
   Wrapper,
   Header,
   HeaderTitleRow,
   HeaderTitle,
   HeaderDescription,
+  Text,
   Footer,
   SecondaryButton,
   PrimaryButton,
@@ -15,30 +16,32 @@ import {
 import "react-responsive-modal/styles.css";
 import { LuTrash2 } from "react-icons/lu";
 
-interface modalProps {
-  product_id: string;
-  open: boolean;
-  setOpen: (value: boolean) => void;
-  setReloadData(value: number);
+interface ModalDeleteCompanyProps {
+  companyId: string | undefined;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  onSuccess: () => void;
 }
 
-export function ModalDeleteProduct({
-  product_id,
-  open,
-  setOpen,
-  setReloadData,
-}: modalProps) {
+export function ModalDeleteCompany({
+  companyId,
+  isOpen,
+  setIsOpen,
+  onSuccess,
+}: ModalDeleteCompanyProps) {
   async function handleDelete(event: FormEvent) {
     event.preventDefault();
+    if (!companyId) return;
 
-    await productsService
-      .delete(product_id)
+    await companiesService
+      .delete(companyId)
       .then(() => {
-        setReloadData(Math.random());
-        setOpen(false);
+        onSuccess();
+        setIsOpen(false);
       })
-      .catch((error) => {
-        GetSwallAlert("center", "error", error.message, 2000);
+      .catch((error: Error) => {
+        console.error(error);
+        GetSwallAlert("center", "error", "Erro ao excluir empresa", 2000);
       });
   }
 
@@ -48,8 +51,8 @@ export function ModalDeleteProduct({
         overlay: "customOverlay",
         modal: "customModal",
       }}
-      open={open}
-      onClose={() => setOpen(false)}
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
       styles={{ modal: { width: "420px", maxHeight: "60vh", padding: 0 } }}
       center
     >
@@ -57,16 +60,18 @@ export function ModalDeleteProduct({
         <Header>
           <HeaderTitleRow>
             <LuTrash2 size={20} />
-            <HeaderTitle>Excluir produto</HeaderTitle>
+            <HeaderTitle>Excluir empresa</HeaderTitle>
           </HeaderTitleRow>
           <HeaderDescription>
-            Tem certeza que deseja excluir este produto? Esta ação não pode ser
+            Tem certeza que deseja excluir esta empresa? Esta ação não pode ser
             desfeita.
           </HeaderDescription>
         </Header>
 
+        <Text>Os dados associados à empresa serão removidos permanentemente.</Text>
+
         <Footer>
-          <SecondaryButton type="button" onClick={() => setOpen(false)}>
+          <SecondaryButton type="button" onClick={() => setIsOpen(false)}>
             Cancelar
           </SecondaryButton>
           <PrimaryButton $danger type="submit">

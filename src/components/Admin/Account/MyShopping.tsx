@@ -2,12 +2,12 @@ import Image from "next/image";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { BiChevronDown } from "react-icons/bi";
-import { useAuth } from "../../hooks/useAuth";
-import { saleService } from "../../services/sale-service";
-import { environment } from "../../config/environment";
-import { ISale, PaymentMethod, SaleStatus } from "../../interfaces";
-import { formatPrice } from "../../utils/formatPrice";
-import { Button } from "../../styles/components";
+import { useAuth } from "../../../hooks/useAuth";
+import { saleService } from "../../../services/sale-service";
+import { environment } from "../../../config/environment";
+import { ISale, PaymentMethod, SaleStatus } from "../../../interfaces";
+import { formatPrice } from "../../../utils/formatPrice";
+import { Button } from "../../../styles/components";
 import {
   SaleActions,
   SaleContainer,
@@ -27,8 +27,8 @@ import {
   SaleItemTitle,
   SaleItemSubtitle,
   SaleItemPrice,
-} from "../../styles/pages/shopping";
-import { PageWrapper, PageTitle } from "../../styles/pages/shared";
+} from "../../../styles/pages/shopping";
+import { PageWrapper, PageTitle } from "../../../styles/pages/shared";
 
 export default function MyShopping() {
   const { user } = useAuth();

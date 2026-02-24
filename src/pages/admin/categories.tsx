@@ -1,5 +1,15 @@
-import { memo, useState } from "react";
+import { memo, useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "react-query";
+import { BiSearch, BiNews, BiPlus } from "react-icons/bi";
+import { FiMoreVertical } from "react-icons/fi";
+import { MdModeEditOutline, MdDeleteOutline } from "react-icons/md";
+import {
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
+} from "@coreui/react";
+import "@coreui/coreui/dist/css/coreui.min.css";
 import { IProductCategory } from "../../interfaces";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import {
@@ -7,140 +17,233 @@ import {
   ModalEditCategory,
   ModalDeleteCategory,
 } from "../../components";
-import { EditButton, ExcludeButton } from "../../components/Buttons";
-import DataTable from "react-data-table-component";
-import { AdminWrapper, AdminContent, AdminTitle, AdminButton, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
-import { customStyles } from "../../styles/customDataTable";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  AdminTableEmpty,
+  AdminTablePagination,
+} from "../../components/AdminTable";
+import {
+  AdminWrapper,
+  AdminContent,
+  AdminTitle,
+  AdminSubtitle,
+  AdminCard,
+  AdminCardHeader,
+  AdminCardHeaderLeft,
+  AdminCardHeaderRight,
+  AdminCardTitleRow,
+  AdminCardTitle,
+  AdminCardCount,
+  AdminSearchWrap,
+  AdminSearchInput,
+  AdminButton,
+  CountBadge,
+} from "../../styles/pages/admin";
 import "react-responsive-modal/styles.css";
 
 function AdminCategories() {
   const queryClient = useQueryClient();
-  const [category_id, setCategory_id] = useState("");
-  const [open, setOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [onOpen, setOnOpen] = useState(false);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [isDeleteOpen, setDeleteOpen] = useState(false);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setEditOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const {
     value: { productCategories, meta },
     isLoading,
-  } = useCategoryFilter({ page, perPage });
+  } = useCategoryFilter({ page: 1, perPage: 100 });
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-  };
+  const filteredCategories = useMemo(() => {
+    if (!searchTerm.trim()) return productCategories ?? [];
+    const term = searchTerm.toLowerCase();
+    return (productCategories ?? []).filter(
+      (c: IProductCategory) =>
+        c.title?.toLowerCase().includes(term) ||
+        c.description?.toLowerCase().includes(term)
+    );
+  }, [productCategories, searchTerm]);
 
-  const handlePerRowsChange = (newPerPage: number) => {
-    setPerPage(newPerPage);
-    setPage(1);
-  };
+  const totalItems = filteredCategories.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage || 1));
 
-  function invalidateQuery() {
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedCategories = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredCategories.slice(startIndex, endIndex);
+  }, [filteredCategories, currentPage, itemsPerPage]);
+
+  const handleInvalidate = () => {
     queryClient.invalidateQueries(["productCategories"]);
-  }
+  };
 
-  const columns = [
-    {
-      name: "titulo",
-      selector: (row) => row.title,
-      sortable: true,
-    },
-    {
-      name: "descrição",
-      selector: (row) => row.description,
-      sortable: true,
-    },
-    {
-      name: "outros",
-      selector: (row) => row.exclude_alter,
-    },
-  ];
+  const handleOpenEdit = (id: string) => {
+    setCategoryId(id);
+    setEditOpen(true);
+  };
 
-  const data =
-    productCategories && productCategories.length > 0
-      ? productCategories.map((category: IProductCategory) => ({
-          title: category.title,
-          description: category.description,
-          exclude_alter: (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <EditButton
-                onClick={() => {
-                  setOnOpen(true);
-                  setCategory_id(category.category_id);
-                }}
-              ></EditButton>
-              <ExcludeButton
-                onClick={() => {
-                  setCategory_id(category.category_id);
-                  setOpen(true);
-                }}
-              ></ExcludeButton>
-            </div>
-          ),
-        }))
-      : [];
-
-  const paginationComponentOptions = {
-    rowsPerPageText: "Linhas por página",
-    rangeSeparatorText: "de",
-    selectAllRowsItem: false,
+  const handleOpenDelete = (id: string) => {
+    setCategoryId(id);
+    setDeleteOpen(true);
   };
 
   return (
     <AdminWrapper>
-      <AdminTitle>Administração de Categorias de Produtos</AdminTitle>
+      <AdminTitle>Administração de Categorias</AdminTitle>
+      <AdminSubtitle>Gerencie as categorias de produtos da loja</AdminSubtitle>
       <AdminContent fullWidth>
         <AdminCard>
           <AdminCardHeader>
-            <AdminCardTitle>Lista de Categorias</AdminCardTitle>
-            <AdminButton onClick={() => setIsOpen(true)}>
-              Cadastrar nova Categoria
-            </AdminButton>
+            <AdminCardHeaderLeft>
+              <AdminCardTitleRow>
+                <BiNews />
+                <AdminCardTitle>Lista de Categorias</AdminCardTitle>
+              </AdminCardTitleRow>
+              <AdminCardCount>
+                {meta?.total ?? 0} categorias cadastradas
+              </AdminCardCount>
+            </AdminCardHeaderLeft>
+            <AdminCardHeaderRight>
+              <AdminSearchWrap>
+                <BiSearch />
+                <AdminSearchInput
+                  type="text"
+                  placeholder="Buscar categoria..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                />
+              </AdminSearchWrap>
+              <AdminButton onClick={() => setIsCreateOpen(true)}>
+                <BiPlus size={18} style={{ marginRight: 8 }} />
+                Nova Categoria
+              </AdminButton>
+            </AdminCardHeaderRight>
           </AdminCardHeader>
-          <DataTable
-            columns={columns}
-            data={data}
-            pagination
-            progressPending={isLoading}
-            onChangePage={handlePageChange}
-            paginationTotalRows={meta.total}
-            paginationPerPage={perPage}
-            paginationServer
-            paginationComponentOptions={paginationComponentOptions}
-            paginationDefaultPage={page}
-            customStyles={customStyles}
-            paginationRowsPerPageOptions={[5, 10, 20]}
-            onChangeRowsPerPage={handlePerRowsChange}
-          />
+
+          {isLoading ? (
+            <p style={{ padding: 24, textAlign: "center", opacity: 0.8 }}>
+              Carregando...
+            </p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Título</TableHead>
+                  <TableHead>Descrição</TableHead>
+                  <TableHead alignCenter>Produtos</TableHead>
+                  <TableHead alignRight>Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginatedCategories.length > 0 ? (
+                  paginatedCategories.map((category: IProductCategory) => (
+                    <TableRow key={category.category_id}>
+                      <TableCell fontMedium>{category.title}</TableCell>
+                      <TableCell muted>{category.description ?? "-"}</TableCell>
+                      <TableCell alignCenter>
+                        <CountBadge>
+                          {category.products?.length ?? 0}
+                        </CountBadge>
+                      </TableCell>
+                      <TableCell alignRight>
+                        <CDropdown>
+                          <CDropdownToggle caret={false} className="p-0 btn-link">
+                            <FiMoreVertical
+                              size={20}
+                              style={{ cursor: "pointer" }}
+                            />
+                          </CDropdownToggle>
+                          <CDropdownMenu>
+                            <CDropdownItem
+                              onClick={() =>
+                                handleOpenEdit(category.category_id)
+                              }
+                            >
+                              <MdModeEditOutline
+                                size={16}
+                                style={{ marginRight: 8 }}
+                              />
+                              Editar
+                            </CDropdownItem>
+                            <CDropdownItem
+                              onClick={() =>
+                                handleOpenDelete(category.category_id)
+                              }
+                              className="text-danger"
+                            >
+                              <MdDeleteOutline
+                                size={16}
+                                style={{ marginRight: 8 }}
+                              />
+                              Excluir
+                            </CDropdownItem>
+                          </CDropdownMenu>
+                        </CDropdown>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <AdminTableEmpty
+                    colSpan={4}
+                    message="Nenhuma categoria encontrada"
+                  />
+                )}
+              </TableBody>
+            </Table>
+          )}
+
+          {totalItems > 0 && (
+            <AdminTablePagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              itemsPerPageOptions={[5, 10, 15, 20]}
+              label="categorias"
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={(value) => {
+                setItemsPerPage(value);
+                setCurrentPage(1);
+              }}
+            />
+          )}
         </AdminCard>
       </AdminContent>
+
       <ModalCreateCategory
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        setReloadData={() => invalidateQuery()}
+        isOpen={isCreateOpen}
+        setIsOpen={setIsCreateOpen}
+        setReloadData={(_value?: number) => handleInvalidate()}
       />
       <ModalEditCategory
-        category_id={category_id}
-        onOpen={onOpen}
-        setOnOpen={setOnOpen}
-        setReloadData={() => invalidateQuery()}
+        category_id={categoryId}
+        onOpen={isEditOpen}
+        setOnOpen={setEditOpen}
+        setReloadData={(_value?: number) => handleInvalidate()}
       />
       <ModalDeleteCategory
-        category_id={category_id}
-        open={open}
-        setOpen={setOpen}
-        setReloadData={() => invalidateQuery()}
+        category_id={categoryId}
+        open={isDeleteOpen}
+        setOpen={setDeleteOpen}
+        setReloadData={(_value?: number) => handleInvalidate()}
       />
     </AdminWrapper>
   );
 }
 
 export default memo(AdminCategories);
-

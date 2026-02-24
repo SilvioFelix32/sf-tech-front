@@ -3,6 +3,7 @@ export enum SaleStatus {
   DELIVERED = "DELIVERED",
   UNDER_REVIEW = "UNDER_REVIEW",
   IN_TRANSIT = "IN_TRANSIT",
+  CANCELED = "CANCELED",
 }
 
 export enum PaymentMethod {
@@ -48,3 +49,26 @@ export interface ISale {
   updated_at?: string;
 }
 
+export interface AdminSalesTableProps {
+  isLoading: boolean;
+  salesCount: number;
+  filteredSales: ISale[];
+  searchTerm: string;
+  statusFilter: AdminSalesStatusFilter;
+  onSearchChange: (value: string) => void;
+  onStatusFilterChange: (value: AdminSalesStatusFilter) => void;
+  onRowClick: (sale: ISale) => void;
+  onUpdateStatusClick: (sale: ISale) => void;
+  setSelectedSaleId: (id: string) => void;
+  setIsDetailsOpen: (value: boolean) => void;
+}
+
+export type AdminSalesStatusFilter = "all" | SaleStatus;
+
+export interface ModalSaleDetailsProps {
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  saleId: string;
+  company_id: string;
+  onUpdateStatusClick?: (sale: ISale) => void;
+}

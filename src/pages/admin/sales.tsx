@@ -1,21 +1,34 @@
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import "@coreui/coreui/dist/css/coreui.min.css";
 import { saleService } from "../../services/sale-service";
-import { ISale, PaymentMethod, SaleStatus } from "../../interfaces";
+import { AdminSalesStatusFilter, ISale, SaleStatus } from "../../interfaces";
 import { environment } from "../../config/environment";
-import DataTable from "react-data-table-component";
-import { AdminWrapper, AdminContent, AdminTitle, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
-import { customStyles } from "../../styles/customDataTable";
-import { ModalSaleDetails, ModalUpdateSaleStatus } from "../../components/Modals";
-import { EditButton } from "../../components/Buttons";
+import {
+  AdminWrapper,
+  AdminTitle,
+  AdminSubtitle,
+  AdminContent,
+} from "@/styles/pages/admin";
+import {
+  AdminSalesTable,
+} from "../../components/Admin/Sale/AdminSalesTable";
+import { AdminSalesStats } from "../../components/Admin/Sale/AdminSalesStats";
+import {
+  ModalSaleDetails,
+  ModalUpdateSaleStatus,
+} from "../../components/Modals";
 
 function AdminSales() {
   const queryClient = useQueryClient();
   const [selectedSaleId, setSelectedSaleId] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [updateSaleId, setUpdateSaleId] = useState<string | null>(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedSaleStatus, setSelectedSaleStatus] = useState<SaleStatus | undefined>(undefined);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] =
+    useState<AdminSalesStatusFilter>("all");
 
   const company_id = environment.companyId;
 
@@ -32,13 +45,41 @@ function AdminSales() {
     }
   );
 
-  const handleRowClick = (row: { sale_data: ISale }) => {
-    setSelectedSaleId(row.sale_data.sale_id);
-    setIsModalOpen(true);
+  const filteredSales = useMemo(() => {
+    const term = searchTerm.toLowerCase();
+
+    return sales.filter((sale) => {
+      const totalAsString = String(sale.total ?? "").toLowerCase();
+
+      const matchesSearch =
+        sale.sale_id.toLowerCase().includes(term) ||
+        totalAsString.includes(term);
+
+      const matchesStatus =
+        statusFilter === "all" || sale.status === statusFilter;
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [sales, searchTerm, statusFilter]);
+
+  const totalVendas = sales.length;
+  const totalFaturamento = sales.reduce(
+    (acc, current) => acc + Number(current.total ?? 0),
+    0
+  );
+  const entregues = sales.filter(
+    (sale) => sale.status === SaleStatus.DELIVERED
+  ).length;
+  const pendentes = sales.filter(
+    (sale) => sale.status === SaleStatus.UNDER_REVIEW
+  ).length;
+
+  const handleRowClick = (sale: ISale) => {
+    setSelectedSaleId(sale.sale_id);
+    setIsDetailsOpen(true);
   };
 
-  const handleUpdateStatusClick = (e: React.MouseEvent, sale: ISale) => {
-    e.stopPropagation();
+  const handleUpdateStatusClick = (sale: ISale) => {
     setUpdateSaleId(sale.sale_id);
     setSelectedSaleStatus(sale.status);
     setIsUpdateModalOpen(true);
@@ -49,134 +90,48 @@ function AdminSales() {
     setIsUpdateModalOpen(false);
   };
 
-  const data = sales.map((sale) => ({
-    sale_id: sale.sale_id,
-    user_id: sale.user_id,
-    total: sale.total,
-    payment_method: sale.payment_method,
-    status: sale.status,
-    deliver_address: sale.deliver_address || "-",
-    created_at: new Date(sale.created_at).toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-    sale_data: sale,
-  }));
-
-  const formatPaymentMethod = (method?: PaymentMethod) => {
-    if (!method) return "-";
-    switch (method) {
-      case PaymentMethod.CREDIT_CARD:
-        return "Cartão de Crédito";
-      case PaymentMethod.DEBIT_CARD:
-        return "Cartão de Débito";
-      case PaymentMethod.PIX:
-        return "PIX";
-      case PaymentMethod.BANK_SLIP:
-        return "Boleto Bancário";
-      default:
-        return method;
-    }
-  };
-
-  const formatSaleStatus = (status?: SaleStatus) => {
-    if (!status) return "Em Análise";
-    switch (status) {
-      case SaleStatus.APPROVED:
-        return "Aprovada";
-      case SaleStatus.DELIVERED:
-        return "Entregue";
-      case SaleStatus.UNDER_REVIEW:
-        return "Em Análise";
-      case SaleStatus.IN_TRANSIT:
-        return "Em Trânsito";
-      default:
-        return status;
-    }
-  };
-
-  const columns = [
-    {
-      name: "Total",
-      selector: (row) => `R$ ${row.total.toFixed(2).replace(".", ",")}`,
-      sortable: true,
-    },
-    {
-      name: "Status",
-      selector: (row) => formatSaleStatus(row.status),
-      sortable: true,
-      grow: 1,
-    },
-    {
-      name: "Forma de Pagamento",
-      selector: (row) => formatPaymentMethod(row.payment_method),
-      sortable: true,
-      grow: 2,
-    },
-    {
-      name: "Endereço de Entrega",
-      selector: (row) => row.deliver_address?.substring(0, 50) + (row.deliver_address?.length > 50 ? "..." : "") || "-",
-      sortable: false,
-      grow: 3,
-    },
-    {
-      name: "Data da Venda",
-      selector: (row) => row.created_at,
-      sortable: true,
-      grow: 2,
-    },
-    {
-      name: "Ações",
-      selector: (row) => row.sale_data,
-      cell: (row) => (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <EditButton
-            onClick={(e) => handleUpdateStatusClick(e, row.sale_data)}
-            title="Atualizar Status"
-          />
-        </div>
-      ),
-      sortable: false,
-      grow: 1,
-    },
-  ];
-
   return (
     <>
       <AdminWrapper>
         <AdminTitle>Administrar Vendas</AdminTitle>
+        <AdminSubtitle>Acompanhe e gerencie todas as vendas da loja</AdminSubtitle>
+
         <AdminContent fullWidth>
-          <AdminCard>
-            <AdminCardHeader>
-              <AdminCardTitle>Lista de Vendas</AdminCardTitle>
-            </AdminCardHeader>
-            <DataTable
-              columns={columns}
-              data={data}
-              customStyles={customStyles}
-              progressPending={isLoading}
-              onRowClicked={handleRowClick}
-              pointerOnHover
-              highlightOnHover
-            />
-          </AdminCard>
+          <AdminSalesStats
+            totalVendas={totalVendas}
+            totalFaturamento={totalFaturamento}
+            entregues={entregues}
+            pendentes={pendentes}
+          />
+
+          <AdminSalesTable
+            isLoading={isLoading}
+            salesCount={filteredSales.length}
+            filteredSales={filteredSales}
+            searchTerm={searchTerm}
+            statusFilter={statusFilter}
+            onSearchChange={setSearchTerm}
+            onStatusFilterChange={setStatusFilter}
+            onRowClick={handleRowClick}
+            onUpdateStatusClick={handleUpdateStatusClick}
+            setSelectedSaleId={setSelectedSaleId}
+            setIsDetailsOpen={setIsDetailsOpen}
+          />
         </AdminContent>
       </AdminWrapper>
+
       {selectedSaleId && (
         <ModalSaleDetails
           saleId={selectedSaleId}
           company_id={company_id}
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
+          isOpen={isDetailsOpen}
+          setIsOpen={setIsDetailsOpen}
+          onUpdateStatusClick={(sale) => {
+            setUpdateSaleId(sale.sale_id);
+            setSelectedSaleStatus(sale.status);
+            setIsDetailsOpen(false);
+            setIsUpdateModalOpen(true);
+          }}
         />
       )}
       {updateSaleId && (

@@ -8,8 +8,8 @@ import {
   AccountInput,
   AccountLabel,
 } from "@/styles/components/Account/styles";
-import { PageTitle, PageText } from "../../../styles/pages/shared";
-import { Button } from "../../../styles/components";
+import { PageTitle, PageText } from "../../../../styles/pages/shared";
+import { Button } from "../../../../styles/components";
 
 interface PersonalDataProps {
   name: string;
