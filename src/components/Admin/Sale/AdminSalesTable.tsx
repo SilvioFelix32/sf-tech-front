@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { BiSearch, BiStore } from "react-icons/bi";
 import { FiMoreVertical } from "react-icons/fi";
 import { MdModeEditOutline } from "react-icons/md";
@@ -20,6 +20,7 @@ import {
   TableCell,
   AdminTableEmpty,
 } from "../../AdminTable";
+import { AdminTablePagination } from "../../AdminTable";
 import {
   AdminCard,
   AdminCardHeader,
@@ -94,6 +95,24 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
   setSelectedSaleId,
   setIsDetailsOpen,
 }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  const totalItems = filteredSales.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage || 1));
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedSales = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredSales.slice(startIndex, endIndex);
+  }, [filteredSales, currentPage, itemsPerPage]);
+
   return (
     <AdminCard>
       <AdminCardHeader>
@@ -157,8 +176,8 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredSales.length > 0 ? (
-              filteredSales.map((sale) => (
+            {paginatedSales.length > 0 ? (
+              paginatedSales.map((sale) => (
                 <TableRow
                   key={sale.sale_id}
                   onClick={() => onRowClick(sale)}
@@ -240,6 +259,20 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
             )}
           </TableBody>
         </Table>
+      )}
+      {totalItems > 0 && (
+        <AdminTablePagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          itemsPerPageOptions={[5, 10, 15, 20]}
+          label="vendas"
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={(value) => {
+            setItemsPerPage(value);
+            setCurrentPage(1);
+          }}
+        />
       )}
     </AdminCard>
   );

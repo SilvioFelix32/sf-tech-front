@@ -1,4 +1,4 @@
-import { memo, useState, useMemo } from "react";
+import { memo, useState, useMemo, useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { BiSearch, BiNews, BiPlus } from "react-icons/bi";
 import { FiMoreVertical } from "react-icons/fi";
@@ -25,6 +25,7 @@ import {
   TableHead,
   TableCell,
   AdminTableEmpty,
+  AdminTablePagination,
 } from "../../components/AdminTable";
 import {
   AdminWrapper,
@@ -52,6 +53,8 @@ function AdminCategories() {
   const [isDeleteOpen, setDeleteOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setEditOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const {
     value: { productCategories, meta },
@@ -67,6 +70,21 @@ function AdminCategories() {
         c.description?.toLowerCase().includes(term)
     );
   }, [productCategories, searchTerm]);
+
+  const totalItems = filteredCategories.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage || 1));
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedCategories = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredCategories.slice(startIndex, endIndex);
+  }, [filteredCategories, currentPage, itemsPerPage]);
 
   const handleInvalidate = () => {
     queryClient.invalidateQueries(["productCategories"]);
@@ -105,7 +123,10 @@ function AdminCategories() {
                   type="text"
                   placeholder="Buscar categoria..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
                 />
               </AdminSearchWrap>
               <AdminButton onClick={() => setIsCreateOpen(true)}>
@@ -130,8 +151,8 @@ function AdminCategories() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredCategories.length > 0 ? (
-                  filteredCategories.map((category: IProductCategory) => (
+                {paginatedCategories.length > 0 ? (
+                  paginatedCategories.map((category: IProductCategory) => (
                     <TableRow key={category.category_id}>
                       <TableCell fontMedium>{category.title}</TableCell>
                       <TableCell muted>{category.description ?? "-"}</TableCell>
@@ -185,6 +206,21 @@ function AdminCategories() {
                 )}
               </TableBody>
             </Table>
+          )}
+
+          {totalItems > 0 && (
+            <AdminTablePagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              itemsPerPageOptions={[5, 10, 15, 20]}
+              label="categorias"
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={(value) => {
+                setItemsPerPage(value);
+                setCurrentPage(1);
+              }}
+            />
           )}
         </AdminCard>
       </AdminContent>

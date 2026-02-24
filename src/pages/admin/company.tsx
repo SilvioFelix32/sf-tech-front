@@ -1,4 +1,4 @@
-import { memo, useState, useMemo } from "react";
+import { memo, useState, useMemo, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { BiSearch, BiBuilding, BiPlus } from "react-icons/bi";
 import { FiMoreVertical } from "react-icons/fi";
@@ -25,6 +25,7 @@ import {
   TableHead,
   TableCell,
   AdminTableEmpty,
+  AdminTablePagination,
 } from "../../components/AdminTable";
 import {
   AdminWrapper,
@@ -58,6 +59,8 @@ function AdminCompany() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedCompanyId, setSelectedCompanyId] = useState<string | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const { data: companies = [] } = useQuery<ICompany[]>(
     "companies",
@@ -82,6 +85,21 @@ function AdminCompany() {
         c.cnpj?.replace(/\D/g, "").includes(term.replace(/\D/g, ""))
     );
   }, [companies, searchTerm]);
+
+  const totalItems = filteredCompanies.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage || 1));
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedCompanies = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredCompanies.slice(startIndex, endIndex);
+  }, [filteredCompanies, currentPage, itemsPerPage]);
 
   const handleReloadCompanies = () => {
     queryClient.invalidateQueries("companies");
@@ -120,7 +138,10 @@ function AdminCompany() {
                   type="text"
                   placeholder="Buscar empresa..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
                 />
               </AdminSearchWrap>
               <AdminButton onClick={() => setIsCreateOpen(true)}>
@@ -142,8 +163,8 @@ function AdminCompany() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredCompanies.length > 0 ? (
-                filteredCompanies.map((company) => (
+              {paginatedCompanies.length > 0 ? (
+                paginatedCompanies.map((company) => (
                   <TableRow key={company.id ?? company.email}>
                     <TableCell fontMedium>{company.name}</TableCell>
                     <TableCell>{company.fantasyName ?? "-"}</TableCell>
@@ -183,6 +204,21 @@ function AdminCompany() {
               )}
             </TableBody>
           </Table>
+
+          {totalItems > 0 && (
+            <AdminTablePagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              itemsPerPageOptions={[5, 10, 15, 20]}
+              label="empresas"
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={(value) => {
+                setItemsPerPage(value);
+                setCurrentPage(1);
+              }}
+            />
+          )}
         </AdminCard>
       </AdminContent>
 

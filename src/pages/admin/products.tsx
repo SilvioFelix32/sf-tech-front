@@ -1,4 +1,4 @@
-import { useState, useMemo, memo } from "react";
+import { useState, useMemo, useEffect, memo } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQueryClient } from "react-query";
@@ -29,6 +29,7 @@ import {
   TableHead,
   TableCell,
   AdminTableEmpty,
+  AdminTablePagination,
 } from "../../components/AdminTable";
 import {
   AdminWrapper,
@@ -57,6 +58,8 @@ function AdminProducts() {
   const [isDeleteOpen, setDeleteOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setEditOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const {
     value: { products, meta },
@@ -77,6 +80,21 @@ function AdminProducts() {
       );
     });
   }, [products, searchTerm]);
+
+  const totalItems = filteredProducts.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage || 1));
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredProducts.slice(startIndex, endIndex);
+  }, [filteredProducts, currentPage, itemsPerPage]);
 
   const reloadData = () => queryClient.invalidateQueries(["products"]);
 
@@ -118,7 +136,10 @@ function AdminProducts() {
                   type="text"
                   placeholder="Buscar produto..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
                 />
               </AdminSearchWrap>
               <AdminButton onClick={() => setIsCreateOpen(true)}>
@@ -146,8 +167,8 @@ function AdminProducts() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product: IProduct) => (
+                {paginatedProducts.length > 0 ? (
+                  paginatedProducts.map((product: IProduct) => (
                     <TableRow key={product.product_id}>
                       <TableCell mono muted style={{ maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {product.sku ??
@@ -254,6 +275,21 @@ function AdminProducts() {
                 )}
               </TableBody>
             </Table>
+          )}
+
+          {totalItems > 0 && (
+            <AdminTablePagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              itemsPerPageOptions={[5, 10, 15, 20]}
+              label="produtos"
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={(value) => {
+                setItemsPerPage(value);
+                setCurrentPage(1);
+              }}
+            />
           )}
         </AdminCard>
       </AdminContent>
