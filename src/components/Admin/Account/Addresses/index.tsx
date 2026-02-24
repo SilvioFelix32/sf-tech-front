@@ -14,13 +14,13 @@ import {
   AccountAddressTitle,
   AccountContent,
 } from "@/styles/components/Account/styles";
-import { PageTitle, PageText } from "../../../styles/pages/shared";
-import { Button } from "../../../styles/components";
-import { useAuth } from "../../../hooks/useAuth";
-import { addressService } from "../../../services/address-service";
-import { IAddress, AddressType } from "../../../interfaces/IDbUser";
-import { ModalCreateAddress } from "../../Modals";
-import { GetSwallAlert } from "../../../utils";
+import { PageTitle, PageText } from "../../../../styles/pages/shared";
+import { Button } from "../../../../styles/components";
+import { useAuth } from "../../../../hooks/useAuth";
+import { addressService } from "../../../../services/address-service";
+import { IAddress, AddressType } from "../../../../interfaces/IDbUser";
+import { ModalCreateAddress } from "../../../Modals";
+import { GetSwallAlert } from "../../../../utils";
 
 function getAddressTypeLabel(type: AddressType): string {
   const labels: Record<AddressType, string> = {

@@ -13,7 +13,7 @@ import {
   AccountPreferencesSeparator,
   AccountPreferencesToggle,
 } from "@/styles/components/Account/styles";
-import { PageTitle, PageText } from "../../../styles/pages/shared";
+import { PageTitle, PageText } from "../../../../styles/pages/shared";
 
 export function Preferences() {
   return (

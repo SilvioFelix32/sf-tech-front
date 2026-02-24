@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { PageLayout } from "../../components";
-import { AccountSidebar, MyAccount, MyFavorites, MyShopping } from "../../components/Account";
+import { AccountSidebar, MyAccount, MyFavorites, MyShopping } from "../../components/Admin/Account";
 import { AccountContainer, AccountSection } from "../../styles/pages/account";
 import { useAuth } from "../../hooks/useAuth";
 

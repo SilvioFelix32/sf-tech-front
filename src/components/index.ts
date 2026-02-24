@@ -21,7 +21,7 @@ export * from "./AdminTable";
 export * from "./Sidebar";
 
 // Sub-components
-export * from "./Account";
+export * from "./Admin/Account";
 export * from "./Buttons";
 export * from "./Forms";
 export * from "./Filters";

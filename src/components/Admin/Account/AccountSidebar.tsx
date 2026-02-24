@@ -5,7 +5,7 @@ import {
   SidebarProfile,
   SidebarUserEmail,
   SidebarUserName,
-} from "../../styles/pages/account";
+} from "../../../styles/pages/account";
 import {
   BiStore,
   BiHeart,
@@ -15,11 +15,11 @@ import {
   BiBell,
   BiCog,
 } from "react-icons/bi";
-import { Role } from "../../interfaces/IUser";
+import { Role } from "../../../interfaces/IUser";
 import {
   NavigationSidebar,
   SidebarItemConfig,
-} from "../Sidebar";
+} from "../../Sidebar";
 
 interface AccountSidebarProps {
   actualPage: string;

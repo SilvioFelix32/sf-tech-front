@@ -7,8 +7,8 @@ import {
   AccountSecurityCardInfo,
   AccountSecurityCardStatus,
 } from "@/styles/components/Account/styles";
-import { PageTitle, PageText } from "../../../styles/pages/shared";
-import { Button } from "../../../styles/components";
+import { PageTitle, PageText } from "../../../../styles/pages/shared";
+import { Button } from "../../../../styles/components";
 
 export function Security() {
   return (

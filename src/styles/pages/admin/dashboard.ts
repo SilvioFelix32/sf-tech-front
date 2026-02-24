@@ -8,6 +8,14 @@ export const StatsGrid = styled.div`
   margin-bottom: 24px;
 `;
 
+export const StatsGridFour = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 24px;
+`;
+
 export const StatCard = styled.div`
   background-color: ${({ theme }) =>
     theme.title === "light" ? "#FFFFFF" : theme.colors.background};

@@ -5,14 +5,14 @@ import {
   AccountTabsList,
   AccountTabButton,
 } from "@/styles/components/Account/styles";
-import { useAuth } from "../../hooks/useAuth";
-import { PageWrapper, PageTitle, PageText } from "../../styles/pages/shared";
+import { useAuth } from "../../../hooks/useAuth";
+import { PageWrapper, PageTitle, PageText } from "../../../styles/pages/shared";
 import { PersonalData } from "./PersonalData";
 import { Addresses } from "./Addresses";
 import { Preferences } from "./Preferences";
 import { Security } from "./Security";
-import { userService } from "../../services/user-service";
-import { IDbUser } from "../../interfaces/IDbUser";
+import { userService } from "../../../services/user-service";
+import { IDbUser } from "../../../interfaces/IDbUser";
 
 function formatCpf(cpf: string): string {
   if (!cpf) return "";
