@@ -4,7 +4,6 @@ export {
   AdminTitle,
   AdminSubtitle,
   AdminButton,
-  AdminPicture,
   AdminContainer,
   AdminSection,
   AdminCard,
