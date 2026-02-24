@@ -17,12 +17,13 @@ export const TableRow = StyledTableRow;
 
 interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
   alignRight?: boolean;
+  alignCenter?: boolean;
   children: React.ReactNode;
 }
 
-export function TableHead({ alignRight, children, ...rest }: TableHeadProps) {
+export function TableHead({ alignRight, alignCenter, children, ...rest }: TableHeadProps) {
   return (
-    <StyledTableHead $alignRight={alignRight} {...rest}>
+    <StyledTableHead $alignRight={alignRight} $alignCenter={alignCenter} {...rest}>
       {children}
     </StyledTableHead>
   );
@@ -30,6 +31,7 @@ export function TableHead({ alignRight, children, ...rest }: TableHeadProps) {
 
 interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
   alignRight?: boolean;
+  alignCenter?: boolean;
   fontMedium?: boolean;
   muted?: boolean;
   mono?: boolean;
@@ -38,6 +40,7 @@ interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
 
 export function TableCell({
   alignRight,
+  alignCenter,
   fontMedium,
   muted,
   mono,
@@ -47,6 +50,7 @@ export function TableCell({
   return (
     <StyledTableCell
       $alignRight={alignRight}
+      $alignCenter={alignCenter}
       $fontMedium={fontMedium}
       $muted={muted}
       $mono={mono}

@@ -140,6 +140,17 @@ export const StatusPill = styled.span<{ $active?: boolean }>`
     $active ? theme.colors.quaternary : "#b91c1c"};
 `;
 
+export const CountBadge = styled.span`
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: ${({ theme }) =>
+    theme.title === "light" ? "rgba(0, 0, 0, 0.06)" : "rgba(255, 255, 255, 0.1)"};
+  color: ${({ theme }) => theme.colors.text};
+`;
+
 export const AdminButton = styled(PageButton).attrs({
   variant: "primary",
 })`

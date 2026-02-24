@@ -17,5 +17,6 @@ export {
   AdminSearchWrap,
   AdminSearchInput,
   StatusPill,
+  CountBadge,
 } from './styles';
 

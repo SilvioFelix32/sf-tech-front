@@ -5,7 +5,7 @@ import { IProductCategory } from "../../../../interfaces";
 import { categoryService } from "../../../../services";
 import { GetSwallAlert } from "../../../../utils";
 //styles
-import { Button, Text, Content, Wrapper, Input } from "./styles";
+import { Button, Text, Content, Wrapper, Input } from "../styles";
 import "react-responsive-modal/styles.css";
 
 interface modalProps {
@@ -54,9 +54,9 @@ export function ModalCreateCategory({
     >
       <Wrapper onSubmit={handleSubmit}>
         <Content>
-          <Text>Title:</Text>
+          <Text>Título:</Text>
           <Input type="string" onChange={(e) => setTitle(e.target.value)} />
-          <Text>Description:</Text>
+          <Text>Descrição:</Text>
           <Input
             type="string"
             onChange={(e) => setDescription(e.target.value)}

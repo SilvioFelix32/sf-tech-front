@@ -7,7 +7,7 @@ import { IProductCategory } from "../../../../interfaces";
 //components
 import { Modal as ModalEdit } from "react-responsive-modal";
 //styles
-import { Button, Content, Context, Text, Input, Wrapper } from "./styles";
+import { Button, Content, Text, Input, Wrapper } from "../styles";
 import "react-responsive-modal/styles.css";
 import { sanitazePayload } from "../../../../utils";
 
@@ -68,15 +68,18 @@ export function ModalEditCategory({
       center
     >
       <Wrapper onSubmit={handleSubmit(handleUpdate)}>
-        <Context>
-          <Content>
-            <Text>Title:</Text>
-            <Input type="string" {...register("title")} />
-            <Text>Description:</Text>
-            <Input type="string" {...register("description")} />
-          </Content>
-        </Context>
-        <Button type="submit">Confirmar</Button>
+        <Content>
+          <Text>Título:</Text>
+          <Input type="string" {...register("title")} />
+          <Text>Descrição:</Text>
+          <Input
+            type="string"
+            {...register("description")}
+          />
+        </Content>
+        <Button type="submit" onClick={() => setOnOpen(false)}>
+          Atualizar
+        </Button>
       </Wrapper>
     </ModalEdit>
   );

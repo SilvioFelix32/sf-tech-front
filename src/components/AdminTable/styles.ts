@@ -28,8 +28,9 @@ export const TableRow = styled.tr`
   }
 `;
 
-export const TableHead = styled.th<{ $alignRight?: boolean }>`
-  text-align: ${({ $alignRight }) => ($alignRight ? "right" : "left")};
+export const TableHead = styled.th<{ $alignRight?: boolean; $alignCenter?: boolean }>`
+  text-align: ${({ $alignRight, $alignCenter }) =>
+    $alignCenter ? "center" : $alignRight ? "right" : "left"};
   padding: 12px 16px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.text};
@@ -38,11 +39,13 @@ export const TableHead = styled.th<{ $alignRight?: boolean }>`
 
 export const TableCell = styled.td<{
   $alignRight?: boolean;
+  $alignCenter?: boolean;
   $fontMedium?: boolean;
   $muted?: boolean;
   $mono?: boolean;
 }>`
-  text-align: ${({ $alignRight }) => ($alignRight ? "right" : "left")};
+  text-align: ${({ $alignRight, $alignCenter }) =>
+    $alignCenter ? "center" : $alignRight ? "right" : "left"};
   padding: 12px 16px;
   color: ${({ theme, $muted }) =>
     $muted ? `${theme.colors.text}` : theme.colors.text};

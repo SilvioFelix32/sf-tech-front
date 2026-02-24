@@ -2,7 +2,7 @@ import { FormEvent } from "react";
 import { Modal as ModalDelete } from "react-responsive-modal";
 import { categoryService } from "../../../../services";
 //styles
-import { Wrapper, Button, Content, Text } from "./styles";
+import { Wrapper, Button, Content, Text } from "../styles";
 import { GetSwallAlert } from "../../../../utils/sweet-alert";
 
 interface modalProps {
@@ -42,14 +42,16 @@ export function ModalDeleteCategory({
       }}
       center
     >
-      <Wrapper onSubmit={handleDelete}>
-        <Text>Delete Category?</Text>
-        <Content>
+      <Wrapper
+        onSubmit={handleDelete}>
+        <Text style={{ textAlign: "center" }}>Excluir categoria?</Text>
+        <Content
+          style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
           <Button type="submit" onClick={() => setOpen(false)}>
-            Confirm
+            Confirmar
           </Button>
           <Button type="button" onClick={() => setOpen(false)}>
-            Cancel
+            Cancelar
           </Button>
         </Content>
       </Wrapper>
