@@ -48,3 +48,18 @@ export interface ISale {
   updated_at?: string;
 }
 
+export interface AdminSalesTableProps {
+  isLoading: boolean;
+  salesCount: number;
+  filteredSales: ISale[];
+  searchTerm: string;
+  statusFilter: AdminSalesStatusFilter;
+  onSearchChange: (value: string) => void;
+  onStatusFilterChange: (value: AdminSalesStatusFilter) => void;
+  onRowClick: (sale: ISale) => void;
+  onUpdateStatusClick: (sale: ISale) => void;
+  setSelectedSaleId: (id: string) => void;
+  setIsDetailsOpen: (value: boolean) => void;
+}
+
+export type AdminSalesStatusFilter = "all" | SaleStatus;

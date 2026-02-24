@@ -2,7 +2,7 @@ import { memo, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { saleService } from "../../services/sale-service";
-import { ISale, SaleStatus } from "../../interfaces";
+import { AdminSalesStatusFilter, ISale, SaleStatus } from "../../interfaces";
 import { environment } from "../../config/environment";
 import {
   AdminWrapper,
@@ -11,7 +11,6 @@ import {
   AdminContent,
 } from "@/styles/pages/admin";
 import {
-  AdminSalesStatusFilter,
   AdminSalesTable,
 } from "../../components/Admin/Sale/AdminSalesTable";
 import { AdminSalesStats } from "../../components/Admin/Sale/AdminSalesStats";

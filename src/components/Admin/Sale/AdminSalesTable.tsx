@@ -8,8 +8,7 @@ import {
   CDropdownMenu,
   CDropdownItem,
 } from "@coreui/react";
-
-import { ISale, PaymentMethod, SaleStatus } from "../../../interfaces";
+import { AdminSalesTableProps, PaymentMethod, SaleStatus } from "../../../interfaces";
 import { formatPrice } from "../../../utils/formatPrice";
 import {
   Table,
@@ -33,22 +32,6 @@ import {
   AdminSearchInput,
   StatusPill,
 } from "../../../styles/pages/admin";
-
-export type AdminSalesStatusFilter = "all" | SaleStatus;
-
-interface AdminSalesTableProps {
-  isLoading: boolean;
-  salesCount: number;
-  filteredSales: ISale[];
-  searchTerm: string;
-  statusFilter: AdminSalesStatusFilter;
-  onSearchChange: (value: string) => void;
-  onStatusFilterChange: (value: AdminSalesStatusFilter) => void;
-  onRowClick: (sale: ISale) => void;
-  onUpdateStatusClick: (sale: ISale) => void;
-  setSelectedSaleId: (id: string) => void;
-  setIsDetailsOpen: (value: boolean) => void;
-}
 
 function formatPaymentMethod(method?: PaymentMethod) {
   if (!method) return "-";

@@ -12,3 +12,5 @@ export * from "./IAdminTable";
 // Product Review
 export * from "./IProductReview";
 
+// Admin
+export * from "./ISale";
