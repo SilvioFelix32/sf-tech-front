@@ -7,7 +7,6 @@ export const AccountContainer = styled.div`
   grid-template-columns: 280px minmax(0, 1fr);
   gap: 24px;
   align-items: stretch;
-  margin-top: 20px;
 `;
 
 export const AccountSidebar = styled.aside`

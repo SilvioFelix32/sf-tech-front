@@ -22,10 +22,17 @@ export const AdminContent = styled(PageContent)`
 
 export const AdminTitle = styled(PageTitle)`
   font-size: 2rem;
-  margin: 0 0 2rem 0;
-  text-align: center;
+  margin: 0 0 0.5rem 0;
+  text-align: left;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.tertiary};
+`;
+
+export const AdminSubtitle = styled.p`
+  font-size: 0.95rem;
+  color: ${({ theme }) => theme.colors.text};
+  margin: 0 0 2rem 0;
+  opacity: 0.85;
 `;
 
 export const AdminCard = styled.div`
@@ -49,12 +56,90 @@ export const AdminCardHeader = styled.div`
   margin-bottom: 20px;
 `;
 
+export const AdminCardHeaderLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+`;
+
+export const AdminCardTitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > svg {
+    color: ${({ theme }) => theme.colors.tertiary};
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+`;
+
 export const AdminCardTitle = styled.h3`
   font-size: 1.2rem;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.text};
   margin: 0;
   text-align: left;
+`;
+
+export const AdminCardCount = styled.span`
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.text};
+  opacity: 0.8;
+`;
+
+export const AdminCardHeaderRight = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const AdminSearchWrap = styled.div`
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 6px;
+  background-color: ${({ theme }) =>
+    theme.title === "light" ? "#F7F8FA" : theme.colors.background};
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  min-width: 220px;
+
+  > svg {
+    color: ${({ theme }) => theme.colors.text};
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    opacity: 0.7;
+  }
+`;
+
+export const AdminSearchInput = styled.input`
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.text};
+  width: 100%;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.text};
+    opacity: 0.5;
+  }
+`;
+
+export const StatusPill = styled.span<{ $active?: boolean }>`
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: ${({ theme, $active }) =>
+    $active ? `${theme.colors.tertiary}30` : "rgba(254, 202, 202, 0.6)"};
+  color: ${({ theme, $active }) =>
+    $active ? theme.colors.quaternary : "#b91c1c"};
 `;
 
 export const AdminButton = styled(PageButton).attrs({
@@ -75,11 +160,13 @@ export const AdminPicture = styled.div`
 export const AdminContainer = styled.div`
   width: 100%;
   min-height: 100%;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 24px;
   align-items: stretch;
   justify-content: flex-start;
   overflow: hidden;
+  margin-top: 20px;
 `;
 
 export const AdminSection = styled.div`

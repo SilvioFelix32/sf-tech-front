@@ -1,27 +1,58 @@
 import { useState } from "react";
 import { useCan } from "../../hooks/useCan";
-import { PageLayout } from "../../components";
+import { NavigationSidebar, SidebarItemConfig, PageLayout } from "../../components";
+import AdminDashboard from "./dashboard";
 import AdminProducts from "./products";
 import AdminCompany from "./company";
 import AdminCategories from "./categories";
 import AdminSales from "./sales";
-import { BiMenu, BiNews, BiPackage, BiStore, BiWallet } from "react-icons/bi";
-import {
-  CustomSidebar,
-  CustomMenuItem,
-  CustomMenu,
-} from "../../styles/customSideBar";
+import { BiNews, BiPackage, BiStore, BiWallet, BiGridAlt } from "react-icons/bi";
 import { AdminContainer, AdminSection } from "../../styles/pages/admin";
 
-export default function Administration() {
-  const [actualPage, setActualPage] = useState("AdminCompany");
-  const [collapsed, setCollapsed] = useState(false);
+type AdminPage = "Dashboard" | "AdminCompany" | "AdminCategories" | "AdminProducts" | "AdminSales";
 
-  const toggleSidebar = () => {
-    setCollapsed((prevState) => !prevState);
-  };
+export default function Administration() {
+  const [actualPage, setActualPage] = useState<AdminPage>("Dashboard");
 
   const userHasAdminPermissions = useCan({ role: ["ADMIN", "MASTER"] });
+
+  const sidebarItems: SidebarItemConfig[] = [
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: <BiGridAlt />,
+      active: actualPage === "Dashboard",
+      onClick: () => setActualPage("Dashboard"),
+    },
+    {
+      id: "company",
+      label: "Empresa",
+      icon: <BiStore />,
+      active: actualPage === "AdminCompany",
+      onClick: () => setActualPage("AdminCompany"),
+    },
+    {
+      id: "categories",
+      label: "Categorias",
+      icon: <BiNews />,
+      active: actualPage === "AdminCategories",
+      onClick: () => setActualPage("AdminCategories"),
+    },
+    {
+      id: "products",
+      label: "Produtos",
+      icon: <BiPackage />,
+      active: actualPage === "AdminProducts",
+      onClick: () => setActualPage("AdminProducts"),
+    },
+    {
+      id: "sales",
+      label: "Vendas",
+      icon: <BiWallet />,
+      active: actualPage === "AdminSales",
+      onClick: () => setActualPage("AdminSales"),
+    },
+  ];
 
   return (
     <PageLayout
@@ -43,32 +74,9 @@ export default function Administration() {
     >
       {userHasAdminPermissions ? (
         <AdminContainer>
-          <CustomSidebar collapsed={collapsed} transitionDuration={500}>
-            <CustomMenu>
-              <CustomMenuItem onClick={toggleSidebar}>
-                <BiMenu />
-              </CustomMenuItem>
-              <CustomMenuItem onClick={() => setActualPage("AdminCompany")}>
-                <BiStore /> Empresa
-              </CustomMenuItem>
-              <CustomMenuItem
-                onClick={() => setActualPage("AdminCategories")}
-              >
-                <BiNews /> Categorias
-              </CustomMenuItem>
-              <CustomMenuItem
-                onClick={() => setActualPage("AdminProducts")}
-              >
-                <BiPackage /> Produtos
-              </CustomMenuItem>
-              <CustomMenuItem
-                onClick={() => setActualPage("AdminSales")}
-              >
-                <BiWallet /> Vendas
-              </CustomMenuItem>
-            </CustomMenu>
-          </CustomSidebar>
+          <NavigationSidebar items={sidebarItems} />
           <AdminSection>
+            {actualPage === "Dashboard" && <AdminDashboard />}
             {actualPage === "AdminCompany" && <AdminCompany />}
             {actualPage === "AdminCategories" && <AdminCategories />}
             {actualPage === "AdminProducts" && <AdminProducts />}
@@ -79,4 +87,3 @@ export default function Administration() {
     </PageLayout>
   );
 }
-

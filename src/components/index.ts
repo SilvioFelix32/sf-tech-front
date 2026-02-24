@@ -16,6 +16,10 @@ export * from "./Checkout";
 export * from "./InputMask";
 export * from "./ValidationMessage";
 
+// Admin Components
+export * from "./AdminTable";
+export * from "./Sidebar";
+
 // Sub-components
 export * from "./Account";
 export * from "./Buttons";

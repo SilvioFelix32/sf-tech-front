@@ -8,6 +8,11 @@ export * from "./Category/CreateCategory";
 export * from "./Category/DeleteCategory";
 export * from "./Category/UpdateCategory";
 
+// Company Modals
+export * from "./Company/CreateCompany";
+export * from "./Company/UpdateCompany";
+export * from "./Company/DeleteCompany";
+
 // Sale Modals
 export * from "./Sale/SaleDetails";
 export * from "./Sale/UpdateSaleStatus";
