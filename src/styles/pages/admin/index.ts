@@ -18,5 +18,6 @@ export {
   AdminSearchInput,
   StatusPill,
   CountBadge,
+  SortableHeader,
 } from './styles';
 

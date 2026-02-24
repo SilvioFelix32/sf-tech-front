@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { BiSearch, BiStore } from "react-icons/bi";
+import { BiSearch, BiStore, BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { FiMoreVertical } from "react-icons/fi";
 import { MdModeEditOutline } from "react-icons/md";
 import {
@@ -31,6 +31,7 @@ import {
   AdminSearchWrap,
   AdminSearchInput,
   StatusPill,
+  SortableHeader,
 } from "../../../styles/pages/admin";
 
 function formatPaymentMethod(method?: PaymentMethod) {
@@ -85,6 +86,17 @@ function getStatusVariant(status?: SaleStatus) {
   }
 }
 
+type SortColumn = "total" | "status" | "payment" | "address" | "date";
+type SortDirection = "asc" | "desc";
+
+const STATUS_ORDER: Record<string, number> = {
+  [SaleStatus.UNDER_REVIEW]: 0,
+  [SaleStatus.APPROVED]: 1,
+  [SaleStatus.IN_TRANSIT]: 2,
+  [SaleStatus.DELIVERED]: 3,
+  [SaleStatus.CANCELED]: 4,
+};
+
 export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
   isLoading,
   salesCount,
@@ -100,8 +112,57 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortState, setSortState] = useState<{
+    column: SortColumn;
+    direction: SortDirection;
+  }>({ column: "date", direction: "desc" });
 
-  const totalItems = filteredSales.length;
+  const handleSort = (column: SortColumn) => {
+    setSortState((prev) => {
+      if (prev?.column === column) {
+        return {
+          column,
+          direction: prev.direction === "asc" ? "desc" : "asc",
+        };
+      }
+      return { column, direction: "asc" as SortDirection };
+    });
+    setCurrentPage(1);
+  };
+
+  const sortedSales = useMemo(() => {
+    const { column: sortColumn, direction: sortDirection } = sortState;
+    const dir = sortDirection === "asc" ? 1 : -1;
+    return [...filteredSales].sort((a, b) => {
+      let cmp = 0;
+      switch (sortColumn) {
+        case "total":
+          cmp = (a.total ?? 0) - (b.total ?? 0);
+          break;
+        case "status":
+          cmp =
+            (STATUS_ORDER[a.status ?? ""] ?? -1) -
+            (STATUS_ORDER[b.status ?? ""] ?? -1);
+          break;
+        case "payment":
+          cmp = (formatPaymentMethod(a.payment_method) ?? "").localeCompare(
+            formatPaymentMethod(b.payment_method) ?? ""
+          );
+          break;
+        case "address":
+          cmp = (a.deliver_address ?? "").localeCompare(b.deliver_address ?? "");
+          break;
+        case "date":
+          cmp = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+          break;
+        default:
+          return 0;
+      }
+      return cmp * dir;
+    });
+  }, [filteredSales, sortState]);
+
+  const totalItems = sortedSales.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage || 1));
 
   useEffect(() => {
@@ -113,8 +174,17 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
   const paginatedSales = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return filteredSales.slice(startIndex, endIndex);
-  }, [filteredSales, currentPage, itemsPerPage]);
+    return sortedSales.slice(startIndex, endIndex);
+  }, [sortedSales, currentPage, itemsPerPage]);
+
+  const SortIcon = ({ column }: { column: SortColumn }) => {
+    if (sortState.column !== column) return <BiChevronDown size={14} />;
+    return sortState.direction === "asc" ? (
+      <BiChevronUp size={14} />
+    ) : (
+      <BiChevronDown size={14} />
+    );
+  };
 
   return (
     <AdminCard>
@@ -170,11 +240,36 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Total</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Pagamento</TableHead>
-              <TableHead>Endereço de Entrega</TableHead>
-              <TableHead>Data da Venda</TableHead>
+              <TableHead>
+                <SortableHeader type="button" onClick={() => handleSort("total")}>
+                  Total
+                  <SortIcon column="total" />
+                </SortableHeader>
+              </TableHead>
+              <TableHead>
+                <SortableHeader type="button" onClick={() => handleSort("status")}>
+                  Status
+                  <SortIcon column="status" />
+                </SortableHeader>
+              </TableHead>
+              <TableHead>
+                <SortableHeader type="button" onClick={() => handleSort("payment")}>
+                  Pagamento
+                  <SortIcon column="payment" />
+                </SortableHeader>
+              </TableHead>
+              <TableHead>
+                <SortableHeader type="button" onClick={() => handleSort("address")}>
+                  Endereço de Entrega
+                  <SortIcon column="address" />
+                </SortableHeader>
+              </TableHead>
+              <TableHead>
+                <SortableHeader type="button" onClick={() => handleSort("date")}>
+                  Data da Venda
+                  <SortIcon column="date" />
+                </SortableHeader>
+              </TableHead>
               <TableHead alignRight>Ações</TableHead>
             </TableRow>
           </TableHeader>

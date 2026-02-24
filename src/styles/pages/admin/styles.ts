@@ -238,3 +238,26 @@ export const AdminSection = styled.div`
   overflow: auto;
 `;
 
+export const SortableHeader = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  svg {
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+`;
+
