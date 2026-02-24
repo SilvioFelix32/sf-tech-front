@@ -126,6 +126,12 @@ function AdminSales() {
           company_id={company_id}
           isOpen={isDetailsOpen}
           setIsOpen={setIsDetailsOpen}
+          onUpdateStatusClick={(sale) => {
+            setUpdateSaleId(sale.sale_id);
+            setSelectedSaleStatus(sale.status);
+            setIsDetailsOpen(false);
+            setIsUpdateModalOpen(true);
+          }}
         />
       )}
       {updateSaleId && (

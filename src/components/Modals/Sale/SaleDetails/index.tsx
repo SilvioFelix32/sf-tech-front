@@ -63,6 +63,7 @@ export function ModalSaleDetails({
   setIsOpen,
   saleId,
   company_id,
+  onUpdateStatusClick,
 }: ModalSaleDetailsProps) {
   const { data: sale, isLoading } = useQuery<ISale>(
     ["sale", saleId, company_id],
@@ -329,7 +330,15 @@ export function ModalSaleDetails({
           <SecondaryButton onClick={() => setIsOpen(false)}>
             Fechar
           </SecondaryButton>
-          <PrimaryButton>
+          <PrimaryButton
+            type="button"
+            onClick={() => {
+              if (onUpdateStatusClick && sale) {
+                onUpdateStatusClick(sale);
+                setIsOpen(false);
+              }
+            }}
+          >
             <MdModeEditOutline size={16} />
             Atualizar Status
           </PrimaryButton>

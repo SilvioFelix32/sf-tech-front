@@ -70,4 +70,5 @@ export interface ModalSaleDetailsProps {
   setIsOpen: (value: boolean) => void;
   saleId: string;
   company_id: string;
+  onUpdateStatusClick?: (sale: ISale) => void;
 }
