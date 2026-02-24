@@ -163,13 +163,15 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
               paginatedSales.map((sale) => (
                 <TableRow
                   key={sale.sale_id}
-                  onClick={() => onRowClick(sale)}
-                  style={{ cursor: "pointer" }}
                 >
-                  <TableCell fontMedium>
+                  <TableCell fontMedium
+                    onClick={() => onRowClick(sale)}
+                    style={{ cursor: "pointer" }}>
                     R$ {formatPrice(sale.total)}
                   </TableCell>
-                  <TableCell>
+                  <TableCell
+                    onClick={() => onRowClick(sale)}
+                    style={{ cursor: "pointer" }}>
                     <StatusPill
                       $active={
                         sale.status === SaleStatus.APPROVED ||
@@ -179,17 +181,22 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
                       {formatSaleStatus(sale.status)}
                     </StatusPill>
                   </TableCell>
-                  <TableCell muted>
+                  <TableCell muted
+                    onClick={() => onRowClick(sale)}
+                    style={{ cursor: "pointer" }}>
                     {formatPaymentMethod(sale.payment_method)}
                   </TableCell>
-                  <TableCell muted>
+                  <TableCell muted
+                    onClick={() => onRowClick(sale)}
+                    style={{ cursor: "pointer" }}>
                     {sale.deliver_address
-                      ? `${sale.deliver_address.substring(0, 50)}${
-                          sale.deliver_address.length > 50 ? "..." : ""
-                        }`
+                      ? `${sale.deliver_address.substring(0, 50)}${sale.deliver_address.length > 50 ? "..." : ""
+                      }`
                       : "-"}
                   </TableCell>
-                  <TableCell muted>
+                  <TableCell muted
+                    onClick={() => onRowClick(sale)}
+                    style={{ cursor: "pointer" }}>
                     {new Date(sale.created_at).toLocaleDateString("pt-BR", {
                       day: "2-digit",
                       month: "2-digit",
@@ -198,6 +205,7 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
                       minute: "2-digit",
                     })}
                   </TableCell>
+
                   <TableCell alignRight>
                     <CDropdown>
                       <CDropdownToggle caret={false} className="p-0 btn-link">
