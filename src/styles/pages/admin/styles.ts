@@ -4,8 +4,6 @@ import { PageWrapper, PageContent, PageTitle, PageButton } from "../shared";
 export const AdminWrapper = styled(PageWrapper)`
   width: 100%;
   padding: 24px;
-  background-color: ${({ theme }) => 
-    theme.title === "light" ? "#F7F8FA" : theme.colors.background};
   min-height: 100%;
   display: flex;
   flex-direction: column;
