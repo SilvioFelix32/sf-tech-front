@@ -1,160 +1,281 @@
-import React, { useState, memo } from "react";
+import { useState, useMemo, memo } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useQueryClient } from "react-query";
+import { BiSearch, BiPackage, BiPlus, BiStore } from "react-icons/bi";
+import { FiMoreVertical } from "react-icons/fi";
+import { MdModeEditOutline, MdDeleteOutline } from "react-icons/md";
+import {
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
+} from "@coreui/react";
+import "@coreui/coreui/dist/css/coreui.min.css";
+
 import { useProductFilter } from "../../hooks/useProductFilter";
+import { formatPrice } from "../../utils/formatPrice";
+import { IProduct } from "../../interfaces";
 import {
   ModalCreateProduct,
   ModalDeleteProduct,
   ModalEditProduct,
 } from "../../components";
-import { useQueryClient } from "react-query";
-import DataTable from "react-data-table-component";
-import { EditButton, ExcludeButton } from "../../components/Buttons";
-import { AdminContent, AdminTitle, AdminButton, AdminPicture, AdminCard, AdminCardHeader, AdminCardTitle } from "../../styles/pages/admin";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  AdminTableEmpty,
+} from "../../components/AdminTable";
+import {
+  AdminWrapper,
+  AdminContent,
+  AdminTitle,
+  AdminSubtitle,
+  AdminCard,
+  AdminCardHeader,
+  AdminCardHeaderLeft,
+  AdminCardHeaderRight,
+  AdminCardTitleRow,
+  AdminCardTitle,
+  AdminCardCount,
+  AdminSearchWrap,
+  AdminSearchInput,
+  AdminButton,
+  CountBadge,
+} from "../../styles/pages/admin";
+import { AdminProductText } from "@/styles/pages/admin/styles";
 
 function AdminProducts() {
+  const router = useRouter();
   const queryClient = useQueryClient();
-  const [product_id, setProduct_id] = useState("");
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
-  const [open, setOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [onOpen, setOnOpen] = useState(false);
+  const [productId, setProductId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isDeleteOpen, setDeleteOpen] = useState(false);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setEditOpen] = useState(false);
 
   const {
     value: { products, meta },
     isLoading,
-  } = useProductFilter({ page, perPage });
+  } = useProductFilter({ page: 1, perPage: 100 });
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-  };
+  const filteredProducts = useMemo(() => {
+    if (!searchTerm.trim()) return products ?? [];
+    const term = searchTerm.toLowerCase();
 
-  const handlePerRowsChange = (newPerPage: number) => {
-    setPerPage(newPerPage);
-    setPage(1);
-  };
+    return (products ?? []).filter((p: IProduct) => {
+      const title = p.title ?? "";
+      const sku = p.sku ?? "";
+      return (
+        title.toLowerCase().includes(term) ||
+        sku.toLowerCase().includes(term) ||
+        p.product_id.toLowerCase().includes(term)
+      );
+    });
+  }, [products, searchTerm]);
 
   const reloadData = () => queryClient.invalidateQueries(["products"]);
 
-  const columns = [
-    {
-      name: "sku",
-      selector: (row) => row.sku,
-      sortable: true,
-    },
-    {
-      name: "titulo",
-      selector: (row) => row.title,
-      sortable: true,
-    },
-    {
-      name: "imagem",
-      selector: (row) => row.urlBanner,
-    },
-    {
-      name: "destaque",
-      selector: (row) => row.highlighted,
-      sortable: true,
-    },
-    {
-      name: "outros",
-      selector: (row) => row.exclude_alter,
-    },
-  ];
+  const handleOpenEdit = (id: string) => {
+    setProductId(id);
+    setEditOpen(true);
+  };
 
-  const data =
-    products && products.length > 0
-      ? products.map((product) => ({
-          id: product.product_id,
-          sku: product.sku,
-          title: product.title,
-          urlBanner: (
-            <AdminPicture>
-              <Image
-                src={product.urlBanner}
-                alt={product.title}
-                width="200"
-                height="200"
-                style={{ objectFit: "contain" }}
-                priority
-              ></Image>
-            </AdminPicture>
-          ),
-          highlighted: product.highlighted ? "Sim" : "Não",
-          exclude_alter: (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <EditButton
-                onClick={() => {
-                  setOnOpen(true);
-                  setProduct_id(product.product_id);
-                }}
-              ></EditButton>
-              <ExcludeButton
-                onClick={() => {
-                  setProduct_id(product.product_id);
-                  setOpen(true);
-                }}
-              ></ExcludeButton>
-            </div>
-          ),
-        }))
-      : [];
+  const handleOpenDelete = (id: string) => {
+    setProductId(id);
+    setDeleteOpen(true);
+  };
 
-  const paginationComponentOptions = {
-    rowsPerPageText: "Linhas por página",
-    rangeSeparatorText: "de",
-    selectAllRowsItem: false,
+  const handleView = (id: string) => {
+    router.push(`/product/${id}`);
   };
 
   return (
-    <>
-      <AdminContent fullWidth direction="column" align="flex-start">
-        <AdminTitle>Administração de Produtos</AdminTitle>
+    <AdminWrapper>
+      <AdminTitle>Administração de Produtos</AdminTitle>
+      <AdminSubtitle>Gerencie o catálogo de produtos da loja</AdminSubtitle>
+
+      <AdminContent fullWidth>
         <AdminCard>
           <AdminCardHeader>
-            <AdminCardTitle>Lista de Produtos</AdminCardTitle>
-            <AdminButton onClick={() => setIsOpen(true)}>Cadastrar novo Produto</AdminButton>
+            <AdminCardHeaderLeft>
+              <AdminCardTitleRow>
+                <BiPackage />
+                <AdminCardTitle>Lista de Produtos</AdminCardTitle>
+              </AdminCardTitleRow>
+              <AdminCardCount>
+                {meta?.total ?? 0} produtos cadastrados
+              </AdminCardCount>
+            </AdminCardHeaderLeft>
+            <AdminCardHeaderRight>
+              <AdminSearchWrap>
+                <BiSearch />
+                <AdminSearchInput
+                  type="text"
+                  placeholder="Buscar produto..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </AdminSearchWrap>
+              <AdminButton onClick={() => setIsCreateOpen(true)}>
+                <BiPlus size={18} style={{ marginRight: 8 }} />
+                Novo Produto
+              </AdminButton>
+            </AdminCardHeaderRight>
           </AdminCardHeader>
-          <DataTable
-            columns={columns}
-            data={data}
-            pagination
-            progressPending={isLoading}
-            onChangePage={handlePageChange}
-            paginationTotalRows={meta.total}
-            paginationPerPage={perPage}
-            paginationServer
-            paginationComponentOptions={paginationComponentOptions}
-            paginationDefaultPage={page}
-            paginationRowsPerPageOptions={[5, 10, 20]}
-            onChangeRowsPerPage={handlePerRowsChange}
-          />
+
+          {isLoading ? (
+            <p style={{ padding: 24, textAlign: "center", opacity: 0.8 }}>
+              Carregando...
+            </p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>SKU</TableHead>
+                  <TableHead>Produto</TableHead>
+                  <TableHead>Categoria</TableHead>
+                  <TableHead alignRight>Preço</TableHead>
+                  <TableHead alignCenter>Estoque</TableHead>
+                  <TableHead alignCenter>Destaque</TableHead>
+                  <TableHead alignRight>Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product: IProduct) => (
+                    <TableRow key={product.product_id}>
+                      <TableCell mono muted style={{ maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {product.sku ??
+                          `${product.product_id.slice(0, 10)}...`}
+                      </TableCell>
+
+                      <TableCell>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {product.urlBanner && (
+                            <Image
+                              src={product.urlBanner}
+                              alt={product.title ?? "Produto"}
+                              width={48}
+                              height={48}
+                              style={{ objectFit: "cover" }}
+                            />
+                          )}
+                          <AdminProductText>{product.title ?? "Produto sem título"} </AdminProductText>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <CountBadge>
+                          Categoria
+                        </CountBadge>
+                      </TableCell>
+
+                      <TableCell alignRight fontMedium>
+                        {product.price != null
+                          ? `R$ ${formatPrice(product.price)}`
+                          : "-"}
+                      </TableCell>
+
+                      <TableCell alignCenter>
+                        <CountBadge>{product.amount ?? 0}</CountBadge>
+                      </TableCell>
+
+                      <TableCell alignCenter>
+                        <CountBadge $highlight={product.highlighted}>
+                          {product.highlighted ? "Sim" : "Não"}
+                        </CountBadge>
+                      </TableCell>
+
+                      <TableCell alignRight>
+                        <CDropdown>
+                          <CDropdownToggle
+                            caret={false}
+                            className="p-0 btn-link"
+                          >
+                            <FiMoreVertical
+                              size={20}
+                              style={{ cursor: "pointer" }}
+                            />
+                          </CDropdownToggle>
+                          <CDropdownMenu>
+                            <CDropdownItem
+                              onClick={() => handleView(product.product_id)}
+                            >
+                              <BiStore
+                                size={16}
+                                style={{ marginRight: 8 }}
+                              />
+                              Visualizar
+                            </CDropdownItem>
+                            <CDropdownItem
+                              onClick={() =>
+                                handleOpenEdit(product.product_id)
+                              }
+                            >
+                              <MdModeEditOutline
+                                size={16}
+                                style={{ marginRight: 8 }}
+                              />
+                              Editar
+                            </CDropdownItem>
+                            <CDropdownItem
+                              onClick={() =>
+                                handleOpenDelete(product.product_id)
+                              }
+                              className="text-danger"
+                            >
+                              <MdDeleteOutline
+                                size={16}
+                                style={{ marginRight: 8 }}
+                              />
+                              Excluir
+                            </CDropdownItem>
+                          </CDropdownMenu>
+                        </CDropdown>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <AdminTableEmpty
+                    colSpan={7}
+                    message="Nenhum produto encontrado"
+                  />
+                )}
+              </TableBody>
+            </Table>
+          )}
         </AdminCard>
       </AdminContent>
+
       <ModalCreateProduct
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        isOpen={isCreateOpen}
+        setIsOpen={setIsCreateOpen}
         setReloadData={reloadData}
       />
       <ModalEditProduct
-        product_id={product_id}
-        onOpen={onOpen}
-        setOnOpen={setOnOpen}
+        product_id={productId}
+        onOpen={isEditOpen}
+        setOnOpen={setEditOpen}
         setReloadData={reloadData}
       />
       <ModalDeleteProduct
-        product_id={product_id}
-        open={open}
-        setOpen={setOpen}
+        product_id={productId}
+        open={isDeleteOpen}
+        setOpen={setDeleteOpen}
         setReloadData={reloadData}
       />
-    </>
+    </AdminWrapper>
   );
 }
 
