@@ -71,6 +71,7 @@ export function ModalUpdateSaleStatus({
               <option value={SaleStatus.APPROVED}>Aprovada</option>
               <option value={SaleStatus.IN_TRANSIT}>Em Trânsito</option>
               <option value={SaleStatus.DELIVERED}>Entregue</option>
+              <option value={SaleStatus.CANCELED}>Cancelada</option>
             </Select>
           </Content>
         </Context>

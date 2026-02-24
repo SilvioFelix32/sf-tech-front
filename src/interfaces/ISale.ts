@@ -3,6 +3,7 @@ export enum SaleStatus {
   DELIVERED = "DELIVERED",
   UNDER_REVIEW = "UNDER_REVIEW",
   IN_TRANSIT = "IN_TRANSIT",
+  CANCELED = "CANCELED",
 }
 
 export enum PaymentMethod {

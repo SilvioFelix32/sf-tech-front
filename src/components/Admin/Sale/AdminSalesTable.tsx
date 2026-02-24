@@ -60,8 +60,28 @@ function formatSaleStatus(status?: SaleStatus) {
       return "Em Análise";
     case SaleStatus.IN_TRANSIT:
       return "Em Trânsito";
+    case SaleStatus.CANCELED:
+      return "Cancelada";
     default:
       return String(status);
+  }
+}
+
+function getStatusVariant(status?: SaleStatus) {
+  if (!status) return "under_review" as const;
+  switch (status) {
+    case SaleStatus.APPROVED:
+      return "approved" as const;
+    case SaleStatus.DELIVERED:
+      return "delivered" as const;
+    case SaleStatus.UNDER_REVIEW:
+      return "under_review" as const;
+    case SaleStatus.IN_TRANSIT:
+      return "in_transit" as const;
+    case SaleStatus.CANCELED:
+      return "canceled" as const;
+    default:
+      return "default" as const;
   }
 }
 
@@ -173,10 +193,7 @@ export const AdminSalesTable: React.FC<AdminSalesTableProps> = ({
                     onClick={() => onRowClick(sale)}
                     style={{ cursor: "pointer" }}>
                     <StatusPill
-                      $active={
-                        sale.status === SaleStatus.APPROVED ||
-                        sale.status === SaleStatus.DELIVERED
-                      }
+                      $variant={getStatusVariant(sale.status)}
                     >
                       {formatSaleStatus(sale.status)}
                     </StatusPill>

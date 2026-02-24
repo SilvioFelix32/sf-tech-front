@@ -128,16 +128,61 @@ export const AdminSearchInput = styled.input`
   }
 `;
 
-export const StatusPill = styled.span<{ $active?: boolean }>`
+type StatusVariant =
+  | "approved"
+  | "delivered"
+  | "under_review"
+  | "in_transit"
+  | "canceled"
+  | "default";
+
+export const StatusPill = styled.span<{ $active?: boolean; $variant?: StatusVariant }>`
   display: inline-block;
   padding: 4px 10px;
   border-radius: 9999px;
   font-size: 0.8rem;
   font-weight: 600;
-  background-color: ${({ theme, $active }) =>
-    $active ? `${theme.colors.tertiary}30` : "rgba(254, 202, 202, 0.6)"};
-  color: ${({ theme, $active }) =>
-    $active ? theme.colors.quaternary : "#b91c1c"};
+  ${({ theme, $active, $variant }) => {
+    if ($variant) {
+      switch ($variant) {
+        case "delivered":
+          return `
+            background-color: ${theme.colors.tertiary}30;
+            color: ${theme.colors.quaternary};
+          `;
+        case "approved":
+          return `
+            background-color: rgba(59, 130, 246, 0.18);
+            color: #1d4ed8;
+          `;
+        case "under_review":
+          return `
+            background-color: rgba(249, 115, 22, 0.18);
+            color: #c2410c;
+          `;
+        case "in_transit":
+          return `
+            background-color: rgba(234, 179, 8, 0.2);
+            color: #854d0e;
+          `;
+        case "canceled":
+          return `
+            background-color: rgba(248, 113, 113, 0.22);
+            color: #b91c1c;
+          `;
+        default:
+          return `
+            background-color: rgba(148, 163, 184, 0.25);
+            color: ${theme.colors.text};
+          `;
+      }
+    }
+
+    return `
+      background-color: ${$active ? `${theme.colors.tertiary}30` : "rgba(254, 202, 202, 0.6)"};
+      color: ${$active ? theme.colors.quaternary : "#b91c1c"};
+    `;
+  }}
 `;
 
 export const CountBadge = styled.span<{ $highlight?: boolean }>`

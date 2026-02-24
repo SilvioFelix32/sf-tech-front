@@ -9,16 +9,39 @@ import { Modal as ModalCreate } from "react-responsive-modal";
 import { ValidationMessage } from "../../../ValidationMessage";
 //styles
 import {
-  Button,
-  Text,
-  Content,
   Wrapper,
+  Header,
+  HeaderTitleRow,
+  HeaderTitle,
+  HeaderDescription,
+  FormGrid,
+  Row,
+  RowThree,
+  FieldGroup,
+  FieldLabelRow,
+  LabelIcon,
+  LabelRequired,
+  LabelOptional,
   Input,
   Select,
-  Context,
-} from "./styles";
+  Textarea,
+  ImagePreview,
+  PriceSummary,
+  Footer,
+  SecondaryButton,
+  PrimaryButton,
+} from "../styles";
 import "react-responsive-modal/styles.css";
 import { GetSwallAlert, validateForm, validators } from "../../../../utils";
+import {
+  LuPackage,
+  LuFileText,
+  LuDollarSign,
+  LuLayers,
+  LuImagePlus,
+  LuTag,
+  LuStar,
+} from "react-icons/lu";
 
 interface modalProps {
   isOpen: boolean;
@@ -41,7 +64,7 @@ export function ModalCreateProduct({
   const [urlBanner, setUrl] = useState<string>();
   const [price, setPrice] = useState<number>();
   const [discount, setDiscount] = useState<number>();
-  const [highlighted, setHighlighted] = useState(true);
+  const [highlighted, setHighlighted] = useState(false);
   const [validationError, setValidationError] = useState<string>("");
 
   const {
@@ -115,88 +138,238 @@ export function ModalCreateProduct({
       }}
       open={isOpen}
       onClose={() => setIsOpen(false)}
+      styles={{ modal: { width: "720px", maxHeight: "90vh", padding: 0 } }}
       center
     >
       <Wrapper onSubmit={handleSubmit}>
-        <Context>
-          <Content>
-            <Text>Titulo:</Text>
-            <Input type="string" onChange={(e) => setTitle(e.target.value)} />
-            <Text>Subtitulo:</Text>
+        <Header>
+          <HeaderTitleRow>
+            <LuPackage size={20} />
+            <HeaderTitle>Cadastrar Novo Produto</HeaderTitle>
+          </HeaderTitleRow>
+          <HeaderDescription>
+            Preencha os campos abaixo para adicionar um novo produto ao catálogo.
+          </HeaderDescription>
+        </Header>
+
+        <FormGrid>
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="title">
+                <LabelIcon>
+                  <LuFileText size={14} />
+                </LabelIcon>
+                Título <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="title"
+                placeholder="Ex: PC Gamer Starter"
+                value={title || ""}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <FieldLabelRow htmlFor="highlighted">
+                <LabelIcon>
+                  <LuStar size={14} />
+                </LabelIcon>
+                Em destaque
+              </FieldLabelRow>
+              <Select
+                id="highlighted"
+                value={String(highlighted)}
+                onChange={(e) => setHighlighted(e.target.value === "true")}
+              >
+                <option value="false">Não</option>
+                <option value="true">Sim</option>
+              </Select>
+            </FieldGroup>
+          </Row>
+
+          <RowThree>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="subtitle">
+                <LabelIcon>
+                  <LuFileText size={14} />
+                </LabelIcon>
+                Subtítulo
+              </FieldLabelRow>
+              <Input
+                id="subtitle"
+                placeholder="Ex: Montagem Completa"
+                value={subtitle || ""}
+                onChange={(e) => setSubtitle(e.target.value)}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <FieldLabelRow htmlFor="price">
+                <LabelIcon>
+                  <LuDollarSign size={14} />
+                </LabelIcon>
+                Valor <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="price"
+                type="number"
+                min={0}
+                step="0.01"
+                placeholder="0,00"
+                value={price ?? ""}
+                onChange={(e) => setPrice(Number(e.target.value))}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <FieldLabelRow htmlFor="category_id">
+                <LabelIcon>
+                  <LuLayers size={14} />
+                </LabelIcon>
+                Categoria <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              {isLoading ? (
+                <Input disabled value="Carregando categorias..." />
+              ) : isError ? (
+                <Input disabled value="Erro ao carregar categorias" />
+              ) : (
+                <Select
+                  id="category_id"
+                  value={category || ""}
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option value="">Selecione...</option>
+                  {categories.map((categoryOption) => (
+                    <option
+                      key={categoryOption.value}
+                      value={categoryOption.value}
+                    >
+                      {categoryOption.label}
+                    </option>
+                  ))}
+                </Select>
+              )}
+            </FieldGroup>
+          </RowThree>
+
+          <FieldGroup>
+            <FieldLabelRow htmlFor="urlBanner">
+              <LabelIcon>
+                <LuImagePlus size={14} />
+              </LabelIcon>
+              Imagem de capa
+              <LabelOptional>(Opcional)</LabelOptional>
+            </FieldLabelRow>
             <Input
-              type="string"
-              onChange={(e) => setSubtitle(e.target.value)}
-            />
-            <Text>Descrição do produto:</Text>
-            <Input
-              type="string"
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Content>
-          <Content>
-            <Text>Imagem de capa:</Text>
-            <Input
-              type="string"
-              placeholder="(Opcional)"
+              id="urlBanner"
+              placeholder="https://exemplo.com/imagem.jpg"
+              value={urlBanner || ""}
               onChange={(e) => setUrl(e.target.value)}
             />
-            <Text>Valor:</Text>
-            <Input
-              type="number"
-              min={0}
-              onChange={(e) => setPrice(Number(e.target.value))}
-            />
-            <Text>Valor Desconto:</Text>
-            <Input
-              type="number"
-              min={0}
-              onChange={(e) => setDiscount(Number(e.target.value))}
-            />
-          </Content>
-          <Content>
-            <Text>Em destaque:</Text>
-            <Select
-              onChange={(e) =>
-                setHighlighted(e.target.value === "true" ? true : false)
-              }
-              defaultValue="false"
-            >
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </Select>
-            <Text>Categoria de produto:</Text>
-            {isLoading ? (
-              <Text>Carregando categorias...</Text>
-            ) : isError ? (
-              <Text>Erro ao carregar categorias</Text>
-            ) : (
-              <Select
-                onChange={(e) => setCategory(e.target.value)}
-                defaultValue=""
-              >
-                <option value=""></option>
-                {categories.map(
-                  (category: { label: string; value: string }) => (
-                    <option key={category.value} value={category.value}>
-                      {category.label}
-                    </option>
-                  )
-                )}
-              </Select>
+            {urlBanner && (
+              <ImagePreview>
+                <img
+                  src={urlBanner}
+                  alt="Preview"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+              </ImagePreview>
             )}
-            <Text>Sku:</Text>
-            <Input
-              type="string"
-              placeholder="(Opcional)"
-              onChange={(e) => setSku(e.target.value)}
+          </FieldGroup>
+
+          <FieldGroup>
+            <FieldLabelRow htmlFor="description">
+              <LabelIcon>
+                <LuFileText size={14} />
+              </LabelIcon>
+              Descrição do produto
+            </FieldLabelRow>
+            <Textarea
+              id="description"
+              placeholder="Descreva as características e detalhes do produto..."
+              value={description || ""}
+              onChange={(e) => setDescription(e.target.value)}
             />
-          </Content>
-        </Context>
-        <ValidationMessage 
-          message={validationError} 
-          show={!!validationError} 
+          </FieldGroup>
+
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="discount">
+                <LabelIcon>
+                  <LuTag size={14} />
+                </LabelIcon>
+                Valor Desconto
+              </FieldLabelRow>
+              <Input
+                id="discount"
+                type="number"
+                min={0}
+                step="0.01"
+                placeholder="0,00"
+                value={discount ?? ""}
+                onChange={(e) => setDiscount(Number(e.target.value))}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <FieldLabelRow htmlFor="sku">
+                <LabelIcon>
+                  <LuPackage size={14} />
+                </LabelIcon>
+                SKU
+                <LabelOptional>(Opcional)</LabelOptional>
+              </FieldLabelRow>
+              <Input
+                id="sku"
+                placeholder="Gerado automaticamente se vazio"
+                value={sku || ""}
+                onChange={(e) => setSku(e.target.value)}
+              />
+            </FieldGroup>
+          </Row>
+
+          {price && discount && discount > 0 && (
+            <PriceSummary>
+              <span>Resumo de preço:</span>
+              <div className="line">
+                <span className="old">
+                  R${" "}
+                  {price.toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                  })}
+                </span>
+                <span className="new">
+                  R${" "}
+                  {(price - discount).toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                  })}
+                </span>
+                <span className="badge">
+                  {Math.round((discount / price) * 100)}% OFF
+                </span>
+              </div>
+            </PriceSummary>
+          )}
+        </FormGrid>
+
+        <ValidationMessage
+          message={validationError}
+          show={!!validationError}
         />
-        <Button type="submit">Cadastrar</Button>
+
+        <Footer>
+          <SecondaryButton type="button" onClick={() => setIsOpen(false)}>
+            Cancelar
+          </SecondaryButton>
+          <PrimaryButton
+            type="submit"
+            disabled={!title || !price || !category}
+          >
+            Cadastrar Produto
+          </PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalCreate>
   );
