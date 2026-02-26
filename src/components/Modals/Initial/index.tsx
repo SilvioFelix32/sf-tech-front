@@ -6,7 +6,6 @@ import {
   Wrapper,
   Header,
   HeaderTitle,
-  HeaderDescription,
   ContentBlock,
   TextBlock,
   Footer,
@@ -36,25 +35,28 @@ export function InitialModal({ isOpen, setOpen }: ModalProps) {
       open={isOpen}
       onClose={() => setOpen(false)}
       center
-      styles={{ modal: { width: "560px", maxHeight: "90vh", padding: 0 } }}
+      styles={{ modal: { width: "100%"} }}
     >
       <Wrapper>
         <Header>
-          <HeaderTitle>Bem-vindo ao SF-Tech!</HeaderTitle>
-          <HeaderDescription>
-            Projeto de e-commerce desenvolvido com Clean Architecture, Clean Code e usando os Principios SOLID.
-          </HeaderDescription>
+          <HeaderTitle style={{ fontSize: "1.5rem" }}>Bem-vindo ao SF-Tech!</HeaderTitle>
         </Header>
 
         <ContentBlock>
           <TextBlock>
-            <strong>Frontend:</strong> Next.js, React e Styled-Components para estilização de interfaces dinâmicas e responsivas.
+            Projeto de e-commerce desenvolvido com Clean Architecture, Clean Code e usando os Principios SOLID.
           </TextBlock>
           <TextBlock>
-            <strong>Backend Node.js:</strong> NestJS, Prisma e Redis para gestão de produtos, com 100% de cobertura de testes.
+            <strong style={{ fontWeight: 600 }}>Frontend:</strong> Next.js, React e Styled-Components para estilização de interfaces dinâmicas e responsivas.
           </TextBlock>
           <TextBlock>
-            <strong>Backend Java:</strong> Spring Boot para gestão de vendas.
+            <strong style={{ fontWeight: 600 }}>Autenticação:</strong> AWS Cognito para autenticação de usuários e gerenciamento de sessões.
+          </TextBlock>
+          <TextBlock>
+            <strong style={{ fontWeight: 600 }}>Backend Node.js:</strong> NestJS, Prisma e Redis para gestão de produtos, com 100% de cobertura de testes.
+          </TextBlock>
+          <TextBlock>
+            <strong style={{ fontWeight: 600 }}>Backend Java:</strong> Spring Boot para gestão de vendas.
           </TextBlock>
         </ContentBlock>
 
