@@ -15,7 +15,17 @@ import "@coreui/coreui/dist/css/coreui.min.css";
 
 import { useProductFilter } from "../../hooks/useProductFilter";
 import { formatPrice } from "../../utils/formatPrice";
-import { IProduct } from "../../interfaces";
+import { IProduct, StockLevel } from "../../interfaces";
+
+function getStockLevelLabel(level: StockLevel | undefined): string {
+  const labels: Record<StockLevel, string> = {
+    OutOfStock: "Sem estoque",
+    Low: "Baixo",
+    Medium: "Médio",
+    High: "Alto",
+  };
+  return level ? labels[level] ?? level : "-";
+}
 import {
   ModalCreateProduct,
   ModalDeleteProduct,
@@ -162,6 +172,7 @@ function AdminProducts() {
                   <TableHead>Categoria</TableHead>
                   <TableHead alignRight>Preço</TableHead>
                   <TableHead alignCenter>Estoque</TableHead>
+                  <TableHead alignCenter>Nível</TableHead>
                   <TableHead alignCenter>Destaque</TableHead>
                   <TableHead alignRight>Ações</TableHead>
                 </TableRow>
@@ -209,7 +220,13 @@ function AdminProducts() {
                       </TableCell>
 
                       <TableCell alignCenter>
-                        <CountBadge>{product.amount ?? 0}</CountBadge>
+                        <CountBadge>{product.stock ?? 0}</CountBadge>
+                      </TableCell>
+
+                      <TableCell alignCenter>
+                        <CountBadge $variant={product.stock_level}>
+                          {getStockLevelLabel(product.stock_level)}
+                        </CountBadge>
                       </TableCell>
 
                       <TableCell alignCenter>
@@ -269,7 +286,7 @@ function AdminProducts() {
                   ))
                 ) : (
                   <AdminTableEmpty
-                    colSpan={7}
+                    colSpan={8}
                     message="Nenhum produto encontrado"
                   />
                 )}

@@ -41,6 +41,7 @@ import {
   LuImagePlus,
   LuTag,
   LuStar,
+  LuBoxes,
 } from "react-icons/lu";
 
 interface modalProps {
@@ -64,6 +65,7 @@ export function ModalCreateProduct({
   const [urlBanner, setUrl] = useState<string>();
   const [price, setPrice] = useState<number>();
   const [discount, setDiscount] = useState<number>();
+  const [stock, setStock] = useState<number>(0);
   const [highlighted, setHighlighted] = useState(false);
   const [validationError, setValidationError] = useState<string>("");
 
@@ -106,7 +108,8 @@ export function ModalCreateProduct({
       { field: "subtitle", value: subtitle, message: "O campo Subtítulo é obrigatório", validator: validators.requiredString },
       { field: "description", value: description, message: "O campo Descrição é obrigatório", validator: validators.requiredString },
       { field: "category", value: category, message: "O campo Categoria é obrigatório", validator: validators.selectedOption },
-      { field: "price", value: price, message: "O campo Valor deve ser maior que zero", validator: validators.positiveNumber }
+      { field: "price", value: price, message: "O campo Valor deve ser maior que zero", validator: validators.positiveNumber },
+      { field: "stock", value: stock, message: "O campo Estoque deve ser um número válido (≥ 0)", validator: validators.nonNegativeNumber }
     ]);
 
     if (!validation.isValid) {
@@ -123,6 +126,7 @@ export function ModalCreateProduct({
       urlBanner: urlBanner || "https://i.imgur.com/2HFGvvT.png",
       price,
       discount,
+      stock: stock ?? 0,
       highlighted,
     };
 
@@ -294,7 +298,25 @@ export function ModalCreateProduct({
             />
           </FieldGroup>
 
-          <Row>
+          <RowThree>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="stock">
+                <LabelIcon>
+                  <LuBoxes size={14} />
+                </LabelIcon>
+                Estoque <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="stock"
+                type="number"
+                min={0}
+                step={1}
+                placeholder="0"
+                value={stock ?? ""}
+                onChange={(e) => setStock(Number(e.target.value) || 0)}
+              />
+            </FieldGroup>
+
             <FieldGroup>
               <FieldLabelRow htmlFor="discount">
                 <LabelIcon>
@@ -328,7 +350,7 @@ export function ModalCreateProduct({
                 onChange={(e) => setSku(e.target.value)}
               />
             </FieldGroup>
-          </Row>
+          </RowThree>
 
           {price && discount && discount > 0 && (
             <PriceSummary>
@@ -365,7 +387,7 @@ export function ModalCreateProduct({
           </SecondaryButton>
           <PrimaryButton
             type="submit"
-            disabled={!title || !price || !category}
+            disabled={!title || !price || !category || stock === undefined}
           >
             Cadastrar Produto
           </PrimaryButton>

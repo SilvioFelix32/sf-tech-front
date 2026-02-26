@@ -185,20 +185,35 @@ export const StatusPill = styled.span<{ $active?: boolean; $variant?: StatusVari
   }}
 `;
 
-export const CountBadge = styled.span<{ $highlight?: boolean }>`
+type StockLevelVariant = "OutOfStock" | "Low" | "Medium" | "High";
+
+export const CountBadge = styled.span<{
+  $highlight?: boolean;
+  $variant?: StockLevelVariant;
+}>`
   display: inline-block;
   padding: 4px 10px;
   border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 600;
-  background-color: ${({ theme, $highlight }) =>
-    $highlight
-      ? `${theme.colors.tertiary}30`
-      : theme.title === "light"
-        ? "rgba(0, 0, 0, 0.06)"
-        : "rgba(255, 255, 255, 0.1)"};
-  color: ${({ theme, $highlight }) =>
-    $highlight ? theme.colors.quaternary : theme.colors.text};
+  background-color: ${({ theme, $highlight, $variant }) => {
+    if ($highlight) return `${theme.colors.tertiary}30`;
+    if ($variant === "OutOfStock") return "rgba(220, 38, 38, 0.15)";
+    if ($variant === "Low") return "rgba(245, 158, 11, 0.2)";
+    if ($variant === "Medium") return "rgba(34, 197, 94, 0.15)";
+    if ($variant === "High") return "rgba(22, 163, 74, 0.25)";
+    return theme.title === "light"
+      ? "rgba(0, 0, 0, 0.06)"
+      : "rgba(255, 255, 255, 0.1)";
+  }};
+  color: ${({ theme, $highlight, $variant }) => {
+    if ($highlight) return theme.colors.quaternary;
+    if ($variant === "OutOfStock") return "#dc2626";
+    if ($variant === "Low") return "#d97706";
+    if ($variant === "Medium") return "#16a34a";
+    if ($variant === "High") return "#15803d";
+    return theme.colors.text;
+  }};
 `;
 
 export const AdminButton = styled(PageButton).attrs({

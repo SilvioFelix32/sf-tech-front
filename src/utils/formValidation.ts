@@ -25,5 +25,7 @@ export const validators = {
   required: (value: any) => value !== undefined && value !== null && value !== '',
   requiredString: (value: string) => value !== undefined && value !== null && value.trim() !== '',
   positiveNumber: (value: number) => value !== undefined && value !== null && value > 0,
-  selectedOption: (value: string) => value !== undefined && value !== null && value !== ''
+  nonNegativeNumber: (value: number) =>
+    value !== undefined && value !== null && !Number.isNaN(value) && value >= 0,
+  selectedOption: (value: string) => value !== undefined && value !== null && value !== '',
 };

@@ -36,6 +36,7 @@ import {
   LuLayers,
   LuImagePlus,
   LuTag,
+  LuBoxes,
 } from "react-icons/lu";
 
 interface ModalProps {
@@ -74,7 +75,7 @@ export function ModalEditProduct({
   const mutation = useMutation(
     async (data: IUpdateProduct) => {
       const sanitizedData = sanitazePayload(data);
-      const { product_id, ...rest } = sanitizedData;
+      const { product_id: _productId, stock_level: _stockLevel, ...rest } = sanitizedData;
       try {
         return await productsService.update(product_id, {
           ...rest,
@@ -253,6 +254,26 @@ export function ModalEditProduct({
               {...register("description")}
             />
           </FieldGroup>
+
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="stock">
+                <LabelIcon>
+                  <LuBoxes size={14} />
+                </LabelIcon>
+                Estoque <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="stock"
+                type="number"
+                min={0}
+                step={1}
+                placeholder="0"
+                {...register("stock", { valueAsNumber: true })}
+              />
+            </FieldGroup>
+
+          </Row>
 
           <Row>
             <FieldGroup>

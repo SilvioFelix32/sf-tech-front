@@ -1,3 +1,5 @@
+export type StockLevel = "OutOfStock" | "Low" | "Medium" | "High";
+
 export interface IProduct {
   product_id: string;
   category_id: string;
@@ -8,9 +10,10 @@ export interface IProduct {
   urlBanner?: string;
   price?: number;
   discount?: number;
+  stock?: number;
+  stock_level?: StockLevel;
   highlighted?: boolean;
   active?: boolean;
-  amount?: number;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -26,9 +29,10 @@ export interface IUpdateProduct {
   urlBanner?: string;
   price?: number;
   discount?: number;
+  stock?: number;
+  stock_level?: StockLevel;
   highlighted?: boolean;
   active?: boolean;
-  amount?: number;
 
   createdAt?: Date | string;
   updatedAt?: Date | string;

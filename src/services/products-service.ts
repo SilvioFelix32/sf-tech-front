@@ -58,8 +58,6 @@ async function create(
   params: IProduct
 ): Promise<IProduct> {
   try {
-    console.log("TOKEN", nextauth);
-    
     const response = await api.post<IProduct>(`${baseUrl}`, params, {
       headers: {
         category_id,
