@@ -15,7 +15,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 }
 
 export function sanitazePayload<T>(payload: T): StripTimestamps<T> {
-  const omitKeys = new Set(['createdAt', 'updatedAt']);
+  const omitKeys = new Set(['createdAt', 'updatedAt', 'stock_level']);
 
   const sanitize = (value: unknown): unknown => {
     if (Array.isArray(value)) {
