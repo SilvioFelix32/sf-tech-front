@@ -1,4 +1,4 @@
-import { User } from "../../../services/auth";
+import { User } from "../../../interfaces/IUser";
 import { useQuery } from "react-query";
 import { addressService } from "../../../services/address-service";
 import { IAddress } from "../../../interfaces/IDbUser";

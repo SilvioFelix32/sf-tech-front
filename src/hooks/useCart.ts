@@ -1,5 +1,5 @@
 import { useCartStore } from "../stores/cartStore";
-import { ICartContext } from "../services/cart";
+import { ICartContext } from "../interfaces/ICart";
 import { useMemo } from "react";
 
 export const useCart = (): ICartContext => {

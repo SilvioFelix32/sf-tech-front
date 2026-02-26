@@ -9,7 +9,7 @@ import {
   InfoText,
 } from "./styles";
 import { BtnAddOrRemove } from "../Buttons";
-import { CartItemType } from "../../services/cart";
+import { CartItemType } from "../../interfaces/ICart";
 import { formatPrice } from "../../utils/formatPrice";
 
 interface ProductCardProps {

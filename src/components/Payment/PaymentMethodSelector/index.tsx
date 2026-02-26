@@ -7,7 +7,7 @@ import {
 } from "@coreui/react";
 import { CardForm } from "../Card";
 import { PixForm } from "../Pix";
-import { User } from "../../../services/auth";
+import { User } from "../../../interfaces/IUser";
 import { PaymentCard, PaymentOptions, SelectedBadge } from "./styles";
 import { Title } from "../styles";
 

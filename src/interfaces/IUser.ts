@@ -12,3 +12,14 @@ export interface IUser {
   role: Role;
   user_id: string;
 }
+
+export type User = {
+  name?: string;
+  lastName?: string;
+  email?: string;
+  role?: Role;
+  user_id?: string;
+  isSignedIn?: boolean;
+  userStatus?: string;
+};
+

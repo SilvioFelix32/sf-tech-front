@@ -1,5 +1,5 @@
 import { salesApi } from "./api";
-import { AxiosError } from "axios";
+import { handleApiError } from "@/errors/errorHandler";
 import {
   SaleService,
   ISale,
@@ -42,8 +42,7 @@ async function getAll(
     
     return response.data as ISale[];
   } catch (error) {
-    handleAxiosError(error);
-    throw error;
+    throw handleApiError(error);
   }
 }
 
@@ -63,8 +62,7 @@ async function getById(company_id: string, saleId: string): Promise<ISale> {
     }
     return response.data as ISale;
   } catch (error) {
-    handleAxiosError(error);
-    throw error;
+    throw handleApiError(error);
   }
 }
 
@@ -82,8 +80,7 @@ async function create(
     });
     return response.data;
   } catch (error) {
-    handleAxiosError(error);
-    throw error;
+    throw handleApiError(error);
   }
 }
 
@@ -107,8 +104,7 @@ async function updateStatus(
     }
     return response.data as ISale;
   } catch (error) {
-    handleAxiosError(error);
-    throw error;
+    throw handleApiError(error);
   }
 }
 
@@ -120,13 +116,7 @@ async function _delete(company_id: string, saleId: string): Promise<void> {
       },
     });
   } catch (error) {
-    handleAxiosError(error);
-    throw error;
+    throw handleApiError(error);
   }
-}
-
-function handleAxiosError(error: AxiosError) {
-  console.error("SaleService, Error:", error);
-  throw new Error(`SaleService, Error: ${error}`);
 }
 

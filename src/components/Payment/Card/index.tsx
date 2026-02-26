@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User } from "../../../services/auth";
+import { User } from "../../../interfaces/IUser";
 import {
   Wrapper,
   CardVisualWrapper,

@@ -1,4 +1,5 @@
 import api from "./api";
+import { handleApiError } from "@/errors/errorHandler";
 import {
   IDbUser,
   ICreateUserRequest,
@@ -15,24 +16,36 @@ export const userService: DbUserService = {
 };
 
 async function create(data: ICreateUserRequest): Promise<IDbUser> {
-  const response = await api.post<IDbUser>(baseUrl, data);
-  return response.data;
+  try {
+    const response = await api.post<IDbUser>(baseUrl, data);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }
 
 async function findById(user_id: string): Promise<IDbUser> {
-  const response = await api.get<IDbUser>(`${baseUrl}/${user_id}`);
-  return response.data;
+  try {
+    const response = await api.get<IDbUser>(`${baseUrl}/${user_id}`);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }
 
 async function update(
   user_id: string,
   data: IUpdateUserRequest
 ): Promise<IDbUser> {
-  const response = await api.patch<IDbUser>(
-    `${baseUrl}/${user_id}`,
-    data
-  );
-  return response.data;
+  try {
+    const response = await api.patch<IDbUser>(
+      `${baseUrl}/${user_id}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }
 
 

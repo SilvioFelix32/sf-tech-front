@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { User } from "../services/auth";
+import { User } from "../interfaces/IUser";
 import { authService } from "../services/auth.service";
 import { SignInInput } from "aws-amplify/auth";
 import { syncUserWithDb } from "../services/user-sync.service";
