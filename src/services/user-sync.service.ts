@@ -33,9 +33,9 @@ function mapUserToDbUser(user: User): ICreateUserRequest {
 
   return {
     user_id: user.user_id,
-    first_name: user.name || "",
-    last_name: user.lastName || "",
-    email: user.email || "",
+    first_name: user.name || faker.person.firstName(),
+    last_name: user.lastName || faker.person.lastName(),
+    email: user.email,
     cpf,
     cellphone,
     birthdate,

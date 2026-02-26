@@ -1,13 +1,14 @@
+// Eu do futuro: 
+    * Melhorar descrições dos TODOs: 
+        * Incluir causa de erro, como log.
+        * Detalhamento do todo de forma especifica.
+        * Escrever de forma que eu consiga entender no futuro.
 
 // TODO
-- Usar o construtor de erros globais nas buscas da api (services).
-
-
 -- Remover o erro de rerender no cadastro do usuário no banco
 -- Adicionar o novo tipo a pagina de minha conta
 
 -- Melhorar os estilos modal de cadastro de endereço
 
-
--- Integrar ao backend de protudos o estoque e o nivel do estoque do produto. 
--- Integrar ao backend de sales as opções de status (CANCELLED)
+-- Integrar ao front e backend de protudos o estoque e o nivel do estoque do produto. 
+-- Integrar ao front e backend de sales as opções de status (CANCELLED)
