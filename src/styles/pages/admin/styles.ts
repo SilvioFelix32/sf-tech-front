@@ -189,6 +189,7 @@ type StockLevelVariant = "OutOfStock" | "Low" | "Medium" | "High";
 
 export const CountBadge = styled.span<{
   $highlight?: boolean;
+  $negative?: boolean;
   $variant?: StockLevelVariant;
 }>`
   display: inline-block;
@@ -196,22 +197,24 @@ export const CountBadge = styled.span<{
   border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 600;
-  background-color: ${({ theme, $highlight, $variant }) => {
-    if ($highlight) return `${theme.colors.tertiary}30`;
+  background-color: ${({ theme, $highlight, $negative, $variant }) => {
+    if ($highlight) return "rgba(34, 197, 94, 0.2)";
+    if ($negative) return "rgba(220, 38, 38, 0.15)";
     if ($variant === "OutOfStock") return "rgba(220, 38, 38, 0.15)";
     if ($variant === "Low") return "rgba(245, 158, 11, 0.2)";
-    if ($variant === "Medium") return "rgba(34, 197, 94, 0.15)";
-    if ($variant === "High") return "rgba(22, 163, 74, 0.25)";
+    if ($variant === "Medium") return "rgba(234, 179, 8, 0.2)";
+    if ($variant === "High") return "rgba(34, 197, 94, 0.2)";
     return theme.title === "light"
       ? "rgba(0, 0, 0, 0.06)"
       : "rgba(255, 255, 255, 0.1)";
   }};
-  color: ${({ theme, $highlight, $variant }) => {
-    if ($highlight) return theme.colors.quaternary;
+  color: ${({ theme, $highlight, $negative, $variant }) => {
+    if ($highlight) return "#16a34a";
+    if ($negative) return "#dc2626";
     if ($variant === "OutOfStock") return "#dc2626";
     if ($variant === "Low") return "#d97706";
-    if ($variant === "Medium") return "#16a34a";
-    if ($variant === "High") return "#15803d";
+    if ($variant === "Medium") return "#ca8a04";
+    if ($variant === "High") return "#16a34a";
     return theme.colors.text;
   }};
 `;

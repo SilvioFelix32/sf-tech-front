@@ -81,7 +81,8 @@ export function ModalCreateProduct({
     {
       onSuccess: () => {
         setReloadData(Math.random());
-        queryClient.invalidateQueries("products");
+        queryClient.invalidateQueries(["products"]);
+        queryClient.invalidateQueries(["admin-products"]);
       },
       onError: (error: Error) => {
         GetSwallAlert(

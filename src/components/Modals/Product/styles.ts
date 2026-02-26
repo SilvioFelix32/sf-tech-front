@@ -3,9 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-height: 90vh;
-  padding: 20px 24px 18px;
+  padding: 20px;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 

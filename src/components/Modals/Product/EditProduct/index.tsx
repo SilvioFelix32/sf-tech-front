@@ -75,7 +75,7 @@ export function ModalEditProduct({
   const mutation = useMutation(
     async (data: IUpdateProduct) => {
       const sanitizedData = sanitazePayload(data);
-      const { product_id: _productId, stock_level: _stockLevel, ...rest } = sanitizedData;
+      const { product_id, ...rest } = sanitizedData;
       try {
         return await productsService.update(product_id, {
           ...rest,
@@ -89,6 +89,7 @@ export function ModalEditProduct({
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["products"]);
+        queryClient.invalidateQueries(["admin-products"]);
         setReloadData(Math.random());
         setOnOpen(false);
       },

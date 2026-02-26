@@ -14,3 +14,4 @@ export * from "./IProductReview";
 
 // Admin
 export * from "./ISale";
+export * from "./IAdminProduct";

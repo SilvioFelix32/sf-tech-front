@@ -3,15 +3,17 @@ import { useQuery } from "react-query";
 import { productsService } from "../services";
 import { IProductResponse } from "@/interfaces";
 
-interface useCategoryFilterOptions {
+interface useProductFilterOptions {
   page: number;
   perPage: number;
+  queryKey?: string;
 }
 
 export const useProductFilter = ({
   page,
   perPage,
-}: useCategoryFilterOptions) => {
+  queryKey = "products",
+}: useProductFilterOptions) => {
   const {
     data: response = {
       data: [],
@@ -22,7 +24,7 @@ export const useProductFilter = ({
     isError,
     refetch,
   } = useQuery<IProductResponse>(
-    ["products", page, perPage],
+    [queryKey, page, perPage],
     () => productsService.getAll({ page, limit: perPage }),
     {
       select: ({ data, meta, message }) => ({ data, meta, message }),

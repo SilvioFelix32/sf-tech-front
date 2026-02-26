@@ -18,5 +18,6 @@ export {
   StatusPill,
   CountBadge,
   SortableHeader,
+  AdminProductText,
 } from './styles';
 
