@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCart } from "../../../hooks/useCart";
 import { Modal as ModalComponent } from "react-responsive-modal";
-import { CartItemType } from "../../../services/cart";
+import { CartItemType } from "../../../interfaces/ICart";
 import { BtnAddOrRemove } from "../../Buttons";
 import { BsXLg } from "react-icons/bs";
 import { formatPrice } from "../../../utils/formatPrice";

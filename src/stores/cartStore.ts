@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CartItemType } from "../services/cart";
+import { CartItemType } from "../interfaces/ICart";
 import { getCookie, setCookie } from "../services/cookie-service";
 
 interface CartState {

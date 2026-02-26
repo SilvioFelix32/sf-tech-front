@@ -2,9 +2,6 @@
 export * from "./api";
 export * from "./auth.service";
 export * from "./cookie-service";
-export * from "./auth";
-export * from "./cart";
-export * from "./favorite";
 
 // Business Services
 export * from "./companies-service";

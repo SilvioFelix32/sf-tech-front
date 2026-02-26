@@ -1,5 +1,5 @@
 import api from "./api";
-import { AxiosError } from "axios";
+import { handleApiError } from "@/errors/errorHandler";
 import { getCookie } from "./cookie-service";
 import { IProduct } from "../interfaces";
 import {
@@ -29,7 +29,7 @@ async function getAll(params: IParamsRequest): Promise<IProductResponse> {
     });
     return response.data;
   } catch (error) {
-    handleAxiosError(error);
+    throw handleApiError(error);
   }
 }
 
@@ -40,7 +40,7 @@ async function search(searchTerm: string): Promise<IProductInterface> {
     );
     return response.data;
   } catch (error) {
-    handleAxiosError(error);
+    throw handleApiError(error);
   }
 }
 
@@ -49,7 +49,7 @@ async function getById(product_id: string): Promise<IProduct> {
     const response = await api.get<IProduct>(`${baseUrl}/${product_id}`);
     return response.data;
   } catch (error) {
-    handleAxiosError(error);
+    throw handleApiError(error);
   }
 }
 
@@ -68,7 +68,7 @@ async function create(
     });
     return response.data;
   } catch (error) {
-    handleAxiosError(error);
+    throw handleApiError(error);
   }
 }
 
@@ -86,7 +86,7 @@ async function update(product_id: string, params: IProduct): Promise<IProduct> {
     );
     return response.data;
   } catch (error) {
-    handleAxiosError(error);
+    throw handleApiError(error);
   }
 }
 
@@ -96,11 +96,6 @@ async function _delete(product_id: string): Promise<void> {
       headers: { authorization: `Bearer ${nextauth}` },
     });
   } catch (error) {
-    handleAxiosError(error);
+    throw handleApiError(error);
   }
-}
-
-function handleAxiosError(error: AxiosError) {
-  console.error("ProductsService, Error:", error);
-  throw new Error("ProductsService, Error:", error);
 }

@@ -1,4 +1,5 @@
 import api from "./api";
+import { handleApiError } from "@/errors/errorHandler";
 import { ICompanyParams } from "@/interfaces";
 
 export const companiesService = {
@@ -12,26 +13,46 @@ export const companiesService = {
 const baseUrl = "/companies";
 
 async function getAll() {
-  const response = await api.get(baseUrl);
-  return response.data;
+  try {
+    const response = await api.get(baseUrl);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }
 
 async function getById(company_id: string) {
-  const response = await api.get(`${baseUrl}/${company_id}`);
-  return response.data;
+  try {
+    const response = await api.get(`${baseUrl}/${company_id}`);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }
 
 async function create(body: ICompanyParams) {
-  const response = await api.post(baseUrl, body);
-  return response.data;
+  try {
+    const response = await api.post(baseUrl, body);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }
 
 async function update(id: string, params: ICompanyParams) {
-  const response = await api.patch(`${baseUrl}/${id}`, params);
-  return response.data;
+  try {
+    const response = await api.patch(`${baseUrl}/${id}`, params);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
 async function _delete(id: string) {
-  await api.delete(`${baseUrl}/${id}`);
+  try {
+    await api.delete(`${baseUrl}/${id}`);
+  } catch (error) {
+    throw handleApiError(error);
+  }
 }

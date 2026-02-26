@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { BsXLg, BsPlus, BsDash } from "react-icons/bs";
-import { CartItemType } from "../../../services/cart";
+import { CartItemType } from "../../../interfaces/ICart";
 import { formatPrice } from "../../../utils/formatPrice";
 import { useCart } from "../../../hooks/useCart";
 import {

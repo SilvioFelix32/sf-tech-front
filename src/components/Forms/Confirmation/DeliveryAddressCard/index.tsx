@@ -1,4 +1,4 @@
-import { User } from "../../../../services/auth";
+import { User } from "../../../../interfaces/IUser";
 import { CardContainer, CardTitle, RecipientName, AddressText } from "./styles";
 
 interface DeliveryAddressCardProps {

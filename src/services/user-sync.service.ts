@@ -1,6 +1,7 @@
 import { userService } from "./user-service";
 import { authService } from "./auth.service";
-import { User } from "./auth";
+import { User } from "../interfaces/IUser";
+import { CustomError, ErrorTypes } from "@/errors/errorHandler";
 import { ICreateUserRequest, IDbUser, AddressType, AddressPreference } from "../interfaces/IDbUser";
 import { getCookie, setCookie } from "./cookie-service";
 import { addressService } from "./address-service";
@@ -92,23 +93,23 @@ export async function syncUserWithDb(user_id: string): Promise<void> {
         setUserSynced(user_id);
         return;
       }
-    } catch (error: any) {
-      if (error?.response?.status === 404) {
+    } catch (error: unknown) {
+      if (error instanceof CustomError && error.code === ErrorTypes.NotFound) {
         try {
           const currentUser = await authService.getCurrentUser();
           if (currentUser && currentUser.user_id === user_id) {
             await createUserInDb(currentUser);
             setUserSynced(user_id);
           }
-        } catch (createError: any) {
-          if (createError?.response?.status === 409) {
-            setUserSynced(user_id)
+        } catch (createError: unknown) {
+          if (createError instanceof CustomError && createError.code === ErrorTypes.UserAlreadyExists) {
+            setUserSynced(user_id);
           } else {
             throw createError;
           }
         }
       } else {
-        throw new Error(`Erro ao sincronizar usuário com o banco de dados: ${error}`);
+        throw error;
       }
     }
   } catch (error: any) {

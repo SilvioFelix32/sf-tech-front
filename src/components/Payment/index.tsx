@@ -1,7 +1,7 @@
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import { ISaleItem, ICreateSaleRequest, PaymentMethod } from "../../interfaces";
-import { CartItemType } from "../../services/cart";
+import { CartItemType } from "../../interfaces/ICart";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import router from "next/router";

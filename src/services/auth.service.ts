@@ -12,7 +12,8 @@ import { Amplify } from "aws-amplify";
 import { awsConfig } from "../aws/aws-config";
 import { getCookie, setCookie, removeCookie } from "./cookie-service";
 import api from "./api";
-import { buildUserAttributes, User } from "./auth";
+import { buildUserAttributes } from "../utils/buildUserAttributes";
+import { User } from "../interfaces/IUser";
 
 Amplify.configure(awsConfig);
 

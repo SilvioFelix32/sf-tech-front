@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CartItemType } from "../../../services/cart";
+import { CartItemType } from "../../../interfaces/ICart";
 import { formatPrice } from "../../../utils/formatPrice";
 import {
   SidebarCard,

@@ -2,7 +2,7 @@ import { HighlightedProduct } from "../HighlightedProduct";
 import { CartProductCardComponent } from "./CartProductCard";
 import { GiftCard } from "./GiftCard";
 import { OrderSummary } from "./OrderSummary";
-import { CartItemType } from "../../services/cart";
+import { CartItemType } from "../../interfaces/ICart";
 import { useCart } from "../../hooks/useCart";
 import {
   CheckoutWrapper,

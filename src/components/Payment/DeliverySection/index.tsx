@@ -1,4 +1,4 @@
-import { User } from "../../../services/auth";
+import { User } from "../../../interfaces/IUser";
 import { DeliveryMethod } from "../ClientDelivery";
 import { Title, DeliveryCard } from "./styles";
 

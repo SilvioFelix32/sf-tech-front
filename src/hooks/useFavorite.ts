@@ -1,5 +1,5 @@
 import { useFavoriteStore } from "../stores/favoriteStore";
-import { IFavoriteContext } from "../services/favorite";
+import { IFavoriteContext } from "../interfaces/IFavorite";
 import { useMemo } from "react";
 
 export const useFavorite = (): IFavoriteContext => {
