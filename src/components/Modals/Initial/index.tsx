@@ -1,9 +1,17 @@
 import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import { Modal as ModalComponent } from "react-responsive-modal";
-//styles
 import "react-responsive-modal/styles.css";
-import { Button, Wrapper, Content, Title, Text } from "./styles";
+import {
+  Wrapper,
+  Header,
+  HeaderTitle,
+  HeaderDescription,
+  ContentBlock,
+  TextBlock,
+  Footer,
+  PrimaryButton,
+} from "./styles";
 
 interface ModalProps {
   isOpen: boolean;
@@ -26,36 +34,35 @@ export function InitialModal({ isOpen, setOpen }: ModalProps) {
         modal: "customModal",
       }}
       open={isOpen}
-      onClose={() => {
-        setOpen(false);
-      }}
+      onClose={() => setOpen(false)}
       center
+      styles={{ modal: { width: "560px", maxHeight: "90vh", padding: 0 } }}
     >
       <Wrapper>
-        <Content>
-          <Title>Bem-vindo ao SF-Tech!</Title>
-          <Text>
-            Este site é uma demonstração e foi criado para demonstrar minhas
-            habilidades como desenvolvedor Fullstack JavaScript, utilizando
-            tecnologias modernas e eficientes.
-          </Text>
-          <Text>
-            No frontend, trabalhei com React, Next.js, Styled-Components e
-            outras ferramentas que garantem interfaces dinâmicas e responsivas.
-          </Text>
-          <Text>
-            No backend, usei NestJS, Prisma e Redis para construir APIs seguras
-            e escaláveis.
-          </Text>
-          <Text>
-            O e-mail e senha são armazenados com segurança no AWS Cognito, e os
-            cookies seguem as normas da LGPD, melhorando sua experiência sem
-            comprometer sua privacidade.
-          </Text>
-        </Content>
-        <Button type="button" onClick={() => setOpen(false)}>
-          Entendi e aceito
-        </Button>
+        <Header>
+          <HeaderTitle>Bem-vindo ao SF-Tech!</HeaderTitle>
+          <HeaderDescription>
+            Projeto de e-commerce desenvolvido com Clean Architecture, Clean Code e usando os Principios SOLID.
+          </HeaderDescription>
+        </Header>
+
+        <ContentBlock>
+          <TextBlock>
+            <strong>Frontend:</strong> Next.js, React e Styled-Components para estilização de interfaces dinâmicas e responsivas.
+          </TextBlock>
+          <TextBlock>
+            <strong>Backend Node.js:</strong> NestJS, Prisma e Redis para gestão de produtos, com 100% de cobertura de testes.
+          </TextBlock>
+          <TextBlock>
+            <strong>Backend Java:</strong> Spring Boot para gestão de vendas.
+          </TextBlock>
+        </ContentBlock>
+
+        <Footer>
+          <PrimaryButton type="button" onClick={() => setOpen(false)}>
+            Entendi e aceito
+          </PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalComponent>
   );
