@@ -18,12 +18,12 @@ import { PageTitle, PageText } from "../../../../styles/pages/shared";
 import { Button } from "../../../../styles/components";
 import { useAuth } from "../../../../hooks/useAuth";
 import { addressService } from "../../../../services/address-service";
-import { IAddress, AddressType } from "../../../../interfaces/IDbUser";
-import { ModalCreateAddress } from "../../../Modals";
+import { IAddress, AddressTypeEnum } from "../../../../interfaces/IDbUser";
+import { ModalAddress } from "../../../Modals";
 import { GetSwallAlert } from "../../../../utils";
 
-function getAddressTypeLabel(type: AddressType): string {
-  const labels: Record<AddressType, string> = {
+function getAddressTypeLabel(type: AddressTypeEnum): string {
+  const labels: Record<AddressTypeEnum, string> = {
     House: "Casa",
     Work: "Trabalho",
     Temporary: "Temporário",
@@ -132,7 +132,7 @@ export function Addresses() {
       ) : (
         <AccountAddressList>
           {addresses.map((address) => {
-            const isPrimary = address.address_preference === address.address_type;
+            const isPrimary = address.address_preference === "Primary";
             return (
               <AccountAddressCard key={address.address_id} $isPrimary={isPrimary}>
                 <AccountAddressInfo>
@@ -140,7 +140,9 @@ export function Addresses() {
                     <AccountAddressName>
                       {getAddressTypeLabel(address.address_type)}
                     </AccountAddressName>
-                    {isPrimary && <AccountAddressBadge>Principal</AccountAddressBadge>}
+                    <AccountAddressBadge className={isPrimary ? "primary" : undefined}>
+                      {isPrimary ? "Principal" : "Alternativo"}
+                    </AccountAddressBadge>
                   </AccountAddressTitle>
                   <AccountAddressText>
                     {address.street}, {address.number}
@@ -177,7 +179,7 @@ export function Addresses() {
       )}
 
       {user?.user_id && (
-        <ModalCreateAddress
+        <ModalAddress
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           user_id={user.user_id}

@@ -173,6 +173,11 @@ export const AccountAddressBadge = styled.span`
   font-weight: 500;
   background-color: ${({ theme }) => theme.colors.tertiary};
   color: ${({ theme }) => theme.colors.title};
+
+  &.primary {
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: #ffffff;
+  }
 `;
 
 export const AccountAddressText = styled.p`

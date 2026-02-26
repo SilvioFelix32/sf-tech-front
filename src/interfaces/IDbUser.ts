@@ -1,14 +1,14 @@
 export type Gender = "Male" | "Female" | "Other";
 
-export type AddressType = "House" | "Work" | "Temporary";
+export type AddressTypeEnum = "House" | "Work" | "Temporary";
 
-export type AddressPreference = "House" | "Work" | "Temporary";
+export type AddressPreferenceEnum = "Primary" | "Secondary";
 
 export interface IAddress {
     address_id?: string;
     user_id: string;
-    address_type: AddressType;
-    address_preference: AddressPreference;
+    address_type: AddressTypeEnum;
+    address_preference: AddressPreferenceEnum;
     street: string;
     number: string;
     neighborhood: string;

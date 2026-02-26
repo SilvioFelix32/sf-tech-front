@@ -24,7 +24,7 @@ import { environment } from "../../config/environment";
 import { GetSwallAlert } from "../../utils";
 import { addressService } from "../../services/address-service";
 import { IAddress } from "../../interfaces/IDbUser";
-import { ModalCreateAddress } from "../Modals";
+import { ModalAddress } from "../Modals";
 
 export function PaymentForm() {
   const { user } = useAuth();
@@ -54,7 +54,7 @@ export function PaymentForm() {
     if (addresses.length === 0) return null;
     
     const primaryAddress = addresses.find(
-      (addr) => addr.address_preference === addr.address_type
+      (addr) => addr.address_preference === "Primary"
     );
     
     return primaryAddress || addresses[0] || null;
@@ -250,7 +250,7 @@ export function PaymentForm() {
       </Sidebar>
 
       {user?.user_id && (
-        <ModalCreateAddress
+        <ModalAddress
           isOpen={isAddressModalOpen}
           setIsOpen={setIsAddressModalOpen}
           user_id={user.user_id}

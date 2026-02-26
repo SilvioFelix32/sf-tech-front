@@ -2,7 +2,7 @@ import { userService } from "./user-service";
 import { authService } from "./auth.service";
 import { User } from "../interfaces/IUser";
 import { CustomError, ErrorTypes } from "@/errors/errorHandler";
-import { ICreateUserRequest, IDbUser, AddressType, AddressPreference } from "../interfaces/IDbUser";
+import { ICreateUserRequest, IDbUser, AddressTypeEnum, AddressPreferenceEnum } from "../interfaces/IDbUser";
 import { getCookie, setCookie } from "./cookie-service";
 import { addressService } from "./address-service";
 import { faker } from "@faker-js/faker";
@@ -49,8 +49,8 @@ function createFakeAddress(user_id: string) {
   
   return {
     user_id,
-    address_type: "House" as AddressType,
-    address_preference: "House" as AddressPreference,
+    address_type: "House" as AddressTypeEnum,
+    address_preference: "Primary" as AddressPreferenceEnum,
     street: faker.location.street(),
     number: faker.location.buildingNumber(),
     neighborhood: faker.location.county(),

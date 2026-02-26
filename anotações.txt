@@ -5,10 +5,17 @@
         * Escrever de forma que eu consiga entender no futuro.
 
 // TODO
--- Remover o erro de rerender no cadastro do usuário no banco
--- Adicionar o novo tipo a pagina de minha conta
-
 -- Melhorar os estilos modal de cadastro de endereço
 
 -- Integrar ao front e backend de protudos o estoque e o nivel do estoque do produto. 
--- Integrar ao front e backend de sales as opções de status (CANCELLED)
+-- Corrigir no backend os Enums, para refletir o tipo e prioridade do endereço caso necessário:
+    * export type AddressTypeEnum = "House" | "Work" | "Temporary";
+    * export type AddressPreferenceEnum = "Primary" | "Secondary";
+        {
+            "statusCode": 400,
+            "cause": "BadRequestException",
+            "message": [
+                "address_preference must be one of the following values: House, Work, Temporary"
+            ]
+        }
+-- Integrar ao front e backend de sales as opções de status (CANCELLED) a compra.

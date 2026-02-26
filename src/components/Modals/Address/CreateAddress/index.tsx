@@ -1,9 +1,27 @@
 import { FormEvent, useState, useEffect } from "react";
 import { Modal as ModalCreate } from "react-responsive-modal";
-import { IAddress, AddressType, AddressPreference } from "../../../../interfaces/IDbUser";
+import { LuMapPin, LuHouse, LuBuilding2, LuHash } from "react-icons/lu";
+import { IAddress, AddressTypeEnum, AddressPreferenceEnum } from "../../../../interfaces/IDbUser";
 import { addressService } from "../../../../services/address-service";
 import { GetSwallAlert } from "../../../../utils";
-import { Button, Text, Content, Wrapper, Input, Select } from "./styles";
+import {
+  Wrapper,
+  Header,
+  HeaderTitleRow,
+  HeaderTitle,
+  HeaderDescription,
+  FormGrid,
+  Row,
+  FieldGroup,
+  FieldLabelRow,
+  LabelIcon,
+  LabelRequired,
+  Input,
+  Select,
+  Footer,
+  SecondaryButton,
+  PrimaryButton,
+} from "./styles";
 import "react-responsive-modal/styles.css";
 
 interface ModalAddressProps {
@@ -14,7 +32,7 @@ interface ModalAddressProps {
   onSuccess: () => void;
 }
 
-export function ModalCreateAddress({
+export function ModalAddress({
   isOpen,
   setIsOpen,
   user_id,
@@ -26,8 +44,18 @@ export function ModalCreateAddress({
   const [neighborhood, setNeighborhood] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [cep, setCep] = useState<string>("");
-  const [addressType, setAddressType] = useState<AddressType>("House");
-  const [addressPreference, setAddressPreference] = useState<AddressPreference>("House");
+  const [addressType, setAddressType] = useState<AddressTypeEnum>("House");
+  const [addressPreference, setAddressPreference] = useState<AddressPreferenceEnum>("Primary");
+
+  function normalizeAddressPreference(
+    value: AddressPreferenceEnum | string | null | undefined
+  ): AddressPreferenceEnum {
+    if (!value) return "Primary";
+    const normalized = String(value).toLowerCase();
+    if (normalized === "primary") return "Primary";
+    if (normalized === "secondary") return "Secondary";
+    return "Primary";
+  }
 
   useEffect(() => {
     if (isOpen) {
@@ -38,7 +66,7 @@ export function ModalCreateAddress({
         setCity(address.city);
         setCep(address.cep);
         setAddressType(address.address_type);
-        setAddressPreference(address.address_preference);
+        setAddressPreference(normalizeAddressPreference(address.address_preference));
       } else {
         setStreet("");
         setNumber("");
@@ -46,7 +74,7 @@ export function ModalCreateAddress({
         setCity("");
         setCep("");
         setAddressType("House");
-        setAddressPreference("House");
+        setAddressPreference("Primary");
       }
     }
   }, [address, isOpen]);
@@ -75,8 +103,13 @@ export function ModalCreateAddress({
       }
       setIsOpen(false);
       onSuccess();
-    } catch (error: any) {
-      GetSwallAlert("center", "error", error.message || "Erro ao salvar endereço", 2000);
+    } catch (error: unknown) {
+      GetSwallAlert(
+        "center",
+        "error",
+        error instanceof Error ? error.message : "Erro ao salvar endereço",
+        2000
+      );
     }
   }
 
@@ -104,78 +137,163 @@ export function ModalCreateAddress({
           setCity("");
           setCep("");
           setAddressType("House");
-          setAddressPreference("House");
+          setAddressPreference("Primary");
         }
       }}
+      styles={{ modal: { width: "720px", maxHeight: "90vh", padding: 0 } }}
       center
     >
       <Wrapper onSubmit={handleSubmit}>
-        <Content>
-          <Text>Tipo de Endereço:</Text>
-          <Select
-            value={addressType}
-            onChange={(e) => setAddressType(e.target.value as AddressType)}
-          >
-            <option value="House">Residencial</option>
-            <option value="Work">Trabalho</option>
-            <option value="Temporary">Temporário</option>
-          </Select>
+        <Header>
+          <HeaderTitleRow>
+            <LuMapPin size={20} />
+            <HeaderTitle>{address ? "Editar Endereço" : "Cadastrar Endereço"}</HeaderTitle>
+          </HeaderTitleRow>
+          <HeaderDescription>
+            {address
+              ? "Atualize os dados do endereço conforme necessário."
+              : "Preencha os campos abaixo para adicionar um novo endereço de entrega."}
+          </HeaderDescription>
+        </Header>
 
-          <Text>Preferência:</Text>
-          <Select
-            value={addressPreference}
-            onChange={(e) => setAddressPreference(e.target.value as AddressPreference)}
-          >
-            <option value="House">Residencial</option>
-            <option value="Work">Trabalho</option>
-            <option value="Temporary">Temporário</option>
-          </Select>
+        <FormGrid>
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="address_type">
+                <LabelIcon>
+                  <LuBuilding2 size={14} />
+                </LabelIcon>
+                Tipo de Endereço <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Select
+                id="address_type"
+                value={addressType}
+                onChange={(e) => setAddressType(e.target.value as AddressTypeEnum)}
+              >
+                <option value="House">Residencial</option>
+                <option value="Work">Trabalho</option>
+                <option value="Temporary">Temporário</option>
+              </Select>
+            </FieldGroup>
 
-          <Text>Rua:</Text>
-          <Input
-            type="text"
-            value={street}
-            onChange={(e) => setStreet(e.target.value)}
-            required
-          />
+            <FieldGroup>
+              <FieldLabelRow htmlFor="address_preference">
+                <LabelIcon>
+                  <LuHouse size={14} />
+                </LabelIcon>
+                Preferência <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Select
+                id="address_preference"
+                value={addressPreference}
+                onChange={(e) => setAddressPreference(e.target.value as AddressPreferenceEnum)}
+              >
+                <option value="Primary">Principal</option>
+                <option value="Secondary">Alternativo</option>
+              </Select>
+            </FieldGroup>
+          </Row>
 
-          <Text>Número:</Text>
-          <Input
-            type="text"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-            required
-          />
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="street">
+                <LabelIcon>
+                  <LuMapPin size={14} />
+                </LabelIcon>
+                Rua <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="street"
+                type="text"
+                placeholder="Ex: Rua das Flores"
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
+                required
+              />
+            </FieldGroup>
 
-          <Text>Bairro:</Text>
-          <Input
-            type="text"
-            value={neighborhood}
-            onChange={(e) => setNeighborhood(e.target.value)}
-            required
-          />
+            <FieldGroup>
+              <FieldLabelRow htmlFor="number">
+                <LabelIcon>
+                  <LuHash size={14} />
+                </LabelIcon>
+                Número <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="number"
+                type="text"
+                placeholder="Ex: 123"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                required
+              />
+            </FieldGroup>
+          </Row>
 
-          <Text>Cidade:</Text>
-          <Input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-          />
+          <Row>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="neighborhood">
+                <LabelIcon>
+                  <LuMapPin size={14} />
+                </LabelIcon>
+                Bairro <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="neighborhood"
+                type="text"
+                placeholder="Ex: Centro"
+                value={neighborhood}
+                onChange={(e) => setNeighborhood(e.target.value)}
+                required
+              />
+            </FieldGroup>
 
-          <Text>CEP:</Text>
-          <Input
-            type="text"
-            value={cep}
-            onChange={(e) => setCep(formatCep(e.target.value))}
-            placeholder="00000-000"
-            maxLength={9}
-            required
-          />
-        </Content>
-        <Button type="submit">{address ? "Atualizar" : "Cadastrar"}</Button>
+            <FieldGroup>
+              <FieldLabelRow htmlFor="city">
+                <LabelIcon>
+                  <LuBuilding2 size={14} />
+                </LabelIcon>
+                Cidade <LabelRequired>*</LabelRequired>
+              </FieldLabelRow>
+              <Input
+                id="city"
+                type="text"
+                placeholder="Ex: São Paulo"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+              />
+            </FieldGroup>
+          </Row>
+
+          <FieldGroup>
+            <FieldLabelRow htmlFor="cep">
+              <LabelIcon>
+                <LuMapPin size={14} />
+              </LabelIcon>
+              CEP <LabelRequired>*</LabelRequired>
+            </FieldLabelRow>
+            <Input
+              id="cep"
+              type="text"
+              placeholder="00000-000"
+              value={cep}
+              onChange={(e) => setCep(formatCep(e.target.value))}
+              maxLength={9}
+              required
+            />
+          </FieldGroup>
+        </FormGrid>
+
+        <Footer>
+          <SecondaryButton type="button" onClick={() => setIsOpen(false)}>
+            Cancelar
+          </SecondaryButton>
+          <PrimaryButton type="submit">
+            {address ? "Atualizar Endereço" : "Cadastrar Endereço"}
+          </PrimaryButton>
+        </Footer>
       </Wrapper>
     </ModalCreate>
   );
 }
-

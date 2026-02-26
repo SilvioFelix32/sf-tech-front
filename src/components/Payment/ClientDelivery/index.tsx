@@ -37,7 +37,7 @@ export function DeliveryMethod({ user }: DeliveryMethodProps) {
     if (addresses.length === 0) return null;
     
     const primaryAddress = addresses.find(
-      (addr) => addr.address_preference === addr.address_type
+      (addr) => addr.address_preference === "Primary"
     );
     
     return primaryAddress || addresses[0] || null;
